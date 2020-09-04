@@ -3,6 +3,12 @@
 import Vue from 'vue'
 import App from './App'
 import router from './router'
+import dataV from '@jiaminghi/data-view'
+import ElementUI from 'element-ui'
+import 'element-ui/lib/theme-chalk/index.css'
+
+Vue.use(dataV);
+Vue.use(ElementUI, { size: 'small' });
 
 Vue.config.productionTip = false
 
