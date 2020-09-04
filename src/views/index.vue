@@ -25,7 +25,7 @@ export default {
     cancelLoading() {
       setTimeout(() => {
         this.loading = false;
-      }, 500);
+      }, 1000);
     }
   }
 }
