@@ -37,7 +37,7 @@
           <!--</ul>-->
           <ul class="ul1">
             <li>
-              <div class="li-text2 bg-img1">
+              <div class="li-text2 bg-img1" @click="gotoPage">
                 <span>
                    项目概览
                 </span>
@@ -45,7 +45,7 @@
               </div>
             </li>
             <li>
-              <div class="li-text2 pos-style1 bg-img2" >
+              <div class="li-text2 pos-style1 bg-img2" @click="gotoTest">
                 <span>
                    人员管理
                 </span>
