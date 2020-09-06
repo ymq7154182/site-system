@@ -225,9 +225,12 @@
   .li-text2 {
     position: relative;
     /*position: absolute;*/
-
+    text-align: center;
+    line-height: 0.7rem;
+    width: 1.9rem;
+    height: 0.7rem;
     background-size: 100% 100%;
-    padding: 0.18rem 0.5rem 0.18rem .5rem;
+    /*padding: 0.18rem 0.5rem 0.18rem .5rem;*/
   }
   .pos-style1 {
        left: -0.2rem;
@@ -266,8 +269,8 @@
     background-image: url("../../../assets/header/rightcheck.png");
   }
   .head-text {
-    width: 15vw;
-    height: 3.7vh;
+    width: 4rem;
+    height: 0.5rem;
     background-size: 100% 100%;
     /*font-size: 0.4rem;*/
     /*font-family: "Adobe Heiti Std";*/
