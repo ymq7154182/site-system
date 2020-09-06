@@ -266,8 +266,8 @@
     background-image: url("../../../assets/header/rightcheck.png");
   }
   .head-text {
-    width: 250px;
-    height: 0.5rem;
+    width: 15vw;
+    height: 3.7vh;
     background-size: 100% 100%;
     /*font-size: 0.4rem;*/
     /*font-family: "Adobe Heiti Std";*/
