@@ -270,7 +270,7 @@
   }
   .head-text {
     width: 4rem;
-    height: 0.5rem;
+    height: 0.45rem;
     background-size: 100% 100%;
     /*font-size: 0.4rem;*/
     /*font-family: "Adobe Heiti Std";*/
