@@ -19,7 +19,9 @@ export default {
     }
   },
   mounted() {
+    this.$store.dispatch('changeMsg', '人员管理')
     this.cancelLoading();
+
   },
   methods: {
     cancelLoading() {

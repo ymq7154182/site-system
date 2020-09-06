@@ -7,6 +7,7 @@ import dataV from '@jiaminghi/data-view'
 import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
 import './common/flexible.js';
+import store from './store'
 
 Vue.use(dataV);
 Vue.use(ElementUI, { size: 'small' });
@@ -17,6 +18,7 @@ Vue.config.productionTip = false
 new Vue({
   el: '#app',
   router,
+  store,
   components: { App },
   template: '<App/>'
 })

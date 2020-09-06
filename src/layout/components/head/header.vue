@@ -37,7 +37,7 @@
           <!--</ul>-->
           <ul class="ul1">
             <li>
-              <div class="li-text2 bg-img1" @click="gotoPage">
+              <div class="li-text2 " :class="{'bg-img1': textStyle=== '项目概览', 'bg-img2': textStyle!== '项目概览'}" @click="gotoPage">
                 <span>
                    项目概览
                 </span>
@@ -45,28 +45,28 @@
               </div>
             </li>
             <li>
-              <div class="li-text2 pos-style1 bg-img2" @click="gotoTest">
+              <div class="li-text2 pos-style1 " :class="{'bg-img1': textStyle=== '人员管理', 'bg-img2': textStyle!== '人员管理'}" @click="gotoTest">
                 <span>
                    人员管理
                 </span>
               </div>
             </li>
             <li>
-              <div class="li-text2 pos-style2 bg-img2" >
+              <div class="li-text2 pos-style2 " :class="{'bg-img1': textStyle=== '安全管理', 'bg-img2': textStyle!== '安全管理'}">
                   <span>
                    安全管理
                 </span>
               </div>
             </li>
             <li>
-              <div class="li-text2 pos-style3 bg-img2">
+              <div class="li-text2 pos-style3" :class="{'bg-img1': textStyle=== '设备管理', 'bg-img2': textStyle!== '设备管理'}">
                   <span>
                    设备管理
                 </span>
               </div>
             </li>
             <li>
-              <div class="li-text2 pos-style4 bg-img2">
+              <div class="li-text2 pos-style4" :class="{'bg-img1': textStyle=== '视频监控', 'bg-img2': textStyle!== '视频监控'}">
                   <span>
                    视频监控
                 </span>
@@ -74,41 +74,42 @@
             </li>
           </ul>
         </div>
+        <div class="head-text"></div>
         <div class="div-tag right-tag" style="padding-right: 0.15rem;">
           <ul class="ul2">
           <li>
-            <div class="li-text2 bg-img22">
+            <div class="li-text2" :class="{'bg-img23': textStyle=== '进入系统', 'bg-img22': textStyle!== '进入系统'}">
                 <span>
-                   项目概览
+                   进入系统
                 </span>
 
             </div>
           </li>
           <li>
-            <div class="li-text2 pos-style-right1 bg-img22" >
+            <div class="li-text2 pos-style-right1" :class="{'bg-img23': textStyle=== '资料管理', 'bg-img22': textStyle!== '资料管理'}">
                 <span>
-                   人员管理
+                   资料管理
                 </span>
             </div>
           </li>
           <li>
-            <div class="li-text2 pos-style-right2 bg-img22" >
+            <div class="li-text2 pos-style-right2" :class="{'bg-img23': textStyle=== '质量管理', 'bg-img22': textStyle!== '质量管理'}">
                   <span>
-                   安全管理
+                   质量管理
                 </span>
             </div>
           </li>
           <li>
-            <div class="li-text2 pos-style-right3 bg-img22">
+            <div class="li-text2 pos-style-right3" :class="{'bg-img23': textStyle=== '生产管理', 'bg-img22': textStyle!== '生产管理'}">
                   <span>
-                   设备管理
+                   生产管理
                 </span>
             </div>
           </li>
           <li>
-            <div class="li-text2 pos-style-right4 bg-img22">
+            <div class="li-text2 pos-style-right4" :class="{'bg-img23': textStyle=== '绿色施工', 'bg-img22': textStyle!== '绿色施工'}">
                   <span>
-                   视频监控
+                   绿色施工
                 </span>
             </div>
           </li>
@@ -120,12 +121,31 @@
 <script>
     export default {
         name: "header",
+      // data() {
+      //   return {
+      //     textStyle: ''
+      //   }
+      // },
+      computed: {
+        textStyle() {
+          return this.$store.state.textStyle
+        }
+      },
+      mounted() {
+        // this.textStyle = this.$store.state.textStyle
+      },
       methods: {
         gotoPage() {
+          // this.textStyle = '项目概览'
+
           this.$router.push('/')
+          // this.textStyle = this.$store.state.textStyle
+
         },
         gotoTest() {
+          // this.textStyle = '人员管理'
           this.$router.push('/test')
+          // this.textStyle = this.$store.state.textStyle
         }
       }
     }
@@ -184,7 +204,7 @@
     background-image: url("../../../assets/header/tagleftcheck.png");
   }
   .div-tag ul li:hover .bg-img22 {
-    background-image: url("../../../assets/header/tagleftcheck.png");
+    background-image: url("../../../assets/header/rightcheck.png");
   }
   .tag-img {
     width: 1.9rem;
@@ -242,4 +262,28 @@
   .bg-img22 {
     background-image: url("../../../assets/header/tagright.png");
   }
+  .bg-img23 {
+    background-image: url("../../../assets/header/rightcheck.png");
+  }
+  .head-text {
+    width: 250px;
+    height: 0.5rem;
+    background-size: 100% 100%;
+    /*font-size: 0.4rem;*/
+    /*font-family: "Adobe Heiti Std";*/
+    /*color: rgb(255, 255, 255);*/
+    /*text-transform: uppercase;*/
+    /*line-height: 1.934;*/
+    /*-moz-transform: matrix( 1.12300210614388,0,0,1.12300210614388,0,0);*/
+    /*-webkit-transform: matrix( 1.12300210614388,0,0,1.12300210614388,0,0);*/
+    /*-ms-transform: matrix( 1.12300210614388,0,0,1.12300210614388,0,0);*/
+    background-image: url("../../../assets/header/titletext.png");
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    top: 0.4rem;
+    /*z-index: 1103;*/
+  }
+
+
 </style>
