@@ -24,7 +24,19 @@ const routes = [{
       component: () => import('@/views/index'),
     }
   ]
-}]
+},
+  {
+    path: '/device',
+    component: Layout,
+    name: 'deviceManage',
+    children: [
+      {
+        path: '/device',
+        component: () => import('@/views/deviceManage'),
+      }
+    ]
+  }
+]
 const router = new VueRouter({
   mode: "history",
   routes

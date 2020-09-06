@@ -59,7 +59,7 @@
               </div>
             </li>
             <li>
-              <div class="li-text2 pos-style3" :class="{'bg-img1': textStyle=== '设备管理', 'bg-img2': textStyle!== '设备管理'}">
+              <div class="li-text2 pos-style3" :class="{'bg-img1': textStyle=== '设备管理', 'bg-img2': textStyle!== '设备管理'}" @click="gotoDevice">
                   <span>
                    设备管理
                 </span>
@@ -146,6 +146,9 @@
           // this.textStyle = '人员管理'
           this.$router.push('/test')
           // this.textStyle = this.$store.state.textStyle
+        },
+        gotoDevice() {
+          this.$router.push('/device')
         }
       }
     }
@@ -225,7 +228,7 @@
   .li-text2 {
     position: relative;
     /*position: absolute;*/
-
+    width: 0.9rem;
     background-size: 100% 100%;
     padding: 0.18rem 0.5rem 0.18rem .5rem;
   }
