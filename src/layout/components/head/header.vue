@@ -93,7 +93,7 @@
             </div>
           </li>
           <li>
-            <div class="li-text2 pos-style-right2" :class="{'bg-img23': textStyle=== '质量管理', 'bg-img22': textStyle!== '质量管理'}">
+            <div class="li-text2 pos-style-right2" :class="{'bg-img23': textStyle=== '质量管理', 'bg-img22': textStyle!== '质量管理'}" @click="qualityControl">
                   <span>
                    质量管理
                 </span>
@@ -149,6 +149,9 @@
         },
         gotoDevice() {
           this.$router.push('/device')
+        },
+        qualityControl() {
+          this.$router.push('/qualityControl')
         }
       }
     }
@@ -228,9 +231,12 @@
   .li-text2 {
     position: relative;
     /*position: absolute;*/
-    width: 0.9rem;
+    text-align: center;
+    line-height: 0.7rem;
+    width: 1.9rem;
+    height: 0.7rem;
     background-size: 100% 100%;
-    padding: 0.18rem 0.5rem 0.18rem .5rem;
+    /*padding: 0.18rem 0.5rem 0.18rem .5rem;*/
   }
   .pos-style1 {
        left: -0.2rem;
@@ -269,8 +275,8 @@
     background-image: url("../../../assets/header/rightcheck.png");
   }
   .head-text {
-    width: 250px;
-    height: 0.5rem;
+    width: 4rem;
+    height: 0.45rem;
     background-size: 100% 100%;
     /*font-size: 0.4rem;*/
     /*font-family: "Adobe Heiti Std";*/
