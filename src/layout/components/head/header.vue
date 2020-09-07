@@ -93,7 +93,7 @@
             </div>
           </li>
           <li>
-            <div class="li-text2 pos-style-right2" :class="{'bg-img23': textStyle=== '质量管理', 'bg-img22': textStyle!== '质量管理'}">
+            <div class="li-text2 pos-style-right2" :class="{'bg-img23': textStyle=== '质量管理', 'bg-img22': textStyle!== '质量管理'}" @click="qualityControl">
                   <span>
                    质量管理
                 </span>
@@ -146,6 +146,9 @@
           // this.textStyle = '人员管理'
           this.$router.push('/test')
           // this.textStyle = this.$store.state.textStyle
+        },
+        qualityControl() {
+          this.$router.push('/qualityControl')
         }
       }
     }

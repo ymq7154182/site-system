@@ -24,6 +24,16 @@ const routes = [{
       component: () => import('@/views/index'),
     }
   ]
+},{
+  path: '/qualityControl',
+  component: Layout,
+  name: 'index',
+  children: [
+    {
+      path: '/qualityControl',
+      component: () => import('@/views/qualityControl/index'),
+    }
+  ]
 }]
 const router = new VueRouter({
   mode: "history",
