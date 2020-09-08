@@ -45,7 +45,18 @@ const routes = [{
         component: () => import('@/views/qualityControl/index'),
       }
     ]
-  }
+  },
+  {
+    path: '/videoManager',
+    component: Layout,
+    name: 'videoManager',
+    children: [
+      {
+        path: '/videoManager',
+        component: () => import('@/views/videoManager/index'),
+      }
+    ]
+  },
 ]
 const router = new VueRouter({
   mode: "history",
