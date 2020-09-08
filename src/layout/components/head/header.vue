@@ -66,7 +66,7 @@
               </div>
             </li>
             <li>
-              <div class="li-text2 pos-style4" :class="{'bg-img1': textStyle=== '视频监控', 'bg-img2': textStyle!== '视频监控'}">
+              <div class="li-text2 pos-style4" :class="{'bg-img1': textStyle=== '视频监控', 'bg-img2': textStyle!== '视频监控'}" @click="gotoVideo">
                   <span>
                    视频监控
                 </span>
@@ -149,6 +149,9 @@
         },
         gotoDevice() {
           this.$router.push('/device')
+        },
+        gotoVideo() {
+          this.$router.push('/videoManager')
         },
         qualityControl() {
           this.$router.push('/qualityControl')
