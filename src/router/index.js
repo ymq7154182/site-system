@@ -45,6 +45,16 @@ const routes = [{
         component: () => import('@/views/qualityControl/index'),
       }
     ]
+  },{
+    path: '/greenConstruction',
+    component: Layout,
+    name: 'greenConstruction',
+    children: [
+      {
+        path: '/greenConstruction',
+        component: () => import('@/views/greenConstruction/index'),
+      }
+    ]
   }
 ]
 const router = new VueRouter({
