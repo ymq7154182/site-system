@@ -45,7 +45,19 @@ const routes = [{
         component: () => import('@/views/qualityControl/index'),
       }
     ]
-  },{
+  },
+  {
+    path: '/videoManager',
+    component: Layout,
+    name: 'videoManager',
+    children: [
+      {
+        path: '/videoManager',
+        component: () => import('@/views/videoManager/index'),
+      }
+    ]
+  },
+  {
     path: '/greenConstruction',
     component: Layout,
     name: 'greenConstruction',
