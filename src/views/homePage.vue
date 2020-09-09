@@ -29,19 +29,19 @@
               </div>
             </div>
             <div class="project_item">
-              <span style="height: 0.43rem;line-height: 0.43rem;font-size: 0.1rem;color: #d2d7dc;padding-right: 0.1rem;margin-left: 0.1rem">建设单位：精准医疗中心责任有限公司</span>
+              <span style="height: 0.43rem;line-height: 0.43rem;font-size: 0.08rem;color: #d2d7dc;margin-left: 0.1rem">建设单位：精准医疗中心责任有限公司</span>
             </div>
             <div class="project_item">
-              <span style="height: 0.43rem;line-height: 0.43rem;font-size: 0.1rem;color: #d2d7dc;padding-right: 0.1rem;margin-left: 0.1rem">设计单位：中路设计研究院</span>
+              <span style="height: 0.43rem;line-height: 0.43rem;font-size: 0.08rem;color: #d2d7dc;padding-right: 0.1rem;margin-left: 0.1rem">设计单位：中路设计研究院</span>
             </div>
             <div class="project_item">
-              <span style="height: 0.43rem;line-height: 0.43rem;font-size: 0.1rem;color: #d2d7dc;padding-right: 0.1rem;margin-left: 0.1rem">监理单位：建设监理有限公司</span>
+              <span style="height: 0.43rem;line-height: 0.43rem;font-size: 0.08rem;color: #d2d7dc;padding-right: 0.1rem;margin-left: 0.1rem">监理单位：建设监理有限公司</span>
             </div>
             <div class="project_item">
-              <span style="height: 0.43rem;line-height: 0.43rem;font-size: 0.1rem;color: #d2d7dc;padding-right: 0.1rem;margin-left: 0.1rem">施工单位：建工集团第一建筑有限公司</span>
+              <span style="height: 0.43rem;line-height: 0.43rem;font-size: 0.08rem;color: #d2d7dc;margin-left: 0.1rem">施工单位：建工集团第一建筑有限公司</span>
             </div>
             <div class="project_item">
-              <span style="height: 0.43rem;line-height: 0.43rem;font-size: 0.1rem;color: #d2d7dc;padding-right: 0.1rem;margin-left: 0.1rem">备案编号：98387009JDHWUH</span>
+              <span style="height: 0.43rem;line-height: 0.43rem;font-size: 0.08rem;color: #d2d7dc;padding-right: 0.1rem;margin-left: 0.1rem">备案编号：98387009JDHWUH</span>
             </div>
           </div>
           <div class="people">
@@ -88,7 +88,7 @@
                 <span style="font-size: 0.2rem;color: #ffa454;">绿色施工</span>
               </div>
               <div class="green_container">
-
+                <img src="../assets/homepage/shigong.png" style="margin-left: 1.2rem;height: 3rem">
               </div>
             </div>
           </el-row>
@@ -259,12 +259,13 @@
             radiusAxis: {
             },
             polar: {
+              radius: ['20%', '50%'],
+              center: ["50%", "50%"],
             },
             label:{
               normal:{
                 show:true,
                 position:'top',
-
                 textStyle:{
                   fontSize:16,
                   color:'#B0CEFC'
@@ -272,12 +273,16 @@
               }
             },
             series: [{
+              radius: ['20%', '70%'],
+              center: ["20%", "20%"],
               type: 'bar',
               data: [1, 2, 3, 4, 3, 5, 1],
               coordinateSystem: 'polar',
               name: '异常',
               stack: 'a',
             }, {
+              radius: ['20%', '70%'],
+              center: ["90%", "90%"],
               type: 'bar',
               data: [15, 24, 16, 33, 23, 22, 21],
               coordinateSystem: 'polar',
@@ -765,7 +770,7 @@
   #mychart24 {
     padding-top: 0.2rem;
     width: 100%;
-    height: 22vh;
+    height: 25vh;
   }
   #mychart13 {
     width: 100%;
@@ -898,10 +903,10 @@
   }
   .green_container{
     width: 100%;
-    height: 3rem;
-    background-image: url("../assets/homepage/shigong.png");
+    height: 2.5rem;
+    /*background-image: url("../assets/homepage/shigong.png");*/
     background-repeat: no-repeat;
-    background-position: center;
+    background-size: cover;
   }
   .thing{
     position: relative;
