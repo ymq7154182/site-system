@@ -144,7 +144,7 @@
         },
         gotoTest() {
           // this.textStyle = '人员管理'
-          this.$router.push('/test')
+          this.$router.push('/peopleManager')
           // this.textStyle = this.$store.state.textStyle
         },
         gotoDevice() {

@@ -15,13 +15,13 @@ const routes = [{
     }
   ]
 },{
-  path: '/test',
+  path: '/peopleManager',
   component: Layout,
-  name: 'index',
+  name: 'People Manager',
   children: [
     {
-      path: '/test',
-      component: () => import('@/views/index'),
+      path: '/peopleManager',
+      component: () => import('@/views/peopleManager/index'),
     }
   ]
 },
