@@ -38,7 +38,7 @@ const routes = [{
   },{
     path: '/qualityControl',
     component: Layout,
-    name: 'index',
+    name: 'Quality Control',
     children: [
       {
         path: '/qualityControl',

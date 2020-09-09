@@ -9,14 +9,7 @@
               <span class="title1">今日出勤</span>
             </div>
             <div class="p_chart">
-              <div id="chart1" style="width:30vw;height:30vh;"></div>
-            </div>
-
-          </div>
-          <div class="left_middle">
-            <div class="border-top-left"></div>
-            <div class="p_title">
-              <span class="title1">人员统计</span>
+              <div id="chart1" style="width:30vw;height:17vh;"></div>
             </div>
             <div class="p_picture">
               <ul class="p_list">
@@ -28,7 +21,14 @@
                     <div class="p_temperature">{{item.temperature}}℃</div>
                   </div>
                 </li>
-
+                <li v-for="(item1,index) in items" :key="index + '-only'" class="p_item">
+                  <div >
+                    <img class="yicun" :src="item1.url" alt="">
+                    <div>{{item1.name}}</div>
+                    <div>{{item1.position}}</div>
+                    <div class="p_temperature">{{item1.temperature}}℃</div>
+                  </div>
+                </li>
               </ul>
               <div class="p_num">
                 <span class="p_attention">发烧人数：</span>
@@ -37,13 +37,14 @@
               </div>
             </div>
           </div>
+
           <div class="left_bottom">
             <div class="border-top-left"></div>
             <div class="p_title">
               <span class="title1">主要人员考勤</span>
             </div>
             <div class="p_chart">
-              <div id="chart2" style="width: 32vw;height:34vh;"></div>
+              <div id="chart2" style="width: 28vw;height:29vh;"></div>
             </div>
             <div>
 
@@ -76,7 +77,7 @@
                     <el-row>
                       <el-col :span="8">
                         <div class="headman">
-                          <el-image fit="fill" style="height: 75%; width: 100%; " />
+                          <el-image :src="require('../../assets/peopleManager/fuze3.jpg')" fit="fill" style="height: 75%; width: 100%; " />
                           <div style="height: 18%; width: 100%; ">
                             <el-row>
                               建设方负责人&nbsp;&nbsp;&nbsp;史扬
@@ -89,7 +90,7 @@
                       </el-col>
                       <el-col :span="8">
                         <div class="headman">
-                          <el-image fit="fill" style="height: 75%; width: 100%; " />
+                          <el-image :src="require('../../assets/peopleManager/fuze2.jpg')" fit="fill" style="height: 75%; width: 100%; " />
                           <div style="height: 18%; width: 100%; ">
                             <el-row>
                               监理方负责人&nbsp;&nbsp;&nbsp;王琦
@@ -102,7 +103,7 @@
                       </el-col>
                       <el-col :span="8">
                         <div class="headman">
-                          <el-image fit="fill" style="height: 75%; width: 100%; " />
+                          <el-image :src="require('../../assets/peopleManager/fuze1.jpg')" fit="fill" style="height: 75%; width: 100%; " />
                           <div style="height: 18%; width: 100%; ">
                             <el-row>
                               施工方负责人&nbsp;&nbsp;&nbsp;赵军何
@@ -144,19 +145,19 @@ export default {
       items:[
         {
           url:require('../../assets/peopleManager/yicun1.jpg'),
-          name:'蒋芳',
+          name:'李芳',
           position:'项目经理',
           temperature:'36.3',
         },
         {
           url:require('../../assets/peopleManager/yicun2.jpg'),
-          name:'蒋芳',
+          name:'蒋珊',
           position:'项目经理',
           temperature:'37.5',
         },
         {
           url:require('../../assets/peopleManager/yicun3.jpg'),
-          name:'蒋芳',
+          name:'商鹏',
           position:'项目经理',
           temperature:'36.3',
         },{
@@ -228,318 +229,203 @@ export default {
       var num3 = 116;
       myChart1.setOption({
 
-          title: [{
-            text: '',
-            x: '50%',
-            y: 10,
+        title: [{
+          text: '',
+          x: '50%',
+          y: 10,
+          textAlign: 'center',
+          textStyle: {
+            fontSize: '13',
+            fontWeight:'600',
+            color: '#fff',
             textAlign: 'center',
-            textStyle: {
-              fontSize: '18',
-              fontWeight:'600',
-              color: '#fff',
-              textAlign: 'center',
-            },
-          },{
-            text: '14',
-            left: '49%',
-            top: '30%',
+          },
+        },{
+          text: '14',
+          left: '49%',
+          top: '30%',
+          textAlign: 'center',
+          textStyle: {
+            fontSize: '13',
+            // fontWeight:'600',
+            color: 'rgba(251, 200, 79, 1)',
             textAlign: 'center',
-            textStyle: {
-              fontSize: '16',
-              // fontWeight:'600',
-              color: 'rgba(251, 200, 79, 1)',
-              textAlign: 'center',
-            },
-          }, {
-            text: '未签到',
-            left: '49%',
-            top: '40%',
+          },
+        }, {
+          text: '未签到',
+          left: '49%',
+          top: '45%',
+          textAlign: 'center',
+          textStyle: {
+            fontSize: '13',
+            // fontWeight:'600',
+            color: 'rgba(251, 200, 79, 1)',
             textAlign: 'center',
-            textStyle: {
-              fontSize: '16',
-              // fontWeight:'600',
-              color: 'rgba(251, 200, 79, 1)',
-              textAlign: 'center',
-            },
-          },{
-            text: '130',
-            left: '19.5%',
-            top: '30%',
+          },
+        },{
+          text: '130',
+          left: '19.5%',
+          top: '30%',
+          textAlign: 'center',
+          textStyle: {
+            fontSize: '13',
+            // fontWeight:'600',
+            color: 'rgba(232, 85, 63, 1)',
             textAlign: 'center',
-            textStyle: {
-              fontSize: '16',
-              // fontWeight:'600',
-              color: 'rgba(232, 85, 63, 1)',
-              textAlign: 'center',
-            },
-          },{
-            text: '登记人数',
-            left: '19.5%',
-            top: '40%',
+          },
+        },{
+          text: '登记人数',
+          left: '19.5%',
+          top: '45%',
+          textAlign: 'center',
+          textStyle: {
+            fontSize: '13',
+            // fontWeight:'600',
+            color: 'rgba(232, 85, 63, 1)',
             textAlign: 'center',
-            textStyle: {
-              fontSize: '16',
-              // fontWeight:'600',
-              color: 'rgba(232, 85, 63, 1)',
-              textAlign: 'center',
-            },
-          },{
-            text: '116',
-            left: '79%',
-            top: '30%',
+          },
+        },{
+          text: '116',
+          left: '79%',
+          top: '30%',
+          textAlign: 'center',
+          textStyle: {
+            fontSize: '13',
+            // fontWeight:'600',
+            color: 'rgb(106,192,240)',
             textAlign: 'center',
-            textStyle: {
-              fontSize: '16',
-              // fontWeight:'600',
-              color: 'rgb(106,192,240)',
-              textAlign: 'center',
-            },
-          }, {
-            text: '已签到',
-            left: '79%',
-            top: '40%',
+          },
+        }, {
+          text: '已签到',
+          left: '79%',
+          top: '45%',
+          textAlign: 'center',
+          textStyle: {
+            fontSize: '13',
+            // fontWeight:'600',
+            color: 'rgb(106,192,240)',
             textAlign: 'center',
-            textStyle: {
-              fontSize: '16',
-              // fontWeight:'600',
-              color: 'rgb(106,192,240)',
-              textAlign: 'center',
-            },
-          },],
-          series: [
+          },
+        },],
+        series: [
 
-              // 左边 num1
-            {
-              type: 'pie',
-              radius: ['50%', '53%'],
-              center: ['20%', '40%'],
-              data: [{
-                hoverOffset: 1,
-                value: num1,
-                name: '虚拟主机',
-                itemStyle: {
-                  color: 'rgba(232, 85, 63, 1)',
-                },
-                label: {
-                  show: false
-                },
-                labelLine: {
-                  normal: {
-                    smooth: true,
-                    lineStyle: {
-                      width: 0
-                    }
-                  }
-                },
-                hoverAnimation: false,
+          // 左边 num1
+          {
+            type: 'pie',
+            radius: ['65%', '70%'],
+            center: ['20%', '50%'],
+            data: [{
+              hoverOffset: 1,
+              value: num1,
+              name: '虚拟主机',
+              itemStyle: {
+                color: 'rgba(232, 85, 63, 1)',
               },
-                {
-                  label: {
-                    show: false
-                  },
-                  labelLine: {
-                    normal: {
-                      smooth: true,
-                      lineStyle: {
-                        width: 0
-                      }
-                    }
-                  },
-                  value: 130-num1,
-                  hoverAnimation: false,
-                  itemStyle: {
-                    color: 'rgba(232, 85, 63, .2)',
-                  },
-                }
-              ]
-            },
-            {
-              type: 'pie',
-              radius: ['55%', '58%'],
-              center: ['20%', '40%'],
-              data: [{
-                label: {
-                  show: false
-                },
-                labelLine: {
-                  normal: {
-                    smooth: true,
-                    lineStyle: {
-                      width: 0
-                    }
-                  }
-                },
-                value: 100 - num2,
-                hoverAnimation: false,
-                itemStyle: {
-                  color: 'rgba(63, 66, 73, .3)',
-                },
-              }]
-            },
-            {
-              type: 'pie',
-              radius: ['48%', '45%'],
-              center: ['20%', '40%'],
-              data: [{
-                label: {
-                  show: false
-                },
-                labelLine: {
-                  normal: {
-                    smooth: true,
-                    lineStyle: {
-                      width: 0
-                    }
-                  }
-                },
-                value: 100 - num3,
-                hoverAnimation: false,
-                itemStyle: {
-                  color: 'rgba(63, 66, 73, .3)',
-                },
-              }]
-            },
-            // 中间
-            {
-              type: 'pie',
-              radius: ['50%', '53%'],
-              center: ['50%', '40%'],
-              data: [{
-                hoverOffset: 1,
-                value: num2,
-                name: '虚拟主机',
-                itemStyle: {
-                  color: 'rgba(251, 200, 79, 1)',
-                },
-                label: {
-                  show: false
-                },
-                labelLine: {
-                  normal: {
-                    smooth: true,
-                    lineStyle: {
-                      width: 0
-                    }
-                  }
-                },
-                hoverAnimation: false,
+              label: {
+                show: false
               },
-                {
-                  label: {
-                    show: false
-                  },
-                  labelLine: {
-                    normal: {
-                      smooth: true,
-                      lineStyle: {
-                        width: 0
-                      }
-                    }
-                  },
-                  value: 130 - num2,
-                  hoverAnimation: false,
-                  itemStyle: {
-                    color: 'rgba(251, 200, 79, .2)',
-                  },
+              labelLine: {
+                normal: {
+                  smooth: true,
+                  lineStyle: {
+                    width: 0
+                  }
                 }
-              ]
-            },
-            {
-              type: 'pie',
-              radius: ['55%', '58%'],
-              center: ['50%', '40%'],
-              data: [{
-                label: {
-                  show: false
-                },
-                labelLine: {
-                  normal: {
-                    smooth: true,
-                    lineStyle: {
-                      width: 0
-                    }
-                  }
-                },
-                value: 100 - num1,
-                hoverAnimation: false,
-                itemStyle: {
-                  color: 'rgba(63, 66, 73, .3)',
-                },
-              }]
-            },
-            {
-              type: 'pie',
-              radius: ['48%', '45%'],
-              center: ['50%', '40%'],
-              data: [{
-                label: {
-                  show: false
-                },
-                labelLine: {
-                  normal: {
-                    smooth: true,
-                    lineStyle: {
-                      width: 0
-                    }
-                  }
-                },
-                value: 100 - num1,
-                hoverAnimation: false,
-                itemStyle: {
-                  color: 'rgba(63, 66, 73, .3)',
-                },
-              }]
-            },
-              //右边 num1
-            {
-              type: 'pie',
-              radius: ['50%', '53%'],
-              center: ['80%', '40%'],
-              data: [{
-                hoverOffset: 1,
-                value: num3,
-                name: '虚拟主机',
-                itemStyle: {
-                  color: 'rgb(106,192,240)',
-                },
-                label: {
-                  show: false
-                },
-                labelLine: {
-                  normal: {
-                    smooth: true,
-                    lineStyle: {
-                      width: 0
-                    }
-                  }
-                },
-                hoverAnimation: false,
               },
-                {
-                  label: {
-                    show: false
-                  },
-                  labelLine: {
-                    normal: {
-                      smooth: true,
-                      lineStyle: {
-                        width: 0
-                      }
+              hoverAnimation: false,
+            },
+              {
+                label: {
+                  show: false
+                },
+                labelLine: {
+                  normal: {
+                    smooth: true,
+                    lineStyle: {
+                      width: 0
                     }
-                  },
-                  value: 130 - num3,
-                  hoverAnimation: false,
-                  itemStyle: {
-                    color: 'rgba(251, 200, 79, .2)',
-                  },
+                  }
+                },
+                value: 130-num1,
+                hoverAnimation: false,
+                itemStyle: {
+                  color: 'rgba(232, 85, 63, .2)',
+                },
+              }
+            ]
+          },
+          {
+            type: 'pie',
+            radius: ['75%', '70%'],
+            center: ['20%', '50%'],
+            data: [{
+              label: {
+                show: false
+              },
+              labelLine: {
+                normal: {
+                  smooth: true,
+                  lineStyle: {
+                    width: 0
+                  }
                 }
-              ]
+              },
+              value: 100 - num2,
+              hoverAnimation: false,
+              itemStyle: {
+                color: 'rgba(63, 66, 73, .3)',
+              },
+            }]
+          },
+          {
+            type: 'pie',
+            radius: ['65%', '60%'],
+            center: ['20%', '50%'],
+            data: [{
+              label: {
+                show: false
+              },
+              labelLine: {
+                normal: {
+                  smooth: true,
+                  lineStyle: {
+                    width: 0
+                  }
+                }
+              },
+              value: 100 - num3,
+              hoverAnimation: false,
+              itemStyle: {
+                color: 'rgba(63, 66, 73, .3)',
+              },
+            }]
+          },
+          // 中间
+          {
+            type: 'pie',
+            radius: ['65%', '70%'],
+            center: ['50%', '50%'],
+            data: [{
+              hoverOffset: 1,
+              value: num2,
+              name: '虚拟主机',
+              itemStyle: {
+                color: 'rgba(251, 200, 79, 1)',
+              },
+              label: {
+                show: false
+              },
+              labelLine: {
+                normal: {
+                  smooth: true,
+                  lineStyle: {
+                    width: 0
+                  }
+                }
+              },
+              hoverAnimation: false,
             },
-            {
-              type: 'pie',
-              radius: ['55%', '58%'],
-              center: ['80%', '40%'],
-              data: [{
+              {
                 label: {
                   show: false
                 },
@@ -551,18 +437,86 @@ export default {
                     }
                   }
                 },
-                value: 100 - num1,
+                value: 130 - num2,
                 hoverAnimation: false,
                 itemStyle: {
-                  color: 'rgba(63, 66, 73, .3)',
+                  color: 'rgba(251, 200, 79, .2)',
                 },
-              }]
+              }
+            ]
+          },
+          {
+            type: 'pie',
+            radius: ['75%', '70%'],
+            center: ['50%', '50%'],
+            data: [{
+              label: {
+                show: false
+              },
+              labelLine: {
+                normal: {
+                  smooth: true,
+                  lineStyle: {
+                    width: 0
+                  }
+                }
+              },
+              value: 100 - num1,
+              hoverAnimation: false,
+              itemStyle: {
+                color: 'rgba(63, 66, 73, .3)',
+              },
+            }]
+          },
+          {
+            type: 'pie',
+            radius: ['65%', '60%'],
+            center: ['50%', '50%'],
+            data: [{
+              label: {
+                show: false
+              },
+              labelLine: {
+                normal: {
+                  smooth: true,
+                  lineStyle: {
+                    width: 0
+                  }
+                }
+              },
+              value: 100 - num1,
+              hoverAnimation: false,
+              itemStyle: {
+                color: 'rgba(63, 66, 73, .3)',
+              },
+            }]
+          },
+          //右边 num1
+          {
+            type: 'pie',
+            radius: ['65%', '70%'],
+            center: ['80%', '50%'],
+            data: [{
+              hoverOffset: 1,
+              value: num3,
+              name: '虚拟主机',
+              itemStyle: {
+                color: 'rgb(106,192,240)',
+              },
+              label: {
+                show: false
+              },
+              labelLine: {
+                normal: {
+                  smooth: true,
+                  lineStyle: {
+                    width: 0
+                  }
+                }
+              },
+              hoverAnimation: false,
             },
-            {
-              type: 'pie',
-              radius: ['48%', '45%'],
-              center: ['80%', '40%'],
-              data: [{
+              {
                 label: {
                   show: false
                 },
@@ -574,14 +528,61 @@ export default {
                     }
                   }
                 },
-                value: 100 - num1,
+                value: 130 - num3,
                 hoverAnimation: false,
                 itemStyle: {
-                  color: 'rgba(63, 66, 73, .3)',
+                  color: 'rgba(251, 200, 79, .2)',
                 },
-              }]
-            },
-          ]
+              }
+            ]
+          },
+          {
+            type: 'pie',
+            radius: ['75%', '70%'],
+            center: ['80%', '50%'],
+            data: [{
+              label: {
+                show: false
+              },
+              labelLine: {
+                normal: {
+                  smooth: true,
+                  lineStyle: {
+                    width: 0
+                  }
+                }
+              },
+              value: 100 - num1,
+              hoverAnimation: false,
+              itemStyle: {
+                color: 'rgba(63, 66, 73, .3)',
+              },
+            }]
+          },
+          {
+            type: 'pie',
+            radius: ['65%', '60%'],
+            center: ['80%', '50%'],
+            data: [{
+              label: {
+                show: false
+              },
+              labelLine: {
+                normal: {
+                  smooth: true,
+                  lineStyle: {
+                    width: 0
+                  }
+                }
+              },
+              value: 100 - num1,
+              hoverAnimation: false,
+              itemStyle: {
+                color: 'rgba(63, 66, 73, .3)',
+              },
+            }]
+          },
+        ]
 
       });
       myChart2.setOption({
@@ -615,61 +616,61 @@ export default {
           }
         },
         polar: { //极坐标位置
-          center:['50%','60%'],
+          center:['45%','50%'],
         },
         series: [{
-            type: 'bar',
-            data: [1, 2, 3, 4, 3, 5, 1],
-            coordinateSystem: 'polar',
-            name: '项目经理',
-            stack: 'a'
-          }, {
-            type: 'bar',
-            data: [2, 4, 9, 1, 0, 2, 1],
-            coordinateSystem: 'polar',
-            name: '施工员',
-            stack: 'a'
-          },{
-            type: 'bar',
-            data: [2, 3, 6, 6, 3, 2, 1],
-            coordinateSystem: 'polar',
-            name: '安全员',
-            stack: 'a'
-          },{
-            type: 'bar',
-            data: [2, 4, 6, 1, 1, 5, 1],
-            coordinateSystem: 'polar',
-            name: '质量员',
-            stack: 'a'
-          },{
-            type: 'bar',
-            data: [2, 8, 6, 8, 3, 2, 3],
-            coordinateSystem: 'polar',
-            name: '下属单位',
-            stack: 'a'
-          }, {
-            type: 'bar',
-            data: [1, 2, 7, 4, 4, 2, 8],
-            coordinateSystem: 'polar',
-            name: '特种操作工',
-            stack: 'a'
-          }],
+          type: 'bar',
+          data: [1, 2, 3, 4, 3, 5, 1],
+          coordinateSystem: 'polar',
+          name: '项目经理',
+          stack: 'a'
+        }, {
+          type: 'bar',
+          data: [2, 4, 9, 1, 0, 2, 1],
+          coordinateSystem: 'polar',
+          name: '施工员',
+          stack: 'a'
+        },{
+          type: 'bar',
+          data: [2, 3, 6, 6, 3, 2, 1],
+          coordinateSystem: 'polar',
+          name: '安全员',
+          stack: 'a'
+        },{
+          type: 'bar',
+          data: [2, 4, 6, 1, 1, 5, 1],
+          coordinateSystem: 'polar',
+          name: '质量员',
+          stack: 'a'
+        },{
+          type: 'bar',
+          data: [2, 8, 6, 8, 3, 2, 3],
+          coordinateSystem: 'polar',
+          name: '下属单位',
+          stack: 'a'
+        }, {
+          type: 'bar',
+          data: [1, 2, 7, 4, 4, 2, 8],
+          coordinateSystem: 'polar',
+          name: '特种操作工',
+          stack: 'a'
+        }],
         // radar: {
         //   center: ['0', '40%'],
         //   textStyle: {
         //     color: '#6ac0f0' ,
         //   },
         // },
-          legend: {
-            itemWidth: 15 ,
-            show: true,
-            right:'right',
-            data: ['项目经理', '施工员', '安全员','质量员','下属单位','特种操作工'],
-            textStyle: {
-              fontSize:10,
-              color: '#6ac0f0' ,
-            },
+        legend: {
+          itemWidth: 13 ,
+          show: true,
+          right:'right',
+          data: ['项目经理', '施工员', '安全员','质量员','下属单位','特种操作工'],
+          textStyle: {
+            fontSize:10,
+            color: '#6ac0f0' ,
           },
+        },
 
       });
       myChart3.setOption({
@@ -698,10 +699,6 @@ export default {
             type: 'pie',
             radius: ['60%', '80%'],
             avoidLabelOverlap: false,
-            label: {
-              show: false,
-              position: 'center'
-            },
             emphasis: {
               label: {
                 show: true,
@@ -827,8 +824,8 @@ export default {
             data: [0.8,0.7,0.9,0.6,0.9,0.5,0.9,0.6,0.7,0.8,0.9]
           }
         ]
-        });
-      },
+      });
+    },
   }
 }
 </script>
@@ -849,9 +846,10 @@ export default {
 .left_top{
   margin-bottom: 1vh;
   width: 100%;
-  height: 35vh;
+  height: 47vh;
   background-color: rgba(0, 36, 78, 0.5);
 }
+
 .p_icon{
 
   color: white;
@@ -860,7 +858,7 @@ export default {
   margin: 0 4vw 0 4vw;
 }
 .left_bottom{
-  height: 47vh;
+  height: 35vh;
   background-color: rgba(0, 36, 78, 0.5);
 }
 .p_right{
@@ -903,11 +901,11 @@ export default {
   overflow: hidden;
 }
 .p_list{
-  font-size: 0.18rem;
+  font-size: 0.13rem;
   list-style: none;
   padding: 0;
   margin: 0;
-  animation: moving 7s linear infinite;
+  animation: moving 12s linear infinite;
   width: 35rem;
 }
 @keyframes moving {
@@ -915,7 +913,7 @@ export default {
     transform: translateX(0);
   }
   to {
-    transform: translateX(-30vw);
+    transform: translateX(-11rem);
   }
 }
 .p_list:hover {
@@ -926,24 +924,23 @@ export default {
   text-align: center;
   color:white;
   float:left;
-  margin: 0 1vw 3vh 1vw;
+  margin: 0 0.2rem 3vh 0.2rem;
 }
 .yicun{
-  margin-top: 2vw;
-  width: 1.3rem;
-  height: 1.6rem;
+  margin-top: 0.5vw;
+  width: 0.7rem;
+  height: 1rem;
 }
 .p_num{
-  font-size: 0.2rem;
-  position: relative;
-  bottom: 3%;
+  font-size: 0.1rem;
+  /*position: relative;*/
+  /*bottom: 3%;*/
   text-align: center;
 }
 
 .p_attention{
-  padding-top: 3vh;
   color: #FFD66A;
-  font-size: 15px;
+  font-size: 13px;
 }
 .p_temperature{
   color: #3DE7C9;
@@ -955,7 +952,7 @@ export default {
 
 .headman {
   height: 30vh;
-  width: 95%;
+  width: 94%;
   margin: 0.3rem auto 0 auto;
   border: 1px solid #3FA0C3;;
   border-radius: 4px;
