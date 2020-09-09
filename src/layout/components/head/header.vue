@@ -107,7 +107,7 @@
             </div>
           </li>
           <li>
-            <div class="li-text2 pos-style-right4" :class="{'bg-img23': textStyle=== '绿色施工', 'bg-img22': textStyle!== '绿色施工'}">
+            <div class="li-text2 pos-style-right4" :class="{'bg-img23': textStyle=== '绿色施工', 'bg-img22': textStyle!== '绿色施工'}" @click="gotoGreen">
                   <span>
                    绿色施工
                 </span>
@@ -155,6 +155,9 @@
         },
         qualityControl() {
           this.$router.push('/qualityControl')
+        },
+        gotoGreen () {
+          this.$router.push('/greenConstruction')
         }
       }
     }

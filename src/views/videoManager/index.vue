@@ -5,13 +5,15 @@
 
                 <!-- 只有一个视频 -->
                 <div class="videoArea" v-if="videoOne">
-                    <dv-border-box-8>
+                    
                     
                     
                         <div class="oneArea" id="one" >
+                            <dv-border-box-8>
                             <img src="../../assets/videoManager/1.png" />
+                            </dv-border-box-8> 
                         </div>
-                    </dv-border-box-8> 
+                    
                 </div>
 
                 <!-- 两个视频 -->
@@ -105,24 +107,14 @@ export default {
             videoTwo: false,
             videoFour: true,
             treeData: [{
-                label: '生活区',
+                label: '石家庄智慧工地项目一期',
                 children: [
-                    {label: '广场'},
+                    {label: '大门'},
                     
                     {label: '门口'},
                     {label: '东南角'},
                     {label: '西南角'}
                     ]
-                }, {
-                label: '建筑区',
-                children: [
-                    {label: '一栋'},
-                    {label: '二栋'},
-                    {label: '三栋'},
-                    {label: '四栋'},
-                    {label: '五栋'},
-                    
-                ]
                 }],
 
             
@@ -211,12 +203,14 @@ export default {
     height: 100%;
     width: 100%;
     margin: 0 auto;
+    margin-right: 1rem;
+
 }
 .fourVideoArea {
     display: flex;
     flex-wrap: wrap;
     align-content: space-between;
-    
+   
     height: 10rem;
     animation: daxiao_1 1s linear;
 }
@@ -230,19 +224,20 @@ export default {
     justify-content: center;
     align-items: center;
     height: 100%;
-    width: 100%;
+    width: 80%;
     margin: 0 auto;
+    border:1px solid red;
 }
 .fenge {
     background: transparent;
-    height: 500px;
+    height: 10rem;
 }
 .controllerArea {
     
     background-image: url("../../assets/videoManager/bg_chang.png"); 
-    /* background-size:  100% 100%;  */
+    background-size:  100% 70%; 
     background-repeat: no-repeat;
-    height: 5rem;
+    height: 3rem;
 }
 .box-txt {
     color: #ffa454;
@@ -254,7 +249,7 @@ export default {
 .controllerIcon {
     display: flex;
     /* flex: 1; */
-    padding-top:1.5rem;
+    padding-top:1rem;
     padding-left:0.5rem;
     color: white;
     text-align: center;
@@ -300,6 +295,7 @@ export default {
     /* background-size:  50% 100%;  */
     /* background-repeat: no-repeat; */
     height: 5rem;
+    
 }
  .el-tree {
     position: relative;

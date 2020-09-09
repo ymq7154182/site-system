@@ -57,6 +57,17 @@ const routes = [{
       }
     ]
   },
+  {
+    path: '/greenConstruction',
+    component: Layout,
+    name: 'greenConstruction',
+    children: [
+      {
+        path: '/greenConstruction',
+        component: () => import('@/views/greenConstruction/index'),
+      }
+    ]
+  }
 ]
 const router = new VueRouter({
   mode: "history",
