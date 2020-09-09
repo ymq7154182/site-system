@@ -13,6 +13,30 @@
             </div>
 
           </div>
+          <div class="left_middle">
+            <div class="border-top-left"></div>
+            <div class="p_title">
+              <span class="title1">人员统计</span>
+            </div>
+            <div class="p_picture">
+              <ul class="p_list">
+                <li v-for="(item,index) in items" :key="index" class="p_item">
+                  <div >
+                    <img class="yicun" :src="item.url" alt="">
+                    <div>{{item.name}}</div>
+                    <div>{{item.position}}</div>
+                    <div class="p_temperature">{{item.temperature}}℃</div>
+                  </div>
+                </li>
+
+              </ul>
+              <div class="p_num">
+                <span class="p_attention">发烧人数：</span>
+                <span class="p_attention">{{attentionNum}}</span>
+                <span class="p_attention">人，已进行追踪处理</span>
+              </div>
+            </div>
+          </div>
           <div class="left_bottom">
             <div class="border-top-left"></div>
             <div class="p_title">
