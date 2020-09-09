@@ -506,7 +506,8 @@ export default {
         rowNum: 7,
         align: ['center', 'center', 'center', 'center', 'center'],
         headerBGC: '#3FA0C3',
-        evenRowBGC: ''
+        evenRowBGC: '',
+        columnWidth: [ ,200]
       },
       chosen: '所有设备',
       infohover1: true,

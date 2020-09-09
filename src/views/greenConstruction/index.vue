@@ -1,70 +1,66 @@
 <template>
   <div>
-    <el-row :gutter="10" style="margin-bottom: 1.4vh; ">
-      <el-col :span="6" style="padding-left: 1vw; position: relative">
+    <el-row style="margin-bottom: 1.4vh; ">
+      <el-col :span="6" style="padding: 0 0.5vw; ">
         <div style="background-color: rgba(0, 36, 78, 0.5); height: 40vh; width: 100%; ">
           <div class="border-top-left"></div>
           <div class="box-title">实时监控</div>
-<!--          <el-row class="first_row">-->
-            <div class="item">
-              <div class="jian_item one">
-                <i class="iconfont iconfengsu"></i>
-                <div class="item_content">
-                  <span>风速</span>
-                  <span style="font-weight: bold">0m/s</span>
-                </div>
-                <div class="item_final">
-                  阈值<span style="font-weight: bold">6</span>
-                </div>
-              </div>
-              <div class="jian_item two">
-                <i class="iconfont iconwumai"></i>
-                <div class="item_content">
-                  <span>PM2.5</span>
-                  <span style="font-weight: bold">39ug/m^3</span>
-                </div>
-                <div class="item_final">
-                  阈值<span style="font-weight: bold">100</span>
-                </div>
-              </div>
-              <div class="jian_item three"><i class="iconfont iconzaoyin1"></i>
-                <div class="item_content">
-                  <span>PM10</span>
-                  <span style="font-weight: bold">101ug/m^3</span>
-                </div>
-                <div class="item_final">
-                  阈值 <span style="font-weight: bold">200</span>
-                </div></div>
-              <div class="jian_item four"><i class="iconfont iconPM"></i>
-                <div class="item_content">
-                  <span>噪音</span>
-                  <span style="font-weight: bold">47.5dB</span>
-                </div>
-                <div class="item_final">
-                  阈值<span style="font-weight: bold">85</span>
-                </div></div>
-              <div class="jian_item five"><i class="iconfont iconwendu"></i>
-                <div class="item_content">
-                  <span>温度</span>
-                  <span style="font-weight: bold">6.6℃</span>
-                </div>
-                <div class="item_final">
-                  阈值<span style="font-weight: bold">40</span>
-                </div></div>
-              <div class="jian_item six"><i class="iconfont iconshidu"></i>
-                <div class="item_content">
-                  <span>湿度</span>
-                  <span style="font-weight: bold">99.9%</span>
-                </div>
-                <div class="item_final">
-                  阈值<span style="font-weight: bold">25</span>
-                </div></div>
-            </div>
-<!---->
-<!--          </el-row>-->
+          <div class="item">
+            <table>
+              <tr>
+                <td></td>
+                <td>名称</td>
+                <td>单位</td>
+                <td>阈值</td>
+                <td>实际值</td>
+              </tr>
+              <tr>
+                <td><i class="iconfont iconfengsu" style="color: rgb(110, 203, 253); "></i></td>
+                <td><span>风速</span></td>
+                <td>m/s</td>
+                <td><span style="font-weight: bold">6</span></td>
+                <td><span style="font-weight: bold; color: #67C23A; ">0</span></td>
+              </tr>
+              <tr>
+                <td><i class="iconfont iconwumai" style="color: rgb(106, 193, 241); "></i></td>
+                <td><span>PM2.5</span></td>
+                <td>ug/m<sup>3</sup></td>
+                <td><span style="font-weight: bold">100</span></td>
+                <td><span style="font-weight: bold; color: #67C23A; ">39</span></td>
+              </tr>
+              <tr>
+                <td><i class="iconfont iconzaoyin1" style="color: rgb(238, 216, 152); "></i></td>
+                <td><span>PM10</span></td>
+                <td>ug/m<sup>3</sup></td>
+                <td><span style="font-weight: bold">200</span></td>
+                <td><span style="font-weight: bold; color: #F56C6C; ">201</span></td>
+              </tr>
+              <tr>
+                <td><i class="iconfont iconPM" style="color: rgb(255, 179, 88); "></i></td>
+                <td><span>噪音</span></td>
+                <td>dB</td>
+                <td><span style="font-weight: bold">85</span></td>
+                <td><span style="font-weight: bold; color: #67C23A; ">47.5</span></td>
+              </tr>
+              <tr>
+                <td><i class="iconfont iconwendu" style="color: rgb(255, 143, 161); "></i></td>
+                <td><span>温度</span></td>
+                <td>℃</td>
+                <td><span style="font-weight: bold">40</span></td>
+                <td><span style="font-weight: bold; color: #67C23A; ">6.6</span></td>
+              </tr>
+              <tr>
+                <td><i class="iconfont iconshidu" style="color: rgb(235, 108, 177); "></i></td>
+                <td><span>湿度</span></td>
+                <td>%</td>
+                <td><span style="font-weight: bold">25</span></td>
+                <td><span style="font-weight: bold; color: #F56C6C; ">99.9%</span></td>
+              </tr>
+            </table>
+          </div>
         </div>
       </el-col>
-      <el-col :span="13">
+      <el-col :span="12">
         <div style="background-color: rgba(0, 36, 78, 0.5); height: 40vh; width: 100%;">
           <div class="border-top-center"></div>
           <div class="box-title">环境数据趋势图</div>
@@ -73,19 +69,19 @@
 <!--          </div>-->
         </div>
       </el-col>
-      <el-col :span="5" style="padding-right: 1vw; ">
+      <el-col :span="6" style="padding: 0 0.5vw; ">
         <div style="background-color: rgba(0, 36, 78, 0.5); height: 40vh; width: 100%;">
           <div class="border-top-left"></div>
           <div class="box-title">用电用水统计</div>
-          <div id="alarmTrend" style="height: 37vh"></div>
+          <div id="alarmTrend"></div>
 <!--          <div class="solve-view">-->
 <!--            <dv-active-ring-chart :config="configPie" style="width: 3rem; height: 3rem; margin: auto; " />-->
 <!--          </div>-->
         </div>
       </el-col>
     </el-row>
-    <el-row :gutter="10">
-      <el-col :span="8" style="padding-left: 1vw; ">
+    <el-row>
+      <el-col :span="8" style="padding: 0 0.5vw; ">
         <div style="background-color: rgba(0, 36, 78, 0.5); height: 42vh; width: 100%; ">
           <div class="border-top-left"></div>
           <div class="box-title" @click="refresh">空气质量统计</div>
@@ -96,20 +92,14 @@
         <div style="background-color: rgba(0, 36, 78, 0.5); height: 42vh; width: 100%; ">
           <div class="border-top-left"></div>
           <div class="box-title">报警类型统计</div>
-<!--          <div id="alarmTrend" class="alarm-trend"></div>-->
-          <el-col :span="8">
-            <dv-active-ring-chart :config="config" style="width:98%;height:37vh" />
-          </el-col>
-          <el-col :span="16">
-            <dv-conical-column-chart :config="configType" style="width:98%;height: 3rem;padding-top: 0.2rem;" />
-          </el-col>
+          <dv-active-ring-chart :config="config" style="width:98%;height:37vh" />
         </div>
       </el-col>
-      <el-col :span="8" style="padding-right: 1vw; ">
+      <el-col :span="8" style="padding: 0 0.5vw; ">
         <div style="background-color: rgba(0, 36, 78, 0.5); height: 42vh; width: 100%; ">
-<!--          <div class="border-top-left"></div>-->
-<!--          <div class="box-title">报警记录</div>-->
-          <dv-scroll-board :config="configTable" style="width: 98%; height: calc(42vh - 10px - 0.1rem);margin-left: 50%;transform: translateX(-50%);padding-top: 0.1rem" />
+          <div class="border-top-left"></div>
+          <div class="box-title">报警记录</div>
+          <dv-scroll-board :config="configTable" style="width: 98%; height: calc(42vh - 10px - 0.7rem);margin-left: 50%;transform: translateX(-50%);padding-top: 0.1rem" />
         </div>
       </el-col>
     </el-row>
@@ -118,6 +108,7 @@
 
 <script>
   import echarts from 'echarts';
+  require('echarts/theme/macarons') // echarts theme
 
   export default {
     name: 'greenConstruction',
@@ -136,21 +127,22 @@
         qualityChart: null,
         configTable: {
           header: ['报警时间', '报警类型', '处理情况', '报警数值'],
-          headerHeight: 45,
+          headerHeight: 44,
           data: [
-            ['2019-10-13 13:14:01', '噪音', '<span style="color: #67c23a; ">已处理</span>', 86.5],
-            ['2019-10-13 14:14:01', '风速', '<span style="color: red; ">未处理</span>', 5],
-            ['2020-10-13 15:14:01', '风速', '<span style="color: #67c23a; ">已处理</span>', 7],
-            ['2020-1-13 3:14:01', '温度', '<span style="color: red; ">未处理</span>', 35],
+            ['2019-7-13 13:14:01', '噪音', '<span style="color: #67c23a; ">已处理</span>', 86.5],
+            ['2019-8-13 14:14:01', '风速', '<span style="color: #F56C6C; ">未处理</span>', 5],
+            ['2020-5-30 15:14:01', '风速', '<span style="color: #67c23a; ">已处理</span>', 7],
+            ['2020-1-13 3:14:01', '温度', '<span style="color: #F56C6C; ">未处理</span>', 35],
             ['2019-1-1 8:14:01', '湿度', '<span style="color: #67c23a; ">已处理</span>', 23.5],
-            ['2019-12-30 10:14:01', 'PM2.5', '<span style="color: red; ">未处理</span>', 87.5],
+            ['2019-12-30 10:14:01', 'PM2.5', '<span style="color: #F56C6C; ">未处理</span>', 87.5],
             ['2020-1-15 12:14:01', 'PM10', '<span style="color: #67c23a; ">已处理</span>', 297],
-            ['2020-9-7 3:14:01', '湿度', '<span style="color: red; ">未处理</span>', 27.5],
+            ['2020-9-7 3:14:01', '湿度', '<span style="color: #F56C6C; ">未处理</span>', 27.5],
           ],
-          rowNum: 7,
+          rowNum: 6,
           align: ['center', 'center', 'center', 'center', 'center'],
           headerBGC: '#3FA0C3',
-          evenRowBGC: ''
+          evenRowBGC: '',
+          columnWidth: [200]
         },
         config: {radius: '65%',
           activeRadius: '70%',
@@ -425,7 +417,7 @@
       //     })
       // },
       initEnvironment() {
-        this.environChart = echarts.init(document.getElementById('environmentChart'))
+        this.environChart = echarts.init(document.getElementById('environmentChart'), 'macarons')
         this.environChart.setOption({
           tooltip: {
             trigger: 'axis',
@@ -433,13 +425,12 @@
               type: 'shadow'
             }
           },
-          color: ['rgb(85, 159, 135)'],
-          // legend: {
-          //   data: ['最近七天', '今天'],
-          //   textStyle: {
-          //     color: 'white'
-          //   }
-          // },
+          legend: {
+            data: ['风速', 'PM2.5', 'PM10', '噪音', '温度', '湿度'],
+            textStyle: {
+              color: 'white'
+            }
+          },
           xAxis: {
             type: 'category',
             boundaryGap: false,
@@ -448,8 +439,9 @@
             /*改变x轴颜色*/
             axisLine: {
               lineStyle: {
-                type: 'dashed',
-                color: 'red',
+                // type: 'dashed',
+                // color: 'red',
+                color: '#3FA0C3'
                 // width: 1, //这里是为了突出显示加上的
               }
             },
@@ -461,7 +453,6 @@
           },
           yAxis: {
             type: 'value',
-            name : '风速(m/s)',
             axisLine: {
               lineStyle: {
                 color: 'rgb(58, 136, 242)',
@@ -472,11 +463,44 @@
               show: false
             }
           },
-          series: [{
-            data: [1.6, 0.7, 0.7, 0.3, 1.1, 1, 1.2, 1.4, 0.5, 1.2, 1, 1.5, 1.3, 0.8, 0.6, 1, 0.4, 0.5, 0.7, 0.6, 0.7, 0.9,1],
-            type: 'line',
-            areaStyle: {}
-          }]
+          series: [
+            {
+              name: '风速',
+              data: [1.6, 0.7, 0.7, 0.3, 1.1, 1, 1.2, 1.4, 0.5, 1.2, 1, 1.5, 1.3, 0.8, 0.6, 1, 0.4, 0.5, 0.7, 0.6, 0.7, 0.9,1],
+              type: 'line',
+              smooth: true
+            },
+            {
+              name: 'PM2.5',
+              data: [1.4, 0.8, 1.7, 2.3, 1.0, 0.8, 1.0, 1.1, 0.7, 1.5, 1.1, 1.6, 1.7, 0.9, 0.7, 0.5, 0.3, 0.7, 0.5, 1.6, 0.5, 1,0.8],
+              type: 'line',
+              smooth: true
+            },
+            {
+              name: 'PM10',
+              data: [2, 1.8, 2.7, 1.3, 1.0, 0.8, 1.0, 1.1, 0.7, 1.5, 1.1, 1.6, 1.7, 0.9, 0.7, 0.5, 0.3, 0.7, 0.5, 1.6, 0.5, 1,0.8],
+              type: 'line',
+              smooth: true
+            },
+            {
+              name: '噪音',
+              data: [1.2, 2.8, 1.5, 1.5, 1.0, 1.1, 0.7, 1.5, 1.1, 1.6, 1.1, 1.6, 1.7, 0.9, 0.7, 0.5, 0.3, 0.7, 0.5, 1.6, 0.5, 1,0.8],
+              type: 'line',
+              smooth: true
+            },
+            {
+              name: '温度',
+              data: [0.7, 0.5, 1.8, 2.3, 1.0, 0.8, 1.0, 1.1, 0.7, 1.5, 1.1, 1.6, 2.7, 1.3, 1.0, 0.8, 1.0, 1.1, 0.7, 1.6, 0.5, 1,0.8],
+              type: 'line',
+              smooth: true
+            },
+            {
+              name: '湿度',
+              data: [0.6, 0.7, 0.9, 2.3, 1.0, 0.8, 1.0, 1.1, 0.7, 1.5, 1.1, 1.6, 1.7, 0.9, 0.7, 0.5, 0.3, 0.7, 0.5, 1.6, 0.5, 1,0.8],
+              type: 'line',
+              smooth: true
+            },
+          ]
         });
       },
       initAlarmType() {
@@ -685,7 +709,7 @@
             trigger: 'axis',
           },
           legend: {
-            data: ['最近7天', '最近14天'],
+            data: ['用水情况', '用电情况'],
             textStyle: {
               color: 'white'
             }
@@ -715,14 +739,14 @@
           },
           series: [
             {
-              name: '最近7天',
+              name: '用水情况',
               data: [300, 450, 901, 700, 1290, 760, 1350],
-              type: 'line'
+              type: 'line',
             },
             {
-              name: '最近14天',
+              name: '用电情况',
               data: [800, 600, 910, 1000, 450, 1310, 1310],
-              type: 'line'
+              type: 'line',
             }
           ]
         });
@@ -760,88 +784,6 @@
     padding-left: 0.25rem;
   }
 
-  .alarm-type {
-    height: calc(53vh - 10px - 1.1rem);
-    width: calc(100% - 0.34rem);
-    margin: 0 0.17rem;
-  }
-
-  .alarm-select {
-    width: 100%;
-    height: 0.6rem;
-    text-align: center;
-  }
-
-  .el-button--text {
-    color: #3FA0C3;
-  }
-
-  .el-button--small {
-    font-size: 0.2rem;
-  }
-
-  .alarm-trend {
-    height: calc(53vh - 10px - 0.5rem);
-    width: calc(100% - 0.34rem);
-    margin: 0 0.17rem;
-  }
-
-  .solve-view {
-    height: calc(28vh - 10px - 0.5rem);
-    width: 100%;
-  }
-
-  .device-data {
-    height: calc(28vh - 10px - 0.5rem - 0.34rem);
-    margin: 0.17rem;
-    width: calc(100% - 0.34rem);
-    overflow: hidden;
-  }
-
-  .device-detail {
-    height: calc(100% - 0.34rem);
-    width: calc(3.5rem - 0.34rem);
-    padding: 0.17rem;
-  }
-
-  .device-detail-title {
-    font-size: 0.23rem;
-    height: 0.7rem;
-    line-height: 0.7rem;
-    color: #E8FEFF;
-  }
-
-  .device-detail-tag {
-    width: 100%;
-    background-color: #3FA0C3;
-    height: 0.43rem;
-    line-height: 0.43rem;
-    font-size: 0.2rem;
-  }
-
-  .device-detail-span {
-    padding-left: 0.17rem;
-    font-size: 0.2rem;
-    color: #E8FEFF;
-    line-height: 0.37rem;
-  }
-
-  .tower-data {
-    width: 2.3rem;
-    height: 2.3rem;
-    margin: 0.15rem auto 0 auto;
-    font-size: 0.39rem;
-    color: #FFA454;
-  }
-
-  .device-list {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    animation: moving 12s linear infinite;
-    width: 35rem;
-  }
-
   .device-list li {
     float: left;
   }
@@ -855,47 +797,20 @@
     }
   }
 
-  .device-list:hover {
-    animation-play-state: paused;
-  }
   .item{
-    /*display: flex;*/
-    /*justify-content: center;*/
-    /*align-content: center;*/
-    position: absolute;
-    top: 53%;
-    left: 50%;
-    transform: translateX(-50%) translateY(-47%);
+    height: calc(100% - 10px - 0.5rem);
+    width: 100%;
   }
-  .jian_item {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 4rem;
-    background-color: #fff;
-    margin: 0.08rem 0 0.08rem 50%;
-    height: 0.5rem;
-    /*margin-left: 50%;*/
-    transform: translateX(-50%);
+
+  .item table {
+    width: 80%;
+    height: 80%;
+    margin: 0.3rem auto;
+    font-size: 0.25rem;
+    text-align: center;
+    color: #E8FEFF;
   }
-  .item .one {
-    background-color: rgb(110, 203, 153);
-  }
-  .item .two {
-    background-color: rgb(106, 193, 241);
-  }
-  .item .three {
-    background-color: rgb(238, 216, 152);
-  }
-  .item .four {
-    background-color: rgb(255, 179, 88);
-  }
-  .item .five {
-    background-color: rgb(255, 143, 161);
-  }
-  .item .six {
-    background-color: rgb(235, 108, 177);
-  }
+
   .jian_item .iconfont {
     flex: 1;
     /*margin-left: 0.6rem;*/
@@ -919,5 +834,10 @@
   }
   .item_content span {
     display: block;
+  }
+
+  #alarmTrend {
+    width: 100%;
+    height: calc(40vh - 10px - 0.5rem);
   }
 </style>
