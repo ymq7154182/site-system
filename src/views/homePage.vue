@@ -88,7 +88,7 @@
                 <span style="font-size: 0.2rem;color: #ffa454;">绿色施工</span>
               </div>
               <div class="green_container">
-                <img src="../assets/homepage/shigong.png" style="margin-left: 1.2rem;height: 3rem">
+                <img src="../assets/homepage/shigong.png" style="margin-left: 1.6rem;width:6rem;height: 3rem">
               </div>
             </div>
           </el-row>
@@ -639,7 +639,7 @@
               },
               data: [{
                 value: 1,
-                name: '安全管理',
+                name: '监督员',
                 itemStyle: {
                   color: "#FEDF00",
                   borderColor: "#FEDF00",
