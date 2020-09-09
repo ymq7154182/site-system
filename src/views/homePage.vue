@@ -184,19 +184,18 @@
               trigger: 'item',
               formatter: "{a} <br/>{b}: {c} ({d}%)"
             },
-            legend: {
-              orient: 'vertical',
-              right: 30,
-              top: 'center',
-              itemWidth: 14 * scale,
-              itemHeight: 14 * scale,
-              data:legendData,
-              textStyle: {
-                color: '#2CABE3',
-                fontSize: 12,
-              },
-
-            },
+            // legend: {
+            //   // orient: 'vertical',
+            //   // right: 30,
+            //   // top: 'center',
+            //   // itemWidth: 14 * scale,
+            //   // itemHeight: 14 * scale,
+            //   // data:legendData,
+            //   // textStyle: {
+            //   //   color: '#2CABE3',
+            //   //   fontSize: 12,
+            //   // },
+            // },
             series: [
               {
                 name:'人员统计',
@@ -259,7 +258,7 @@
             radiusAxis: {
             },
             polar: {
-              radius: ['20%', '50%'],
+              radius: ['10%', '50%'],
               center: ["50%", "50%"],
             },
             label:{
@@ -773,6 +772,7 @@
     height: 25vh;
   }
   #mychart13 {
+    padding-top: 0.2rem;
     width: 100%;
     height: 25vh;
   }
