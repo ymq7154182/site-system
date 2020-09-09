@@ -52,7 +52,7 @@
               </div>
             </li>
             <li>
-              <div class="li-text2 pos-style2 " :class="{'bg-img1': textStyle=== '安全管理', 'bg-img2': textStyle!== '安全管理'}">
+              <div class="li-text2 pos-style2 " :class="{'bg-img1': textStyle=== '安全管理', 'bg-img2': textStyle!== '安全管理'}" @click="securityControl">
                   <span>
                    安全管理
                 </span>
@@ -93,7 +93,7 @@
             </div>
           </li>
           <li>
-            <div class="li-text2 pos-style-right2" :class="{'bg-img23': textStyle=== '质量管理', 'bg-img22': textStyle!== '质量管理'}" @click="qualityControl">
+            <div class="li-text2 pos-style-right2" :class="{'bg-img23': textStyle=== '质量管理', 'bg-img22': textStyle!== '质量管理'}" >
                   <span>
                    质量管理
                 </span>
@@ -153,7 +153,7 @@
         gotoVideo() {
           this.$router.push('/videoManager')
         },
-        qualityControl() {
+        securityControl() {
           this.$router.push('/qualityControl')
         },
         gotoGreen () {
