@@ -58,7 +58,7 @@
                     <el-row>
                       <el-col :span="15">
                         <div class="device-detail-span">
-                          {{ '1号塔机' }}&nbsp;
+                          {{ '1号塔吊' }}&nbsp;
                         </div>
                       </el-col>
                       <el-col :span="9">
@@ -95,7 +95,7 @@
                     <el-row>
                       <el-col :span="15">
                         <div class="device-detail-span">
-                          {{ '2号塔机' }}&nbsp;
+                          {{ '2号塔吊' }}&nbsp;
                         </div>
                       </el-col>
                       <el-col :span="9">
@@ -132,7 +132,7 @@
                     <el-row>
                       <el-col :span="15">
                         <div class="device-detail-span">
-                          {{ '3号塔机' }}&nbsp;
+                          {{ '3号塔吊' }}&nbsp;
                         </div>
                       </el-col>
                       <el-col :span="9">
@@ -169,7 +169,7 @@
                     <el-row>
                       <el-col :span="15">
                         <div class="device-detail-span">
-                          {{ '一号吊机' }}&nbsp;
+                          {{ '4号塔吊' }}&nbsp;
                         </div>
                       </el-col>
                       <el-col :span="9">
@@ -206,7 +206,7 @@
                     <el-row>
                       <el-col :span="15">
                         <div class="device-detail-span">
-                          {{ '二号吊机' }}&nbsp;
+                          {{ '5号塔吊' }}&nbsp;
                         </div>
                       </el-col>
                       <el-col :span="9">
@@ -243,7 +243,7 @@
                     <el-row>
                       <el-col :span="15">
                         <div class="device-detail-span">
-                          {{ '1号塔机' }}&nbsp;
+                          {{ '1号塔吊' }}&nbsp;
                         </div>
                       </el-col>
                       <el-col :span="9">
@@ -280,7 +280,7 @@
                     <el-row>
                       <el-col :span="15">
                         <div class="device-detail-span">
-                          {{ '2号塔机' }}&nbsp;
+                          {{ '2号塔吊' }}&nbsp;
                         </div>
                       </el-col>
                       <el-col :span="9">
@@ -317,7 +317,7 @@
                     <el-row>
                       <el-col :span="15">
                         <div class="device-detail-span">
-                          {{ '3号塔机' }}&nbsp;
+                          {{ '3号塔吊' }}&nbsp;
                         </div>
                       </el-col>
                       <el-col :span="9">
@@ -354,7 +354,7 @@
                     <el-row>
                       <el-col :span="15">
                         <div class="device-detail-span">
-                          {{ '一号吊机' }}&nbsp;
+                          {{ '4号塔吊' }}&nbsp;
                         </div>
                       </el-col>
                       <el-col :span="9">
@@ -391,7 +391,7 @@
                     <el-row>
                       <el-col :span="15">
                         <div class="device-detail-span">
-                          {{ '二号吊机' }}&nbsp;
+                          {{ '5号塔吊' }}&nbsp;
                         </div>
                       </el-col>
                       <el-col :span="9">
@@ -427,10 +427,11 @@
               </span>
               <el-dropdown-menu  style="background-color: rgba(255,255,255,0.5)" slot="dropdown">
                 <el-dropdown-item command="所有设备">所有设备</el-dropdown-item>
-                <el-dropdown-item command="一号吊机">一号吊机</el-dropdown-item>
-                <el-dropdown-item command="二号吊机">二号吊机</el-dropdown-item>
-                <el-dropdown-item command="1号塔机">1号塔机</el-dropdown-item>
-                <el-dropdown-item command="2号塔机">2号塔机</el-dropdown-item>
+                <el-dropdown-item command="1号塔吊">1号塔吊</el-dropdown-item>
+                <el-dropdown-item command="2号塔吊">2号塔吊</el-dropdown-item>
+                <el-dropdown-item command="3号塔吊">3号塔吊</el-dropdown-item>
+                <el-dropdown-item command="4号塔吊">4号塔吊</el-dropdown-item>
+                <el-dropdown-item command="5号塔吊">5号塔吊</el-dropdown-item>
               </el-dropdown-menu>
             </el-dropdown>
           </div>
@@ -494,20 +495,20 @@ export default {
         header: ['设备名称', '报警时间', '报警类型', '处理情况', '报警数值'],
         headerHeight: 45,
         data: [
-          ['1号塔机', '2019-10-13 13:14:01', '高度限位报警', '<span style="color: #67c23a; ">已处理</span>', 53.5],
-          ['2号塔机', '2019-10-13 14:14:01', '幅度限位报警', '<span style="color: #f56c6c; ">红色报警</span>', 54.5],
-          ['一号吊机', '2020-10-13 15:14:01', '风速限位报警', '<span style="color: #67c23a; ">已处理</span>', 57.5],
-          ['1号塔机', '2020-1-13 3:14:01', '角度限位报警', '<span style="color: #e6a23c; ">黄色报警</span>', 123.5],
-          ['1号塔机', '2019-1-1 8:14:01', '高度限位报警', '<span style="color: #67c23a; ">已处理</span>', 56.5],
-          ['2号塔机', '2019-12-30 10:14:01', '幅度限位报警', '<span style="color: #f56c6c; ">红色报警</span>', 87.5],
-          ['一号吊机', '2020-1-15 12:14:01', '风速限位报警', '<span style="color: #f56c6c; ">红色报警</span>', 97],
-          ['1号塔机', '2020-9-7 3:14:01', '角度限位报警', '<span style="color: #e6a23c; ">黄色报警</span>', 123.5],
+          ['1号塔吊', '2019-10-13 13:14:01', '高度限位', '<span style="color: #67c23a; ">已处理</span>', 53.5],
+          ['2号塔吊', '2019-10-13 14:14:01', '幅度限位', '<span style="color: #f56c6c; ">红色报警</span>', 54.5],
+          ['3号塔吊', '2019-10-15 15:14:01', '风速限位', '<span style="color: #67c23a; ">已处理</span>', 57.5],
+          ['4号塔吊', '2020-01-13 03:14:01', '角度限位', '<span style="color: #e6a23c; ">黄色报警</span>', 123.5],
+          ['2号塔吊', '2019-01-01 08:14:01', '高度限位', '<span style="color: #67c23a; ">已处理</span>', 56.5],
+          ['5号塔吊', '2019-12-30 10:14:01', '幅度限位', '<span style="color: #f56c6c; ">红色报警</span>', 87.5],
+          ['3号塔吊', '2020-01-15 12:14:01', '风速限位', '<span style="color: #f56c6c; ">红色报警</span>', 97],
+          ['1号塔吊', '2020-05-07 03:14:01', '角度限位', '<span style="color: #e6a23c; ">黄色报警</span>', 123.5],
         ],
         rowNum: 7,
         align: ['center', 'center', 'center', 'center', 'center'],
-        headerBGC: '#3FA0C3',
+        headerBGC: '',
         evenRowBGC: '',
-        columnWidth: [ ,200]
+        columnWidth: [ , 200]
       },
       chosen: '所有设备',
       infohover1: true,

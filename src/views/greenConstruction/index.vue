@@ -6,13 +6,12 @@
           <div class="border-top-left"></div>
           <div class="box-title">实时监控</div>
           <div class="item">
-            <table>
-              <tr>
-                <td></td>
-                <td>名称</td>
-                <td>单位</td>
-                <td>阈值</td>
-                <td>实际值</td>
+            <table cellspacing="0">
+              <tr style="background-color: rgba(56, 93, 128, 0.5); ">
+                <td colspan="2" style="border-color: rgba(56, 93, 128, 0.5);">名称</td>
+                <td style="border-color: rgba(56, 93, 128, 0.5);">单位</td>
+                <td style="border-color: rgba(56, 93, 128, 0.5);">阈值</td>
+                <td style="border-color: rgba(56, 93, 128, 0.5);">实际值</td>
               </tr>
               <tr>
                 <td><i class="iconfont iconfengsu" style="color: rgb(110, 203, 253); "></i></td>
@@ -54,7 +53,7 @@
                 <td><span>湿度</span></td>
                 <td>%</td>
                 <td><span style="font-weight: bold">25</span></td>
-                <td><span style="font-weight: bold; color: #F56C6C; ">99.9%</span></td>
+                <td><span style="font-weight: bold; color: #F56C6C; ">99.9</span></td>
               </tr>
             </table>
           </div>
@@ -129,18 +128,18 @@
           header: ['报警时间', '报警类型', '处理情况', '报警数值'],
           headerHeight: 44,
           data: [
-            ['2019-7-13 13:14:01', '噪音', '<span style="color: #67c23a; ">已处理</span>', 86.5],
-            ['2019-8-13 14:14:01', '风速', '<span style="color: #F56C6C; ">未处理</span>', 5],
-            ['2020-5-30 15:14:01', '风速', '<span style="color: #67c23a; ">已处理</span>', 7],
-            ['2020-1-13 3:14:01', '温度', '<span style="color: #F56C6C; ">未处理</span>', 35],
-            ['2019-1-1 8:14:01', '湿度', '<span style="color: #67c23a; ">已处理</span>', 23.5],
+            ['2019-07-13 13:14:01', '噪音', '<span style="color: #67c23a; ">已处理</span>', 86.5],
+            ['2019-08-13 14:14:01', '风速', '<span style="color: #F56C6C; ">未处理</span>', 5],
+            ['2020-05-30 15:14:01', '风速', '<span style="color: #67c23a; ">已处理</span>', 7],
+            ['2020-01-13 03:14:01', '温度', '<span style="color: #F56C6C; ">未处理</span>', 35],
+            ['2019-01-01 08:14:01', '湿度', '<span style="color: #67c23a; ">已处理</span>', 23.5],
             ['2019-12-30 10:14:01', 'PM2.5', '<span style="color: #F56C6C; ">未处理</span>', 87.5],
-            ['2020-1-15 12:14:01', 'PM10', '<span style="color: #67c23a; ">已处理</span>', 297],
-            ['2020-9-7 3:14:01', '湿度', '<span style="color: #F56C6C; ">未处理</span>', 27.5],
+            ['2020-01-15 12:14:01', 'PM10', '<span style="color: #67c23a; ">已处理</span>', 297],
+            ['2020-09-07 03:14:01', '湿度', '<span style="color: #F56C6C; ">未处理</span>', 27.5],
           ],
           rowNum: 6,
           align: ['center', 'center', 'center', 'center', 'center'],
-          headerBGC: '#3FA0C3',
+          headerBGC: '',
           evenRowBGC: '',
           columnWidth: [200]
         },
