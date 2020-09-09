@@ -14,6 +14,7 @@
                             
                         </div>
                     <!-- </dv-border-box-8>  -->
+                    
                 </div>
 
                 <!-- 两个视频 -->
@@ -28,6 +29,7 @@
                             <img src="../../assets/videoManager/2.png" />
                         </div>
                     <!-- </dv-border-box-8>  -->
+                    
                 </div>
 
                 <!-- 四个视频 -->
@@ -56,6 +58,7 @@
                             </div>
                         <!-- </dv-border-box-8>  -->
                     </div>
+                   <div class="shengluehao">...</div>
                     
                     
                 </div>         
@@ -225,7 +228,7 @@ export default {
     justify-content: center;
     align-items: center; 
     height: 10rem;
-    animation: daxiao_1 1s linear;
+    /* animation: daxiao_1 1s linear; */
     margin: 0 auto;
    
 }
@@ -253,6 +256,7 @@ export default {
    margin-right: 0.6rem;
     margin-left: 0.5rem;
    border:1px solid rgb(223, 187, 187); 
+   animation: daxiao_1 1s linear;
     
 }
 
@@ -281,19 +285,25 @@ export default {
     flex-wrap: wrap;
     align-content: space-between;
    
-    height: 10rem;
+    height: 9rem;
     animation: daxiao_1 1s linear;
+}
+.shengluehao {
+    margin: 0 auto;
+    margin-top: -0.5rem;
+    font-size: 38px;
+    color: white;
 }
 .fourVideoArea_1 {
     flex-basis: 100%;
-  display: flex;
-  justify-content: space-between;
+    display: flex;
+    justify-content: space-between;
 }
 .fourArea {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100%;
+    height: 85%;
     width: 80%;
     margin: 0 auto;
     margin-right: 0.6rem;
