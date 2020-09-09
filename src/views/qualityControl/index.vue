@@ -3,73 +3,86 @@
       <dv-loading v-if="loading" class="load">Loading...</dv-loading>
       <div>
         <el-row :gutter="20">
-          <el-col :span="8">
-            <div class="col-div">
-              <div class="box-txt">
-                <span>安质检查</span>
-              </div>
-              <div class="box-text1">
-                <span>安全检查</span>
-              </div>
-              <div class="box-text2">
-                <span>质量检查</span>
-              </div>
-              <div id="mychart1"></div>
-            </div>
+          <el-col :span="16">
+            <el-row :gutter="20">
+              <el-col :span="12">
+                <div class="col-div">
+                  <div class="box-txt">
+                    <span>安全检查</span>
+                  </div>
+                  <div id="mychart1"></div>
+                </div>
+              </el-col>
+              <el-col :span="12">
+                <div class="col-div">
+                  <div class="box-txt">
+                    <span>安全整改</span>
+                  </div>
+                  <div id="mychart12"></div>
+                </div>
+              </el-col>
+              <!--<el-col :span="8">-->
+              <!--<div class="col-div">-->
+              <!--<div class="box-txt">-->
+              <!--<span>质量整改</span>-->
+              <!--</div>-->
+              <!--<div id="mychart21">-->
+
+              <!--</div>-->
+              <!--</div>-->
+              <!--</el-col>-->
+            </el-row>
+            <el-row :gutter="20" class="rowstyle">
+              <el-col :span="12">
+                <div class="col-div">
+                  <div class="box-txt">
+                    <span>安全隐患统计</span>
+                  </div>
+                  <!--<div id="mychart21">-->
+                  <!---->
+                  <!--</div>-->
+                  <div id="mychart13"></div>
+                </div>
+              </el-col>
+              <el-col :span="12">
+                <div class="col-div">
+                  <div class="box-txt">
+                    重大危险源
+                  </div>
+                  <div id="mychart24"></div>
+                </div>
+              </el-col>
+              <!--<el-col :span="8">-->
+              <!--<div class="col-div">-->
+              <!--<div class="box-txt">-->
+              <!--安全日志和交底-->
+              <!--</div>-->
+              <!--<div>-->
+              <!--<el-row>-->
+              <!--<el-col :span="12">-->
+              <!--<div id="mychart22"></div>-->
+              <!--</el-col>-->
+              <!--<el-col :span="12">-->
+              <!--<div id="mychart23"></div>-->
+              <!--</el-col>-->
+              <!--</el-row>-->
+              <!--</div>-->
+              <!--</div>-->
+              <!--</el-col>-->
+
+            </el-row>
           </el-col>
           <el-col :span="8">
-            <div class="col-div">
-              <div class="box-txt">
-                <span>安质整改</span>
+            <div class="col-div4">
+              <div class="box-txt4">
+                <span>安全记录</span>
               </div>
-              <div id="mychart12"></div>
-            </div>
-          </el-col>
-          <el-col :span="8">
-            <div class="col-div">
-              <div class="box-txt">
-                <span>质量整改</span>
-              </div>
-              <div id="mychart13"></div>
+              <dv-scroll-board :config="configTable" style="width: 100%;height: 5.5rem;position: absolute;top: 8%" />
             </div>
           </el-col>
         </el-row>
-        <el-row :gutter="20" class="rowstyle">
-          <el-col :span="8">
-            <div class="col-div">
-              <div class="box-txt">
-                <span>安全隐患统计</span>
-              </div>
-              <div id="mychart21">
-              </div>
-            </div>
-          </el-col>
-          <el-col :span="8">
-            <div class="col-div">
-              <div class="box-txt">
-                安全日志和交底
-              </div>
-              <div>
-                <el-row>
-                  <el-col :span="12">
-                    <div id="mychart22"></div>
-                  </el-col>
-                  <el-col :span="12">
-                    <div id="mychart23"></div>
-                  </el-col>
-                </el-row>
-              </div>
-            </div>
-          </el-col>
-          <el-col :span="8">
-            <div class="col-div">
-              <div class="box-txt">
-                重大危险源
-              </div>
-              <div id="mychart24"></div>
-            </div>
-          </el-col>
-        </el-row>
+
+
         <el-row :gutter="20" class="rowstyle">
           <el-col :span="12">
             <div class="col-div2">
@@ -77,57 +90,18 @@
                 安全教育培训
               </div>
               <div>
-                <el-row :gutter="20">
-                  <el-col :span="8">
-                    <div class="box-text31">
-                      <dv-border-box-13>
-                        <div class="box-txts">
-                          <span>进场教育</span>
-                        </div>
-                        <div class="box-txts2">
-                          <span style="color: #3DE7C9">11/</span>
-                          <span style="color: #ffa454">223</span>
-                        </div>
-                        <div class="box-txts3">
-                          <span>教育次数/</span>
-                          <span>累计参与人次</span>
-                        </div>
-                      </dv-border-box-13>
-                    </div>
+                <el-row>
+                  <el-col :span="6">
+                    <div id="mychart41"></div>
                   </el-col>
-                  <el-col :span="8">
-                    <div class="box-text31">
-                      <dv-border-box-13>
-                        <div class="box-txts">
-                          <span>三级教育</span>
-                        </div>
-                        <div class="box-txts2">
-                          <span style="color: #3DE7C9">1/</span>
-                          <span style="color: #ffa454">182</span>
-                        </div>
-                        <div class="box-txts3">
-                          <span>教育次数/</span>
-                          <span>累计参与人次</span>
-                        </div>
-                      </dv-border-box-13>
-                    </div>
+                  <el-col :span="6">
+                    <div id="mychart42"></div>
                   </el-col>
-                  <el-col :span="8">
-                    <div class="box-text31">
-                      <dv-border-box-13>
-                        <div class="box-txts">
-                          <span>其他教育</span>
-                        </div>
-                        <div class="box-txts2">
-                          <span style="color: #3DE7C9">11/</span>
-                          <span style="color: #ffa454">323</span>
-                        </div>
-                        <div class="box-txts3">
-                          <span>教育次数/</span>
-                          <span>累计参与人次</span>
-                        </div>
-                      </dv-border-box-13>
-                    </div>
+                  <el-col :span="6">
+                    <div id="mychart43"></div>
+                  </el-col>
+                  <el-col :span="6">
+                    <div id="mychart44"></div>
                   </el-col>
                 </el-row>
               </div>
@@ -161,14 +135,41 @@
           myChart24: '',
           myChart32: '',
           myChart13: '',
+          myChart41: '',
+          myChart42: '',
+          myChart43: '',
+          myChart44: '',
+          option4: '',
+          option5: '',
+          option6: '',
+          option7: '',
+          angle: 0,
           resizeTimer: null,
           timer: '',
           option: '',
+          configTable: {
+            header: ['安全事件', '记录时间', '安全类型', '处理情况'],
+            headerHeight: 45,
+            data: [
+              ['设备安全检查', '2019-10-13', '1号塔机检测', '<span style="color: #67c23a; ">通过</span>'],
+              ['人员安全检查', '2019-10-13', '员工未佩戴安全帽', '<span style="color: #f56c6c; ">整改</span>'],
+              ['用电安全检查', '2020-10-13', '用电规范', '<span style="color: #67c23a; ">通过</span>'],
+              ['设备安全检查', '2020-1-13', '2号塔机检测', '<span style="color: #e6a23c; ">警告</span>'],
+              ['人员安全检查', '2019-1-1', '佩戴安全带作业', '<span style="color: #67c23a; ">通过</span>'],
+              ['消防检查', '2019-12-30', '灭火器材配备不合理', '<span style="color: #f56c6c; ">整改</span>'],
+              ['施工现场标牌', '2020-1-15', '安全标语不醒目', '<span style="color: #f56c6c; ">整改</span>'],
+              ['基坑支护', '2020-9-7', '防护措施不符合要求', '<span style="color: #e6a23c; ">警告</span>'],
+            ],
+            rowNum: 7,
+            align: ['center', 'center', 'center', 'center', 'center'],
+            headerBGC: '',
+            evenRowBGC: ''
+          },
         }
       },
       mounted() {
           var _this = this
-        this.$store.dispatch('changeMsg', '质量管理')
+        this.$store.dispatch('changeMsg', '安全管理')
         setTimeout(() => {
           this.loading = false
         }, 600)
@@ -187,20 +188,27 @@
         this.inchart1()
 
         this.inchart13()
-        this.inchart21()
-        this.inchart22()
-        this.inchart23()
+        // this.inchart21()
+        // this.inchart22()
+        // this.inchart23()
         this.inchart24()
         this.inchart32()
         this.inchart12()
-        _this.startTimer()
-        _this.myChart23.on('mouseover', function(params) {
-          _this.stopTimer();
-        });
-
-        _this.myChart23.on('mouseout', function(params) {
-          _this.startTimer();
-        });
+        this.inchart41()
+        this.inchart42()
+        this.inchart43()
+        this.inchart44()
+        setInterval(function () {
+          _this.draw()
+        },100)
+        // _this.startTimer()
+        // _this.myChart23.on('mouseover', function(params) {
+        //   _this.stopTimer();
+        // });
+        //
+        // _this.myChart23.on('mouseout', function(params) {
+        //   _this.startTimer();
+        // });
 
         // setTimeout(_this.startTimer, 620);
         // setTimeout(() => {
@@ -210,9 +218,9 @@
         // },620)
         this.chart1Res()
         this.chart12Res()
-        this.chart21Res()
-        this.chart22Res()
-        this.chart23Res()
+        // this.chart21Res()
+        // this.chart22Res()
+        // this.chart23Res()
         this.chart24Res()
         this.chart13Res()
         this.chart32Res()
@@ -243,8 +251,8 @@
                 },
               },{
                 text: '130',
-                left: '19%',
-                top: '20%',
+                left: '14%',
+                top: '40%',
                 textAlign: 'center',
                 textStyle: {
                   fontSize: '16',
@@ -254,8 +262,8 @@
                 },
               }, {
                 text: '累计检查',
-                left: '19%',
-                top: '30%',
+                left: '14%',
+                top: '50%',
                 textAlign: 'center',
                 textStyle: {
                   fontSize: '14',
@@ -265,8 +273,8 @@
                 },
               },{
                 text: '45',
-                left: '39%',
-                top: '20%',
+                left: '37%',
+                top: '40%',
                 textAlign: 'center',
                 textStyle: {
                   fontSize: '16',
@@ -276,8 +284,8 @@
                 },
               }, {
                 text: '警告',
-                left: '39%',
-                top: '30%',
+                left: '37%',
+                top: '50%',
                 textAlign: 'center',
                 textStyle: {
                   fontSize: '16',
@@ -287,8 +295,8 @@
                 },
               },{
                 text: '70',
-                left: '59.5%',
-                top: '20%',
+                left: '61.5%',
+                top: '40%',
                 textAlign: 'center',
                 textStyle: {
                   fontSize: '16',
@@ -298,8 +306,8 @@
                 },
               },{
                 text: '整改',
-                left: '59.5%',
-                top: '30%',
+                left: '61.5%',
+                top: '50%',
                 textAlign: 'center',
                 textStyle: {
                   fontSize: '16',
@@ -309,8 +317,8 @@
                 },
               },{
                 text: '15',
-                left: '79.5%',
-                top: '20%',
+                left: '84.5%',
+                top: '40%',
                 textAlign: 'center',
                 textStyle: {
                   fontSize: '16',
@@ -320,8 +328,8 @@
                 },
               },{
                 text: '通过',
-                left: '79.5%',
-                top: '30%',
+                left: '84.5%',
+                top: '50%',
                 textAlign: 'center',
                 textStyle: {
                   fontSize: '16',
@@ -329,100 +337,103 @@
                   color: 'rgba(89, 180, 157, 1)',
                   textAlign: 'center',
                 },
-              },{
-                text: '130',
-                left: '19.5%',
-                top: '60%',
-                textAlign: 'center',
-                textStyle: {
-                  fontSize: '16',
-                  // fontWeight:'600',
-                  color: 'rgb(106,192,240)',
-                  textAlign: 'center',
-                },
-              }, {
-                text: '累计检查',
-                left: '19.5%',
-                top: '70%',
-                textAlign: 'center',
-                textStyle: {
-                  fontSize: '14',
-                  // fontWeight:'600',
-                  color: 'rgb(106,192,240)',
-                  textAlign: 'center',
-                },
-              },{
-                text: '45',
-                left: '39%',
-                top: '60%',
-                textAlign: 'center',
-                textStyle: {
-                  fontSize: '16',
-                  // fontWeight:'600',
-                  color: 'rgba(251, 200, 79, 1)',
-                  textAlign: 'center',
-                },
-              }, {
-                text: '警告',
-                left: '39%',
-                top: '70%',
-                textAlign: 'center',
-                textStyle: {
-                  fontSize: '16',
-                  // fontWeight:'600',
-                  color: 'rgba(251, 200, 79, 1)',
-                  textAlign: 'center',
-                },
-              },{
-                text: '65',
-                left: '59.5%%',
-                top: '60%',
-                textAlign: 'center',
-                textStyle: {
-                  fontSize: '16',
-                  // fontWeight:'600',
-                  color: 'rgba(232, 85, 63, 1)',
-                  textAlign: 'center',
-                },
-              },{
-                text: '整改',
-                left: '59.5%%',
-                top: '70%',
-                textAlign: 'center',
-                textStyle: {
-                  fontSize: '16',
-                  // fontWeight:'600',
-                  color: 'rgba(232, 85, 63, 1)',
-                  textAlign: 'center',
-                },
-              },{
-                text: '15',
-                left: '79.5%',
-                top: '60%',
-                textAlign: 'center',
-                textStyle: {
-                  fontSize: '16',
-                  // fontWeight:'600',
-                  color: 'rgba(89, 180, 157, 1)',
-                  textAlign: 'center',
-                },
-              },{
-                text: '通过',
-                left: '79.5%',
-                top: '70%',
-                textAlign: 'center',
-                textStyle: {
-                  fontSize: '16',
-                  // fontWeight:'600',
-                  color: 'rgba(89, 180, 157, 1)',
-                  textAlign: 'center',
-                },
-              },],
+              },
+              //   {
+              //   text: '130',
+              //   left: '19.5%',
+              //   top: '60%',
+              //   textAlign: 'center',
+              //   textStyle: {
+              //     fontSize: '16',
+              //     // fontWeight:'600',
+              //     color: 'rgb(106,192,240)',
+              //     textAlign: 'center',
+              //   },
+              // },
+              //   {
+              //   text: '累计检查',
+              //   left: '19.5%',
+              //   top: '70%',
+              //   textAlign: 'center',
+              //   textStyle: {
+              //     fontSize: '14',
+              //     // fontWeight:'600',
+              //     color: 'rgb(106,192,240)',
+              //     textAlign: 'center',
+              //   },
+              // },{
+              //   text: '45',
+              //   left: '39%',
+              //   top: '60%',
+              //   textAlign: 'center',
+              //   textStyle: {
+              //     fontSize: '16',
+              //     // fontWeight:'600',
+              //     color: 'rgba(251, 200, 79, 1)',
+              //     textAlign: 'center',
+              //   },
+              // }, {
+              //   text: '警告',
+              //   left: '39%',
+              //   top: '70%',
+              //   textAlign: 'center',
+              //   textStyle: {
+              //     fontSize: '16',
+              //     // fontWeight:'600',
+              //     color: 'rgba(251, 200, 79, 1)',
+              //     textAlign: 'center',
+              //   },
+              // },{
+              //   text: '65',
+              //   left: '59.5%%',
+              //   top: '60%',
+              //   textAlign: 'center',
+              //   textStyle: {
+              //     fontSize: '16',
+              //     // fontWeight:'600',
+              //     color: 'rgba(232, 85, 63, 1)',
+              //     textAlign: 'center',
+              //   },
+              // },{
+              //   text: '整改',
+              //   left: '59.5%%',
+              //   top: '70%',
+              //   textAlign: 'center',
+              //   textStyle: {
+              //     fontSize: '16',
+              //     // fontWeight:'600',
+              //     color: 'rgba(232, 85, 63, 1)',
+              //     textAlign: 'center',
+              //   },
+              // },{
+              //   text: '15',
+              //   left: '79.5%',
+              //   top: '60%',
+              //   textAlign: 'center',
+              //   textStyle: {
+              //     fontSize: '16',
+              //     // fontWeight:'600',
+              //     color: 'rgba(89, 180, 157, 1)',
+              //     textAlign: 'center',
+              //   },
+              // },{
+              //   text: '通过',
+              //   left: '79.5%',
+              //   top: '70%',
+              //   textAlign: 'center',
+              //   textStyle: {
+              //     fontSize: '16',
+              //     // fontWeight:'600',
+              //     color: 'rgba(89, 180, 157, 1)',
+              //     textAlign: 'center',
+              //   },
+              // },
+              ],
               series: [
                 {
                   type: 'pie',
-                  radius: ['30%', '33%'],
-                  center: ['20%', '30%'],
+                  radius: ['45%', '48%'],
+                  center: ['15%', '50%'],
                   data: [{
                     hoverOffset: 1,
                     value: num1,
@@ -465,8 +476,8 @@
                 },
                 {
                   type: 'pie',
-                  radius: ['35%', '38%'],
-                  center: ['20%', '30%'],
+                  radius: ['50%', '53%'],
+                  center: ['15%', '50%'],
                   data: [{
                     label: {
                       show: false
@@ -488,8 +499,8 @@
                 },
                 {
                   type: 'pie',
-                  radius: ['28%', '25%'],
-                  center: ['20%', '30%'],
+                  radius: ['43%', '40%'],
+                  center: ['15%', '50%'],
                   data: [{
                     label: {
                       show: false
@@ -512,8 +523,8 @@
 
                 {
                   type: 'pie',
-                  radius: ['30%', '33%'],
-                  center: ['40%', '30%'],
+                  radius: ['45%', '48%'],
+                  center: ['38%', '50%'],
                   data: [{
                     hoverOffset: 1,
                     value: num1,
@@ -556,8 +567,8 @@
                 },
                 {
                   type: 'pie',
-                  radius: ['35%', '38%'],
-                  center: ['40%', '30%'],
+                  radius: ['50%', '53%'],
+                  center: ['38%', '50%'],
                   data: [{
                     label: {
                       show: false
@@ -579,8 +590,8 @@
                 },
                 {
                   type: 'pie',
-                  radius: ['28%', '25%'],
-                  center: ['40%', '30%'],
+                  radius: ['43%', '40%'],
+                  center: ['38%', '50%'],
                   data: [{
                     label: {
                       show: false
@@ -603,8 +614,8 @@
 
                 {
                   type: 'pie',
-                  radius: ['30%', '33%'],
-                  center: ['60%', '30%'],
+                  radius: ['45%', '48%'],
+                  center: ['62%', '50%'],
                   data: [{
                     hoverOffset: 1,
                     value: num2,
@@ -647,8 +658,8 @@
                 },
                 {
                   type: 'pie',
-                  radius: ['35%', '38%'],
-                  center: ['60%', '30%'],
+                  radius: ['50%', '53%'],
+                  center: ['62%', '50%'],
                   data: [{
                     label: {
                       show: false
@@ -670,8 +681,8 @@
                 },
                 {
                   type: 'pie',
-                  radius: ['28%', '25%'],
-                  center: ['60%', '30%'],
+                  radius: ['43%', '40%'],
+                  center: ['62%', '50%'],
                   data: [{
                     label: {
                       show: false
@@ -694,8 +705,8 @@
 
                 {
                   type: 'pie',
-                  radius: ['30%', '33%'],
-                  center: ['80%', '30%'],
+                  radius: ['45%', '48%'],
+                  center: ['85%', '50%'],
                   data: [{
                     hoverOffset: 1,
                     value: num3,
@@ -738,8 +749,8 @@
                 },
                 {
                   type: 'pie',
-                  radius: ['35%', '38%'],
-                  center: ['80%', '30%'],
+                  radius: ['50%', '53%'],
+                  center: ['85%', '50%'],
                   data: [{
                     label: {
                       show: false
@@ -761,8 +772,8 @@
                 },
                 {
                   type: 'pie',
-                  radius: ['28%', '25%'],
-                  center: ['80%', '30%'],
+                  radius: ['43%', '40%'],
+                  center: ['85%', '50%'],
                   data: [{
                     label: {
                       show: false
@@ -782,370 +793,370 @@
                     },
                   }]
                 },
-
-                {
-                  type: 'pie',
-                  radius: ['30%', '33%'],
-                  center: ['20%', '70%'],
-                  data: [{
-                    hoverOffset: 1,
-                    value: num1,
-                    name: '虚拟主机',
-                    itemStyle: {
-                      color: 'rgb(106,192,240)',
-                    },
-                    label: {
-                      show: false
-                    },
-                    labelLine: {
-                      normal: {
-                        smooth: true,
-                        lineStyle: {
-                          width: 0
-                        }
-                      }
-                    },
-                    hoverAnimation: false,
-                  },
-                    {
-                      label: {
-                        show: false
-                      },
-                      labelLine: {
-                        normal: {
-                          smooth: true,
-                          lineStyle: {
-                            width: 0
-                          }
-                        }
-                      },
-                      value: 100 - num1,
-                      hoverAnimation: false,
-                      itemStyle: {
-                        color: 'rgba(251, 200, 79, .2)',
-                      },
-                    }
-                  ]
-                },
-                {
-                  type: 'pie',
-                  radius: ['35%', '38%'],
-                  center: ['20%', '70%'],
-                  data: [{
-                    label: {
-                      show: false
-                    },
-                    labelLine: {
-                      normal: {
-                        smooth: true,
-                        lineStyle: {
-                          width: 0
-                        }
-                      }
-                    },
-                    value: 100 - num1,
-                    hoverAnimation: false,
-                    itemStyle: {
-                      color: 'rgba(63, 66, 73, .3)',
-                    },
-                  }]
-                },
-                {
-                  type: 'pie',
-                  radius: ['28%', '25%'],
-                  center: ['20%', '70%'],
-                  data: [{
-                    label: {
-                      show: false
-                    },
-                    labelLine: {
-                      normal: {
-                        smooth: true,
-                        lineStyle: {
-                          width: 0
-                        }
-                      }
-                    },
-                    value: 100 - num1,
-                    hoverAnimation: false,
-                    itemStyle: {
-                      color: 'rgba(63, 66, 73, .3)',
-                    },
-                  }]
-                },
-
-                {
-                  type: 'pie',
-                  radius: ['30%', '33%'],
-                  center: ['40%', '70%'],
-                  data: [{
-                    hoverOffset: 1,
-                    value: num1,
-                    name: '虚拟主机',
-                    itemStyle: {
-                      color: 'rgba(251, 200, 79, 1)',
-                    },
-                    label: {
-                      show: false
-                    },
-                    labelLine: {
-                      normal: {
-                        smooth: true,
-                        lineStyle: {
-                          width: 0
-                        }
-                      }
-                    },
-                    hoverAnimation: false,
-                  },
-                    {
-                      label: {
-                        show: false
-                      },
-                      labelLine: {
-                        normal: {
-                          smooth: true,
-                          lineStyle: {
-                            width: 0
-                          }
-                        }
-                      },
-                      value: 100 - num1,
-                      hoverAnimation: false,
-                      itemStyle: {
-                        color: 'rgba(251, 200, 79, .2)',
-                      },
-                    }
-                  ]
-                },
-                {
-                  type: 'pie',
-                  radius: ['35%', '38%'],
-                  center: ['40%', '70%'],
-                  data: [{
-                    label: {
-                      show: false
-                    },
-                    labelLine: {
-                      normal: {
-                        smooth: true,
-                        lineStyle: {
-                          width: 0
-                        }
-                      }
-                    },
-                    value: 100 - num1,
-                    hoverAnimation: false,
-                    itemStyle: {
-                      color: 'rgba(63, 66, 73, .3)',
-                    },
-                  }]
-                },
-                {
-                  type: 'pie',
-                  radius: ['28%', '25%'],
-                  center: ['40%', '70%'],
-                  data: [{
-                    label: {
-                      show: false
-                    },
-                    labelLine: {
-                      normal: {
-                        smooth: true,
-                        lineStyle: {
-                          width: 0
-                        }
-                      }
-                    },
-                    value: 100 - num1,
-                    hoverAnimation: false,
-                    itemStyle: {
-                      color: 'rgba(63, 66, 73, .3)',
-                    },
-                  }]
-                },
-
-                {
-                  type: 'pie',
-                  radius: ['30%', '33%'],
-                  center: ['60%', '70%'],
-                  data: [{
-                    hoverOffset: 1,
-                    value: num2,
-                    name: '虚拟主机',
-                    itemStyle: {
-                      color: 'rgba(232, 85, 63, 1)',
-                    },
-                    label: {
-                      show: false
-                    },
-                    labelLine: {
-                      normal: {
-                        smooth: true,
-                        lineStyle: {
-                          width: 0
-                        }
-                      }
-                    },
-                    hoverAnimation: false,
-                  },
-                    {
-                      label: {
-                        show: false
-                      },
-                      labelLine: {
-                        normal: {
-                          smooth: true,
-                          lineStyle: {
-                            width: 0
-                          }
-                        }
-                      },
-                      value: 100 - num2,
-                      hoverAnimation: false,
-                      itemStyle: {
-                        color: 'rgba(232, 85, 63, .2)',
-                      },
-                    }
-                  ]
-                },
-                {
-                  type: 'pie',
-                  radius: ['35%', '38%'],
-                  center: ['60%', '70%'],
-                  data: [{
-                    label: {
-                      show: false
-                    },
-                    labelLine: {
-                      normal: {
-                        smooth: true,
-                        lineStyle: {
-                          width: 0
-                        }
-                      }
-                    },
-                    value: 100 - num2,
-                    hoverAnimation: false,
-                    itemStyle: {
-                      color: 'rgba(63, 66, 73, .3)',
-                    },
-                  }]
-                },
-                {
-                  type: 'pie',
-                  radius: ['28%', '25%'],
-                  center: ['60%', '70%'],
-                  data: [{
-                    label: {
-                      show: false
-                    },
-                    labelLine: {
-                      normal: {
-                        smooth: true,
-                        lineStyle: {
-                          width: 0
-                        }
-                      }
-                    },
-                    value: 100 - num3,
-                    hoverAnimation: false,
-                    itemStyle: {
-                      color: 'rgba(63, 66, 73, .3)',
-                    },
-                  }]
-                },
-
-                {
-                  type: 'pie',
-                  radius: ['30%', '33%'],
-                  center: ['80%', '70%'],
-                  data: [{
-                    hoverOffset: 1,
-                    value: num3,
-                    name: '虚拟主机',
-                    itemStyle: {
-                      color: 'rgba(89, 180, 157, 1)',
-                    },
-                    label: {
-                      show: false
-                    },
-                    labelLine: {
-                      normal: {
-                        smooth: true,
-                        lineStyle: {
-                          width: 0
-                        }
-                      }
-                    },
-                    hoverAnimation: false,
-                  },
-                    {
-                      label: {
-                        show: false
-                      },
-                      labelLine: {
-                        normal: {
-                          smooth: true,
-                          lineStyle: {
-                            width: 0
-                          }
-                        }
-                      },
-                      value: 100 - num3,
-                      hoverAnimation: false,
-                      itemStyle: {
-                        color: 'rgba(89, 180, 157, .2)',
-                      },
-                    }
-                  ]
-                },
-                {
-                  type: 'pie',
-                  radius: ['35%', '38%'],
-                  center: ['80%', '70%'],
-                  data: [{
-                    label: {
-                      show: false
-                    },
-                    labelLine: {
-                      normal: {
-                        smooth: true,
-                        lineStyle: {
-                          width: 0
-                        }
-                      }
-                    },
-                    value: 100 - num3,
-                    hoverAnimation: false,
-                    itemStyle: {
-                      color: 'rgba(63, 66, 73, .3)',
-                    },
-                  }]
-                },
-                {
-                  type: 'pie',
-                  radius: ['28%', '25%'],
-                  center: ['80%', '70%'],
-                  data: [{
-                    label: {
-                      show: false
-                    },
-                    labelLine: {
-                      normal: {
-                        smooth: true,
-                        lineStyle: {
-                          width: 0
-                        }
-                      }
-                    },
-                    value: 100 - num3,
-                    hoverAnimation: false,
-                    itemStyle: {
-                      color: 'rgba(63, 66, 73, .3)',
-                    },
-                  }]
-                },
+                //
+                // {
+                //   type: 'pie',
+                //   radius: ['30%', '33%'],
+                //   center: ['20%', '70%'],
+                //   data: [{
+                //     hoverOffset: 1,
+                //     value: num1,
+                //     name: '虚拟主机',
+                //     itemStyle: {
+                //       color: 'rgb(106,192,240)',
+                //     },
+                //     label: {
+                //       show: false
+                //     },
+                //     labelLine: {
+                //       normal: {
+                //         smooth: true,
+                //         lineStyle: {
+                //           width: 0
+                //         }
+                //       }
+                //     },
+                //     hoverAnimation: false,
+                //   },
+                //     {
+                //       label: {
+                //         show: false
+                //       },
+                //       labelLine: {
+                //         normal: {
+                //           smooth: true,
+                //           lineStyle: {
+                //             width: 0
+                //           }
+                //         }
+                //       },
+                //       value: 100 - num1,
+                //       hoverAnimation: false,
+                //       itemStyle: {
+                //         color: 'rgba(251, 200, 79, .2)',
+                //       },
+                //     }
+                //   ]
+                // },
+                // {
+                //   type: 'pie',
+                //   radius: ['35%', '38%'],
+                //   center: ['20%', '70%'],
+                //   data: [{
+                //     label: {
+                //       show: false
+                //     },
+                //     labelLine: {
+                //       normal: {
+                //         smooth: true,
+                //         lineStyle: {
+                //           width: 0
+                //         }
+                //       }
+                //     },
+                //     value: 100 - num1,
+                //     hoverAnimation: false,
+                //     itemStyle: {
+                //       color: 'rgba(63, 66, 73, .3)',
+                //     },
+                //   }]
+                // },
+                // {
+                //   type: 'pie',
+                //   radius: ['28%', '25%'],
+                //   center: ['20%', '70%'],
+                //   data: [{
+                //     label: {
+                //       show: false
+                //     },
+                //     labelLine: {
+                //       normal: {
+                //         smooth: true,
+                //         lineStyle: {
+                //           width: 0
+                //         }
+                //       }
+                //     },
+                //     value: 100 - num1,
+                //     hoverAnimation: false,
+                //     itemStyle: {
+                //       color: 'rgba(63, 66, 73, .3)',
+                //     },
+                //   }]
+                // },
+                //
+                // {
+                //   type: 'pie',
+                //   radius: ['30%', '33%'],
+                //   center: ['40%', '70%'],
+                //   data: [{
+                //     hoverOffset: 1,
+                //     value: num1,
+                //     name: '虚拟主机',
+                //     itemStyle: {
+                //       color: 'rgba(251, 200, 79, 1)',
+                //     },
+                //     label: {
+                //       show: false
+                //     },
+                //     labelLine: {
+                //       normal: {
+                //         smooth: true,
+                //         lineStyle: {
+                //           width: 0
+                //         }
+                //       }
+                //     },
+                //     hoverAnimation: false,
+                //   },
+                //     {
+                //       label: {
+                //         show: false
+                //       },
+                //       labelLine: {
+                //         normal: {
+                //           smooth: true,
+                //           lineStyle: {
+                //             width: 0
+                //           }
+                //         }
+                //       },
+                //       value: 100 - num1,
+                //       hoverAnimation: false,
+                //       itemStyle: {
+                //         color: 'rgba(251, 200, 79, .2)',
+                //       },
+                //     }
+                //   ]
+                // },
+                // {
+                //   type: 'pie',
+                //   radius: ['35%', '38%'],
+                //   center: ['40%', '70%'],
+                //   data: [{
+                //     label: {
+                //       show: false
+                //     },
+                //     labelLine: {
+                //       normal: {
+                //         smooth: true,
+                //         lineStyle: {
+                //           width: 0
+                //         }
+                //       }
+                //     },
+                //     value: 100 - num1,
+                //     hoverAnimation: false,
+                //     itemStyle: {
+                //       color: 'rgba(63, 66, 73, .3)',
+                //     },
+                //   }]
+                // },
+                // {
+                //   type: 'pie',
+                //   radius: ['28%', '25%'],
+                //   center: ['40%', '70%'],
+                //   data: [{
+                //     label: {
+                //       show: false
+                //     },
+                //     labelLine: {
+                //       normal: {
+                //         smooth: true,
+                //         lineStyle: {
+                //           width: 0
+                //         }
+                //       }
+                //     },
+                //     value: 100 - num1,
+                //     hoverAnimation: false,
+                //     itemStyle: {
+                //       color: 'rgba(63, 66, 73, .3)',
+                //     },
+                //   }]
+                // },
+                //
+                // {
+                //   type: 'pie',
+                //   radius: ['30%', '33%'],
+                //   center: ['60%', '70%'],
+                //   data: [{
+                //     hoverOffset: 1,
+                //     value: num2,
+                //     name: '虚拟主机',
+                //     itemStyle: {
+                //       color: 'rgba(232, 85, 63, 1)',
+                //     },
+                //     label: {
+                //       show: false
+                //     },
+                //     labelLine: {
+                //       normal: {
+                //         smooth: true,
+                //         lineStyle: {
+                //           width: 0
+                //         }
+                //       }
+                //     },
+                //     hoverAnimation: false,
+                //   },
+                //     {
+                //       label: {
+                //         show: false
+                //       },
+                //       labelLine: {
+                //         normal: {
+                //           smooth: true,
+                //           lineStyle: {
+                //             width: 0
+                //           }
+                //         }
+                //       },
+                //       value: 100 - num2,
+                //       hoverAnimation: false,
+                //       itemStyle: {
+                //         color: 'rgba(232, 85, 63, .2)',
+                //       },
+                //     }
+                //   ]
+                // },
+                // {
+                //   type: 'pie',
+                //   radius: ['35%', '38%'],
+                //   center: ['60%', '70%'],
+                //   data: [{
+                //     label: {
+                //       show: false
+                //     },
+                //     labelLine: {
+                //       normal: {
+                //         smooth: true,
+                //         lineStyle: {
+                //           width: 0
+                //         }
+                //       }
+                //     },
+                //     value: 100 - num2,
+                //     hoverAnimation: false,
+                //     itemStyle: {
+                //       color: 'rgba(63, 66, 73, .3)',
+                //     },
+                //   }]
+                // },
+                // {
+                //   type: 'pie',
+                //   radius: ['28%', '25%'],
+                //   center: ['60%', '70%'],
+                //   data: [{
+                //     label: {
+                //       show: false
+                //     },
+                //     labelLine: {
+                //       normal: {
+                //         smooth: true,
+                //         lineStyle: {
+                //           width: 0
+                //         }
+                //       }
+                //     },
+                //     value: 100 - num3,
+                //     hoverAnimation: false,
+                //     itemStyle: {
+                //       color: 'rgba(63, 66, 73, .3)',
+                //     },
+                //   }]
+                // },
+                //
+                // {
+                //   type: 'pie',
+                //   radius: ['30%', '33%'],
+                //   center: ['80%', '70%'],
+                //   data: [{
+                //     hoverOffset: 1,
+                //     value: num3,
+                //     name: '虚拟主机',
+                //     itemStyle: {
+                //       color: 'rgba(89, 180, 157, 1)',
+                //     },
+                //     label: {
+                //       show: false
+                //     },
+                //     labelLine: {
+                //       normal: {
+                //         smooth: true,
+                //         lineStyle: {
+                //           width: 0
+                //         }
+                //       }
+                //     },
+                //     hoverAnimation: false,
+                //   },
+                //     {
+                //       label: {
+                //         show: false
+                //       },
+                //       labelLine: {
+                //         normal: {
+                //           smooth: true,
+                //           lineStyle: {
+                //             width: 0
+                //           }
+                //         }
+                //       },
+                //       value: 100 - num3,
+                //       hoverAnimation: false,
+                //       itemStyle: {
+                //         color: 'rgba(89, 180, 157, .2)',
+                //       },
+                //     }
+                //   ]
+                // },
+                // {
+                //   type: 'pie',
+                //   radius: ['35%', '38%'],
+                //   center: ['80%', '70%'],
+                //   data: [{
+                //     label: {
+                //       show: false
+                //     },
+                //     labelLine: {
+                //       normal: {
+                //         smooth: true,
+                //         lineStyle: {
+                //           width: 0
+                //         }
+                //       }
+                //     },
+                //     value: 100 - num3,
+                //     hoverAnimation: false,
+                //     itemStyle: {
+                //       color: 'rgba(63, 66, 73, .3)',
+                //     },
+                //   }]
+                // },
+                // {
+                //   type: 'pie',
+                //   radius: ['28%', '25%'],
+                //   center: ['80%', '70%'],
+                //   data: [{
+                //     label: {
+                //       show: false
+                //     },
+                //     labelLine: {
+                //       normal: {
+                //         smooth: true,
+                //         lineStyle: {
+                //           width: 0
+                //         }
+                //       }
+                //     },
+                //     value: 100 - num3,
+                //     hoverAnimation: false,
+                //     itemStyle: {
+                //       color: 'rgba(63, 66, 73, .3)',
+                //     },
+                //   }]
+                // },
 
                 // {
                 //   type: 'pie',
@@ -1581,15 +1592,15 @@
           let scale = 1;
           let echartData = {
             inner: [
-              {value:335,unit:'人', name:'明泽瑞达', selected:true,
+              {value:335,unit:'人', name:'安全管理', selected:true,
               },
-              {value:679,unit:'人', name:'嘉宇天泽'},
-              {value:1548,unit:'人', name:'御达捷'}
+              {value:679,unit:'人', name:'文明施工'},
+              {value:1548,unit:'人', name:'基坑支护安全'}
             ],
             outer: [
-              {value:310,unit:'人', name:'车安'},
-              {value:234, unit:'人',name:'广成翔'},
-              {value:135, unit:'人',name:'劲草园艺'},
+              {value:310,unit:'人', name:'模板工程安全'},
+              {value:234, unit:'人',name:'施工用电'},
+              {value:135, unit:'人',name:'物料提升机'},
             ]
           }
 
@@ -1620,7 +1631,7 @@
             },
             series: [
               {
-                name:'人员统计',
+                name:'安全隐患统计',
                 type:'pie',
                 selectedMode: 'single',
                 radius: [0, '40%'],
@@ -1638,7 +1649,7 @@
                 data:echartData.inner
               },
               {
-                name:'人员统计',
+                name:'安全隐患统计',
                 type:'pie',
                 radius: ['60%', '80%'],
                 data:echartData.outer,
@@ -1670,14 +1681,14 @@
           this.myChart12 = this.$echarts.init(document.getElementById('mychart12'))
           var category = [];
           var dottedBase = [];
-          var lineData = [18092,20728,24045,28348,32808
-            ,36097,39867,44715,48444,50415
-            ,56061,62677,69521,77560,85038
-            ,92477,102268];
-          var barData = [4600,5000,5500,6500,7500
-            ,8500,9900,12500,14000,21500
-            ,23200,24450,25250,33300,35800
-            ,45400,59810];
+          var lineData = [192,128,145,148,118
+            ,197,167,115,144,115
+            ,161,177,121,160,138
+            ,177,168];
+          var barData = [46,50,55,65,75
+            ,85,99,12,14,21
+            ,232,244,25,33,35
+            ,45,59];
           var rateData = [];
 
           for (var i = 0; i < 17; i++) {
@@ -2489,6 +2500,1193 @@
           }
           this.myChart32.setOption(option)
         },
+        inchart41() {
+          this.myChart41 = this.$echarts.init(document.getElementById('mychart41'));
+          var _this = this
+          //角度，用来做简单的动画效果的
+          let value = 55;
+          var option = {
+            // backgroundColor:"#061740",
+            title: [{
+              text: '{a|'+ value +'次}',
+              x: 'center',
+              y: '40%',
+              textStyle: {
+                rich:{
+                  a: {
+                    fontSize: 16,
+                    color: '#29EEF3'
+                  },
+
+                  c: {
+                    fontSize: 20,
+                    color: '#ffffff',
+                    // padding: [5,0]
+                  }
+                }
+              }
+            },
+              {
+                text: '举办次数',
+                x: 'center',
+                y: '50%',
+                textStyle: {
+                  fontSize: 14,
+                  color: '#ffffff'
+                }
+              }],
+            legend: {
+              type: "plain",
+              orient: "vertical",
+              right: 0,
+              top: "10%",
+              align: "auto",
+              data: [{
+                name: '涨价后没吃过',
+                icon: "circle"
+              }, {
+                name: '天天吃',
+                icon: "circle"
+              }, {
+                name: '三五天吃一次',
+                icon: "circle"
+              }, {
+                name: '半个月吃一次',
+                icon: "circle"
+              }],
+              textStyle: {
+                color: "white",
+                fontSize: 16,
+                padding: [10, 1, 10, 0]
+              },
+              selectedMode:false
+            },
+            series: [ {
+              name: "ring5",
+              type: 'custom',
+              coordinateSystem: "none",
+              renderItem: function(params, api) {
+                return {
+                  type: 'arc',
+                  shape: {
+                    cx: api.getWidth() / 2,
+                    cy: api.getHeight() / 2,
+                    r: Math.min(api.getWidth(), api.getHeight()) / 2 * 0.6,
+                    startAngle: (0+_this.angle) * Math.PI / 180,
+                    endAngle: (90+_this.angle) * Math.PI / 180
+                  },
+                  style: {
+                    stroke: "#0CD3DB",
+                    fill: "transparent",
+                    lineWidth: 1.5
+                  },
+                  silent: true
+                };
+              },
+              data: [0]
+            }, {
+              name: "ring5",
+              type: 'custom',
+              coordinateSystem: "none",
+              renderItem: function(params, api) {
+                return {
+                  type: 'arc',
+                  shape: {
+                    cx: api.getWidth() / 2,
+                    cy: api.getHeight() / 2,
+                    r: Math.min(api.getWidth(), api.getHeight()) / 2 * 0.6,
+                    startAngle: (180+_this.angle) * Math.PI / 180,
+                    endAngle: (270+_this.angle) * Math.PI / 180
+                  },
+                  style: {
+                    stroke: "#0CD3DB",
+                    fill: "transparent",
+                    lineWidth: 1.5
+                  },
+                  silent: true
+                };
+              },
+              data: [0]
+            }, {
+              name: "ring5",
+              type: 'custom',
+              coordinateSystem: "none",
+              renderItem: function(params, api) {
+                return {
+                  type: 'arc',
+                  shape: {
+                    cx: api.getWidth() / 2,
+                    cy: api.getHeight() / 2,
+                    r: Math.min(api.getWidth(), api.getHeight()) / 2 * 0.65,
+                    startAngle: (270+-_this.angle) * Math.PI / 180,
+                    endAngle: (40+-_this.angle) * Math.PI / 180
+                  },
+                  style: {
+                    stroke: "#0CD3DB",
+                    fill: "transparent",
+                    lineWidth: 1.5
+                  },
+                  silent: true
+                };
+              },
+              data: [0]
+            }, {
+              name: "ring5",
+              type: 'custom',
+              coordinateSystem: "none",
+              renderItem: function(params, api) {
+                return {
+                  type: 'arc',
+                  shape: {
+                    cx: api.getWidth() / 2,
+                    cy: api.getHeight() / 2,
+                    r: Math.min(api.getWidth(), api.getHeight()) / 2 * 0.65,
+                    startAngle: (90+-_this.angle) * Math.PI / 180,
+                    endAngle: (220+-_this.angle) * Math.PI / 180
+                  },
+                  style: {
+                    stroke: "#0CD3DB",
+                    fill: "transparent",
+                    lineWidth: 1.5
+                  },
+                  silent: true
+                };
+              },
+              data: [0]
+            }, {
+              name: "ring5",
+              type: 'custom',
+              coordinateSystem: "none",
+              renderItem: function(params, api) {
+                let x0 = api.getWidth() / 2;
+                let y0 = api.getHeight() / 2;
+                let r = Math.min(api.getWidth(), api.getHeight()) / 2 * 0.65;
+                let point = _this.getCirlPoint(x0, y0, r, (90+-_this.angle))
+                return {
+                  type: 'circle',
+                  shape: {
+                    cx: point.x,
+                    cy: point.y,
+                    r: 4
+                  },
+                  style: {
+                    stroke: "#0CD3DB",//粉
+                    fill: "#0CD3DB"
+                  },
+                  silent: true
+                };
+              },
+              data: [0]
+            }, {
+              name: "ring5",  //绿点
+              type: 'custom',
+              coordinateSystem: "none",
+              renderItem: function(params, api) {
+                let x0 = api.getWidth() / 2;
+                let y0 = api.getHeight() / 2;
+                let r = Math.min(api.getWidth(), api.getHeight()) / 2 * 0.65;
+                let point = _this.getCirlPoint(x0, y0, r, (270+-_this.angle))
+                return {
+                  type: 'circle',
+                  shape: {
+                    cx: point.x,
+                    cy: point.y,
+                    r: 4
+                  },
+                  style: {
+                    stroke: "#0CD3DB",      //绿
+                    fill: "#0CD3DB"
+                  },
+                  silent: true
+                };
+              },
+              data: [0]
+            }, {
+              name: '吃猪肉频率',
+              type: 'pie',
+              radius: ['58%', '45%'],
+              silent: true,
+              clockwise: true,
+              startAngle: 90,
+              z: 0,
+              zlevel: 0,
+              label: {
+                normal: {
+                  position: "center",
+
+                }
+              },
+              data: [{
+                value: value,
+                name: "",
+                itemStyle: {
+                  normal: {
+                    color: { // 完成的圆环的颜色
+                      colorStops: [{
+                        offset: 0,
+                        color: '#4FADFD' // 0% 处的颜色
+                      }, {
+                        offset: 1,
+                        color: '#28E8FA' // 100% 处的颜色
+                      }]
+                    },
+                  }
+                }
+              },
+                {
+                  value: 100-value,
+                  name: "",
+                  label: {
+                    normal: {
+                      show: false
+                    }
+                  },
+                  itemStyle: {
+                    normal: {
+                      color: "#173164"
+                    }
+                  }
+                }
+              ]
+            },
+
+              {
+                name: "",
+                type: "gauge",
+                radius: "58%",
+                center: ['50%', '50%'],
+                startAngle: 0,
+                endAngle: 359.9,
+                splitNumber: 8,
+                hoverAnimation: true,
+                axisTick: {
+                  show: false
+                },
+                splitLine: {
+                  length: 60,
+                  lineStyle: {
+                    width: 0,
+                    color: "#061740"
+                  }
+                },
+                axisLabel: {
+                  show: false
+                },
+                pointer: {
+                  show: false
+                },
+                axisLine: {
+                  lineStyle: {
+                    opacity: 0
+                  }
+                },
+                detail: {
+                  show: false
+                },
+                data: [{
+                  value: 0,
+                  name: ""
+                }]
+              },
+
+            ]
+          }
+          _this.option4 = option
+        },
+        inchart42() {
+          this.myChart42 = this.$echarts.init(document.getElementById('mychart42'));
+          var _this = this
+          //角度，用来做简单的动画效果的
+          let value = 67;
+          var option = {
+            // backgroundColor:"#061740",
+            title: [{
+              text: '{a|'+ value +'人}',
+              x: 'center',
+              y: '40%',
+              textStyle: {
+                rich:{
+                  a: {
+                    fontSize: 16,
+                    color: '#29EEF3'
+                  },
+
+                  c: {
+                    fontSize: 20,
+                    color: '#ffffff',
+                    // padding: [5,0]
+                  }
+                }
+              }
+            },
+              {
+                text: '参与人数',
+                x: 'center',
+                y: '50%',
+                textStyle: {
+                  fontSize: 14,
+                  color: '#ffffff'
+                }
+              }],
+            legend: {
+              type: "plain",
+              orient: "vertical",
+              right: 0,
+              top: "10%",
+              align: "auto",
+              data: [{
+                name: '涨价后没吃过',
+                icon: "circle"
+              }, {
+                name: '天天吃',
+                icon: "circle"
+              }, {
+                name: '三五天吃一次',
+                icon: "circle"
+              }, {
+                name: '半个月吃一次',
+                icon: "circle"
+              }],
+              textStyle: {
+                color: "white",
+                fontSize: 16,
+                padding: [10, 1, 10, 0]
+              },
+              selectedMode:false
+            },
+            series: [ {
+              name: "ring5",
+              type: 'custom',
+              coordinateSystem: "none",
+              renderItem: function(params, api) {
+                return {
+                  type: 'arc',
+                  shape: {
+                    cx: api.getWidth() / 2,
+                    cy: api.getHeight() / 2,
+                    r: Math.min(api.getWidth(), api.getHeight()) / 2 * 0.6,
+                    startAngle: (0+_this.angle) * Math.PI / 180,
+                    endAngle: (90+_this.angle) * Math.PI / 180
+                  },
+                  style: {
+                    stroke: "#0CD3DB",
+                    fill: "transparent",
+                    lineWidth: 1.5
+                  },
+                  silent: true
+                };
+              },
+              data: [0]
+            }, {
+              name: "ring5",
+              type: 'custom',
+              coordinateSystem: "none",
+              renderItem: function(params, api) {
+                return {
+                  type: 'arc',
+                  shape: {
+                    cx: api.getWidth() / 2,
+                    cy: api.getHeight() / 2,
+                    r: Math.min(api.getWidth(), api.getHeight()) / 2 * 0.6,
+                    startAngle: (180+_this.angle) * Math.PI / 180,
+                    endAngle: (270+_this.angle) * Math.PI / 180
+                  },
+                  style: {
+                    stroke: "#0CD3DB",
+                    fill: "transparent",
+                    lineWidth: 1.5
+                  },
+                  silent: true
+                };
+              },
+              data: [0]
+            }, {
+              name: "ring5",
+              type: 'custom',
+              coordinateSystem: "none",
+              renderItem: function(params, api) {
+                return {
+                  type: 'arc',
+                  shape: {
+                    cx: api.getWidth() / 2,
+                    cy: api.getHeight() / 2,
+                    r: Math.min(api.getWidth(), api.getHeight()) / 2 * 0.65,
+                    startAngle: (270+-_this.angle) * Math.PI / 180,
+                    endAngle: (40+-_this.angle) * Math.PI / 180
+                  },
+                  style: {
+                    stroke: "#0CD3DB",
+                    fill: "transparent",
+                    lineWidth: 1.5
+                  },
+                  silent: true
+                };
+              },
+              data: [0]
+            }, {
+              name: "ring5",
+              type: 'custom',
+              coordinateSystem: "none",
+              renderItem: function(params, api) {
+                return {
+                  type: 'arc',
+                  shape: {
+                    cx: api.getWidth() / 2,
+                    cy: api.getHeight() / 2,
+                    r: Math.min(api.getWidth(), api.getHeight()) / 2 * 0.65,
+                    startAngle: (90+-_this.angle) * Math.PI / 180,
+                    endAngle: (220+-_this.angle) * Math.PI / 180
+                  },
+                  style: {
+                    stroke: "#0CD3DB",
+                    fill: "transparent",
+                    lineWidth: 1.5
+                  },
+                  silent: true
+                };
+              },
+              data: [0]
+            }, {
+              name: "ring5",
+              type: 'custom',
+              coordinateSystem: "none",
+              renderItem: function(params, api) {
+                let x0 = api.getWidth() / 2;
+                let y0 = api.getHeight() / 2;
+                let r = Math.min(api.getWidth(), api.getHeight()) / 2 * 0.65;
+                let point = _this.getCirlPoint(x0, y0, r, (90+-_this.angle))
+                return {
+                  type: 'circle',
+                  shape: {
+                    cx: point.x,
+                    cy: point.y,
+                    r: 4
+                  },
+                  style: {
+                    stroke: "#0CD3DB",//粉
+                    fill: "#0CD3DB"
+                  },
+                  silent: true
+                };
+              },
+              data: [0]
+            }, {
+              name: "ring5",  //绿点
+              type: 'custom',
+              coordinateSystem: "none",
+              renderItem: function(params, api) {
+                let x0 = api.getWidth() / 2;
+                let y0 = api.getHeight() / 2;
+                let r = Math.min(api.getWidth(), api.getHeight()) / 2 * 0.65;
+                let point = _this.getCirlPoint(x0, y0, r, (270+-_this.angle))
+                return {
+                  type: 'circle',
+                  shape: {
+                    cx: point.x,
+                    cy: point.y,
+                    r: 4
+                  },
+                  style: {
+                    stroke: "#0CD3DB",      //绿
+                    fill: "#0CD3DB"
+                  },
+                  silent: true
+                };
+              },
+              data: [0]
+            }, {
+              name: '吃猪肉频率',
+              type: 'pie',
+              radius: ['58%', '45%'],
+              silent: true,
+              clockwise: true,
+              startAngle: 90,
+              z: 0,
+              zlevel: 0,
+              label: {
+                normal: {
+                  position: "center",
+
+                }
+              },
+              data: [{
+                value: value,
+                name: "",
+                itemStyle: {
+                  normal: {
+                    color: { // 完成的圆环的颜色
+                      colorStops: [{
+                        offset: 0,
+                        color: '#4FADFD' // 0% 处的颜色
+                      }, {
+                        offset: 1,
+                        color: '#28E8FA' // 100% 处的颜色
+                      }]
+                    },
+                  }
+                }
+              },
+                {
+                  value: 100-value,
+                  name: "",
+                  label: {
+                    normal: {
+                      show: false
+                    }
+                  },
+                  itemStyle: {
+                    normal: {
+                      color: "#173164"
+                    }
+                  }
+                }
+              ]
+            },
+
+              {
+                name: "",
+                type: "gauge",
+                radius: "58%",
+                center: ['50%', '50%'],
+                startAngle: 0,
+                endAngle: 359.9,
+                splitNumber: 8,
+                hoverAnimation: true,
+                axisTick: {
+                  show: false
+                },
+                splitLine: {
+                  length: 60,
+                  lineStyle: {
+                    width: 0,
+                    color: "#061740"
+                  }
+                },
+                axisLabel: {
+                  show: false
+                },
+                pointer: {
+                  show: false
+                },
+                axisLine: {
+                  lineStyle: {
+                    opacity: 0
+                  }
+                },
+                detail: {
+                  show: false
+                },
+                data: [{
+                  value: 0,
+                  name: ""
+                }]
+              },
+
+            ]
+          }
+          _this.option5 = option
+        },
+        inchart43() {
+          this.myChart43 = this.$echarts.init(document.getElementById('mychart43'));
+          var _this = this
+          //角度，用来做简单的动画效果的
+          let value = 45;
+          var option = {
+            // backgroundColor:"#061740",
+            title: [{
+              text: '{a|'+ value +'个}',
+              x: 'center',
+              y: '40%',
+              textStyle: {
+                rich:{
+                  a: {
+                    fontSize: 16,
+                    color: '#29EEF3'
+                  },
+
+                  c: {
+                    fontSize: 20,
+                    color: '#ffffff',
+                    // padding: [5,0]
+                  }
+                }
+              }
+            },
+              {
+                text: '视频数目',
+                x: 'center',
+                y: '50%',
+                textStyle: {
+                  fontSize: 14,
+                  color: '#ffffff'
+                }
+              }],
+            legend: {
+              type: "plain",
+              orient: "vertical",
+              right: 0,
+              top: "10%",
+              align: "auto",
+              data: [{
+                name: '涨价后没吃过',
+                icon: "circle"
+              }, {
+                name: '天天吃',
+                icon: "circle"
+              }, {
+                name: '三五天吃一次',
+                icon: "circle"
+              }, {
+                name: '半个月吃一次',
+                icon: "circle"
+              }],
+              textStyle: {
+                color: "white",
+                fontSize: 16,
+                padding: [10, 1, 10, 0]
+              },
+              selectedMode:false
+            },
+            series: [ {
+              name: "ring5",
+              type: 'custom',
+              coordinateSystem: "none",
+              renderItem: function(params, api) {
+                return {
+                  type: 'arc',
+                  shape: {
+                    cx: api.getWidth() / 2,
+                    cy: api.getHeight() / 2,
+                    r: Math.min(api.getWidth(), api.getHeight()) / 2 * 0.6,
+                    startAngle: (0+_this.angle) * Math.PI / 180,
+                    endAngle: (90+_this.angle) * Math.PI / 180
+                  },
+                  style: {
+                    stroke: "#0CD3DB",
+                    fill: "transparent",
+                    lineWidth: 1.5
+                  },
+                  silent: true
+                };
+              },
+              data: [0]
+            }, {
+              name: "ring5",
+              type: 'custom',
+              coordinateSystem: "none",
+              renderItem: function(params, api) {
+                return {
+                  type: 'arc',
+                  shape: {
+                    cx: api.getWidth() / 2,
+                    cy: api.getHeight() / 2,
+                    r: Math.min(api.getWidth(), api.getHeight()) / 2 * 0.6,
+                    startAngle: (180+_this.angle) * Math.PI / 180,
+                    endAngle: (270+_this.angle) * Math.PI / 180
+                  },
+                  style: {
+                    stroke: "#0CD3DB",
+                    fill: "transparent",
+                    lineWidth: 1.5
+                  },
+                  silent: true
+                };
+              },
+              data: [0]
+            }, {
+              name: "ring5",
+              type: 'custom',
+              coordinateSystem: "none",
+              renderItem: function(params, api) {
+                return {
+                  type: 'arc',
+                  shape: {
+                    cx: api.getWidth() / 2,
+                    cy: api.getHeight() / 2,
+                    r: Math.min(api.getWidth(), api.getHeight()) / 2 * 0.65,
+                    startAngle: (270+-_this.angle) * Math.PI / 180,
+                    endAngle: (40+-_this.angle) * Math.PI / 180
+                  },
+                  style: {
+                    stroke: "#0CD3DB",
+                    fill: "transparent",
+                    lineWidth: 1.5
+                  },
+                  silent: true
+                };
+              },
+              data: [0]
+            }, {
+              name: "ring5",
+              type: 'custom',
+              coordinateSystem: "none",
+              renderItem: function(params, api) {
+                return {
+                  type: 'arc',
+                  shape: {
+                    cx: api.getWidth() / 2,
+                    cy: api.getHeight() / 2,
+                    r: Math.min(api.getWidth(), api.getHeight()) / 2 * 0.65,
+                    startAngle: (90+-_this.angle) * Math.PI / 180,
+                    endAngle: (220+-_this.angle) * Math.PI / 180
+                  },
+                  style: {
+                    stroke: "#0CD3DB",
+                    fill: "transparent",
+                    lineWidth: 1.5
+                  },
+                  silent: true
+                };
+              },
+              data: [0]
+            }, {
+              name: "ring5",
+              type: 'custom',
+              coordinateSystem: "none",
+              renderItem: function(params, api) {
+                let x0 = api.getWidth() / 2;
+                let y0 = api.getHeight() / 2;
+                let r = Math.min(api.getWidth(), api.getHeight()) / 2 * 0.65;
+                let point = _this.getCirlPoint(x0, y0, r, (90+-_this.angle))
+                return {
+                  type: 'circle',
+                  shape: {
+                    cx: point.x,
+                    cy: point.y,
+                    r: 4
+                  },
+                  style: {
+                    stroke: "#0CD3DB",//粉
+                    fill: "#0CD3DB"
+                  },
+                  silent: true
+                };
+              },
+              data: [0]
+            }, {
+              name: "ring5",  //绿点
+              type: 'custom',
+              coordinateSystem: "none",
+              renderItem: function(params, api) {
+                let x0 = api.getWidth() / 2;
+                let y0 = api.getHeight() / 2;
+                let r = Math.min(api.getWidth(), api.getHeight()) / 2 * 0.65;
+                let point = _this.getCirlPoint(x0, y0, r, (270+-_this.angle))
+                return {
+                  type: 'circle',
+                  shape: {
+                    cx: point.x,
+                    cy: point.y,
+                    r: 4
+                  },
+                  style: {
+                    stroke: "#0CD3DB",      //绿
+                    fill: "#0CD3DB"
+                  },
+                  silent: true
+                };
+              },
+              data: [0]
+            }, {
+              name: '吃猪肉频率',
+              type: 'pie',
+              radius: ['58%', '45%'],
+              silent: true,
+              clockwise: true,
+              startAngle: 90,
+              z: 0,
+              zlevel: 0,
+              label: {
+                normal: {
+                  position: "center",
+
+                }
+              },
+              data: [{
+                value: value,
+                name: "",
+                itemStyle: {
+                  normal: {
+                    color: { // 完成的圆环的颜色
+                      colorStops: [{
+                        offset: 0,
+                        color: '#4FADFD' // 0% 处的颜色
+                      }, {
+                        offset: 1,
+                        color: '#28E8FA' // 100% 处的颜色
+                      }]
+                    },
+                  }
+                }
+              },
+                {
+                  value: 100-value,
+                  name: "",
+                  label: {
+                    normal: {
+                      show: false
+                    }
+                  },
+                  itemStyle: {
+                    normal: {
+                      color: "#173164"
+                    }
+                  }
+                }
+              ]
+            },
+
+              {
+                name: "",
+                type: "gauge",
+                radius: "58%",
+                center: ['50%', '50%'],
+                startAngle: 0,
+                endAngle: 359.9,
+                splitNumber: 8,
+                hoverAnimation: true,
+                axisTick: {
+                  show: false
+                },
+                splitLine: {
+                  length: 60,
+                  lineStyle: {
+                    width: 0,
+                    color: "#061740"
+                  }
+                },
+                axisLabel: {
+                  show: false
+                },
+                pointer: {
+                  show: false
+                },
+                axisLine: {
+                  lineStyle: {
+                    opacity: 0
+                  }
+                },
+                detail: {
+                  show: false
+                },
+                data: [{
+                  value: 0,
+                  name: ""
+                }]
+              },
+
+            ]
+          }
+          _this.option6 = option
+        },
+        inchart44() {
+          this.myChart44 = this.$echarts.init(document.getElementById('mychart44'));
+          var _this = this
+          //角度，用来做简单的动画效果的
+          let value = 35;
+          var option = {
+            // backgroundColor:"#061740",
+            title: [{
+              text: '{a|'+ value +'个}',
+              x: 'center',
+              y: '40%',
+              textStyle: {
+                rich:{
+                  a: {
+                    fontSize: 16,
+                    color: '#29EEF3'
+                  },
+
+                  c: {
+                    fontSize: 20,
+                    color: '#ffffff',
+                    // padding: [5,0]
+                  }
+                }
+              }
+            },
+              {
+                text: '文档数目',
+                x: 'center',
+                y: '50%',
+                textStyle: {
+                  fontSize: 14,
+                  color: '#ffffff'
+                }
+              }],
+            legend: {
+              type: "plain",
+              orient: "vertical",
+              right: 0,
+              top: "10%",
+              align: "auto",
+              data: [{
+                name: '涨价后没吃过',
+                icon: "circle"
+              }, {
+                name: '天天吃',
+                icon: "circle"
+              }, {
+                name: '三五天吃一次',
+                icon: "circle"
+              }, {
+                name: '半个月吃一次',
+                icon: "circle"
+              }],
+              textStyle: {
+                color: "white",
+                fontSize: 16,
+                padding: [10, 1, 10, 0]
+              },
+              selectedMode:false
+            },
+            series: [ {
+              name: "ring5",
+              type: 'custom',
+              coordinateSystem: "none",
+              renderItem: function(params, api) {
+                return {
+                  type: 'arc',
+                  shape: {
+                    cx: api.getWidth() / 2,
+                    cy: api.getHeight() / 2,
+                    r: Math.min(api.getWidth(), api.getHeight()) / 2 * 0.6,
+                    startAngle: (0+_this.angle) * Math.PI / 180,
+                    endAngle: (90+_this.angle) * Math.PI / 180
+                  },
+                  style: {
+                    stroke: "#0CD3DB",
+                    fill: "transparent",
+                    lineWidth: 1.5
+                  },
+                  silent: true
+                };
+              },
+              data: [0]
+            }, {
+              name: "ring5",
+              type: 'custom',
+              coordinateSystem: "none",
+              renderItem: function(params, api) {
+                return {
+                  type: 'arc',
+                  shape: {
+                    cx: api.getWidth() / 2,
+                    cy: api.getHeight() / 2,
+                    r: Math.min(api.getWidth(), api.getHeight()) / 2 * 0.6,
+                    startAngle: (180+_this.angle) * Math.PI / 180,
+                    endAngle: (270+_this.angle) * Math.PI / 180
+                  },
+                  style: {
+                    stroke: "#0CD3DB",
+                    fill: "transparent",
+                    lineWidth: 1.5
+                  },
+                  silent: true
+                };
+              },
+              data: [0]
+            }, {
+              name: "ring5",
+              type: 'custom',
+              coordinateSystem: "none",
+              renderItem: function(params, api) {
+                return {
+                  type: 'arc',
+                  shape: {
+                    cx: api.getWidth() / 2,
+                    cy: api.getHeight() / 2,
+                    r: Math.min(api.getWidth(), api.getHeight()) / 2 * 0.65,
+                    startAngle: (270+-_this.angle) * Math.PI / 180,
+                    endAngle: (40+-_this.angle) * Math.PI / 180
+                  },
+                  style: {
+                    stroke: "#0CD3DB",
+                    fill: "transparent",
+                    lineWidth: 1.5
+                  },
+                  silent: true
+                };
+              },
+              data: [0]
+            }, {
+              name: "ring5",
+              type: 'custom',
+              coordinateSystem: "none",
+              renderItem: function(params, api) {
+                return {
+                  type: 'arc',
+                  shape: {
+                    cx: api.getWidth() / 2,
+                    cy: api.getHeight() / 2,
+                    r: Math.min(api.getWidth(), api.getHeight()) / 2 * 0.65,
+                    startAngle: (90+-_this.angle) * Math.PI / 180,
+                    endAngle: (220+-_this.angle) * Math.PI / 180
+                  },
+                  style: {
+                    stroke: "#0CD3DB",
+                    fill: "transparent",
+                    lineWidth: 1.5
+                  },
+                  silent: true
+                };
+              },
+              data: [0]
+            }, {
+              name: "ring5",
+              type: 'custom',
+              coordinateSystem: "none",
+              renderItem: function(params, api) {
+                let x0 = api.getWidth() / 2;
+                let y0 = api.getHeight() / 2;
+                let r = Math.min(api.getWidth(), api.getHeight()) / 2 * 0.65;
+                let point = _this.getCirlPoint(x0, y0, r, (90+-_this.angle))
+                return {
+                  type: 'circle',
+                  shape: {
+                    cx: point.x,
+                    cy: point.y,
+                    r: 4
+                  },
+                  style: {
+                    stroke: "#0CD3DB",//粉
+                    fill: "#0CD3DB"
+                  },
+                  silent: true
+                };
+              },
+              data: [0]
+            }, {
+              name: "ring5",  //绿点
+              type: 'custom',
+              coordinateSystem: "none",
+              renderItem: function(params, api) {
+                let x0 = api.getWidth() / 2;
+                let y0 = api.getHeight() / 2;
+                let r = Math.min(api.getWidth(), api.getHeight()) / 2 * 0.65;
+                let point = _this.getCirlPoint(x0, y0, r, (270+-_this.angle))
+                return {
+                  type: 'circle',
+                  shape: {
+                    cx: point.x,
+                    cy: point.y,
+                    r: 4
+                  },
+                  style: {
+                    stroke: "#0CD3DB",      //绿
+                    fill: "#0CD3DB"
+                  },
+                  silent: true
+                };
+              },
+              data: [0]
+            }, {
+              name: '吃猪肉频率',
+              type: 'pie',
+              radius: ['58%', '45%'],
+              silent: true,
+              clockwise: true,
+              startAngle: 90,
+              z: 0,
+              zlevel: 0,
+              label: {
+                normal: {
+                  position: "center",
+
+                }
+              },
+              data: [{
+                value: value,
+                name: "",
+                itemStyle: {
+                  normal: {
+                    color: { // 完成的圆环的颜色
+                      colorStops: [{
+                        offset: 0,
+                        color: '#4FADFD' // 0% 处的颜色
+                      }, {
+                        offset: 1,
+                        color: '#28E8FA' // 100% 处的颜色
+                      }]
+                    },
+                  }
+                }
+              },
+                {
+                  value: 100-value,
+                  name: "",
+                  label: {
+                    normal: {
+                      show: false
+                    }
+                  },
+                  itemStyle: {
+                    normal: {
+                      color: "#173164"
+                    }
+                  }
+                }
+              ]
+            },
+
+              {
+                name: "",
+                type: "gauge",
+                radius: "58%",
+                center: ['50%', '50%'],
+                startAngle: 0,
+                endAngle: 359.9,
+                splitNumber: 8,
+                hoverAnimation: true,
+                axisTick: {
+                  show: false
+                },
+                splitLine: {
+                  length: 60,
+                  lineStyle: {
+                    width: 0,
+                    color: "#061740"
+                  }
+                },
+                axisLabel: {
+                  show: false
+                },
+                pointer: {
+                  show: false
+                },
+                axisLine: {
+                  lineStyle: {
+                    opacity: 0
+                  }
+                },
+                detail: {
+                  show: false
+                },
+                data: [{
+                  value: 0,
+                  name: ""
+                }]
+              },
+
+            ]
+          }
+          _this.option7 = option
+        },
+        getCirlPoint(x0, y0, r, angle) {
+          let x1 = x0 + r * Math.cos(angle * Math.PI / 180)
+          let y1 = y0 + r * Math.sin(angle * Math.PI / 180)
+          return {
+            x: x1,
+            y: y1
+          }
+        },
+        draw() {
+          this.angle = this.angle+3
+          this.myChart41.setOption(this.option4, true)
+          this.myChart42.setOption(this.option5, true)
+          this.myChart43.setOption(this.option6, true)
+          this.myChart44.setOption(this.option7, true)
+        },
         chart21Res() {
           let _this = this;
           window.addEventListener('resize', function () {
@@ -2974,6 +4172,13 @@
     background-size: 100% 100%;
     position: relative;
   }
+  .col-div4 {
+    width: 100%;
+    background-image: url("../../assets/boxheader.png");
+    background-size: 100% 100%;
+    position: relative;
+    height: 6.1rem;
+  }
   .rowstyle {
     margin-top: 0.1rem;
   }
@@ -3023,11 +4228,38 @@
     width: 100%;
     height: 25vh;
   }
+  #mychart41 {
+    width: 100%;
+    height: 25vh;
+    margin-top: 0.2rem;
+  }
+  #mychart42 {
+    width: 100%;
+    height: 25vh;
+    margin-top: 0.2rem;
+  }
+  #mychart43 {
+    width: 100%;
+    height: 25vh;
+    margin-top: 0.2rem;
+  }
+  #mychart44 {
+    width: 100%;
+    height: 25vh;
+    margin-top: 0.2rem;
+  }
   .box-txt {
     color: #ffa454;
     font-size: 0.2rem;
     position: absolute;
     top: 5%;
+    left: 1%;
+  }
+  .box-txt4 {
+    color: #ffa454;
+    font-size: 0.2rem;
+    position: absolute;
+    top: 2%;
     left: 1%;
   }
   .box-text1 {
@@ -3069,5 +4301,11 @@
     position: absolute;
     top: 50%;
     right: 10%;
+  }
+  .border-top-left {
+    height: 10px;
+    background-image: url("../../assets/border/right-top.png");
+    background-size: 100% 100%;
+    width: 100%;
   }
 </style>
