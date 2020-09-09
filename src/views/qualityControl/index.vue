@@ -2318,7 +2318,7 @@
             },
             legend: {
               data: ['新增问题数', '消除问题数', '现存问题数'],
-              top: '5%',
+              // top: '2%',
               textStyle: {
                 color: '#2CABE3',
                 fontSize: 12,
@@ -4227,6 +4227,8 @@
   #mychart32 {
     width: 100%;
     height: 25vh;
+    position: absolute;
+    top: 10%;
   }
   #mychart41 {
     width: 100%;
