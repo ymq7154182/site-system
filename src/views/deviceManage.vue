@@ -37,19 +37,19 @@
                   <div v-show="!infohover1" class="device-detail-info">
                     <table>
                       <tr>
-                        <td>生产厂家：</td>
+                        <td><i class="el-icon-office-building" /> 生产厂家:</td>
                         <td>HAIZHI</td>
                       </tr>
                       <tr>
-                        <td>设备型号：</td>
+                        <td><i class="el-icon-s-tools" /> 设备型号:</td>
                         <td>HZT520-TJ</td>
                       </tr>
                       <tr>
-                        <td>安装位置：</td>
+                        <td><i class="el-icon-place" /> 安装位置:</td>
                         <td>A4栋东南区</td>
                       </tr>
                       <tr>
-                        <td>责任人：</td>
+                        <td><i class="el-icon-s-custom" /> 责任人:</td>
                         <td>张伟</td>
                       </tr>
                     </table>
@@ -74,19 +74,19 @@
                   <div v-show="!infohover2" class="device-detail-info">
                     <table>
                       <tr>
-                        <td>生产厂家：</td>
+                        <td><i class="el-icon-office-building" /> 生产厂家:</td>
                         <td>HAIZHI</td>
                       </tr>
                       <tr>
-                        <td>设备型号：</td>
+                        <td><i class="el-icon-s-tools" /> 设备型号:</td>
                         <td>HZTJ582-124</td>
                       </tr>
                       <tr>
-                        <td>安装位置：</td>
+                        <td><i class="el-icon-place" /> 安装位置:</td>
                         <td>A6栋门口</td>
                       </tr>
                       <tr>
-                        <td>责任人：</td>
+                        <td><i class="el-icon-s-custom" /> 责任人:</td>
                         <td>张伟</td>
                       </tr>
                     </table>
@@ -111,19 +111,19 @@
                   <div v-show="!infohover3" class="device-detail-info">
                     <table>
                       <tr>
-                        <td>生产厂家：</td>
+                        <td><i class="el-icon-office-building" /> 生产厂家:</td>
                         <td>三一重工</td>
                       </tr>
                       <tr>
-                        <td>设备型号：</td>
+                        <td><i class="el-icon-s-tools" /> 设备型号:</td>
                         <td>CZ-6910</td>
                       </tr>
                       <tr>
-                        <td>安装位置：</td>
+                        <td><i class="el-icon-place" /> 安装位置:</td>
                         <td>施工区</td>
                       </tr>
                       <tr>
-                        <td>责任人：</td>
+                        <td><i class="el-icon-s-custom" /> 责任人:</td>
                         <td>王刚</td>
                       </tr>
                     </table>
@@ -148,19 +148,19 @@
                   <div v-show="!infohover4" class="device-detail-info">
                     <table>
                       <tr>
-                        <td>生产厂家：</td>
+                        <td><i class="el-icon-office-building" /> 生产厂家:</td>
                         <td>HAIZHI</td>
                       </tr>
                       <tr>
-                        <td>设备型号：</td>
+                        <td><i class="el-icon-s-tools" /> 设备型号:</td>
                         <td>HZYJ582-124</td>
                       </tr>
                       <tr>
-                        <td>安装位置：</td>
+                        <td><i class="el-icon-place" /> 安装位置:</td>
                         <td>A4栋</td>
                       </tr>
                       <tr>
-                        <td>责任人：</td>
+                        <td><i class="el-icon-s-custom" /> 责任人:</td>
                         <td>张洲</td>
                       </tr>
                     </table>
@@ -185,19 +185,19 @@
                   <div v-show="!infohover5" class="device-detail-info">
                     <table>
                       <tr>
-                        <td>生产厂家：</td>
+                        <td><i class="el-icon-office-building" /> 生产厂家:</td>
                         <td>HAIZHI</td>
                       </tr>
                       <tr>
-                        <td>设备型号：</td>
+                        <td><i class="el-icon-s-tools" /> 设备型号:</td>
                         <td>HZYJ582-124</td>
                       </tr>
                       <tr>
-                        <td>安装位置：</td>
+                        <td><i class="el-icon-place" /> 安装位置:</td>
                         <td>A5栋</td>
                       </tr>
                       <tr>
-                        <td>责任人：</td>
+                        <td><i class="el-icon-s-custom" /> 责任人:</td>
                         <td>李华</td>
                       </tr>
                     </table>
@@ -222,19 +222,19 @@
                   <div v-show="!infohover6" class="device-detail-info">
                     <table>
                       <tr>
-                        <td>生产厂家：</td>
+                        <td><i class="el-icon-office-building" /> 生产厂家:</td>
                         <td>HAIZHI</td>
                       </tr>
                       <tr>
-                        <td>设备型号：</td>
+                        <td><i class="el-icon-s-tools" /> 设备型号:</td>
                         <td>HZT520-TJ</td>
                       </tr>
                       <tr>
-                        <td>安装位置：</td>
+                        <td><i class="el-icon-place" /> 安装位置:</td>
                         <td>A4栋东南区</td>
                       </tr>
                       <tr>
-                        <td>责任人：</td>
+                        <td><i class="el-icon-s-custom" /> 责任人:</td>
                         <td>张伟</td>
                       </tr>
                     </table>
@@ -259,19 +259,19 @@
                   <div v-show="!infohover7" class="device-detail-info">
                     <table>
                       <tr>
-                        <td>生产厂家：</td>
+                        <td><i class="el-icon-office-building" /> 生产厂家:</td>
                         <td>HAIZHI</td>
                       </tr>
                       <tr>
-                        <td>设备型号：</td>
+                        <td><i class="el-icon-s-tools" /> 设备型号:</td>
                         <td>HZTJ582-124</td>
                       </tr>
                       <tr>
-                        <td>安装位置：</td>
+                        <td><i class="el-icon-place" /> 安装位置:</td>
                         <td>A6栋门口</td>
                       </tr>
                       <tr>
-                        <td>责任人：</td>
+                        <td><i class="el-icon-s-custom" /> 责任人:</td>
                         <td>张伟</td>
                       </tr>
                     </table>
@@ -296,19 +296,19 @@
                   <div v-show="!infohover8" class="device-detail-info">
                     <table>
                       <tr>
-                        <td>生产厂家：</td>
+                        <td><i class="el-icon-office-building" /> 生产厂家:</td>
                         <td>三一重工</td>
                       </tr>
                       <tr>
-                        <td>设备型号：</td>
+                        <td><i class="el-icon-s-tools" /> 设备型号:</td>
                         <td>CZ-6910</td>
                       </tr>
                       <tr>
-                        <td>安装位置：</td>
+                        <td><i class="el-icon-place" /> 安装位置:</td>
                         <td>施工区</td>
                       </tr>
                       <tr>
-                        <td>责任人：</td>
+                        <td><i class="el-icon-s-custom" /> 责任人:</td>
                         <td>王刚</td>
                       </tr>
                     </table>
@@ -333,19 +333,19 @@
                   <div v-show="!infohover9" class="device-detail-info">
                     <table>
                       <tr>
-                        <td>生产厂家：</td>
+                        <td><i class="el-icon-office-building" /> 生产厂家:</td>
                         <td>HAIZHI</td>
                       </tr>
                       <tr>
-                        <td>设备型号：</td>
+                        <td><i class="el-icon-s-tools" /> 设备型号:</td>
                         <td>HZYJ582-124</td>
                       </tr>
                       <tr>
-                        <td>安装位置：</td>
+                        <td><i class="el-icon-place" /> 安装位置:</td>
                         <td>A4栋</td>
                       </tr>
                       <tr>
-                        <td>责任人：</td>
+                        <td><i class="el-icon-s-custom" /> 责任人:</td>
                         <td>张洲</td>
                       </tr>
                     </table>
@@ -370,19 +370,19 @@
                   <div v-show="!infohover10" class="device-detail-info">
                     <table>
                       <tr>
-                        <td>生产厂家：</td>
+                        <td><i class="el-icon-office-building" /> 生产厂家:</td>
                         <td>HAIZHI</td>
                       </tr>
                       <tr>
-                        <td>设备型号：</td>
+                        <td><i class="el-icon-s-tools" /> 设备型号:</td>
                         <td>HZYJ582-124</td>
                       </tr>
                       <tr>
-                        <td>安装位置：</td>
+                        <td><i class="el-icon-place" /> 安装位置:</td>
                         <td>A5栋</td>
                       </tr>
                       <tr>
-                        <td>责任人：</td>
+                        <td><i class="el-icon-s-custom" /> 责任人:</td>
                         <td>李华</td>
                       </tr>
                     </table>
@@ -711,7 +711,7 @@ export default {
   width: 100%;
   background-color: rgba(0, 0, 0, 0.05);
   color: #E8FEFF;
-  font-size: 0.2rem;
+  font-size: 0.18rem;
 }
 
 .device-detail-info table {
