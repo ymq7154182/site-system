@@ -13,6 +13,30 @@
             </div>
 
           </div>
+          <div class="left_middle">
+            <div class="border-top-left"></div>
+            <div class="p_title">
+              <span class="title1">人员统计</span>
+            </div>
+            <div class="p_picture">
+              <ul class="p_list">
+                <li v-for="(item,index) in items" :key="index" class="p_item">
+                  <div >
+                    <img class="yicun" :src="item.url" alt="">
+                    <div>{{item.name}}</div>
+                    <div>{{item.position}}</div>
+                    <div class="p_temperature">{{item.temperature}}℃</div>
+                  </div>
+                </li>
+
+              </ul>
+              <div class="p_num">
+                <span class="p_attention">发烧人数：</span>
+                <span class="p_attention">{{attentionNum}}</span>
+                <span class="p_attention">人，已进行追踪处理</span>
+              </div>
+            </div>
+          </div>
           <div class="left_bottom">
             <div class="border-top-left"></div>
             <div class="p_title">
@@ -45,27 +69,52 @@
               <el-col :span="12">
                 <div class="right_top_right">
                   <div class="border-top-left"></div>
-                 <div class="p_title">
-                   <span class="title1">人员统计</span>
-                 </div>
-                 <div class="p_picture">
-                  <ul class="p_list">
-                    <li v-for="(item,index) in items" :key="index" class="p_item">
-                      <div >
-                        <img class="yicun" :src="item.url" alt="">
-                        <div>{{item.name}}</div>
-                        <div>{{item.position}}</div>
-                        <div class="p_temperature">{{item.temperature}}℃</div>
-                      </div>
-                    </li>
-
-                  </ul>
-                  <div class="p_num">
-                    <span class="p_attention">发烧人数：</span>
-                    <span class="p_attention">{{attentionNum}}</span>
-                    <span class="p_attention">人，已进行追踪处理</span>
+                  <div class="p_title">
+                    <span class="title1">负责人员</span>
                   </div>
-                 </div>
+                  <div>
+                    <el-row>
+                      <el-col :span="8">
+                        <div class="headman">
+                          <el-image fit="fill" style="height: 75%; width: 100%; " />
+                          <div style="height: 18%; width: 100%; ">
+                            <el-row>
+                              建设方负责人&nbsp;&nbsp;&nbsp;史扬
+                            </el-row>
+                            <el-row>
+                              龙湖地产有限公司
+                            </el-row>
+                          </div>
+                        </div>
+                      </el-col>
+                      <el-col :span="8">
+                        <div class="headman">
+                          <el-image fit="fill" style="height: 75%; width: 100%; " />
+                          <div style="height: 18%; width: 100%; ">
+                            <el-row>
+                              监理方负责人&nbsp;&nbsp;&nbsp;王琦
+                            </el-row>
+                            <el-row>
+                              北京铁城建设监理有限公司
+                            </el-row>
+                          </div>
+                        </div>
+                      </el-col>
+                      <el-col :span="8">
+                        <div class="headman">
+                          <el-image fit="fill" style="height: 75%; width: 100%; " />
+                          <div style="height: 18%; width: 100%; ">
+                            <el-row>
+                              施工方负责人&nbsp;&nbsp;&nbsp;赵军何
+                            </el-row>
+                            <el-row>
+                              北京城建集团
+                            </el-row>
+                          </div>
+                        </div>
+                      </el-col>
+                    </el-row>
+                  </div>
                 </div>
               </el-col>
             </el-row>
@@ -660,10 +709,6 @@ export default {
                 fontWeight: 'bold'
               }
             },
-
-            label: {
-              // color: 'rgba(25, 255, 255, 0.3)'
-            },
             labelLine: {
               // lineStyle: {
               //   color: 'rgba(255, 255, 255, 0.3)'
@@ -906,5 +951,17 @@ export default {
 .changeRed{
   color: #DE3143 !important;
   font-weight: 600;
+}
+
+.headman {
+  height: 30vh;
+  width: 95%;
+  margin: 0.3rem auto 0 auto;
+  border: 1px solid #3FA0C3;;
+  border-radius: 4px;
+  background-color: rgba(0 ,0 ,0 , 0.35);
+  color: #E8FEFF;
+  text-align: center;
+  line-height: 0.35rem;
 }
 </style>
