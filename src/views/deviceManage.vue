@@ -1,7 +1,7 @@
 <template>
   <div>
-    <el-row :gutter="10" style="margin-bottom: 1.4vh; ">
-      <el-col :span="6" style="padding-left: 1vw; ">
+    <el-row style="margin-bottom: 1.4vh; ">
+      <el-col :span="6" style="padding: 0 0.5vw; ">
         <div style="background-color: rgba(0, 36, 78, 0.5); height: 28vh; width: 100%; ">
           <div class="border-top-left"></div>
           <div class="box-title">塔吊数据</div>
@@ -28,254 +28,384 @@
       <el-col :span="13">
         <div style="background-color: rgba(0, 36, 78, 0.5); height: 28vh; width: 100%; ">
           <div class="border-top-center"></div>
-          <div class="box-title">塔吊数据</div>
+          <div class="box-title">塔吊信息</div>
           <div class="device-data">
             <ul class="device-list">
-              <li>
+              <li @mouseover="infohover1 = false" @mouseout="infohover1 = true">
                 <div class="device-detail">
-                  <el-row>
-                    <el-col :span="7" style="text-align: center; ">
-                      <el-image
-                        :src="require('../assets/tower.png')"
-                        style="height: 0.6rem; width: 0.6rem; "
-                        fit="contain"
-                      />
-                      <div class="device-detail-title">1号塔机</div>
-                      <div class="device-detail-tag">在线</div>
-                    </el-col>
-                    <el-col :span="17">
-                      <div class="device-detail-span">
-                        <p>塔吊名称：1号吊机</p>
-                        <p>安装位置：A4栋东南区</p>
-                        <p>生产厂家：HAIZHI</p>
-                        <p>设备型号：HZT520-TJ</p>
-                        <p>责任人：</p>
-                      </div>
-                    </el-col>
-                  </el-row>
+                  <el-image v-show="infohover1" :src="require('../../src/assets/tower/tadiao1.jpg')" fit="fill" style="height: 80%; " />
+                  <div v-show="!infohover1" class="device-detail-info">
+                    <table>
+                      <tr>
+                        <td>生产厂家：</td>
+                        <td>HAIZHI</td>
+                      </tr>
+                      <tr>
+                        <td>设备型号：</td>
+                        <td>HZT520-TJ</td>
+                      </tr>
+                      <tr>
+                        <td>安装位置：</td>
+                        <td>A4栋东南区</td>
+                      </tr>
+                      <tr>
+                        <td>责任人：</td>
+                        <td>张伟</td>
+                      </tr>
+                    </table>
+                  </div>
+                  <div style="height: 18%; width: 100%; ">
+                    <el-row>
+                      <el-col :span="15">
+                        <div class="device-detail-span">
+                          {{ '1号塔机' }}&nbsp;
+                        </div>
+                      </el-col>
+                      <el-col :span="9">
+                        <el-tag type="success" effect="dark" style="margin-top: 1.5%; ">在线</el-tag>
+                      </el-col>
+                    </el-row>
+                  </div>
                 </div>
               </li>
-              <li>
+              <li @mouseover="infohover2 = false" @mouseout="infohover2 = true">
                 <div class="device-detail">
-                  <el-row>
-                    <el-col :span="7" style="text-align: center; ">
-                      <el-image
-                        :src="require('../assets/tower.png')"
-                        style="height: 0.6rem; width: 0.6rem; "
-                        fit="contain"
-                      />
-                      <div class="device-detail-title">2号塔机</div>
-                      <div class="device-detail-tag">在线</div>
-                    </el-col>
-                    <el-col :span="17">
-                      <div class="device-detail-span">
-                        <p>塔吊名称：2号塔机</p>
-                        <p>安装位置：A6栋门口</p>
-                        <p>生产厂家：HAIZHI</p>
-                        <p>设备型号：HZTJ582-124</p>
-                        <p>责任人：</p>
-                      </div>
-                    </el-col>
-                  </el-row>
+                  <el-image v-show="infohover2" :src="require('../../src/assets/tower/tadiao2.jpg')" fit="fill" style="height: 80%; " />
+                  <div v-show="!infohover2" class="device-detail-info">
+                    <table>
+                      <tr>
+                        <td>生产厂家：</td>
+                        <td>HAIZHI</td>
+                      </tr>
+                      <tr>
+                        <td>设备型号：</td>
+                        <td>HZTJ582-124</td>
+                      </tr>
+                      <tr>
+                        <td>安装位置：</td>
+                        <td>A6栋门口</td>
+                      </tr>
+                      <tr>
+                        <td>责任人：</td>
+                        <td>张伟</td>
+                      </tr>
+                    </table>
+                  </div>
+                  <div style="height: 18%; width: 100%; ">
+                    <el-row>
+                      <el-col :span="15">
+                        <div class="device-detail-span">
+                          {{ '2号塔机' }}&nbsp;
+                        </div>
+                      </el-col>
+                      <el-col :span="9">
+                        <el-tag type="danger" effect="dark" style="margin-top: 1.5%; ">离线</el-tag>
+                      </el-col>
+                    </el-row>
+                  </div>
                 </div>
               </li>
-              <li>
+              <li @mouseover="infohover3 = false" @mouseout="infohover3 = true">
                 <div class="device-detail">
-                  <el-row>
-                    <el-col :span="7" style="text-align: center; ">
-                      <el-image
-                        :src="require('../assets/tower.png')"
-                        style="height: 0.6rem; width: 0.6rem; "
-                        fit="contain"
-                      />
-                      <div class="device-detail-title">一号吊机</div>
-                      <div class="device-detail-tag">在线</div>
-                    </el-col>
-                    <el-col :span="17">
-                      <div class="device-detail-span">
-                        <p>塔吊名称：一号吊机</p>
-                        <p>安装位置：施工区</p>
-                        <p>生产厂家：三一重工</p>
-                        <p>设备型号：CZ-6910</p>
-                        <p>责任人：王刚</p>
-                      </div>
-                    </el-col>
-                  </el-row>
+                  <el-image v-show="infohover3" :src="require('../../src/assets/tower/tadiao3.jpg')" fit="fill" style="height: 80%; " />
+                  <div v-show="!infohover3" class="device-detail-info">
+                    <table>
+                      <tr>
+                        <td>生产厂家：</td>
+                        <td>三一重工</td>
+                      </tr>
+                      <tr>
+                        <td>设备型号：</td>
+                        <td>CZ-6910</td>
+                      </tr>
+                      <tr>
+                        <td>安装位置：</td>
+                        <td>施工区</td>
+                      </tr>
+                      <tr>
+                        <td>责任人：</td>
+                        <td>王刚</td>
+                      </tr>
+                    </table>
+                  </div>
+                  <div style="height: 18%; width: 100%; ">
+                    <el-row>
+                      <el-col :span="15">
+                        <div class="device-detail-span">
+                          {{ '3号塔机' }}&nbsp;
+                        </div>
+                      </el-col>
+                      <el-col :span="9">
+                        <el-tag type="success" effect="dark" style="margin-top: 1.5%; ">在线</el-tag>
+                      </el-col>
+                    </el-row>
+                  </div>
                 </div>
               </li>
-              <li>
+              <li @mouseover="infohover4 = false" @mouseout="infohover4 = true">
                 <div class="device-detail">
-                  <el-row>
-                    <el-col :span="7" style="text-align: center; ">
-                      <el-image
-                        :src="require('../assets/tower.png')"
-                        style="height: 0.6rem; width: 0.6rem; "
-                        fit="contain"
-                      />
-                      <div class="device-detail-title">三号闸机</div>
-                      <div class="device-detail-tag">在线</div>
-                    </el-col>
-                    <el-col :span="17">
-                      <div class="device-detail-span">
-                        <p>塔吊名称：三号闸机</p>
-                        <p>安装位置：A4栋</p>
-                        <p>生产厂家：HAIZHI</p>
-                        <p>设备型号：HZYJ582-124</p>
-                        <p>责任人：张银洲</p>
-                      </div>
-                    </el-col>
-                  </el-row>
+                  <el-image v-show="infohover4" :src="require('../../src/assets/tower/tadiao4.jpg')" fit="fill" style="height: 80%; " />
+                  <div v-show="!infohover4" class="device-detail-info">
+                    <table>
+                      <tr>
+                        <td>生产厂家：</td>
+                        <td>HAIZHI</td>
+                      </tr>
+                      <tr>
+                        <td>设备型号：</td>
+                        <td>HZYJ582-124</td>
+                      </tr>
+                      <tr>
+                        <td>安装位置：</td>
+                        <td>A4栋</td>
+                      </tr>
+                      <tr>
+                        <td>责任人：</td>
+                        <td>张洲</td>
+                      </tr>
+                    </table>
+                  </div>
+                  <div style="height: 18%; width: 100%; ">
+                    <el-row>
+                      <el-col :span="15">
+                        <div class="device-detail-span">
+                          {{ '一号吊机' }}&nbsp;
+                        </div>
+                      </el-col>
+                      <el-col :span="9">
+                        <el-tag type="success" effect="dark" style="margin-top: 1.5%; ">在线</el-tag>
+                      </el-col>
+                    </el-row>
+                  </div>
                 </div>
               </li>
-              <li>
+              <li @mouseover="infohover5 = false" @mouseout="infohover5 = true">
                 <div class="device-detail">
-                  <el-row>
-                    <el-col :span="7" style="text-align: center; ">
-                      <el-image
-                        :src="require('../assets/tower.png')"
-                        style="height: 0.6rem; width: 0.6rem; "
-                        fit="contain"
-                      />
-                      <div class="device-detail-title">四号闸机</div>
-                      <div class="device-detail-tag">在线</div>
-                    </el-col>
-                    <el-col :span="17">
-                      <div class="device-detail-span">
-                        <p>塔吊名称：四号闸机</p>
-                        <p>安装位置：A5栋</p>
-                        <p>生产厂家：HAIZHI</p>
-                        <p>设备型号：HZYJ582-124</p>
-                        <p>责任人：张银洲</p>
-                      </div>
-                    </el-col>
-                  </el-row>
+                  <el-image v-show="infohover5" :src="require('../../src/assets/tower/tadiao5.jpg')" fit="fill" style="height: 80%; " />
+                  <div v-show="!infohover5" class="device-detail-info">
+                    <table>
+                      <tr>
+                        <td>生产厂家：</td>
+                        <td>HAIZHI</td>
+                      </tr>
+                      <tr>
+                        <td>设备型号：</td>
+                        <td>HZYJ582-124</td>
+                      </tr>
+                      <tr>
+                        <td>安装位置：</td>
+                        <td>A5栋</td>
+                      </tr>
+                      <tr>
+                        <td>责任人：</td>
+                        <td>李华</td>
+                      </tr>
+                    </table>
+                  </div>
+                  <div style="height: 18%; width: 100%; ">
+                    <el-row>
+                      <el-col :span="15">
+                        <div class="device-detail-span">
+                          {{ '二号吊机' }}&nbsp;
+                        </div>
+                      </el-col>
+                      <el-col :span="9">
+                        <el-tag type="danger" effect="dark" style="margin-top: 1.5%; ">离线</el-tag>
+                      </el-col>
+                    </el-row>
+                  </div>
                 </div>
               </li>
-              <li>
+              <li @mouseover="infohover6 = false" @mouseout="infohover6 = true">
                 <div class="device-detail">
-                  <el-row>
-                    <el-col :span="7" style="text-align: center; ">
-                      <el-image
-                        :src="require('../assets/tower.png')"
-                        style="height: 0.6rem; width: 0.6rem; "
-                        fit="contain"
-                      />
-                      <div class="device-detail-title">1号塔机</div>
-                      <div class="device-detail-tag">在线</div>
-                    </el-col>
-                    <el-col :span="17">
-                      <div class="device-detail-span">
-                        <p>塔吊名称：1号吊机</p>
-                        <p>安装位置：A4栋东南区</p>
-                        <p>生产厂家：HAIZHI</p>
-                        <p>设备型号：HZT520-TJ</p>
-                        <p>责任人：</p>
-                      </div>
-                    </el-col>
-                  </el-row>
+                  <el-image v-show="infohover6" :src="require('../../src/assets/tower/tadiao1.jpg')" fit="fill" style="height: 80%; " />
+                  <div v-show="!infohover6" class="device-detail-info">
+                    <table>
+                      <tr>
+                        <td>生产厂家：</td>
+                        <td>HAIZHI</td>
+                      </tr>
+                      <tr>
+                        <td>设备型号：</td>
+                        <td>HZT520-TJ</td>
+                      </tr>
+                      <tr>
+                        <td>安装位置：</td>
+                        <td>A4栋东南区</td>
+                      </tr>
+                      <tr>
+                        <td>责任人：</td>
+                        <td>张伟</td>
+                      </tr>
+                    </table>
+                  </div>
+                  <div style="height: 18%; width: 100%; ">
+                    <el-row>
+                      <el-col :span="15">
+                        <div class="device-detail-span">
+                          {{ '1号塔机' }}&nbsp;
+                        </div>
+                      </el-col>
+                      <el-col :span="9">
+                        <el-tag type="success" effect="dark" style="margin-top: 1.5%; ">在线</el-tag>
+                      </el-col>
+                    </el-row>
+                  </div>
                 </div>
               </li>
-              <li>
+              <li @mouseover="infohover7 = false" @mouseout="infohover7 = true">
                 <div class="device-detail">
-                  <el-row>
-                    <el-col :span="7" style="text-align: center; ">
-                      <el-image
-                        :src="require('../assets/tower.png')"
-                        style="height: 0.6rem; width: 0.6rem; "
-                        fit="contain"
-                      />
-                      <div class="device-detail-title">2号塔机</div>
-                      <div class="device-detail-tag">在线</div>
-                    </el-col>
-                    <el-col :span="17">
-                      <div class="device-detail-span">
-                        <p>塔吊名称：2号塔机</p>
-                        <p>安装位置：A6栋门口</p>
-                        <p>生产厂家：HAIZHI</p>
-                        <p>设备型号：HZTJ582-124</p>
-                        <p>责任人：</p>
-                      </div>
-                    </el-col>
-                  </el-row>
+                  <el-image v-show="infohover7" :src="require('../../src/assets/tower/tadiao2.jpg')" fit="fill" style="height: 80%; " />
+                  <div v-show="!infohover7" class="device-detail-info">
+                    <table>
+                      <tr>
+                        <td>生产厂家：</td>
+                        <td>HAIZHI</td>
+                      </tr>
+                      <tr>
+                        <td>设备型号：</td>
+                        <td>HZTJ582-124</td>
+                      </tr>
+                      <tr>
+                        <td>安装位置：</td>
+                        <td>A6栋门口</td>
+                      </tr>
+                      <tr>
+                        <td>责任人：</td>
+                        <td>张伟</td>
+                      </tr>
+                    </table>
+                  </div>
+                  <div style="height: 18%; width: 100%; ">
+                    <el-row>
+                      <el-col :span="15">
+                        <div class="device-detail-span">
+                          {{ '2号塔机' }}&nbsp;
+                        </div>
+                      </el-col>
+                      <el-col :span="9">
+                        <el-tag type="danger" effect="dark" style="margin-top: 1.5%; ">离线</el-tag>
+                      </el-col>
+                    </el-row>
+                  </div>
                 </div>
               </li>
-              <li>
+              <li @mouseover="infohover8 = false" @mouseout="infohover8 = true">
                 <div class="device-detail">
-                  <el-row>
-                    <el-col :span="7" style="text-align: center; ">
-                      <el-image
-                        :src="require('../assets/tower.png')"
-                        style="height: 0.6rem; width: 0.6rem; "
-                        fit="contain"
-                      />
-                      <div class="device-detail-title">一号吊机</div>
-                      <div class="device-detail-tag">在线</div>
-                    </el-col>
-                    <el-col :span="17">
-                      <div class="device-detail-span">
-                        <p>塔吊名称：一号吊机</p>
-                        <p>安装位置：施工区</p>
-                        <p>生产厂家：三一重工</p>
-                        <p>设备型号：CZ-6910</p>
-                        <p>责任人：王刚</p>
-                      </div>
-                    </el-col>
-                  </el-row>
+                  <el-image v-show="infohover8" :src="require('../../src/assets/tower/tadiao3.jpg')" fit="fill" style="height: 80%; " />
+                  <div v-show="!infohover8" class="device-detail-info">
+                    <table>
+                      <tr>
+                        <td>生产厂家：</td>
+                        <td>三一重工</td>
+                      </tr>
+                      <tr>
+                        <td>设备型号：</td>
+                        <td>CZ-6910</td>
+                      </tr>
+                      <tr>
+                        <td>安装位置：</td>
+                        <td>施工区</td>
+                      </tr>
+                      <tr>
+                        <td>责任人：</td>
+                        <td>王刚</td>
+                      </tr>
+                    </table>
+                  </div>
+                  <div style="height: 18%; width: 100%; ">
+                    <el-row>
+                      <el-col :span="15">
+                        <div class="device-detail-span">
+                          {{ '3号塔机' }}&nbsp;
+                        </div>
+                      </el-col>
+                      <el-col :span="9">
+                        <el-tag type="success" effect="dark" style="margin-top: 1.5%; ">在线</el-tag>
+                      </el-col>
+                    </el-row>
+                  </div>
                 </div>
               </li>
-              <li>
+              <li @mouseover="infohover9 = false" @mouseout="infohover9 = true">
                 <div class="device-detail">
-                  <el-row>
-                    <el-col :span="7" style="text-align: center; ">
-                      <el-image
-                        :src="require('../assets/tower.png')"
-                        style="height: 0.6rem; width: 0.6rem; "
-                        fit="contain"
-                      />
-                      <div class="device-detail-title">三号闸机</div>
-                      <div class="device-detail-tag">在线</div>
-                    </el-col>
-                    <el-col :span="17">
-                      <div class="device-detail-span">
-                        <p>塔吊名称：三号闸机</p>
-                        <p>安装位置：A4栋</p>
-                        <p>生产厂家：HAIZHI</p>
-                        <p>设备型号：HZYJ582-124</p>
-                        <p>责任人：张银洲</p>
-                      </div>
-                    </el-col>
-                  </el-row>
+                  <el-image v-show="infohover9" :src="require('../../src/assets/tower/tadiao4.jpg')" fit="fill" style="height: 80%; " />
+                  <div v-show="!infohover9" class="device-detail-info">
+                    <table>
+                      <tr>
+                        <td>生产厂家：</td>
+                        <td>HAIZHI</td>
+                      </tr>
+                      <tr>
+                        <td>设备型号：</td>
+                        <td>HZYJ582-124</td>
+                      </tr>
+                      <tr>
+                        <td>安装位置：</td>
+                        <td>A4栋</td>
+                      </tr>
+                      <tr>
+                        <td>责任人：</td>
+                        <td>张洲</td>
+                      </tr>
+                    </table>
+                  </div>
+                  <div style="height: 18%; width: 100%; ">
+                    <el-row>
+                      <el-col :span="15">
+                        <div class="device-detail-span">
+                          {{ '一号吊机' }}&nbsp;
+                        </div>
+                      </el-col>
+                      <el-col :span="9">
+                        <el-tag type="success" effect="dark" style="margin-top: 1.5%; ">在线</el-tag>
+                      </el-col>
+                    </el-row>
+                  </div>
                 </div>
               </li>
-              <li>
+              <li @mouseover="infohover10 = false" @mouseout="infohover10 = true">
                 <div class="device-detail">
-                  <el-row>
-                    <el-col :span="7" style="text-align: center; ">
-                      <el-image
-                        :src="require('../assets/tower.png')"
-                        style="height: 0.6rem; width: 0.6rem; "
-                        fit="contain"
-                      />
-                      <div class="device-detail-title">四号闸机</div>
-                      <div class="device-detail-tag">在线</div>
-                    </el-col>
-                    <el-col :span="17">
-                      <div class="device-detail-span">
-                        <p>塔吊名称：四号闸机</p>
-                        <p>安装位置：A5栋</p>
-                        <p>生产厂家：HAIZHI</p>
-                        <p>设备型号：HZYJ582-124</p>
-                        <p>责任人：张银洲</p>
-                      </div>
-                    </el-col>
-                  </el-row>
+                  <el-image v-show="infohover10" :src="require('../../src/assets/tower/tadiao5.jpg')" fit="fill" style="height: 80%; " />
+                  <div v-show="!infohover10" class="device-detail-info">
+                    <table>
+                      <tr>
+                        <td>生产厂家：</td>
+                        <td>HAIZHI</td>
+                      </tr>
+                      <tr>
+                        <td>设备型号：</td>
+                        <td>HZYJ582-124</td>
+                      </tr>
+                      <tr>
+                        <td>安装位置：</td>
+                        <td>A5栋</td>
+                      </tr>
+                      <tr>
+                        <td>责任人：</td>
+                        <td>李华</td>
+                      </tr>
+                    </table>
+                  </div>
+                  <div style="height: 18%; width: 100%; ">
+                    <el-row>
+                      <el-col :span="15">
+                        <div class="device-detail-span">
+                          {{ '二号吊机' }}&nbsp;
+                        </div>
+                      </el-col>
+                      <el-col :span="9">
+                        <el-tag type="danger" effect="dark" style="margin-top: 1.5%; ">离线</el-tag>
+                      </el-col>
+                    </el-row>
+                  </div>
                 </div>
               </li>
             </ul>
           </div>
         </div>
       </el-col>
-      <el-col :span="5"  style="padding-right: 1vw; ">
+      <el-col :span="5" style="padding: 0 0.5vw; ">
         <div style="background-color: rgba(0, 36, 78, 0.5); height: 28vh; width: 100%; ">
           <div class="border-top-left"></div>
           <div class="box-title">处理总览</div>
@@ -285,54 +415,36 @@
         </div>
       </el-col>
     </el-row>
-    <el-row :gutter="10">
-      <el-col :span="8" style="padding-left: 1vw; ">
+    <el-row>
+      <el-col :span="8" style="padding: 0 0.5vw; ">
         <div style="background-color: rgba(0, 36, 78, 0.5); height: 53vh; width: 100%; ">
           <div class="border-top-left"></div>
-          <div class="box-title" @click="refresh">报警类型</div>
-          <el-row type="flex" justify="center">
-            <el-col :span="3">
-              <div class="alarm-select">
-                <el-button type="text">1号塔机</el-button>
-              </div>
-            </el-col>
-            <el-col :span="3">
-              <div class="alarm-select">
-                <el-button type="text">2号塔机</el-button>
-              </div>
-            </el-col>
-            <el-col :span="3">
-              <div class="alarm-select">
-                <el-button type="text">一号吊机</el-button>
-              </div>
-            </el-col>
-            <el-col :span="3">
-              <div class="alarm-select">
-                <el-button type="text">1号塔机</el-button>
-              </div>
-            </el-col>
-            <el-col :span="3">
-              <div class="alarm-select">
-                <el-button type="text">2号塔机</el-button>
-              </div>
-            </el-col>
-            <el-col :span="3">
-              <div class="alarm-select">
-                <el-button type="text">一号吊机</el-button>
-              </div>
-            </el-col>
-          </el-row>
+          <div class="box-title">报警类型</div>
+          <div style="margin-left: 80%; ">
+            <el-dropdown @command="handleCommand">
+              <span class="el-dropdown-link">
+                {{ chosen }}<i class="el-icon-arrow-down el-icon--right"></i>
+              </span>
+              <el-dropdown-menu  style="background-color: rgba(255,255,255,0.5)" slot="dropdown">
+                <el-dropdown-item command="所有设备">所有设备</el-dropdown-item>
+                <el-dropdown-item command="一号吊机">一号吊机</el-dropdown-item>
+                <el-dropdown-item command="二号吊机">二号吊机</el-dropdown-item>
+                <el-dropdown-item command="1号塔机">1号塔机</el-dropdown-item>
+                <el-dropdown-item command="2号塔机">2号塔机</el-dropdown-item>
+              </el-dropdown-menu>
+            </el-dropdown>
+          </div>
           <div id="alarmType" class="alarm-type"></div>
         </div>
       </el-col>
       <el-col :span="8">
         <div style="background-color: rgba(0, 36, 78, 0.5); height: 53vh; width: 100%; ">
           <div class="border-top-left"></div>
-          <div class="box-title">报警趋势</div>
+          <div class="box-title">维护统计</div>
           <div id="alarmTrend" class="alarm-trend"></div>
         </div>
       </el-col>
-      <el-col :span="8" style="padding-right: 1vw; ">
+      <el-col :span="8" style="padding: 0 0.5vw; ">
         <div style="background-color: rgba(0, 36, 78, 0.5); height: 53vh; width: 100%; ">
           <div class="border-top-left"></div>
           <div class="box-title">报警记录</div>
@@ -345,9 +457,9 @@
 
 <script>
 import echarts from 'echarts';
+require('echarts/theme/macarons') // echarts theme
 
 export default {
-  name: 'Device Manage',
   mounted() {
     this.$store.dispatch('changeMsg', '设备管理');
     this.initAlarmType();
@@ -370,16 +482,12 @@ export default {
           {
             name: '黄色报警',
             value: 78
-          },
-          {
-            name: '检测中',
-            value: 66
           }
         ],
         digitalFlopStyle: {
           fontSize: 17
         },
-        color: ['#f56c6c', '#67c23a', '#e6a23c', '#409eff'],
+        color: ['#f56c6c', '#67c23a', '#e6a23c'],
         showOriginValue: true
       },
       configTable: {
@@ -387,24 +495,35 @@ export default {
         headerHeight: 45,
         data: [
           ['1号塔机', '2019-10-13 13:14:01', '高度限位报警', '<span style="color: #67c23a; ">已处理</span>', 53.5],
-          ['2号塔机', '2019-10-13 14:14:01', '幅度限位报警', '<span style="color: red; ">未处理</span>', 54.5],
+          ['2号塔机', '2019-10-13 14:14:01', '幅度限位报警', '<span style="color: #f56c6c; ">红色报警</span>', 54.5],
           ['一号吊机', '2020-10-13 15:14:01', '风速限位报警', '<span style="color: #67c23a; ">已处理</span>', 57.5],
-          ['1号塔机', '2020-1-13 3:14:01', '角度限位报警', '<span style="color: red; ">未处理</span>', 123.5],
+          ['1号塔机', '2020-1-13 3:14:01', '角度限位报警', '<span style="color: #e6a23c; ">黄色报警</span>', 123.5],
           ['1号塔机', '2019-1-1 8:14:01', '高度限位报警', '<span style="color: #67c23a; ">已处理</span>', 56.5],
-          ['2号塔机', '2019-12-30 10:14:01', '幅度限位报警', '<span style="color: red; ">未处理</span>', 87.5],
-          ['一号吊机', '2020-1-15 12:14:01', '风速限位报警', '<span style="color: #67c23a; ">已处理</span>', 97],
-          ['1号塔机', '2020-9-7 3:14:01', '角度限位报警', '<span style="color: red; ">未处理</span>', 123.5],
+          ['2号塔机', '2019-12-30 10:14:01', '幅度限位报警', '<span style="color: #f56c6c; ">红色报警</span>', 87.5],
+          ['一号吊机', '2020-1-15 12:14:01', '风速限位报警', '<span style="color: #f56c6c; ">红色报警</span>', 97],
+          ['1号塔机', '2020-9-7 3:14:01', '角度限位报警', '<span style="color: #e6a23c; ">黄色报警</span>', 123.5],
         ],
         rowNum: 7,
         align: ['center', 'center', 'center', 'center', 'center'],
         headerBGC: '#3FA0C3',
         evenRowBGC: ''
       },
+      chosen: '所有设备',
+      infohover1: true,
+      infohover2: true,
+      infohover3: true,
+      infohover4: true,
+      infohover5: true,
+      infohover6: true,
+      infohover7: true,
+      infohover8: true,
+      infohover9: true,
+      infohover10: true,
     }
   },
   methods: {
     initAlarmType() {
-      this.alarmTypeChart = echarts.init(document.getElementById('alarmType'));
+      this.alarmTypeChart = echarts.init(document.getElementById('alarmType'), 'macarons');
       this.alarmTypeChart.setOption({
         tooltip: {
           trigger: 'axis',
@@ -412,9 +531,8 @@ export default {
             type: 'shadow'
           }
         },
-        color: ['#2C71A2', '#FD9F6F'],
         legend: {
-          data: ['最近七天', '今天'],
+          data: ['近一周', '今天'],
           textStyle: {
             color: 'white'
           }
@@ -445,14 +563,14 @@ export default {
         },
         series: [
           {
-            name: '最近七天',
+            name: '近一周',
             type: 'bar',
-            data: [105, 110, 270, 310]
+            data: [310, 270, 110, 105]
           },
           {
             name: '今天',
             type: 'bar',
-            data: [100, 100, 250, 300]
+            data: [300, 250, 100, 100]
           }
         ]
       });
@@ -460,12 +578,12 @@ export default {
     initAlarmTrend() {
       this.alarmTrendChart = echarts.init(document.getElementById('alarmTrend'));
       this.alarmTrendChart.setOption({
-        color: ['#a5e7f0', '#edafda'],
+        color: ['#fe8463', '#22c3aa'],
         tooltip: {
           trigger: 'axis',
         },
         legend: {
-          data: ['最近7天', '最近14天'],
+          data: ['未维护设备', '已维护设备'],
           textStyle: {
             color: 'white'
           }
@@ -495,14 +613,16 @@ export default {
         },
         series: [
           {
-            name: '最近7天',
-            data: [820, 932, 901, 934, 1290, 1330, 1350],
-            type: 'line'
+            name: '未维护设备',
+            data: [20, 15, 14, 13, 10, 5, 2],
+            type: 'line',
+            smooth: true
           },
           {
-            name: '最近14天',
-            data: [800, 900, 910, 1000, 1300, 1310, 1310],
-            type: 'line'
+            name: '已维护设备',
+            data: [10, 15, 16, 17, 20, 25, 28],
+            type: 'line',
+            smooth: true
           }
         ]
       });
@@ -512,6 +632,9 @@ export default {
       this.alarmTrendChart.dispose();
       this.initAlarmType();
       this.initAlarmTrend();
+    },
+    handleCommand(command) {
+      this.chosen = command;
     }
   }
 }
@@ -541,15 +664,9 @@ export default {
 }
 
 .alarm-type {
-  height: calc(53vh - 10px - 1.1rem);
+  height: calc(53vh - 10px - 0.5rem - 20px);
   width: calc(100% - 0.34rem);
   margin: 0 0.17rem;
-}
-
-.alarm-select {
-  width: 100%;
-  height: 0.6rem;
-  text-align: center;
 }
 
 .el-button--text {
@@ -572,38 +689,41 @@ export default {
 }
 
 .device-data {
-  height: calc(28vh - 10px - 0.5rem - 0.34rem);
-  margin: 0.17rem;
-  width: calc(100% - 0.34rem);
+  height: calc(28vh - 10px - 0.5rem - 0.3rem);
+  margin: 0.15rem;
+  width: calc(100% - 0.3rem);
   overflow: hidden;
 }
 
 .device-detail {
-  height: calc(100% - 0.34rem);
-  width: calc(3.5rem - 0.34rem);
-  padding: 0.17rem;
+  width: 2.5rem;
+  height: calc(28vh - 10px - 0.5rem - 0.4rem);
+  margin: 0 0.05rem;
+  border: 1px solid #3FA0C3;;
+  border-radius: 4px;
+  background-size: 100% 100%;
+  background-color: rgba(0 ,0 ,0 , 0.35);
 }
 
-.device-detail-title {
-  font-size: 0.23rem;
-  height: 0.7rem;
-  line-height: 0.7rem;
-  color: #E8FEFF;
-}
-
-.device-detail-tag {
+.device-detail-info {
+  float: top;
+  height: 80%;
   width: 100%;
-  background-color: #3FA0C3;
-  height: 0.43rem;
-  line-height: 0.43rem;
+  background-color: rgba(0, 0, 0, 0.05);
+  color: #E8FEFF;
   font-size: 0.2rem;
+}
+
+.device-detail-info table {
+  height: 90%;
+  margin: 3px 4px;
 }
 
 .device-detail-span {
-  padding-left: 0.17rem;
-  font-size: 0.2rem;
+  font-size: 0.25rem;
   color: #E8FEFF;
-  line-height: 0.37rem;
+  text-align: right;
+  margin: 0 auto;
 }
 
 .tower-data {
@@ -631,11 +751,19 @@ export default {
     transform: translateX(0);
   }
   to {
-    transform: translateX(-17.5rem);
+    transform: translateX(-13.21rem);
   }
 }
 
 .device-list:hover {
   animation-play-state: paused;
+}
+
+.el-dropdown-link {
+  cursor: pointer;
+  color: #E8FEFF;
+}
+.el-icon-arrow-down {
+  font-size: 12px;
 }
 </style>
