@@ -15,13 +15,13 @@ const routes = [{
     }
   ]
 },{
-  path: '/test',
+  path: '/peopleManager',
   component: Layout,
-  name: 'index',
+  name: 'People Manager',
   children: [
     {
-      path: '/test',
-      component: () => import('@/views/index'),
+      path: '/peopleManager',
+      component: () => import('@/views/peopleManager/index'),
     }
   ]
 },
@@ -43,6 +43,28 @@ const routes = [{
       {
         path: '/qualityControl',
         component: () => import('@/views/qualityControl/index'),
+      }
+    ]
+  },
+  {
+    path: '/videoManager',
+    component: Layout,
+    name: 'videoManager',
+    children: [
+      {
+        path: '/videoManager',
+        component: () => import('@/views/videoManager/index'),
+      }
+    ]
+  },
+  {
+    path: '/greenConstruction',
+    component: Layout,
+    name: 'greenConstruction',
+    children: [
+      {
+        path: '/greenConstruction',
+        component: () => import('@/views/greenConstruction/index'),
       }
     ]
   }
