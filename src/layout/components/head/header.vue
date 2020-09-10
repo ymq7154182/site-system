@@ -78,7 +78,7 @@
         <div class="div-tag right-tag" style="padding-right: 0.15rem;">
           <ul class="ul2">
           <li>
-            <div class="li-text2" :class="{'bg-img23': textStyle=== '进入系统', 'bg-img22': textStyle!== '进入系统'}">
+            <div class="li-text2" :class="{'bg-img23': textStyle=== '进入系统', 'bg-img22': textStyle!== '进入系统'}" @click="gotoSystem">
                 <span>
                    进入系统
                 </span>
@@ -158,6 +158,9 @@
         },
         gotoGreen () {
           this.$router.push('/greenConstruction')
+        },
+        gotoSystem() {
+          window.location.href = "http://121.36.106.18:38080/index.html"
         }
       }
     }
