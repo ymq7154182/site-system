@@ -73,6 +73,7 @@
         <el-col :span="12">
           <div style="padding-left: 0.3rem;margin-right: 0.3rem">
             <div class="video_container">
+              <el-image :src="require('../assets/homepage/button.png')" fill="contain" style="height: 0.4rem; width: 4rem; margin: 0.17rem 0 0 0.17rem; " />
             </div>
             <div class="process">
               <div class="process_content">
