@@ -250,7 +250,7 @@
           var option = {
             angleAxis: {
               type: 'category',
-              data: ['塔吊', '起重机', '升降机', '特种设备', '视频设备'],
+              data: ['塔式起重机', '物料提升机', '施工升降机', '特种设备', '视频设备'],
               textStyle:{
                 fontSize:16,
                 color:'#544bfc'

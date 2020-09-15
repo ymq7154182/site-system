@@ -41,7 +41,7 @@
           <div class="left_bottom">
             <div class="border-top-left"></div>
             <div class="p_title">
-              <span class="title1">主要人员考勤</span>
+              <span class="title1">现场人员考勤</span>
             </div>
             <div class="p_chart">
               <div id="chart2" style="width: 28vw;height:29vh;"></div>
@@ -71,7 +71,7 @@
                 <div class="right_top_right">
                   <div class="border-top-left"></div>
                   <div class="p_title">
-                    <span class="title1">负责人员</span>
+                    <span class="title1">项目负责人</span>
                   </div>
                   <div>
                     <el-row>
