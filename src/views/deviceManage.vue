@@ -441,7 +441,7 @@
       <el-col :span="8">
         <div style="background-color: rgba(0, 36, 78, 0.5); height: 53vh; width: 100%; ">
           <div class="border-top-left"></div>
-          <div class="box-title">维护统计</div>
+          <div class="box-title">设备维护统计</div>
           <div id="alarmTrend" class="alarm-trend"></div>
         </div>
       </el-col>

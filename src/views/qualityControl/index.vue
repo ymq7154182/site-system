@@ -16,7 +16,7 @@
               <el-col :span="12">
                 <div class="col-div">
                   <div class="box-txt">
-                    <span>安全整改</span>
+                    <span>整改情况</span>
                   </div>
                   <div id="mychart12"></div>
                 </div>
@@ -75,7 +75,7 @@
           <el-col :span="8">
             <div class="col-div4">
               <div class="box-txt4">
-                <span>安全记录</span>
+                <span>监督检查记录</span>
               </div>
               <dv-scroll-board :config="configTable" style="width: 100%;height: 5.5rem;position: absolute;top: 8%" />
             </div>
@@ -1722,7 +1722,7 @@
               }
             },
             legend: {
-              data: ['整改率', '未整改','总数',],
+              data: ['已整改', '未整改','总数',],
               textStyle: {
                 color: '#B4B4B4'
               },
