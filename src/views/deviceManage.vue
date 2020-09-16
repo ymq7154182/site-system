@@ -1,5 +1,25 @@
 <template>
-  <div>
+  <div class="container">
+    <div style="padding: 0.11rem">
+      <el-tabs v-model="activeName" type="card">
+        <el-tab-pane label="塔吊" name="first" >
+          <span style="color: white">塔吊</span>
+        </el-tab-pane>
+        <el-tab-pane label="物料提升机" name="second">
+          <span style="color: white">物料提升机</span>
+        </el-tab-pane>
+        <el-tab-pane label="施工升降机" name="third" >
+          <span style="color: white">施工升降机</span>
+        </el-tab-pane>
+        <el-tab-pane label="特种设备" name="fourth">
+          <span style="color: white">特种设备</span>
+        </el-tab-pane>
+        <el-tab-pane label="视频设备" name="five">
+          <span style="color: white">视频设备</span>
+        </el-tab-pane>
+      </el-tabs>
+    </div>
+
     <el-row style="margin-bottom: 1.4vh; ">
       <el-col :span="6" style="padding: 0 0.5vw; ">
         <div style="background-color: rgba(0, 36, 78, 0.5); height: 28vh; width: 100%; ">
@@ -521,6 +541,7 @@ export default {
       infohover8: true,
       infohover9: true,
       infohover10: true,
+      activeName: 'first'
     }
   },
   methods: {
@@ -768,4 +789,10 @@ export default {
 .el-icon-arrow-down {
   font-size: 12px;
 }
+.container {
+  padding-left: 0.2rem;
+  padding-right: 0.2rem;
+}
+
+
 </style>
