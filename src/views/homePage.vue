@@ -89,7 +89,7 @@
                 <span style="font-size: 0.2rem;color: #ffa454;">绿色施工</span>
               </div>
               <div class="green_container">
-                <img src="../assets/homepage/shigong.png" style="margin-left: 1.6rem;width:6rem;height: 3rem">
+                <img src="../assets/homepage/shigong.png" style="margin-left: 1.2rem;width:6.2rem;height: 3rem">
               </div>
             </div>
           </el-row>
@@ -248,6 +248,10 @@
         inchart24() {
           this.myChart24 = this.$echarts.init(document.getElementById('mychart24'),'macarons')
           var option = {
+            tooltip: {
+              trigger: 'item',
+              formatter: '{a} <br/>{b}: {c}'
+            },
             angleAxis: {
               type: 'category',
               data: ['塔式起重机', '物料提升机', '施工升降机', '特种设备', '视频设备'],
@@ -618,7 +622,7 @@
             // },
             tooltip: {
               trigger: 'item',
-              formatter: '{a} <br/>{b} : {c} ({d}%)'
+              formatter: '{b} : {c} ({d}%)'
             },
             series: [{
               name: '人员管理',
@@ -639,7 +643,7 @@
                 smooth: true
               },
               data: [{
-                value: 1,
+                value: 3,
                 name: '监督员',
                 itemStyle: {
                   color: "#FEDF00",
@@ -648,7 +652,7 @@
                 }
               },
                 {
-                  value: 2,
+                  value: 3,
                   name: '项目经理',
                   itemStyle: {
                     color: "#01FFFF",
@@ -657,7 +661,7 @@
                   }
                 },
                 {
-                  value: 3,
+                  value: 4,
                   name: '下属单位',
                   itemStyle: {
                     color: "#3769F4",
@@ -666,7 +670,7 @@
                   }
                 },
                 {
-                  value: 4,
+                  value: 10,
                   name: '施工员',
                   itemStyle: {
                     color: "#6978F2",
@@ -675,7 +679,7 @@
                   }
                 },
                 {
-                  value: 5,
+                  value: 2,
                   name: '质量员',
                   itemStyle: {
                     color: "#55D5B5",
@@ -684,7 +688,7 @@
                   }
                 },
                 {
-                  value: 6,
+                  value: 2,
                   name: '安全员',
                   itemStyle: {
                     color: "#F87D7C",

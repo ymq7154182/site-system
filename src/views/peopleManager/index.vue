@@ -146,29 +146,29 @@ export default {
         {
           url:require('../../assets/peopleManager/yicun1.jpg'),
           name:'李芳',
-          position:'项目经理',
+          position:'施工人员',
           temperature:'36.3',
         },
         {
           url:require('../../assets/peopleManager/yicun2.jpg'),
           name:'蒋珊',
-          position:'项目经理',
+          position:'施工人员',
           temperature:'37.5',
         },
         {
           url:require('../../assets/peopleManager/yicun3.jpg'),
           name:'商鹏',
-          position:'项目经理',
+          position:'施工人员',
           temperature:'36.3',
         },{
           url:require('../../assets/peopleManager/yicun4.jpg'),
           name:'姜琦',
-          position:'项目经理',
+          position:'施工人员',
           temperature:'36.1',
         },{
           url:require('../../assets/peopleManager/yicun5.jpg'),
           name:'李白',
-          position:'项目经理',
+          position:'施工人员',
           temperature:'37.0',
         },{
           url:require('../../assets/peopleManager/yicun6.jpg'),
@@ -183,17 +183,17 @@ export default {
         },{
           url:require('../../assets/peopleManager/yicun8.jpg'),
           name:'江流',
-          position:'安全员',
+          position:'标准员',
           temperature:'36.6',
         },{
           url:require('../../assets/peopleManager/yicun9.jpg'),
           name:'王武',
-          position:'安全员',
+          position:'材料员',
           temperature:'36.3',
         },{
           url:require('../../assets/peopleManager/yicun10.jpg'),
           name:'李四',
-          position:'安全员',
+          position:'机械员',
           temperature:'37.2',
         }
       ],

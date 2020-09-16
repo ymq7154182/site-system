@@ -100,9 +100,9 @@
             </div>
           </li>
           <li>
-            <div class="li-text2 pos-style-right3" :class="{'bg-img23': textStyle=== '生产管理', 'bg-img22': textStyle!== '生产管理'}">
+            <div class="li-text2 pos-style-right3" :class="{'bg-img23': textStyle=== '进度管理', 'bg-img22': textStyle!== '进度管理'}">
                   <span>
-                   生产管理
+                   进度管理
                 </span>
             </div>
           </li>
