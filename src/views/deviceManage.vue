@@ -3,19 +3,19 @@
     <div style="padding: 0.11rem">
       <el-tabs v-model="activeName" class="tabs">
         <el-tab-pane label="塔吊" name="first" >
-          <span style="color: white">塔吊</span>
+          <!-- <span style="color: white">塔吊</span> -->
         </el-tab-pane>
         <el-tab-pane label="物料提升机" name="second">
-          <span style="color: white">物料提升机</span>
+          <!-- <span style="color: white">物料提升机</span> -->
         </el-tab-pane>
         <el-tab-pane label="施工升降机" name="third" >
-          <span style="color: white">施工升降机</span>
+          <!-- <span style="color: white">施工升降机</span> -->
         </el-tab-pane>
         <el-tab-pane label="特种设备" name="fourth">
-          <span style="color: white">特种设备</span>
+          <!-- <span style="color: white">特种设备</span> -->
         </el-tab-pane>
         <el-tab-pane label="视频设备" name="five">
-          <span style="color: white">视频设备</span>
+          <!-- <span style="color: white">视频设备</span> -->
         </el-tab-pane>
       </el-tabs>
     </div>
@@ -604,50 +604,61 @@ export default {
         color: ['#fe8463', '#22c3aa'],
         tooltip: {
           trigger: 'axis',
+          axisPointer: {
+              type: 'shadow'
+          }
         },
         legend: {
-          data: ['未维护设备', '已维护设备'],
+          data: ['距离下次维修时间（天）', '距离租赁到期时间（天）'],
           textStyle: {
             color: 'white'
           }
         },
+        grid: {
+          left: '3%',
+          right: '4%',
+          bottom: '3%',
+          containLabel: true
+        },
         xAxis: {
-          type: 'category',
-          data: ['8月30日', '8月31日', '9月1日', '9月2日', '9月3日', '9月4日', '9月5日'],
+          type: 'value',
+          boundaryGap: [0, 0.01],
+          splitLine: {
+            show: false
+          },
           axisLine: {
             lineStyle: {
               color: '#3FA0C3'
             }
-          },
-          splitLine: {
-            show: false
-          },
+          }
         },
         yAxis: {
-          type: 'value',
+          type: 'category',
+          data: ['一号塔吊', '二号塔吊', '三号塔吊', '四号塔吊'],
+          splitLine: {
+            show: false
+          },
           axisLine: {
             lineStyle: {
               color: '#3FA0C3'
             }
-          },
-          splitLine: {
-            show: false
-          },
+          }
         },
         series: [
-          {
-            name: '未维护设备',
-            data: [20, 15, 14, 13, 10, 5, 2],
-            type: 'line',
-            smooth: true
-          },
-          {
-            name: '已维护设备',
-            data: [10, 15, 16, 17, 20, 25, 28],
-            type: 'line',
-            smooth: true
-          }
+        {
+            name: '距离下次维修时间（天）',
+            type: 'bar',
+            data: [20, 18, 15, 10]
+        },
+        {
+            name: '距离租赁到期时间（天）',
+            type: 'bar',
+            data: [180, 201, 167, 138]
+        }
         ]
+        
+        
+        
       });
     },
     refresh() {
