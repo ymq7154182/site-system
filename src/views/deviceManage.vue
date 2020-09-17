@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <div style="padding: 0.11rem">
-      <el-tabs v-model="activeName" type="card">
+      <el-tabs v-model="activeName" class="tabs">
         <el-tab-pane label="塔吊" name="first" >
           <span style="color: white">塔吊</span>
         </el-tab-pane>
@@ -793,6 +793,14 @@ export default {
   padding-left: 0.2rem;
   padding-right: 0.2rem;
 }
-
-
+  .tabs >>> .el-tabs__nav-wrap::after {
+    height: 0;
+  }
+/*.tabs >>> .el-tabs__active-bar {*/
+  /*height: 1px;*/
+/*}*/
+.tabs >>> .el-tabs__nav-wrap {
+  background-image: url("../assets/homepage/notice_bg.png");
+  padding-left: 0.3rem;
+}
 </style>
