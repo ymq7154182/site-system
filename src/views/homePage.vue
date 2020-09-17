@@ -248,10 +248,10 @@
         inchart24() {
           this.myChart24 = this.$echarts.init(document.getElementById('mychart24'),'macarons')
           var option = {
-            tooltip: {
-              trigger: 'item',
-              formatter: '{a} <br/>{b}: {c}'
-            },
+            // tooltip: {
+            //   trigger: 'item',
+            //   formatter: '{a} <br/>{b}: {c}'
+            // },
             angleAxis: {
               type: 'category',
               data: ['塔式起重机', '物料提升机', '施工升降机', '特种设备', '视频设备'],
@@ -643,7 +643,7 @@
                 smooth: true
               },
               data: [{
-                value: 3,
+                value: 5,
                 name: '监督员',
                 itemStyle: {
                   color: "#FEDF00",
@@ -652,7 +652,7 @@
                 }
               },
                 {
-                  value: 3,
+                  value: 5,
                   name: '项目经理',
                   itemStyle: {
                     color: "#01FFFF",
@@ -662,7 +662,7 @@
                 },
                 {
                   value: 4,
-                  name: '下属单位',
+                  name: '材料员',
                   itemStyle: {
                     color: "#3769F4",
                     borderColor: "#3769F4",
@@ -670,7 +670,7 @@
                   }
                 },
                 {
-                  value: 10,
+                  value: 80,
                   name: '施工员',
                   itemStyle: {
                     color: "#6978F2",
@@ -679,7 +679,7 @@
                   }
                 },
                 {
-                  value: 2,
+                  value: 10,
                   name: '质量员',
                   itemStyle: {
                     color: "#55D5B5",
@@ -688,7 +688,7 @@
                   }
                 },
                 {
-                  value: 2,
+                  value: 6,
                   name: '安全员',
                   itemStyle: {
                     color: "#F87D7C",
@@ -878,7 +878,7 @@
     font-size: 0.2rem;
     height: 93%;
     color: #ffa454;
-    background-image: url("../assets/homepage/process.png");
+    background-image: url("../assets/homepage/process_1.png");
     background-size: contain;
   }
   .people {
