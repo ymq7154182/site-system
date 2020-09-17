@@ -63,7 +63,30 @@
                     <span class="title1">现场工种</span>
                   </div>
                   <div class="p_chart">
-                    <div id="chart3" style="width: 30vw;height:34vh;"></div>
+                    <el-row>
+                      <el-col :span="20">
+                         <div id="chart3" style="width: 30vw;height:34vh;"></div>
+                      </el-col>
+                      <el-col :span="4">
+                        <div class="gongzhong_fenlei">
+                          <ul class="feilei_ul">
+                            <li class="fenlei_li">
+                              <el-tag type="success" @click="selectType">类型</el-tag>
+                            </li>
+                            <li>
+                              <el-tag type="info" @click="selectAge">年龄</el-tag>
+                            </li>
+                            <li>
+                              <el-tag  @click="selectXueli">学历</el-tag>
+                            </li>
+                            <li>
+                              <el-tag type="danger" @click="selectMinzu">民族</el-tag>
+                            </li>
+                          </ul>
+                        </div>
+                      </el-col>
+                    </el-row>
+                   
                   </div>
                 </div>
               </el-col>
@@ -73,8 +96,239 @@
                   <div class="p_title">
                     <span class="title1">项目负责人</span>
                   </div>
-                  <div>
-                    <el-row>
+                  <div style="margin-top:0.3rem;" class="device-data">
+                    <ul class="device-list">
+                      <li @mouseover="infohover1 = false" @mouseout="infohover1 = true">
+                        <div class="device-detail">
+                          <el-image v-show="infohover1" :src="require('../../assets/peopleManager/fuze3.jpg')" fit="fill" style="height: 80%; " />
+                          <div v-show="!infohover1" class="device-detail-info">
+                            <table>
+                              <tr>
+                                <td>姓名:</td>
+                                <td>王琪</td>
+                              </tr>
+                              <tr>
+                                <td>角色:</td>
+                                <td>监理方项目经理</td>
+                              </tr>
+                              <tr>
+                                <td>手机号:</td>
+                                <td>18227447739</td>
+                              </tr>
+                              <tr>
+                                <td>体温:</td>
+                                <td>36.5</td>
+                              </tr>
+                            </table>
+                          </div>
+                          <div style="height: 18%; width: 100%; ">
+                            <el-row>
+                              <el-col :span="15">
+                                <div class="device-detail-span">
+                                  {{ '王琪' }}&nbsp;
+                                </div>
+                              </el-col>
+                              <el-col :span="9">
+                                <el-tag type="success" effect="dark" style="margin-top: 1.6%; ">到岗</el-tag>
+                              </el-col>
+                            </el-row>
+                          </div>
+                        </div>
+                      </li>
+
+                      <li @mouseover="infohover2 = false" @mouseout="infohover2 = true">
+                        <div class="device-detail">
+                          <el-image v-show="infohover2" :src="require('../../assets/peopleManager/fuze2.jpg')" fit="fill" style="height: 80%; " />
+                          <div v-show="!infohover2" class="device-detail-info">
+                            <table>
+                              <tr>
+                                <td>姓名:</td>
+                                <td>史杨</td>
+                              </tr>
+                              <tr>
+                                <td>角色:</td>
+                                <td>施工方总监</td>
+                              </tr>
+                              <tr>
+                                <td>手机号:</td>
+                                <td>17739162457</td>
+                              </tr>
+                              <tr>
+                                <td>体温:</td>
+                                <td>36.5</td>
+                              </tr>
+                            </table>
+                          </div>
+                          <div style="height: 18%; width: 100%; ">
+                            <el-row>
+                              <el-col :span="15">
+                                <div class="device-detail-span">
+                                  {{ '史杨' }}&nbsp;
+                                </div>
+                              </el-col>
+                              <el-col :span="9">
+                                <el-tag type="success" effect="dark" style="margin-top: 1.6%; ">到岗</el-tag>
+                              </el-col>
+                            </el-row>
+                          </div>
+                        </div>
+                      </li>
+
+                      <li @mouseover="infohover3 = false" @mouseout="infohover3 = true">
+                        <div class="device-detail">
+                          <el-image v-show="infohover3" :src="require('../../assets/peopleManager/fuze1.jpg')" fit="fill" style="height: 80%; " />
+                          <div v-show="!infohover3" class="device-detail-info">
+                            <table>
+                              <tr>
+                                <td>姓名:</td>
+                                <td>赵君何</td>
+                              </tr>
+                              <tr>
+                                <td>角色:</td>
+                                <td>建设方项目经理</td>
+                              </tr>
+                              <tr>
+                                <td>手机号:</td>
+                                <td>13588673472</td>
+                              </tr>
+                              <tr>
+                                <td>体温:</td>
+                                <td>36.5</td>
+                              </tr>
+                            </table>
+                          </div>
+                          <div style="height: 18%; width: 100%; ">
+                            <el-row>
+                              <el-col :span="15">
+                                <div class="device-detail-span">
+                                  {{ '赵君何' }}&nbsp;
+                                </div>
+                              </el-col>
+                              <el-col :span="9">
+                                <el-tag type="success" effect="dark" style="margin-top: 1.6%; ">到岗</el-tag>
+                              </el-col>
+                            </el-row>
+                          </div>
+                        </div>
+                      </li>
+
+                      <li @mouseover="infohover4 = false" @mouseout="infohover4 = true">
+                        <div class="device-detail">
+                          <el-image v-show="infohover4" :src="require('../../assets/peopleManager/fuze4.jpg')" fit="fill" style="height: 80%; " />
+                          <div v-show="!infohover4" class="device-detail-info">
+                            <table>
+                              <tr>
+                                <td>姓名:</td>
+                                <td>张欣</td>
+                              </tr>
+                              <tr>
+                                <td>角色:</td>
+                                <td>监理方项目经理</td>
+                              </tr>
+                              <tr>
+                                <td>手机号:</td>
+                                <td>18227447739</td>
+                              </tr>
+                              <tr>
+                                <td>体温:</td>
+                                <td>36.5</td>
+                              </tr>
+                            </table>
+                          </div>
+                          <div style="height: 18%; width: 100%; ">
+                            <el-row>
+                              <el-col :span="15">
+                                <div class="device-detail-span">
+                                  {{ '张欣' }}&nbsp;
+                                </div>
+                              </el-col>
+                              <el-col :span="9">
+                                <el-tag type="success" effect="dark" style="margin-top: 1.6%; ">到岗</el-tag>
+                              </el-col>
+                            </el-row>
+                          </div>
+                        </div>
+                      </li>
+
+                      <li @mouseover="infohover5 = false" @mouseout="infohover5 = true">
+                        <div class="device-detail">
+                          <el-image v-show="infohover5" :src="require('../../assets/peopleManager/fuze5.jpg')" fit="fill" style="height: 80%; " />
+                          <div v-show="!infohover5" class="device-detail-info">
+                            <table>
+                              <tr>
+                                <td>姓名:</td>
+                                <td>杨琪</td>
+                              </tr>
+                              <tr>
+                                <td>角色:</td>
+                                <td>施工方总监</td>
+                              </tr>
+                              <tr>
+                                <td>手机号:</td>
+                                <td>17739162457</td>
+                              </tr>
+                              <tr>
+                                <td>体温:</td>
+                                <td>36.5</td>
+                              </tr>
+                            </table>
+                          </div>
+                          <div style="height: 18%; width: 100%; ">
+                            <el-row>
+                              <el-col :span="15">
+                                <div class="device-detail-span">
+                                  {{ '杨琪' }}&nbsp;
+                                </div>
+                              </el-col>
+                              <el-col :span="9">
+                                <el-tag type="success" effect="dark" style="margin-top: 1.6%; ">到岗</el-tag>
+                              </el-col>
+                            </el-row>
+                          </div>
+                        </div>
+                      </li>
+
+                      <li @mouseover="infohover6 = false" @mouseout="infohover6 = true">
+                        <div class="device-detail">
+                          <el-image v-show="infohover6" :src="require('../../assets/peopleManager/fuze6.jpg')" fit="fill" style="height: 80%; " />
+                          <div v-show="!infohover6" class="device-detail-info">
+                            <table>
+                              <tr>
+                                <td>姓名:</td>
+                                <td>廉伟</td>
+                              </tr>
+                              <tr>
+                                <td>角色:</td>
+                                <td>建设方项目经理</td>
+                              </tr>
+                              <tr>
+                                <td>手机号:</td>
+                                <td>13588673472</td>
+                              </tr>
+                              <tr>
+                                <td>体温:</td>
+                                <td>36.5</td>
+                              </tr>
+                            </table>
+                          </div>
+                          <div style="height: 18%; width: 100%; ">
+                            <el-row>
+                              <el-col :span="15">
+                                <div class="device-detail-span">
+                                  {{ '廉伟' }}&nbsp;
+                                </div>
+                              </el-col>
+                              <el-col :span="9">
+                                <el-tag type="success" effect="dark" style="margin-top: 1.6%; ">到岗</el-tag>
+                              </el-col>
+                            </el-row>
+                          </div>
+                        </div>
+                      </li>
+                     
+                      
+                    </ul>
+                    <!-- <el-row>
                       <el-col :span="8">
                         <div class="headman">
                           <el-image :src="require('../../assets/peopleManager/fuze3.jpg')" fit="fill" style="height: 75%; width: 100%; " />
@@ -114,7 +368,7 @@
                           </div>
                         </div>
                       </el-col>
-                    </el-row>
+                    </el-row> -->
                   </div>
                 </div>
               </el-col>
@@ -197,7 +451,12 @@ export default {
           temperature:'37.2',
         }
       ],
-
+      infohover1: true,
+      infohover2: true,
+      infohover3: true,
+      infohover4: true,
+      infohover5: true,
+      infohover6: true,
     }
   },
   mounted() {
@@ -622,13 +881,13 @@ export default {
           type: 'bar',
           data: [1, 2, 3, 4, 3, 5, 1],
           coordinateSystem: 'polar',
-          name: '项目经理',
+          name: '施工员',
           stack: 'a'
         }, {
           type: 'bar',
           data: [2, 4, 9, 1, 0, 2, 1],
           coordinateSystem: 'polar',
-          name: '施工员',
+          name: '质量员',
           stack: 'a'
         },{
           type: 'bar',
@@ -640,19 +899,19 @@ export default {
           type: 'bar',
           data: [2, 4, 6, 1, 1, 5, 1],
           coordinateSystem: 'polar',
-          name: '质量员',
+          name: '标准员',
           stack: 'a'
         },{
           type: 'bar',
           data: [2, 8, 6, 8, 3, 2, 3],
           coordinateSystem: 'polar',
-          name: '下属单位',
+          name: '材料员',
           stack: 'a'
         }, {
           type: 'bar',
           data: [1, 2, 7, 4, 4, 2, 8],
           coordinateSystem: 'polar',
-          name: '特种操作工',
+          name: '机械员',
           stack: 'a'
         }],
         // radar: {
@@ -665,7 +924,7 @@ export default {
           itemWidth: 13 ,
           show: true,
           right:'right',
-          data: ['项目经理', '施工员', '安全员','质量员','下属单位','特种操作工'],
+          data: ['施工员', '质量员', '安全员','标准员','材料员','机械员'],
           textStyle: {
             fontSize:10,
             color: '#6ac0f0' ,
@@ -687,7 +946,7 @@ export default {
           top:10,
           left:10,
 
-          data: ['电焊工', '建筑电工', '钢筋工', '架子工', '水电工','泥工'],
+          data: ['施工员', '质量员', '安全员', '标准员', '材料员','机械员'],
           textStyle: {
             color: '#6ac0f0' ,
             fontSize: 10,
@@ -695,7 +954,7 @@ export default {
         },
         series: [
           {
-            name: '访问来源',
+            name: '现场工种',
             type: 'pie',
             radius: ['60%', '80%'],
             avoidLabelOverlap: false,
@@ -715,12 +974,12 @@ export default {
               length2: 20
             },
             data: [
-              {value: 335, name: '电焊工'},
-              {value: 310, name: '建筑电工'},
-              {value: 234, name: '钢筋工'},
-              {value: 135, name: '架子工'},
-              {value: 1548, name: '水电工'},
-              {value: 148, name: '泥工'}
+              {value: 150, name: '施工员'},
+              {value: 10, name: '质量员'},
+              {value: 4, name: '安全员'},
+              {value: 5, name: '标准员'},
+              {value: 58, name: '材料员'},
+              {value: 48, name: '机械员'}
             ]
           }
         ]
@@ -960,5 +1219,82 @@ export default {
   color: #E8FEFF;
   text-align: center;
   line-height: 0.35rem;
+}
+
+
+.device-detail {
+  width: 2.5rem;
+  height:30vh;
+  margin: 0 0.05rem;
+  border: 1px solid #3FA0C3;;
+  border-radius: 4px;
+  background-size: 100% 100%;
+  background-color: rgba(0 ,0 ,0 , 0.35);
+}
+
+.device-detail-info {
+  float: top;
+  height: 80%;
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0.05);
+  color: #E8FEFF;
+  font-size: 0.18rem;
+}
+
+.device-detail-info table {
+  height: 90%;
+  margin: 3px 4px;
+}
+
+.device-detail-span {
+  font-size: 0.25rem;
+  color: #E8FEFF;
+  text-align: right;
+  margin: 0 auto;
+}
+
+
+
+.device-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  animation: moving2 12s linear infinite;
+  width: 25rem;
+
+}
+
+.device-list li {
+  float: left;
+}
+
+@keyframes moving2 {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-8.6rem);
+  }
+}
+
+.device-data {
+  /* height: calc(28vh - 10px - 0.5rem - 0.3rem); */
+  margin: 0.15rem;
+  width: calc(100% - 0.3rem);
+  overflow: hidden;
+}
+
+.device-list:hover {
+  animation-play-state: paused;
+}
+.gongzhong_fenlei {
+  /* padding-top: 1rem; */
+}
+.feilei_ul {
+  list-style: none;
+  padding: 0;
+  text-align: center;
+  line-height: 0.8rem;
+  
 }
 </style>
