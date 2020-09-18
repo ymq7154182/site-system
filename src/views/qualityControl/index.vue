@@ -1592,15 +1592,15 @@
           let scale = 1;
           let echartData = {
             inner: [
-              {value:335,unit:'人', name:'安全管理', selected:true,
+              {value:335,unit:'次', name:'易燃物乱摆放', selected:true,
               },
-              {value:679,unit:'人', name:'文明施工'},
-              {value:1548,unit:'人', name:'基坑支护安全'}
+              {value:679,unit:'次', name:'未正确佩戴安全帽'},
+              {value:1548,unit:'次', name:'基坑支护安全'}
             ],
             outer: [
-              {value:310,unit:'人', name:'模板工程安全'},
-              {value:234, unit:'人',name:'施工用电'},
-              {value:135, unit:'人',name:'物料提升机'},
+              {value:310,unit:'次', name:'模板工程安全'},
+              {value:234, unit:'次',name:'施工用电'},
+              {value:135, unit:'次',name:'物料提升机'},
             ]
           }
 
@@ -1618,7 +1618,7 @@
             },
             legend: {
               orient: 'vertical',
-              right: 30,
+              right: 0,
               top: 'center',
               itemWidth: 14 * scale,
               itemHeight: 14 * scale,
