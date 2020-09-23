@@ -219,7 +219,7 @@
               {
                 name:'人员统计',
                 type:'pie',
-                radius: ['60%', '80%'],
+                radius: ['47%', '63%'],
                 data:echartData.outer,
                 // label: {
                 //   normal: {
@@ -852,9 +852,9 @@
     background-size:contain
   }
   .project_item{
-    margin-left: 0.2rem;
+    margin-left: 0.1rem;
     margin-top: 0.1rem;
-    width: 90%;
+    width: 95%;
     height: 0.43rem;
     background-image:url("../assets/homepage/project_item_bg.png") ;
   }
