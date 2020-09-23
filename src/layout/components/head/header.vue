@@ -74,7 +74,7 @@
             </li>
           </ul>
         </div>
-        <div class="head-text"></div>
+        <div class="head-text">智慧工地</div>
         <div class="div-tag right-tag" style="padding-right: 0.15rem;">
           <ul class="ul2">
           <li>
@@ -284,18 +284,22 @@
     background-image: url("../../../assets/header/rightcheck.png");
   }
   .head-text {
+    text-align: center;
     width: 4rem;
     height: 0.45rem;
-    background-size: 100% 100%;
-    /*font-size: 0.4rem;*/
-    /*font-family: "Adobe Heiti Std";*/
-    /*color: rgb(255, 255, 255);*/
-    /*text-transform: uppercase;*/
-    /*line-height: 1.934;*/
-    /*-moz-transform: matrix( 1.12300210614388,0,0,1.12300210614388,0,0);*/
-    /*-webkit-transform: matrix( 1.12300210614388,0,0,1.12300210614388,0,0);*/
-    /*-ms-transform: matrix( 1.12300210614388,0,0,1.12300210614388,0,0);*/
-    background-image: url("../../../assets/header/titletext.png");
+    /* background-size: 100% 100%; */
+    font-size: 0.48rem;
+    font-weight: 500;
+    color: rgb(255, 255, 255);
+    text-transform: uppercase;
+    line-height: 0.45rem;
+    /* -moz-transform: matrix( 1.12300210614388,0,0,1.12300210614388,0,0);
+    -webkit-transform: matrix( 1.12300210614388,0,0,1.12300210614388,0,0);
+    -ms-transform: matrix( 1.12300210614388,0,0,1.12300210614388,0,0); */
+    /* background-image: url("../../../assets/header/titletext.png"); */
+    background-image:-webkit-linear-gradient(bottom,#3d7af1,#3ca3f5, #3ad7fa);
+    -webkit-background-clip:text; 
+    -webkit-text-fill-color:transparent;
     position: absolute;
     left: 50%;
     transform: translateX(-50%);
