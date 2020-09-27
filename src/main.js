@@ -9,7 +9,16 @@ import 'element-ui/lib/theme-chalk/index.css'
 import './common/flexible.js';
 import store from './store'
 import echarts from 'echarts'
+import { parseTime, resetForm, addDateRange, selectDictLabel, selectDictLabels, download, handleTree } from "@/utils/dealCommon";
+
 Vue.prototype.$echarts = echarts
+Vue.prototype.parseTime = parseTime
+Vue.prototype.resetForm = resetForm
+Vue.prototype.addDateRange = addDateRange
+Vue.prototype.selectDictLabel = selectDictLabel
+Vue.prototype.selectDictLabels = selectDictLabels
+Vue.prototype.download = download
+Vue.prototype.handleTree = handleTree
 
 Vue.use(dataV);
 Vue.use(ElementUI, { size: 'small' });
