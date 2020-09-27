@@ -100,7 +100,7 @@
             </div>
           </li>
           <li>
-            <div class="li-text2 pos-style-right3" :class="{'bg-img23': textStyle=== '进度管理', 'bg-img22': textStyle!== '进度管理'}">
+            <div class="li-text2 pos-style-right3" :class="{'bg-img23': textStyle=== '进度管理', 'bg-img22': textStyle!== '进度管理'}" @click="gotoPress">
                   <span>
                    进度管理
                 </span>
@@ -158,6 +158,9 @@
         },
         gotoGreen () {
           this.$router.push('/greenConstruction')
+        },
+        gotoPress () {
+          this.$router.push('/scheduleManage')
         },
         gotoSystem() {
           window.location.href = "http://121.36.106.18:38080/index.html"
@@ -298,7 +301,7 @@
     -ms-transform: matrix( 1.12300210614388,0,0,1.12300210614388,0,0); */
     /* background-image: url("../../../assets/header/titletext.png"); */
     background-image:-webkit-linear-gradient(bottom,#3d7af1,#3ca3f5, #3ad7fa);
-    -webkit-background-clip:text; 
+    -webkit-background-clip:text;
     -webkit-text-fill-color:transparent;
     position: absolute;
     left: 50%;
