@@ -67,7 +67,18 @@ const routes = [{
         component: () => import('@/views/greenConstruction/index'),
       }
     ]
-  }
+  },
+  {
+    path: '/scheduleManage',
+    component: Layout,
+    name: 'scheduleManage',
+    children: [
+      {
+        path: '/scheduleManage',
+        component: () => import('@/views/scheduleManage/index'),
+      }
+    ]
+  },
 ]
 const router = new VueRouter({
   mode: "history",
