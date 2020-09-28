@@ -70,17 +70,119 @@
             </div>
           </div>
         </el-col>
-        <el-col :span="12">
+        <el-col :span="12" class="homePage_dialog">
           <div style="padding-left: 0.3rem;margin-right: 0.3rem">
             <div class="video_container">
               <el-image :src="require('../assets/homepage/button.png')" fill="contain" style="height: 0.4rem; width: 4rem; margin: 0.17rem 0 0 0.17rem; " />
             </div>
             <div class="process">
               <div class="process_content">
+<!--                <div class="border-top-left"></div>-->
+<!--                <div class="box-title">项目进度</div>-->
                 <span>项目进度</span>
+                <div style="margin-top: 3vh;">
+                  <el-steps :active="2" align-center>
+                    <el-step title="地基与基础" @click.native="gotoOption(1)"></el-step>
+                    <el-step title="主体结构" @click.native="gotoOption(2)"></el-step>
+                    <el-step title="建筑装饰装修" @click.native="gotoOption(3)"></el-step>
+                    <el-step title="建筑给水排水及采暖" @click.native="gotoOption(4)"></el-step>
+                    <el-step title="建筑电气" @click.native="gotoOption(5)"></el-step>
+                    <el-step title="智能建筑" @click.native="gotoOption(6)"></el-step>
+                    <el-step title="通风与空调" @click.native="gotoOption(7)"></el-step>
+                    <el-step title="电梯" @click.native="gotoOption(8)"></el-step>
+                    <el-step title="建筑节能" @click.native="gotoOption(9)"></el-step>
+                  </el-steps>
+                </div>
+
               </div>
             </div>
           </div>
+          <el-dialog
+            title="具体进度情况"
+            :visible.sync="dialogVisible"
+            width="70%"
+            class="home_second"
+            :before-close="handleClose">
+            <div class="schedule-press">
+              <el-steps direction="vertical" :active="1" :space="150">
+<!--                <el-step :key="index">-->
+                <el-step :title="item.title" :description="item.content"  v-for="(item, index) in dataList" :key="index">
+                  <template slot="description" >
+                    <div class="step-row">
+<!--                    <div class="step-row" v-for="item in dataList">-->
+                      <table width="100%" border="0" cellspacing="0" cellpadding="0" class="processing_content">
+                        <tr style="border-radius: 0.1rem">
+                          <td style="color: #3c3c3c" class="item-td">
+                            <!--                        <div class="processing_content_detail" style="float:left;width:70%"><span >申请人&nbsp;&nbsp;<span style="color:#219AFF">圆领{{}}</span>&nbsp;&nbsp;提交了割接方案</span></div>-->
+                            <div class="processing_content_detail" style="float:left;width:70%"><span >{{item.title}}&nbsp;&nbsp;{{item.content}}</span></div>
+                            <!--                        <div class="processing_content_detail" style="float:right;"><span ><i class="el-icon-time"></i>&nbsp;&nbsp;昨天12:24</span> </div>-->
+                            <div class="processing_content_detail" style="float:right;" v-if="item.time.length > 0"><span ><i class="el-icon-time"></i>&nbsp;&nbsp;{{item.time}}</span> </div>
+                          </td>
+                        </tr>
+                        <tr v-if="form.id!==item.id">
+                          <td>
+                            <div class="processing_content_detail" style="float:left;width:70%">
+                              <div style="float:left;width: 2px;height: 20px; background:#C7D4E9;margin-left:10px;margin-right:10px"></div>
+                                <span style="color:#919FB8" class="status-label" @click="submitOption('延缓', item)">延缓</span>
+                                <span style="color:#919FB8" class="status-label" @click="submitOption('完成', item)">完成</span>
+                              </div>
+<!--                              <span style="color:#919FB8">同意，建议通过</span></div>-->
+                          </td>
+                        </tr>
+                        <tr v-else>
+                          <td>
+                            <div class="processing_content_detail" style="float:left;width:70%">
+                              <div style="float:left;width: 2px;height: 20px; background:#C7D4E9;margin-left:10px;margin-right:10px"></div>
+                              <span style="color:#919FB8" class="status-label-status">{{item.status}}</span>
+                            </div>
+                            <!--                              <span style="color:#919FB8">同意，建议通过</span></div>-->
+                          </td>
+                        </tr>
+                      </table>
+                    </div>
+                  </template>
+
+                </el-step>
+
+              </el-steps>
+            </div>
+            <span slot="footer" class="dialog-footer">
+              <el-button @click="dialogVisible = false">取 消</el-button>
+              <el-button type="primary" @click="dialogVisible = false">确 定</el-button>
+            </span>
+          </el-dialog>
+          <el-dialog title="迟缓/完成操作" :visible.sync="showSlow">
+            <el-form :model="form">
+              <el-form-item label="名称" :label-width="formLabelWidth">
+                <el-input v-model="form.title" autocomplete="off"></el-input>
+              </el-form-item>
+              <el-form-item label="描述内容" :label-width="formLabelWidth">
+<!--                <el-select v-model="form.content" placeholder="请选择活动区域">-->
+                  <el-input v-model="form.processData" autocomplete="off"></el-input>
+<!--                  <el-option label="区域一" value="shanghai"></el-option>-->
+<!--                  <el-option label="区域二" value="beijing"></el-option>-->
+<!--                </el-select>-->
+              </el-form-item>
+              <el-form-item label="延缓/完成原因" :label-width="formLabelWidth">
+                <el-input v-model="form.reason" autocomplete="off"></el-input>
+              </el-form-item>
+              <el-form-item label="负责人" :label-width="formLabelWidth">
+                <el-input v-model="form.principal" autocomplete="off"></el-input>
+              </el-form-item>
+              <el-form-item label="延缓/完成时间" :label-width="formLabelWidth">
+                <el-date-picker
+                  v-model="form.date"
+                  type="date"
+                  placeholder="选择日期">
+                </el-date-picker>
+<!--                <el-input v-model="form.date" autocomplete="off"></el-input>-->
+              </el-form-item>
+            </el-form>
+            <div slot="footer" class="dialog-footer">
+              <el-button @click="showSlow = false">取 消</el-button>
+              <el-button type="primary" @click="defineReason()">确 定</el-button>
+            </div>
+          </el-dialog>
         </el-col>
         <el-col :span="8">
           <el-row>
@@ -144,13 +246,74 @@
       },
       data(){
           return{
+            flag: 0, // 是否展示延缓和完成按钮
             myChart13: '',
             myChart24: '',
             myChart22: '',
             myChart21: '',
+            dataList: [],
+            dialogVisible: false,
+            slowData: [], // 迟缓对象
+            showSlow: false,
+            formLabelWidth: '110px',
+            option: '', // 完成还是迟缓
+            form: {
+              id: '',
+              title: '',
+              content: '',
+              status: '',
+              reason: '', // 滞缓原因
+              date: '', // 完成时间
+              principal: '', // 负责人
+              processData: '' // 处理内容
+            },
           }
       },
       methods:{
+        defineReason () {
+          this.dataList[this.form.id].time = this.form.date.getFullYear() + '-' + (this.form.date.getMonth() + 1) + '-' + this.form.date.getDate() + ' '
+            // + d.getHours() + ':' + d.getMinutes() + ':' + d.getSeconds();
+          // console.log(this.dataList[this.form.id].time.length, this.form.date)
+          this.dataList[this.form.id].status = this.option
+          this.showSlow = false
+        },
+        submitOption (option, item) {
+          this.form = item
+          this.showSlow = true
+          this.option = option
+          console.log(this.form)
+        },
+        handleClose(done) {
+          this.$confirm('确认关闭？')
+            .then(_ => {
+              done();
+            })
+            .catch(_ => {});
+        },
+        gotoOption (val) {
+          this.dialogVisible = true
+          if (val === 1) {
+            this.dataList = [
+              {id: 0, title: '地基与基础', content: '混凝土，够凝土，混凝土，够凝土，混凝土，够凝土，混凝土，够凝土，', time: '', status: '完成'},
+              {id: 1, title: '地基与基础', content: '混凝土，够凝土，混凝土，够凝土，混凝土，够凝土，混凝土，够凝土，', time: '', status: '完成'},
+              {id: 2, title: '地基与基础', content: '混凝土，够凝土，混凝土，够凝土，混凝土，够凝土，混凝土，够凝土，', time: '', status: '完成'},
+              {id: 3, title: '地基与基础', content: '混凝土，够凝土，混凝土，够凝土，混凝土，够凝土，混凝土，够凝土，', time: '', status: '完成'}
+              ]
+          } else if (val === 2){
+            this.dataList = [
+              {id: 0, title: '主体结构', content: '混凝土，够凝土，混凝土，够凝土，混凝土，够凝土，混凝土，够凝土，', time: '', status: '完成'},
+              {id: 1, title: '主体结构', content: '混凝土，够凝土，混凝土，够凝土，混凝土，够凝土，混凝土，够凝土，', time: '', status: '完成'},
+              {id: 2, title: '主体结构', content: '混凝土，够凝土，混凝土，够凝土，混凝土，够凝土，混凝土，够凝土，', time: '', status: '完成'},
+              {id: 3, title: '主体结构', content: '混凝土，够凝土，混凝土，够凝土，混凝土，够凝土，混凝土，够凝土，', time: '', status: '进行中'}]
+          } else {
+            this.dataList = [
+              {id: 0, title: '流程中' + val, content: '混凝土，够凝土，混凝土，够凝土，混凝土，够凝土，混凝土，够凝土，', time: '', status: '迟缓'},
+              {id: 1, title: '流程中' + val, content: '混凝土，够凝土，混凝土，够凝土，混凝土，够凝土，混凝土，够凝土，', time: '', status: '完成'},
+              {id: 2, title: '流程中' + val, content: '混凝土，够凝土，混凝土，够凝土，混凝土，够凝土，混凝土，够凝土，', time: '', status: '完成'},
+              {id: 3, title: '流程中' + val, content: '混凝土，够凝土，混凝土，够凝土，混凝土，够凝土，混凝土，够凝土，', time: '', status: '完成'}]
+          }
+          // console.log(val)
+        },
         inchart13() {
           this.myChart13 = this.$echarts.init(document.getElementById('mychart13'));
           let innerFontColor = '#FFFFFF';
@@ -870,15 +1033,26 @@
     height: 3rem;
     background-image: url("../assets/homepage/process_bg.png") ;
   }
-  .process_content {
-    padding-left: 0.2rem;
-    padding-top: 0.2rem;
+  .border-top-left {
+    height: 10px;
+    background-image: url("../../src/assets/border/top-center.png");
+    background-size: 100% 100%;
+    width: 100%;
+  }
+  .box-title {
+    color: #FFA454;
+    font-size: 0.27rem;
+    height: 0.5rem;
+    line-height: 0.5rem;
+    padding-left: 0.25rem;
   }
   .process_content{
+    padding-left: 0.2rem;
+    padding-top: 0.2rem;
     font-size: 0.2rem;
     height: 93%;
     color: #ffa454;
-    background-image: url("../assets/homepage/process_1.png");
+    /*background-image: url("../assets/homepage/process_1.png");*/
     background-size: contain;
   }
   .people {
@@ -932,5 +1106,68 @@
     height: 3rem;
     background-image: url("../assets/homepage/project_bg.png") ;
     background-size: 100% 100%;
+  }
+  .processing_content{
+    background-color: rgba(204, 224, 255, 0.5);
+    border-radius: 0.1rem;
+    /*color: #3c3c3c;*/
+  }
+  .item-td {
+    font-size: 15px;
+  }
+  .processing_content_detail{
+    margin-left: 0.4rem;
+    margin-top: 0.1rem;
+    margin-bottom: 0.1rem;
+    width: 150px;
+    display: inline-block;
+  }
+  .step-row{
+    min-width:500px;
+    margin-bottom:12px;
+    margin-top:12px;
+  }
+  .status-label {
+    cursor: pointer;
+    padding: 0 0.2rem;
+    margin-left: 0.3rem;
+    border: 0.01rem solid #919FB8;
+    border-radius: 0.1rem;
+    background-color: #fff;
+  }
+  .status-label-status {
+    cursor: pointer;
+    padding: 0 0.2rem;
+    margin-left: 0.3rem;
+    border: 0.01rem solid #ffb91b;
+    border-radius: 0.1rem;
+    background-color: #ffb91b;
+    color: #fff!important;
+  }
+</style>
+<style>
+  .process_content .el-step__title.is-finish,
+  .process_content .el-step__title.is-process,
+  .process_content .el-step__title.is-wait {
+    /*color: #409EFF;*/
+    width: 25px;
+    margin-left: 50%;
+    transform: translateX(-50%);
+    height: 1.7rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .process_content .el-step__title {
+    line-height: 26px;
+  }
+  .el-step:last-of-type .el-step__description {
+    padding-right: 10%;
+  }
+  .schedule-content .el-step__title {
+    font-size: 18px;
+    font-weight: bold;
+  }
+  .homePage_dialog .home_second .el-dialog__body {
+    margin-left: 10%;
   }
 </style>

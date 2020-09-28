@@ -121,9 +121,6 @@
     /*height: 60vh;*/
     /*max-height: 100vh;*/
   }
-  .title_size {
-    font-size: 18px;
-  }
   .processing_content{
     background-color: rgba(204, 224, 255, 0.5);
     border-radius: 0.1rem;
