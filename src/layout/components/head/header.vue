@@ -86,7 +86,7 @@
             </div>
           </li>
           <li>
-            <div class="li-text2 pos-style-right1" :class="{'bg-img23': textStyle=== '资料管理', 'bg-img22': textStyle!== '资料管理'}">
+            <div class="li-text2 pos-style-right1" :class="{'bg-img23': textStyle=== '资料管理', 'bg-img22': textStyle!== '资料管理' }" @click="gotoDataManage">
                 <span>
                    资料管理
                 </span>
@@ -164,6 +164,9 @@
         },
         gotoSystem() {
           window.location.href = "http://121.36.106.18:38080/index.html"
+        },
+        gotoDataManage() {
+          this.$router.push('/dataManage')
         }
       }
     }

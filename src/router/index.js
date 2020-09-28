@@ -79,6 +79,17 @@ const routes = [{
       }
     ]
   },
+  {
+    path: '/dataManage',
+    component: Layout,
+    name: 'dataManage',
+    children: [
+      {
+        path: '/dataManage',
+        component: () => import('@/views/dataManage/index'),
+      }
+    ]
+  },
 ]
 const router = new VueRouter({
   mode: "history",
