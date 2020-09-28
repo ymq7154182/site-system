@@ -90,6 +90,17 @@ const routes = [{
       }
     ]
   },
+  {
+    path: '/deviceOne',
+    component: Layout,
+    name: 'deviceOne',
+    children: [
+      {
+        path: '/deviceOne',
+        component: () => import('@/views/deviceDetail/deviceOne'),
+      }
+    ]
+  },
 ]
 const router = new VueRouter({
   mode: "history",

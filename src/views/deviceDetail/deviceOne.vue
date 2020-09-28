@@ -4,7 +4,7 @@
       <el-col :span="4">
         <div class="dm-aside">
           <div class="border-top-left"></div>
-          <div class="dm-title">文件类型</div>
+          <div class="dm-title">七张表</div>
           <div class="type-list">
             <ul>
               <li><i class="el-icon-document type-icon" />文件</li>
@@ -18,7 +18,8 @@
         <div class="dm-main">
           <div class="border-top-right"></div>
           <div style="padding: 0.13rem">
-            <el-button type="primary" @click="showUpload = true"><i class="el-icon-upload" /> 上传文件</el-button>
+            <el-button type="success" @click="gotoback"><i class="el-icon-d-arrow-left" />返回</el-button>
+            <el-button type="primary" @click="showUpload = true"><i class="el-icon-plus" /> 新增</el-button>
           </div>
           <div style="padding: 0 0.2rem">
             <el-table
@@ -85,7 +86,7 @@
               multiple>
               <i class="el-icon-upload"></i>
               <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
-<!--              <div class="el-upload__tip" slot="tip">只能上传jpg/png文件，且不超过500kb</div>-->
+              <!--              <div class="el-upload__tip" slot="tip">只能上传jpg/png文件，且不超过500kb</div>-->
             </el-upload>
           </el-form-item>
           <el-form-item>
@@ -128,235 +129,238 @@
 </template>
 
 <script>
-export default {
-  data() {
-    return {
-      fileTable: [
-        {
-          name: '工地合同文件',
-          type: '文件',
-          description: '签署的合同文件',
-          uploader: '史杨',
-          uploadTime: '2020-01-01'
-        },
-        {
-          name: '工地图片文件',
-          type: '图片',
-          description: '拍摄的图片文件',
-          uploader: '张珊',
-          uploadTime: '2020-01-02'
-        },
-        {
-          name: '工地视频文件',
-          type: '视频',
-          description: '拍摄的视频文件',
-          uploader: '史杨',
-          uploadTime: '2020-01-03'
-        }
-      ],
-      currentPage: 1,
-      pageSize: 10,
-      showUpload: false,
-      uploadInfo: {
-        name: '',
-        type: '',
-        description: '',
-        uploadTime: '',
-        uploader: '',
-      },
-      rules: {
-        name: [
-          { required: true, message: '请输入文件名称', trigger: 'blur' }
-        ],
-        type: [
-          { required: true, message: '请选择文件类型', trigger: 'change' }
-        ],
-        description: [
-          { required: true, message: '请输入文件描述', trigger: 'blur' }
-        ],
-        uploadTime: [
-          { required: true, message: '请选择上传日期', trigger: 'change' }
-        ],
-        uploader: [
-          { required: true, message: '请输入文件描述', trigger: 'blur' }
-        ]
-      },
-      pickerOptions: {
-        disabledDate(time) {
-          return time.getTime() > Date.now();
-        },
-        shortcuts: [{
-          text: '今天',
-          onClick(picker) {
-            picker.$emit('pick', new Date());
+  export default {
+    data() {
+      return {
+        fileTable: [
+          {
+            name: '工地合同文件',
+            type: '文件',
+            description: '签署的合同文件',
+            uploader: '史杨',
+            uploadTime: '2020-01-01'
+          },
+          {
+            name: '工地图片文件',
+            type: '图片',
+            description: '拍摄的图片文件',
+            uploader: '张珊',
+            uploadTime: '2020-01-02'
+          },
+          {
+            name: '工地视频文件',
+            type: '视频',
+            description: '拍摄的视频文件',
+            uploader: '史杨',
+            uploadTime: '2020-01-03'
           }
-        }, {
-          text: '昨天',
-          onClick(picker) {
-            const date = new Date();
-            date.setTime(date.getTime() - 3600 * 1000 * 24);
-            picker.$emit('pick', date);
-          }
-        }, {
-          text: '一周前',
-          onClick(picker) {
-            const date = new Date();
-            date.setTime(date.getTime() - 3600 * 1000 * 24 * 7);
-            picker.$emit('pick', date);
-          }
-        }]
+        ],
+        currentPage: 1,
+        pageSize: 10,
+        showUpload: false,
+        uploadInfo: {
+          name: '',
+          type: '',
+          description: '',
+          uploadTime: '',
+          uploader: '',
+        },
+        rules: {
+          name: [
+            { required: true, message: '请输入文件名称', trigger: 'blur' }
+          ],
+          type: [
+            { required: true, message: '请选择文件类型', trigger: 'change' }
+          ],
+          description: [
+            { required: true, message: '请输入文件描述', trigger: 'blur' }
+          ],
+          uploadTime: [
+            { required: true, message: '请选择上传日期', trigger: 'change' }
+          ],
+          uploader: [
+            { required: true, message: '请输入文件描述', trigger: 'blur' }
+          ]
+        },
+        pickerOptions: {
+          disabledDate(time) {
+            return time.getTime() > Date.now();
+          },
+          shortcuts: [{
+            text: '今天',
+            onClick(picker) {
+              picker.$emit('pick', new Date());
+            }
+          }, {
+            text: '昨天',
+            onClick(picker) {
+              const date = new Date();
+              date.setTime(date.getTime() - 3600 * 1000 * 24);
+              picker.$emit('pick', date);
+            }
+          }, {
+            text: '一周前',
+            onClick(picker) {
+              const date = new Date();
+              date.setTime(date.getTime() - 3600 * 1000 * 24 * 7);
+              picker.$emit('pick', date);
+            }
+          }]
+        },
+        showEdit: false,
+        currentInfo: {
+          name: '',
+          type: '',
+          description: '',
+          uploader: '',
+          uploadTime: ''
+        },
+        currentIndex: null
+      }
+    },
+    // mounted() {
+    //   this.$store.dispatch('changeMsg', '资料管理')
+    // },
+    methods: {
+      handleCurrentChange(val) {
+        this.currentPage = val
       },
-      showEdit: false,
-      currentInfo: {
-        name: '',
-        type: '',
-        description: '',
-        uploader: '',
-        uploadTime: ''
+      submitUpload(formName) {
+        this.$refs[formName].validate((valid) => {
+          if(valid) {
+            this.$message({
+              type: 'success',
+              message: '上传成功'
+            });
+            this.showEdit = false;
+          } else {
+            this.$message.error('上传失败')
+            return false
+          }
+        });
       },
-      currentIndex: null
-    }
-  },
-  mounted() {
-    this.$store.dispatch('changeMsg', '资料管理')
-  },
-  methods: {
-    handleCurrentChange(val) {
-      this.currentPage = val
-    },
-    submitUpload(formName) {
-      this.$refs[formName].validate((valid) => {
-        if(valid) {
-          this.$message({
-            type: 'success',
-            message: '上传成功'
-          });
-          this.showEdit = false;
-        } else {
-          this.$message.error('上传失败')
-          return false
-        }
-      });
-    },
-    resetForm(formName) {
-      this.$refs[formName].resetFields();
-    },
-    editInfo(index, row) {
-      this.currentInfo = row;
-      this.currentIndex = index;
-      this.showEdit = true;
-    },
-    submitEdit(formName) {
-      this.$refs[formName].validate((valid) => {
-        if(valid) {
-          this.fileTable[this.currentIndex] = this.currentInfo;
-          this.$message({
-            type: 'success',
-            message: '修改成功！'
-          })
-        } else {
-          this.$message.error('修改失败！')
-        }
-      })
+      resetForm(formName) {
+        this.$refs[formName].resetFields();
+      },
+      editInfo(index, row) {
+        this.currentInfo = row;
+        this.currentIndex = index;
+        this.showEdit = true;
+      },
+      submitEdit(formName) {
+        this.$refs[formName].validate((valid) => {
+          if(valid) {
+            this.fileTable[this.currentIndex] = this.currentInfo;
+            this.$message({
+              type: 'success',
+              message: '修改成功！'
+            })
+          } else {
+            this.$message.error('修改失败！')
+          }
+        })
+      },
+      gotoback() {
+        history.go(-1)
+      }
     }
   }
-}
 </script>
 
 <style>
-.dm-aside {
-  background-color: rgba(0, 36, 78, 0.5);
-  height: 83vh;
-  margin: 0 5px;
-  border-radius: 2px;
-}
+  .dm-aside {
+    background-color: rgba(0, 36, 78, 0.5);
+    height: 83vh;
+    margin: 0 5px;
+    border-radius: 2px;
+  }
 
-.dm-main {
-  background-color: rgba(0, 36, 78, 0.5);
-  height: 83vh;
-  margin: 0 5px;
-  border-radius: 2px;
-}
+  .dm-main {
+    background-color: rgba(0, 36, 78, 0.5);
+    height: 83vh;
+    margin: 0 5px;
+    border-radius: 2px;
+  }
 
-.dm-title {
-  font-size: 0.32rem;
-  color: #409eff;
-  padding: 0.13rem;
-}
+  .dm-title {
+    font-size: 0.32rem;
+    color: #409eff;
+    padding: 0.13rem;
+  }
 
-.border-top-left {
-  height: 10px;
-  background-image: url("../../assets/border/right-top.png");
-  background-size: 100% 100%;
-  width: 100%;
-}
+  .border-top-left {
+    height: 10px;
+    background-image: url("../../assets/border/right-top.png");
+    background-size: 100% 100%;
+    width: 100%;
+  }
 
-.border-top-right {
-  height: 10px;
-  background-image: url("../../assets/border/top-center.png");
-  background-size: 100% 100%;
-  width: 100%;
-}
+  .border-top-right {
+    height: 10px;
+    background-image: url("../../assets/border/top-center.png");
+    background-size: 100% 100%;
+    width: 100%;
+  }
 
-.file-table {
-  font-size: 0.22rem;
-}
+  .file-table {
+    font-size: 0.22rem;
+  }
 
-.block {
-  margin: 10px 0;
-  text-align: center;
-}
+  .block {
+    margin: 10px 0;
+    text-align: center;
+  }
 
-.el-pagination__total {
-  color: #409eff;
-}
+  .el-pagination__total {
+    color: #409eff;
+  }
 
-/*透明化整体*/
-.el-table,
-.el-table__expanded-cell {
-  background-color: transparent !important;
-}
-/*透明化行、单元格*/
-.el-table th,
-.el-table tr,
-.el-table td {
-  background-color: transparent !important;
-}
-/*hover时样式*/
-.el-table tbody tr:hover>td {
-  background-color: #367f7f78 !important
-}
+  /*透明化整体*/
+  .el-table,
+  .el-table__expanded-cell {
+    background-color: transparent !important;
+  }
+  /*透明化行、单元格*/
+  .el-table th,
+  .el-table tr,
+  .el-table td {
+    background-color: transparent !important;
+  }
+  /*hover时样式*/
+  .el-table tbody tr:hover>td {
+    background-color: #367f7f78 !important
+  }
 
-/*偶数行样式*/
-.el-table__row--striped td {
-  background-color: #45797b33 !important
-}
-/*奇数行样式*/
-.el-table__row:not(.el-table__row--striped) {
-  background: #1439391c !important;
-}
+  /*偶数行样式*/
+  .el-table__row--striped td {
+    background-color: #45797b33 !important
+  }
+  /*奇数行样式*/
+  .el-table__row:not(.el-table__row--striped) {
+    background: #1439391c !important;
+  }
 
-.type-list {
-  font-size: 0.26rem;
-  color: white;
-  cursor: pointer;
-}
+  .type-list {
+    font-size: 0.26rem;
+    color: white;
+    cursor: pointer;
+  }
 
-.type-list ul {
-  list-style: none;
-  padding: 0;
-}
+  .type-list ul {
+    list-style: none;
+    padding: 0;
+  }
 
-.type-list li {
-  height: 0.7rem;
-  line-height: 0.7rem;
-}
+  .type-list li {
+    height: 0.7rem;
+    line-height: 0.7rem;
+  }
 
-.type-list li:hover {
-  background-color: rgba(64, 158, 255, 0.5);
-}
+  .type-list li:hover {
+    background-color: rgba(64, 158, 255, 0.5);
+  }
 
-.type-icon {
-  padding: 0 0.2rem;
-}
+  .type-icon {
+    padding: 0 0.2rem;
+  }
 </style>
