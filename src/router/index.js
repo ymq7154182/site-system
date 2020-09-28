@@ -79,6 +79,28 @@ const routes = [{
       }
     ]
   },
+  {
+    path: '/dataManage',
+    component: Layout,
+    name: 'dataManage',
+    children: [
+      {
+        path: '/dataManage',
+        component: () => import('@/views/dataManage/index'),
+      }
+    ]
+  },
+  {
+    path: '/deviceOne',
+    component: Layout,
+    name: 'deviceOne',
+    children: [
+      {
+        path: '/deviceOne',
+        component: () => import('@/views/deviceDetail/deviceOne'),
+      }
+    ]
+  },
 ]
 const router = new VueRouter({
   mode: "history",
