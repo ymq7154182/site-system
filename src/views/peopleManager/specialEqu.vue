@@ -1,68 +1,21 @@
 <template>
   <div class="lskq">
     <el-row style="margin-top:0.3rem; " >
-
-
       <!--用户数据-->
       <el-col :span="24" :xs="24">
-        <el-form :model="queryParams" ref="queryForm" :inline="true" v-show="showSearch" label-width="68px">
-          <el-form-item label="公司" prop="userName" class="fixColor">
-            <el-input v-model="queryParams.userName" placeholder="请输入公司名称" clearable size="small" style="width: 240px" @keyup.enter.native="handleQuery" />
-          </el-form-item>
-          <el-form-item label="工种" prop="phonenumber" class="fixColor">
-            <el-input v-model="queryParams.phonenumber" placeholder="请输入工种" clearable size="small" style="width: 240px" @keyup.enter.native="handleQuery" />
-          </el-form-item>
-          <el-form-item label="时间" prop="time" class="fixColor">
-            <el-input v-model="queryParams.time" placeholder="请输入时间" clearable size="small" style="width: 240px" @keyup.enter.native="handleQuery" />
-<!--            <el-time-select-->
-<!--              v-model="queryParams.status"-->
-<!--              :picker-options="{-->
-<!--              start: '08:30',-->
-<!--              step: '00:15',-->
-<!--              end: '18:30'-->
-<!--               }"-->
-<!--              placeholder="选择时间">-->
-<!--            </el-time-select>-->
-          </el-form-item>
-          <el-form-item>
-            <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
-            <el-button type="primary" icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>
-          </el-form-item>
-        </el-form>
-
         <el-row :gutter="10" style="margin-bottom: 0.3rem;">
-
-          <el-col :span="2">
-            <el-button type="success" icon="el-icon-edit" size="mini" :disabled="single" @click="handleUpdate()" >修改</el-button>
-          </el-col>
-
           <el-col :span="2">
             <el-button type="warning" icon="el-icon-download" size="mini" @click="handleExport" >下载</el-button>
           </el-col>
-
         </el-row>
-
         <el-table v-loading="loading" :data="userList" @selection-change="handleSelectionChange"  border>
-          <el-table-column type="selection" width="50" align="center" />
-          <el-table-column label="用户编号" align="center" prop="id" />
-          <el-table-column label="用户名称" align="center" prop="userName" :show-overflow-tooltip="true" />
-          <el-table-column label="用户昵称" align="center" prop="nickName" :show-overflow-tooltip="true" />
-          <el-table-column label="工种" align="center" prop="kind" :show-overflow-tooltip="true" />
-          <el-table-column label="手机号码" align="center" prop="phonenumber" width="120" />
-          <el-table-column label="状态" align="center">
-            <template slot-scope="scope">
-              <el-switch v-model="scope.row.status" active-value="0" inactive-value="1" @change="handleStatusChange(scope.row)"></el-switch>
-            </template>
-          </el-table-column>
-          <el-table-column label="创建时间" align="center" prop="createTime" width="160">
-            <template slot-scope="scope">
-              <span>{{ parseTime(scope.row.createTime) }}</span>
-            </template>
-          </el-table-column>
+          <el-table-column type="selection"  align="center" width="100"/>
+          <el-table-column label="名字" align="center" prop="userName" :show-overflow-tooltip="true" width="200"/>
+          <el-table-column label="类型" align="center" prop="kind" width="200"/>
+          <el-table-column label="备注" align="center" prop="remark" :show-overflow-tooltip="true" width="200"/>
+          <el-table-column label="上传时间" align="center" prop="createTime" width="200" />
           <el-table-column label="操作" align="center" width="180" class-name="small-padding fixed-width">
             <template slot-scope="scope">
-              <el-button size="mini" type="text" icon="el-icon-edit" @click="handleUpdate(scope.row)"
-              >补打卡</el-button>
               <el-button size="mini" type="text" icon="el-icon-view" @click="handleView(scope.row)"
               >查看</el-button>
             </template>
@@ -71,87 +24,39 @@
         <pagination v-show="total>0" :total="total" :page.sync="queryParams.pageNum" :limit.sync="queryParams.pageSize" @pagination="getList" />
       </el-col>
     </el-row>
+
     <!-- 添加或修改参数配置对话框 -->
     <el-dialog :title="title" :visible.sync="open" width="960px" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
         <el-row>
           <el-col :span="12">
             <el-form-item label="用户昵称" prop="nickName">
-              <el-input v-model="form.nickName" placeholder="请输入用户昵称" />
+              <el-input v-model="form.userName" placeholder="请输入用户昵称" readonly="true"/>
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="归属部门" prop="deptId">
-              <el-input v-model="form.deptId" placeholder="请输入归属部门" />
-            </el-form-item>
-          </el-col>
-        </el-row>
-        <el-row>
-          <el-col :span="12">
-            <el-form-item label="手机号码" prop="phonenumber">
-              <el-input v-model="form.phonenumber" placeholder="请输入手机号码" maxlength="11" />
-            </el-form-item>
-          </el-col>
-          <el-col :span="12">
-            <el-form-item label="邮箱" prop="email">
-              <el-input v-model="form.email" placeholder="请输入邮箱" maxlength="50" />
+            <el-form-item label="类型" prop="kind">
+              <el-input v-model="form.kind" placeholder="请输入归属部门" readonly="true"/>
             </el-form-item>
           </el-col>
         </el-row>
         <el-row>
           <el-col :span="12">
-            <el-form-item v-if="form.userId == undefined" label="用户名称" prop="userName">
-              <el-input v-model="form.userName" placeholder="请输入用户名称" />
-            </el-form-item>
-          </el-col>
-          <el-col :span="12">
-            <el-form-item v-if="form.userId == undefined" label="用户密码" prop="password">
-              <el-input v-model="form.password" placeholder="请输入用户密码" type="password" />
-            </el-form-item>
-          </el-col>
-        </el-row>
-        <el-row>
-          <el-col :span="12">
-            <el-form-item label="用户性别">
-              <el-select v-model="form.sex" placeholder="请选择">
-                <el-option v-for="dict in sexOptions" :key="dict.dictValue" :label="dict.dictLabel" :value="dict.dictValue"></el-option>
-              </el-select>
-            </el-form-item>
-          </el-col>
-          <el-col :span="12">
-            <el-form-item label="状态">
-              <el-radio-group v-model="form.status">
-                <el-radio v-for="dict in statusOptions" :key="dict.dictValue" :label="dict.dictValue">{{dict.dictLabel}}</el-radio>
-              </el-radio-group>
-            </el-form-item>
-          </el-col>
-        </el-row>
-        <el-row>
-          <el-col :span="12">
-            <el-form-item label="岗位">
-              <el-select v-model="form.postIds" multiple placeholder="请选择">
-                <el-option v-for="item in postOptions" :key="item.postId" :label="item.postName" :value="item.postId" :disabled="item.status == 1"></el-option>
-              </el-select>
-            </el-form-item>
-          </el-col>
-          <el-col :span="12">
-            <el-form-item label="角色">
-              <el-select v-model="form.roleIds" multiple placeholder="请选择">
-                <el-option v-for="item in roleOptions" :key="item.roleId" :label="item.roleName" :value="item.roleId" :disabled="item.status == 1"></el-option>
-              </el-select>
+            <el-form-item label="上传时间" prop="nickName">
+              <el-input v-model="form.createTime" placeholder="请输入上传时间" readonly="true"/>
             </el-form-item>
           </el-col>
         </el-row>
         <el-row>
           <el-col :span="24">
             <el-form-item label="备注">
-              <el-input v-model="form.remark" type="textarea" placeholder="请输入内容"></el-input>
+              <el-input v-model="form.remark" type="textarea" placeholder="请输入内容" readonly="true"></el-input>
             </el-form-item>
           </el-col>
         </el-row>
       </el-form>
       <div slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="submitForm">确 定</el-button>
+<!--        <el-button type="primary" @click="submitForm">确 定</el-button>-->
         <el-button @click="cancel">取 消</el-button>
       </div>
     </el-dialog>
@@ -210,7 +115,7 @@ export default {
       // 状态数据字典
       statusOptions: [],
       // 性别状态字典
-      sexOptions: [],
+      sexOptions: ["女","男"],
       // 岗位选项
       postOptions: [],
       // 角色选项
@@ -242,40 +147,40 @@ export default {
         pageSize: 10,
         userName: undefined,
         phonenumber: undefined,
-        time: undefined,
+        status: undefined,
         deptId: undefined,
       },
       // 表单校验
-      rules: {
-        userName: [
-          { required: true, message: "用户名称不能为空", trigger: "blur" },
-        ],
-        nickName: [
-          { required: true, message: "用户昵称不能为空", trigger: "blur" },
-        ],
-        deptId: [
-          { required: true, message: "归属部门不能为空", trigger: "blur" },
-        ],
-        password: [
-          { required: true, message: "用户密码不能为空", trigger: "blur" },
-        ],
-        email: [
-          { required: true, message: "邮箱地址不能为空", trigger: "blur" },
-          {
-            type: "email",
-            message: "'请输入正确的邮箱地址",
-            trigger: ["blur", "change"],
-          },
-        ],
-        phonenumber: [
-          { required: true, message: "手机号码不能为空", trigger: "blur" },
-          {
-            pattern: /^1[3|4|5|6|7|8|9][0-9]\d{8}$/,
-            message: "请输入正确的手机号码",
-            trigger: "blur",
-          },
-        ],
-      },
+      // rules: {
+      //   userName: [
+      //     { required: true, message: "用户名称不能为空", trigger: "blur" },
+      //   ],
+      //   nickName: [
+      //     { required: true, message: "用户昵称不能为空", trigger: "blur" },
+      //   ],
+      //   deptId: [
+      //     { required: true, message: "归属部门不能为空", trigger: "blur" },
+      //   ],
+      //   password: [
+      //     { required: true, message: "用户密码不能为空", trigger: "blur" },
+      //   ],
+      //   email: [
+      //     { required: true, message: "邮箱地址不能为空", trigger: "blur" },
+      //     {
+      //       type: "email",
+      //       message: "'请输入正确的邮箱地址",
+      //       trigger: ["blur", "change"],
+      //     },
+      //   ],
+      //   phonenumber: [
+      //     { required: true, message: "手机号码不能为空", trigger: "blur" },
+      //     {
+      //       pattern: /^1[3|4|5|6|7|8|9][0-9]\d{8}$/,
+      //       message: "请输入正确的手机号码",
+      //       trigger: "blur",
+      //     },
+      //   ],
+      // },
     };
   },
   watch: {
@@ -294,70 +199,43 @@ export default {
       var tmplist = [
         {
           id: 1,
-          admin: true,
+          userName: "admin1",
           kind: "电工",
-          createBy: "admin",
-          createTime: "2018-03-17 00:33:00",
-          delFlag: "0",
-          email: "zkrt@163.com",
-          nickName: "超级管理员",
-          phonenumber: "15888888888",
-          userName: "admin",
-          status: "0"
+          remark:'无',
+          createTime: "2018-06-17 01:33:00",
         },
         {
           id: 2,
-          admin: true,
-          kind: "电工2",
-          createBy: "admin2",
-          createTime: "2018-03-17 00:33:00",
-          delFlag: "0",
-          email: "zkrt@163.com",
-          nickName: "超级管理员2",
-          phonenumber: "15888888888",
           userName: "admin2",
-          status: "0"
+          kind: "电工",
+          remark:'无',
+          createTime: "2020-03-17 00:33:00",
         },
         {
           id: 3,
-          admin: true,
-          kind: "电工3",
-          createBy: "admin3",
-          createTime: "2018-03-17 00:33:00",
-          delFlag: "0",
-          email: "zkrt@163.com",
-          nickName: "超级管理员3",
-          phonenumber: "15888888888",
           userName: "admin3",
-          status: "0"
+          kind: "电工",
+          remark:'无',
+          createTime: "2018-03-15 00:30:32",
         },
         {
           id: 4,
-          admin: true,
-          kind: "电工4",
-          createBy: "admin4",
-          createTime: "2018-03-17 00:33:00",
-          delFlag: "0",
-          email: "zkrt@163.com",
-          nickName: "超级管理员4",
-          phonenumber: "15888888888",
           userName: "admin4",
-          status: "0"
+          kind: "电工",
+          remark:'无',
+          createTime: "2019-03-17 00:39:30",
         },
         {
           id: 5,
-          admin: true,
-          kind: "电工5",
-          createBy: "admin5",
-          createTime: "2018-03-17 00:33:00",
-          delFlag: "0",
-          email: "zkrt@163.com",
-          nickName: "超级管理员5",
-          phonenumber: "15888888888",
           userName: "admin5",
-          status: "0"
+          kind: "电工",
+          remark:'无',
+          createTime: "2020-03-17 10:33:30",
         }
       ];
+      // listUser(){
+      //
+      // },
       this.userList = tmplist;
       this.total = tmplist.length;
       this.loading = false;
@@ -452,17 +330,7 @@ export default {
     },
     /** 修改按钮操作 */
     handleUpdate(row) {
-      console.log("修改按钮生效")
-      this.open = true;
-      this.form.id = row.id
-      this.form.userName = row.userName
-      this.form.nickName = row.nickName
-      this.form.kind = row.kind
-      this.form.phonenumber = row.phonenumber
-      this.form.status = row.status
-      this.form.createTime = row.createTime
-      // this.reset();
-
+      this.reset();
       const userId = row.userId || this.ids;
       getUser(userId).then((response) => {
         this.form = response.data;
@@ -475,9 +343,12 @@ export default {
         this.form.password = "";
       });
     },
-    // 查看按钮操作
     handleView(row){
-
+      this.form.userName = row.userName
+      this.form.kind = row.kind
+      this.form.remark = row.remark
+      this.form.createTime = row.createTime
+      this.open = true
     },
     /** 重置密码按钮操作 */
     handleResetPwd(row) {
@@ -591,9 +462,9 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
-  margin: 0.5rem .3rem;
+  margin: 0.5rem o.3rem;
 }
- .fixColor .el-form-item__label{
+.fixColor .el-form-item__label{
   color: white;
 }
 </style>
