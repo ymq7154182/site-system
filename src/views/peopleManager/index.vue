@@ -9,47 +9,51 @@
         <el-tab-pane label="历史考勤" name="second">
           <kq-history></kq-history>
         </el-tab-pane>
-        <el-tab-pane label="施工升降机" name="third" >
+        <el-tab-pane label="特种作业人员" name="third" >
+          <special-equ> </special-equ>
           <!-- <span style="color: white">施工升降机</span> -->
         </el-tab-pane>
-        <el-tab-pane label="特种设备" name="fourth">
-          <!-- <span style="color: white">特种设备</span> -->
-        </el-tab-pane>
+<!--        <el-tab-pane label="特种设备" name="fourth">-->
+<!--          -->
+<!--          &lt;!&ndash; <span style="color: white">特种设备</span> &ndash;&gt;-->
+<!--        </el-tab-pane>-->
         <el-tab-pane label="视频设备" name="five">
           <!-- <span style="color: white">视频设备</span> -->
         </el-tab-pane>
       </el-tabs>
     </div>
 
-    
+
   </div>
 </template>
 
 <script>
 import kqHistory from './kqHistory'
 import shouYe from './shouYe'
+import specialEqu from "./specialEqu";
 export default {
   name: "peopleManager",
   components: {
     kqHistory,
-    shouYe
+    shouYe,
+    specialEqu
   },
   data(){
     return{
       activeName: 'first',
     }
-    
+
   },
   mounted() {
     this.$store.dispatch('changeMsg', '人员管理')
-    
+
   },
   methods:{
     handleTabs(tab, event) {
        console.log(tab, event);
     },
   }
-  
+
 }
 </script>
 
