@@ -1,6 +1,5 @@
 <template>
   <div>
-
     <div style="padding: 0.11rem">
       <el-tabs v-model="activeName" class="tabs" @click="handleTabs">
         <el-tab-pane label="首页" name="first" >
