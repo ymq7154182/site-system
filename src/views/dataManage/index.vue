@@ -20,7 +20,7 @@
           <div style="padding: 0.13rem">
             <el-button type="primary" @click="showUpload = true"><i class="el-icon-upload" /> 上传文件</el-button>
           </div>
-          <div style="padding: 0 0.2rem">
+          <div class="data_table" style="padding: 0 0.2rem">
             <el-table
               :data="fileTable.slice((currentPage - 1) * pageSize, currentPage * pageSize)"
               class="file-table"
@@ -263,7 +263,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 .dm-aside {
   background-color: rgba(0, 36, 78, 0.5);
   height: 83vh;
@@ -307,32 +307,32 @@ export default {
   text-align: center;
 }
 
-.el-pagination__total {
+.block >>> .el-pagination__total {
   color: #409eff;
 }
 
 /*透明化整体*/
-.el-table,
-.el-table__expanded-cell {
+.data_table >>> .el-table,
+.data_table >>> .el-table__expanded-cell {
   background-color: transparent !important;
 }
 /*透明化行、单元格*/
-.el-table th,
-.el-table tr,
-.el-table td {
+.data_table >>> .el-table th,
+.data_table >>> .el-table tr,
+.data_table >>> .el-table td {
   background-color: transparent !important;
 }
 /*hover时样式*/
-.el-table tbody tr:hover>td {
+.data_table >>> .el-table tbody tr:hover>td {
   background-color: #367f7f78 !important
 }
 
 /*偶数行样式*/
-.el-table__row--striped td {
+.data_table >>> .el-table__row--striped td {
   background-color: #45797b33 !important
 }
 /*奇数行样式*/
-.el-table__row:not(.el-table__row--striped) {
+.data_table >>> .el-table__row:not(.el-table__row--striped) {
   background: #1439391c !important;
 }
 

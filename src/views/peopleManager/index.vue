@@ -1,12 +1,11 @@
 <template>
   <div>
-
     <div style="padding: 0.11rem">
-      <el-tabs v-model="activeName" class="tabs" @click="handleTabs">
-        <el-tab-pane label="首页" name="first" >
+      <el-tabs v-model="activeName" class="tabs" @click="handleTabs" >
+        <el-tab-pane label="首页" name="first" class="label_top">
           <shou-ye></shou-ye>
         </el-tab-pane>
-        <el-tab-pane label="历史考勤" name="second">
+        <el-tab-pane label="历史考勤" name="second" class="label_top">
           <kq-history></kq-history>
         </el-tab-pane>
         <el-tab-pane label="特种作业人员" name="third" >
@@ -59,7 +58,6 @@ export default {
 
 <style scoped>
 
-
 .tabs >>> .el-tabs__nav-wrap::after {
     height: 0;
   }
@@ -71,3 +69,4 @@ export default {
   padding-left: 0.3rem;
 }
 </style>
+
