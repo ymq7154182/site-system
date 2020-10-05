@@ -82,15 +82,15 @@
                 <span>项目进度</span>
                 <div style="margin-top: 3vh;">
                   <el-steps :active="2" align-center>
-                    <el-step title="地基与基础" @click.native="gotoOption(1)"></el-step>
-                    <el-step title="主体结构" @click.native="gotoOption(2)"></el-step>
-                    <el-step title="建筑装饰装修" @click.native="gotoOption(3)"></el-step>
-                    <el-step title="建筑给水排水及采暖" @click.native="gotoOption(4)"></el-step>
-                    <el-step title="建筑电气" @click.native="gotoOption(5)"></el-step>
-                    <el-step title="智能建筑" @click.native="gotoOption(6)"></el-step>
-                    <el-step title="通风与空调" @click.native="gotoOption(7)"></el-step>
-                    <el-step title="电梯" @click.native="gotoOption(8)"></el-step>
-                    <el-step title="建筑节能" @click.native="gotoOption(9)"></el-step>
+                    <el-step  :title="item.title"  v-for="(item, index) in titleList" :key="index" @click.native="gotoOption(item.id)">
+                        <template slot="title">
+                          <div class="title_font">{{item.time}}</div>
+                          <div>
+                            {{item.title}}
+                          </div>
+
+                        </template>
+                    </el-step>
                   </el-steps>
                 </div>
 
@@ -103,6 +103,7 @@
             width="70%"
             class="home_second"
             :before-close="handleClose">
+            <div class="wc_time">完成时间：2020-08-09</div>
             <div class="schedule-press">
               <el-steps direction="vertical" :active="1" :space="150">
 <!--                <el-step :key="index">-->
@@ -247,6 +248,8 @@
       data(){
           return{
             flag: 0, // 是否展示延缓和完成按钮
+            titleList: [{title: '地基与基础', id: 0, time: '2020-08-01'},{title: '主体结构', id: 1, time: '2020-08-01'},{title: '建筑装饰装修', id: 2, time: '2020-08-01'},{title: '建筑给水排水及采暖', id: 3, time: '2020-08-01'},{title: '建筑电气', id: 4, time: '2020-08-01'},{title: '智能建筑', id: 5, time: '2020-08-01'},
+              {title: '通风与空调', id: 6, time: '2020-08-01'},{title: '电梯', id: 7, time: '2020-08-01'},{title: '建筑节能', id: 8, time: '2020-08-01'},],
             myChart13: '',
             myChart24: '',
             myChart22: '',
@@ -291,15 +294,16 @@
             .catch(_ => {});
         },
         gotoOption (val) {
+          console.log(val)
           this.dialogVisible = true
-          if (val === 1) {
+          if (val === 0) {
             this.dataList = [
               {id: 0, title: '地基与基础', content: '混凝土，够凝土，混凝土，够凝土，混凝土，够凝土，混凝土，够凝土，', time: '', status: '完成'},
               {id: 1, title: '地基与基础', content: '混凝土，够凝土，混凝土，够凝土，混凝土，够凝土，混凝土，够凝土，', time: '', status: '完成'},
               {id: 2, title: '地基与基础', content: '混凝土，够凝土，混凝土，够凝土，混凝土，够凝土，混凝土，够凝土，', time: '', status: '完成'},
               {id: 3, title: '地基与基础', content: '混凝土，够凝土，混凝土，够凝土，混凝土，够凝土，混凝土，够凝土，', time: '', status: '完成'}
               ]
-          } else if (val === 2){
+          } else if (val === 1){
             this.dataList = [
               {id: 0, title: '主体结构', content: '混凝土，够凝土，混凝土，够凝土，混凝土，够凝土，混凝土，够凝土，', time: '', status: '完成'},
               {id: 1, title: '主体结构', content: '混凝土，够凝土，混凝土，够凝土，混凝土，够凝土，混凝土，够凝土，', time: '', status: '完成'},
@@ -1144,13 +1148,25 @@
     background-color: #ffb91b;
     color: #fff!important;
   }
+  .title_font {
+    font-size: 12px;
+    color: #fff;
+    margin-bottom: 0.15rem;
+    /*width: 100px;*/
+  }
+  .wc_time {
+    position: absolute;
+    font-size: 16px;
+    top: 3.5vh;
+    left: 25vw;
+  }
 </style>
 <style>
   .process_content .el-step__title.is-finish,
   .process_content .el-step__title.is-process,
   .process_content .el-step__title.is-wait {
     /*color: #409EFF;*/
-    width: 25px;
+    width: 45px;
     margin-left: 50%;
     transform: translateX(-50%);
     height: 1.7rem;

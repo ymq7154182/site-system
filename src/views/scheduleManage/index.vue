@@ -1,98 +1,68 @@
 <template>
   <div>
-    <div style="margin-top: 3vh;">
-      <el-steps :active="2" align-center>
-        <el-step title="地基与基础" @click.native="gotoOption(1)"></el-step>
-        <el-step title="主体结构" @click.native="gotoOption(2)"></el-step>
-        <el-step title="建筑装饰装修" @click.native="gotoOption(3)"></el-step>
-        <el-step title="建筑给水排水及采暖" @click.native="gotoOption(4)"></el-step>
-        <el-step title="建筑电气" @click.native="gotoOption(5)"></el-step>
-        <el-step title="智能建筑" @click.native="gotoOption(6)"></el-step>
-        <el-step title="通风与空调" @click.native="gotoOption(7)"></el-step>
-        <el-step title="电梯" @click.native="gotoOption(8)"></el-step>
-        <el-step title="建筑节能" @click.native="gotoOption(9)"></el-step>
-      </el-steps>
+    <div style="padding: 0.11rem">
+      <el-tabs v-model="activeName" class="tabs" @click="handleTabs" >
+        <el-tab-pane label="查看进度" name="first" class="label_top">
+          <check-progress></check-progress>
+        </el-tab-pane>
+        <el-tab-pane label="上传图片" name="second" class="label_top">
+          <upload-image></upload-image>
+        </el-tab-pane>
+      </el-tabs>
     </div>
-    <div class="schedule-content">
-      <el-row>
-        <div class="border-top-left"></div>
-        <div class="box-title">地基与基础</div>
-        <div class="schedule-press">
-          <el-steps direction="vertical" :active="1" :space="150">
-            <el-step :title="item.title" :description="item.content"  v-for="(item, index) in dataList" :key="index">
-              <template slot="description" >
-                <div class="step-row" v-for="item in dataList">
-                  <table width="100%" border="0" cellspacing="0" cellpadding="0" class="processing_content">
-                    <tr style="border-radius: 0.1rem">
-                      <td style="color:rgba(230,230,230,0.9)" class="item-td">
-<!--                        <div class="processing_content_detail" style="float:left;width:70%"><span >申请人&nbsp;&nbsp;<span style="color:#219AFF">圆领{{}}</span>&nbsp;&nbsp;提交了割接方案</span></div>-->
-                        <div class="processing_content_detail" style="float:left;width:70%"><span >{{item.title}}&nbsp;&nbsp;{{item.content}}</span></div>
-<!--                        <div class="processing_content_detail" style="float:right;"><span ><i class="el-icon-time"></i>&nbsp;&nbsp;昨天12:24</span> </div>-->
-                        <div class="processing_content_detail" style="float:right;"><span ><i class="el-icon-time"></i>&nbsp;&nbsp;{{item.time}}</span> </div>
-                      </td>
-                    </tr>
-<!--                    <tr>-->
-<!--                      <td>-->
-<!--                        <div class="processing_content_detail" style="float:left;width:70%">-->
-<!--                          <div style="float:left;width: 2px;height: 20px; background:#C7D4E9;margin-left:10px;margin-right:10px"></div>-->
-<!--                          <span style="color:#919FB8">同意，建议通过</span></div>-->
-<!--                      </td>-->
-<!--                    </tr>-->
-                  </table>
-                </div>
-              </template>
 
-            </el-step>
-
-          </el-steps>
-        </div>
-      </el-row>
-    </div>
   </div>
 </template>
 
 <script>
+  import uploadImage from './uploadImage'
+  import checkProgress from './checkProgress'
   export default {
     name: 'scheduleManage',
+    components: {
+      uploadImage,
+      checkProgress
+    },
     mounted() {
       this.$store.dispatch('changeMsg', '进度管理');
-      this.gotoOption(1)
+      // this.gotoOption(1)
     },
     data() {
       return {
         dataList: [], // 点击每一个进度，显示的详细进度条数据
+        activeName: 'first',
       }
     },
     methods: {
-      gotoOption (val) {
-        if (val === 1) {
-          this.dataList = [
-            {title: '地基与基础', content: '混凝土，够凝土，混凝土，够凝土，混凝土，够凝土，混凝土，够凝土，', time: '2020-08-01'},
-            {title: '地基与基础', content: '混凝土，够凝土，混凝土，够凝土，混凝土，够凝土，混凝土，够凝土，', time: '2020-08-09'},
-            {title: '地基与基础', content: '混凝土，够凝土，混凝土，够凝土，混凝土，够凝土，混凝土，够凝土，', time: '2020-08-20'},
-            {title: '地基与基础', content: '混凝土，够凝土，混凝土，够凝土，混凝土，够凝土，混凝土，够凝土，', time: '2020-08-30'}]
-        } else if (val === 2){
-          this.dataList = [
-            {title: '主体结构', content: '混凝土，够凝土，混凝土，够凝土，混凝土，够凝土，混凝土，够凝土，', time: '2020-09-01'},
-            {title: '主体结构', content: '混凝土，够凝土，混凝土，够凝土，混凝土，够凝土，混凝土，够凝土，', time: '2020-09-10'},
-            {title: '主体结构', content: '混凝土，够凝土，混凝土，够凝土，混凝土，够凝土，混凝土，够凝土，', time: '2020-09-15'},
-            {title: '主体结构', content: '混凝土，够凝土，混凝土，够凝土，混凝土，够凝土，混凝土，够凝土，', time: '2020-08-20'}]
-        } else {
-          this.dataList = [
-            {title: '流程中' + val, content: '混凝土，够凝土，混凝土，够凝土，混凝土，够凝土，混凝土，够凝土，', time: '2020-09-01'},
-            {title: '流程中' + val, content: '混凝土，够凝土，混凝土，够凝土，混凝土，够凝土，混凝土，够凝土，', time: '2020-09-01'},
-            {title: '流程中' + val, content: '混凝土，够凝土，混凝土，够凝土，混凝土，够凝土，混凝土，够凝土，', time: '2020-09-01'},
-            {title: '流程中' + val, content: '混凝土，够凝土，混凝土，够凝土，混凝土，够凝土，混凝土，够凝土，', time: '2020-09-01'}]
-        }
-        // console.log(val)
-      },
-      refresh() {
-        this.gotoOption(1)
+      // gotoOption (val) {
+      //   if (val === 1) {
+      //     this.dataList = [
+      //       {title: '地基与基础', content: '混凝土，够凝土，混凝土，够凝土，混凝土，够凝土，混凝土，够凝土，', time: '2020-08-01'},
+      //       {title: '地基与基础', content: '混凝土，够凝土，混凝土，够凝土，混凝土，够凝土，混凝土，够凝土，', time: '2020-08-09'},
+      //       {title: '地基与基础', content: '混凝土，够凝土，混凝土，够凝土，混凝土，够凝土，混凝土，够凝土，', time: '2020-08-20'},
+      //       {title: '地基与基础', content: '混凝土，够凝土，混凝土，够凝土，混凝土，够凝土，混凝土，够凝土，', time: '2020-08-30'}]
+      //   } else if (val === 2){
+      //     this.dataList = [
+      //       {title: '主体结构', content: '混凝土，够凝土，混凝土，够凝土，混凝土，够凝土，混凝土，够凝土，', time: '2020-09-01'},
+      //       {title: '主体结构', content: '混凝土，够凝土，混凝土，够凝土，混凝土，够凝土，混凝土，够凝土，', time: '2020-09-10'},
+      //       {title: '主体结构', content: '混凝土，够凝土，混凝土，够凝土，混凝土，够凝土，混凝土，够凝土，', time: '2020-09-15'},
+      //       {title: '主体结构', content: '混凝土，够凝土，混凝土，够凝土，混凝土，够凝土，混凝土，够凝土，', time: '2020-08-20'}]
+      //   } else {
+      //     this.dataList = [
+      //       {title: '流程中' + val, content: '混凝土，够凝土，混凝土，够凝土，混凝土，够凝土，混凝土，够凝土，', time: '2020-09-01'},
+      //       {title: '流程中' + val, content: '混凝土，够凝土，混凝土，够凝土，混凝土，够凝土，混凝土，够凝土，', time: '2020-09-01'},
+      //       {title: '流程中' + val, content: '混凝土，够凝土，混凝土，够凝土，混凝土，够凝土，混凝土，够凝土，', time: '2020-09-01'},
+      //       {title: '流程中' + val, content: '混凝土，够凝土，混凝土，够凝土，混凝土，够凝土，混凝土，够凝土，', time: '2020-09-01'}]
+      //   }
+      //   // console.log(val)
+      // },
+      // refresh() {
+      //   this.gotoOption(1)
         // this.alarmTypeChart.dispose();
         // this.alarmTrendChart.dispose();
         // this.initAlarmType();
         // this.initAlarmTrend();
-      }
+      // }
     }
   }
 </script>
@@ -140,7 +110,16 @@
   margin-bottom:12px;
   margin-top:12px;
 }
-
+  .tabs >>> .el-tabs__nav-wrap::after {
+    height: 0;
+  }
+  /*.tabs >>> .el-tabs__active-bar {*/
+  /*height: 1px;*/
+  /*}*/
+  .tabs >>> .el-tabs__nav-wrap {
+    background-image: url("../../assets/homepage/notice_bg.png");
+    padding-left: 0.3rem;
+  }
 </style>
 <style>
   .el-step:last-of-type .el-step__description {
