@@ -7,9 +7,9 @@
           <div class="dm-title">文件类型</div>
           <div class="type-list">
             <ul>
-              <li><i class="el-icon-document type-icon" />文件</li>
-              <li><i class="el-icon-picture-outline type-icon" />图片</li>
-              <li><i class="el-icon-video-camera-solid type-icon" />视频</li>
+              <li :class="{active: isActive1}" @click="nowActiveOne()"><i class="el-icon-document type-icon" />文件</li>
+              <li :class="{active: isActive2}" @click="nowActiveTwo()"><i class="el-icon-picture-outline type-icon" />图片</li>
+              <li :class="{active: isActive3}" @click="nowActiveThree()"><i class="el-icon-video-camera-solid type-icon" />视频</li>
             </ul>
           </div>
         </div>
@@ -32,13 +32,10 @@
               <el-table-column prop="type" label="文件类型" width="100" align="center" />
               <el-table-column prop="description" label="文件描述" />
               <el-table-column prop="uploader" label="上传人" width="150" align="center" />
-              <el-table-column prop="uploadTime" label="上传时间" align="center" />
-              <el-table-column label="操作" align="center" fixed="right">
+              <el-table-column prop="uploadTime" label="上传时间" width="150" align="center" />
+              <el-table-column label="操作" align="center" width="100">
                 <template slot-scope="scope">
-                  <el-button type="success" size="mini" @click="editInfo(scope.$index, scope.row)">修改</el-button>
-                  <el-popconfirm title="确定删除该文件？">
-                    <el-button slot="reference" type="danger" size="mini">删除</el-button>
-                  </el-popconfirm>
+                  <el-button type="text" size="mini" @click="editInfo(scope.$index, scope.row)"><i class="el-icon-edit" />修改</el-button>
                 </template>
               </el-table-column>
             </el-table>
@@ -214,7 +211,10 @@ export default {
         uploader: '',
         uploadTime: ''
       },
-      currentIndex: null
+      currentIndex: null,
+      isActive1: true,
+      isActive2: false,
+      isActive3: false
     }
   },
   mounted() {
@@ -258,6 +258,21 @@ export default {
           this.$message.error('修改失败！')
         }
       })
+    },
+    nowActiveOne() {
+      this.isActive1 = true
+      this.isActive2 = false
+      this.isActive3 = false
+    },
+    nowActiveTwo() {
+      this.isActive1 = false
+      this.isActive2 = true
+      this.isActive3 = false
+    },
+    nowActiveThree() {
+      this.isActive1 = false
+      this.isActive2 = false
+      this.isActive3 = true
     }
   }
 }
@@ -358,5 +373,9 @@ export default {
 
 .type-icon {
   padding: 0 0.2rem;
+}
+
+.active {
+  color: #3FA0C3;
 }
 </style>
