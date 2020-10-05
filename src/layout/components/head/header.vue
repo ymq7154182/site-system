@@ -163,7 +163,9 @@
           this.$router.push('/scheduleManage')
         },
         gotoSystem() {
-          window.location.href = "http://121.36.106.18:38080/index.html"
+          var url = 'http://121.36.106.18:38088/index'
+          window.open(url,'_self')
+          // window.location.href = "http://121.36.106.18:38088/index"
         },
         gotoDataManage() {
           this.$router.push('/dataManage')
