@@ -4,11 +4,12 @@
       <el-steps :active="2" align-center>
         <el-step  :title="item.durationDictName"  v-for="(item, index) in titleList" :key="index" @click.native="gotoOption(item, 'second')">
           <template slot="title">
-            <div class="title_font" v-if="item.scheduleTime !== null">预估：{{item.scheduleTime}}</div>
-            <div class="title_font" v-if="item.endTime !== null">完成：{{item.endTime}}</div>
+
             <div>
               {{item.durationDictName}}
             </div>
+            <div class="title_font" v-if="item.scheduleTime !== null">预估：{{item.scheduleTime}}</div>
+            <div class="title_font" v-if="item.endTime !== null">完成：{{item.endTime}}</div>
           </template>
         </el-step>
       </el-steps>
@@ -37,18 +38,18 @@
     <el-dialog title="迟缓操作" :visible.sync="showSlow">
       <el-form :model="formDefer">
         <el-form-item label="名称" :label-width="formLabelWidth">
-          <el-input v-model="formDefer.duration2DictName" autocomplete="off"></el-input>
+          <el-input v-model="formDefer.duration2DictName" autocomplete="off" class="item-defer" :disabled="disabledStr"></el-input>
         </el-form-item>
         <el-form-item label="描述内容" :label-width="formLabelWidth">
           <!--                <el-select v-model="form.content" placeholder="请选择活动区域">-->
-          <el-input v-model="formDefer.processData" autocomplete="off"></el-input>
+          <el-input v-model="formDefer.processData" autocomplete="off" class="item-defer" :disabled="disabledStr"></el-input>
           <!--                  <el-option label="区域一" value="shanghai"></el-option>-->
           <!--                  <el-option label="区域二" value="beijing"></el-option>-->
           <!--                </el-select>-->
         </el-form-item>
         <el-form-item label="延缓原因" :label-width="formLabelWidth">
           <!--                <el-input v-model="form.reason" autocomplete="off"></el-input>-->
-          <el-select v-model="formDefer.reason" placeholder="请选择">
+          <el-select v-model="formDefer.reason" placeholder="请选择" class="item-defer" :disabled="disabledStr">
             <el-option
               v-for="(item, index) in deferReasons"
               :key="index"
@@ -58,20 +59,21 @@
           </el-select>
         </el-form-item>
         <el-form-item label="负责人" :label-width="formLabelWidth">
-          <el-input v-model="formDefer.principal" autocomplete="off"></el-input>
+          <el-input v-model="formDefer.principal" autocomplete="off" class="item-defer" :disabled="disabledStr"></el-input>
         </el-form-item>
         <el-form-item label="延缓(预计完成)时间" :label-width="formLabelWidth">
           <el-date-picker
-            v-model="formDefer.date"
+            v-model="formDefer.endTime"
             type="date"
-            placeholder="选择日期">
+            placeholder="选择日期"
+            class="item-defer" :disabled="disabledStr">
           </el-date-picker>
           <!--                <el-input v-model="form.date" autocomplete="off"></el-input>-->
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button @click="showSlow = false">取 消</el-button>
-        <el-button type="primary" @click="defineReason()">确 定</el-button>
+        <el-button type="primary" @click="defineReason()" :disabled="disabledStr">确 定</el-button>
       </div>
     </el-dialog>
     <div class="schedule-content">
@@ -108,9 +110,11 @@
                       <td>
                         <div class="processing_content_detail" style="float:left;width:70%">
                           <div style="float:left;width: 2px;height: 20px; background:#C7D4E9;margin-left:10px;margin-right:10px"></div>
-                          <span v-if="item.status === 3" style="color:#919FB8" class="status-label-status">延缓</span>
-                          <span v-if="item.status === 2" style="color:#919FB8" class="status-label-status">完成</span>
+                          <span v-if="item.status === 3" style="color:#919FB8" class="status-label-status" @click="checkStatus(item)">延缓</span>
+                          <span v-if="item.status === 2" style="color:#919FB8" class="status-label-status" @click="checkStatus(item)">完成</span>
                         </div>
+                        <div class="processing_content_detail" style="float:right;color: #fff" v-if="item.endTime !== null"><span ><i class="el-icon-time"></i>&nbsp;&nbsp;{{item.endTime}}</span> </div>
+
                       </td>
                     </tr>
                   </table>
@@ -144,13 +148,14 @@
         deferReasons: [], // 滞缓原因
         showSlow: false, // 展示迟缓的原因界面
         formLabelWidth: '110px',
+        disabledStr: false,
         formDefer: { // 迟缓对象
           id: '',
           title: '',
           content: '',
           status: '',
           reason: '', // 滞缓原因
-          date: '', // 完成时间
+          endTime: '', // 完成时间
           principal: '', // 负责人
           processData: '' // 处理内容
         },
@@ -179,7 +184,7 @@
           delaysDictId: this.formDefer.reason,
           context: this.deferReasons[this.formDefer.reason-1].reason,
           principal: this.formDefer.principal,
-          planTime: this.formDefer.date.getFullYear() + '-' + (this.formDefer.date.getMonth() + 1) + '-' + this.formDefer.date.getDate()
+          planTime: this.formDefer.endTime.getFullYear() + '-' + (this.formDefer.endTime.getMonth() + 1) + '-' + this.formDefer.endTime.getDate()
         }).then(res => {
           console.log('提交滞缓', res.data)
           if(res.data.code === 200) {
@@ -187,10 +192,25 @@
             this.getTwoSchedules()
           }
         })
-        // this.dataList[this.form.id].time = this.form.date.getFullYear() + '-' + (this.form.date.getMonth() + 1) + '-' + this.form.date.getDate() + ' '
-        // + d.getHours() + ':' + d.getMinutes() + ':' + d.getSeconds();
-        // console.log(this.dataList[this.form.id].time.length, this.form.date)
-        // this.dataList[this.form.id].status = this.option
+      },
+      checkStatus (item) { // 查看滞缓和完成信息
+        if (item.status === 3) {
+          this.formDefer = item
+          this.showSlow = true
+          this.disabledStr = true
+        }
+
+        // this.$nextTick(() =>{
+        //   let formItems = document.querySelectorAll('.item-defer')
+        //   console.log('formItems', formItems)
+        //   for(let i of formItems) {
+        //     console.log(i)
+        //     i.setAttribute('disabled', true)
+        //   }
+        // })
+
+
+        console.log('滞缓信息：', item)
       },
       handleClose(done) {
         this.$confirm('确认关闭？')
@@ -213,7 +233,16 @@
         }).then(res => {
           console.log('完成', res.data.data)
           if (res.data.code === 200) {
-            this.getOneSchedules()
+            // this.getOneSchedules()
+            getOneSchedules({
+              siteId: this.deptId
+            }).then(res => {
+              this.titleList = res.data.data
+              // this.id = res.data.data[0].id
+              // this.title = res.data.data[0].durationDictName
+              this.getTwoSchedules()
+              // console.log(res.data)
+            })
           }
         })
         // this.titleList[this.id].rightTime =
@@ -235,6 +264,7 @@
         }).then(res => {
           this.titleList = res.data.data
           this.id = res.data.data[0].id
+          this.title = res.data.data[0].durationDictName
           this.getTwoSchedules()
           // console.log(res.data)
         })
@@ -253,7 +283,8 @@
             scheduleDurationSectionPlanId: item.id
           }).then(res => {
             if (res.data.code === 200) {
-              console.log('状态为完成')
+              // console.log('状态为完成')
+              this.getTwoSchedules()
             }
           })
         } else {

@@ -52,6 +52,7 @@
 </script>
 <style scoped>
   .upload_first {
+    text-align: center;
     display:flex;
     justify-content:center;
     align-items:center;
