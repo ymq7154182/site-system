@@ -1,9 +1,11 @@
 <template>
   <div class="upload_first">
     <el-upload
-      action="https://jsonplaceholder.typicode.com/posts/"
+      action="http://121.36.106.18:38080/schedule/putImage"
       list-type="picture-card"
+      :on-success="handleAvatarSuccess"
       :on-preview="handlePictureCardPreview"
+      :data="obj"
       :on-remove="handleRemove">
       <i class="el-icon-plus"></i>
     </el-upload>
@@ -13,21 +15,37 @@
   </div>
 </template>
 <script>
+  import {uploadImage} from '@/api/scheduleManage'
   export default {
     name: 'uploadImage',
     data() {
       return {
         dialogImageUrl: '',
-        dialogVisible: false
+        dialogVisible: false,
+        obj: {
+          deptId: 0
+        }
       };
+    },
+    computed: {
+        deptId () {
+          return this.$store.state.deptId
+        }
+      },
+    mounted () {
+      this.obj.deptId = this.deptId
     },
     methods: {
       handleRemove(file, fileList) {
         console.log(file, fileList);
       },
       handlePictureCardPreview(file) {
+        // console.log('hehh', file.url)
         this.dialogImageUrl = file.url;
         this.dialogVisible = true;
+      },
+      handleAvatarSuccess(file) {
+        // console.log('啊哈哈哈', file)
       }
     }
   }

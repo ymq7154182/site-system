@@ -82,11 +82,11 @@
                 <span>项目进度</span>
                 <div style="margin-top: 3vh;">
                   <el-steps :active="2" align-center>
-                    <el-step  :title="item.title"  v-for="(item, index) in titleList" :key="index" @click.native="gotoOption(item.id)">
+                    <el-step  :title="item.durationDictName"  v-for="(item, index) in titleList" :key="index" @click.native="gotoOption(item.id)">
                         <template slot="title">
-                          <div class="title_font">{{item.time}}</div>
+                          <div class="title_font">{{item.scheduleTime}}</div>
                           <div>
-                            {{item.title}}
+                            {{item.durationDictName}}
                           </div>
 
                         </template>
@@ -165,7 +165,15 @@
 <!--                </el-select>-->
               </el-form-item>
               <el-form-item label="延缓/完成原因" :label-width="formLabelWidth">
-                <el-input v-model="form.reason" autocomplete="off"></el-input>
+<!--                <el-input v-model="form.reason" autocomplete="off"></el-input>-->
+                <el-select v-model="form.reason" placeholder="请选择">
+                  <el-option
+                    v-for="(item, index) in deferReasons"
+                    :key="index"
+                    :label="item.reason"
+                    :value="item.id">
+                  </el-option>
+                </el-select>
               </el-form-item>
               <el-form-item label="负责人" :label-width="formLabelWidth">
                 <el-input v-model="form.principal" autocomplete="off"></el-input>
@@ -231,11 +239,15 @@
 </template>
 
 <script>
+  import {getDeferReasons, submitDeferInfo, getOneSchedules, getTwoSchedules} from '@/api/scheduleManage'
   require('echarts/theme/macarons')
     export default {
         name: "homePage",
       mounted() {
         this.$store.dispatch('changeMsg', '项目概览')
+        this.getDeferReasons() // 获取滞缓原因
+        this.getOneSchedules() // 获取所有一级进度
+        // this.getTwoSchedules() // 获取所有二级进度
         this.inchart13()
         this.chart13Res()
         this.inchart24()
@@ -248,8 +260,9 @@
       data(){
           return{
             flag: 0, // 是否展示延缓和完成按钮
-            titleList: [{title: '地基与基础', id: 0, time: '2020-08-01'},{title: '主体结构', id: 1, time: '2020-08-01'},{title: '建筑装饰装修', id: 2, time: '2020-08-01'},{title: '建筑给水排水及采暖', id: 3, time: '2020-08-01'},{title: '建筑电气', id: 4, time: '2020-08-01'},{title: '智能建筑', id: 5, time: '2020-08-01'},
-              {title: '通风与空调', id: 6, time: '2020-08-01'},{title: '电梯', id: 7, time: '2020-08-01'},{title: '建筑节能', id: 8, time: '2020-08-01'},],
+            // titleList: [{title: '地基与基础', id: 0, time: '2020-08-01'},{title: '主体结构', id: 1, time: '2020-08-01'},{title: '建筑装饰装修', id: 2, time: '2020-08-01'},{title: '建筑给水排水及采暖', id: 3, time: '2020-08-01'},{title: '建筑电气', id: 4, time: '2020-08-01'},{title: '智能建筑', id: 5, time: '2020-08-01'},
+            //   {title: '通风与空调', id: 6, time: '2020-08-01'},{title: '电梯', id: 7, time: '2020-08-01'},{title: '建筑节能', id: 8, time: '2020-08-01'},],
+            titleList: [],
             myChart13: '',
             myChart24: '',
             myChart22: '',
@@ -260,6 +273,7 @@
             showSlow: false,
             formLabelWidth: '110px',
             option: '', // 完成还是迟缓
+            deferReasons: [], // 滞缓原因列表
             form: {
               id: '',
               title: '',
@@ -272,9 +286,47 @@
             },
           }
       },
+      computed: {
+          deptId () {
+            return this.$store.state.deptId
+          },
+          schedulePlanId () {
+            return this.$store.state.schedulePlanId
+          }
+      },
       methods:{
-        defineReason () {
-          this.dataList[this.form.id].time = this.form.date.getFullYear() + '-' + (this.form.date.getMonth() + 1) + '-' + this.form.date.getDate() + ' '
+        getDeferReasons () { // 滞缓原因
+          getDeferReasons().then(res => {
+            this.deferReasons = res.data.data
+            // console.log('置换原因', res.data.data)
+          })
+        },
+        getOneSchedules () { // 获取所有一级进度
+          getOneSchedules({
+            siteId: this.deptId
+          }).then(res => {
+            this.titleList = res.data.data
+            console.log(res.data)
+          })
+        },
+        // getTwoSchedules () { // 获取所有一级进度
+        //   getTwoSchedules({
+        //
+        //   }).then(res => {
+        //
+        //   })
+        // },
+        defineReason () { // 提交滞缓
+          submitDeferInfo({
+            scheduleDurationSectionPlanId: this.schedulePlanId,
+            delaysDictId: this.form.reason,
+            context: this.deferReasons[this.form.reason-1].reason,
+            principal: this.form.principal,
+            planTime: this.form.date.getFullYear() + '-' + (this.form.date.getMonth() + 1) + '-' + this.form.date.getDate() + ' '
+          }).then(res => {
+            // console.log('提交滞缓', res.data)
+          })
+          // this.dataList[this.form.id].time = this.form.date.getFullYear() + '-' + (this.form.date.getMonth() + 1) + '-' + this.form.date.getDate() + ' '
             // + d.getHours() + ':' + d.getMinutes() + ':' + d.getSeconds();
           // console.log(this.dataList[this.form.id].time.length, this.form.date)
           this.dataList[this.form.id].status = this.option

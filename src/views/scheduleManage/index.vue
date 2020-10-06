@@ -23,46 +23,25 @@
       uploadImage,
       checkProgress
     },
-    mounted() {
-      this.$store.dispatch('changeMsg', '进度管理');
-      // this.gotoOption(1)
-    },
     data() {
       return {
         dataList: [], // 点击每一个进度，显示的详细进度条数据
         activeName: 'first',
       }
     },
+    // computed: {
+    //   deptId () {
+    //     return localStorage.getItem('deptId')
+    //   }
+    // },
+    mounted() {
+      this.$store.dispatch('changeMsg', '进度管理');
+      // this.gotoOption(1)
+    },
     methods: {
-      // gotoOption (val) {
-      //   if (val === 1) {
-      //     this.dataList = [
-      //       {title: '地基与基础', content: '混凝土，够凝土，混凝土，够凝土，混凝土，够凝土，混凝土，够凝土，', time: '2020-08-01'},
-      //       {title: '地基与基础', content: '混凝土，够凝土，混凝土，够凝土，混凝土，够凝土，混凝土，够凝土，', time: '2020-08-09'},
-      //       {title: '地基与基础', content: '混凝土，够凝土，混凝土，够凝土，混凝土，够凝土，混凝土，够凝土，', time: '2020-08-20'},
-      //       {title: '地基与基础', content: '混凝土，够凝土，混凝土，够凝土，混凝土，够凝土，混凝土，够凝土，', time: '2020-08-30'}]
-      //   } else if (val === 2){
-      //     this.dataList = [
-      //       {title: '主体结构', content: '混凝土，够凝土，混凝土，够凝土，混凝土，够凝土，混凝土，够凝土，', time: '2020-09-01'},
-      //       {title: '主体结构', content: '混凝土，够凝土，混凝土，够凝土，混凝土，够凝土，混凝土，够凝土，', time: '2020-09-10'},
-      //       {title: '主体结构', content: '混凝土，够凝土，混凝土，够凝土，混凝土，够凝土，混凝土，够凝土，', time: '2020-09-15'},
-      //       {title: '主体结构', content: '混凝土，够凝土，混凝土，够凝土，混凝土，够凝土，混凝土，够凝土，', time: '2020-08-20'}]
-      //   } else {
-      //     this.dataList = [
-      //       {title: '流程中' + val, content: '混凝土，够凝土，混凝土，够凝土，混凝土，够凝土，混凝土，够凝土，', time: '2020-09-01'},
-      //       {title: '流程中' + val, content: '混凝土，够凝土，混凝土，够凝土，混凝土，够凝土，混凝土，够凝土，', time: '2020-09-01'},
-      //       {title: '流程中' + val, content: '混凝土，够凝土，混凝土，够凝土，混凝土，够凝土，混凝土，够凝土，', time: '2020-09-01'},
-      //       {title: '流程中' + val, content: '混凝土，够凝土，混凝土，够凝土，混凝土，够凝土，混凝土，够凝土，', time: '2020-09-01'}]
-      //   }
-      //   // console.log(val)
-      // },
-      // refresh() {
-      //   this.gotoOption(1)
-        // this.alarmTypeChart.dispose();
-        // this.alarmTrendChart.dispose();
-        // this.initAlarmType();
-        // this.initAlarmTrend();
-      // }
+      handleTabs(tab, event) {
+        console.log(tab, event);
+      },
     }
   }
 </script>
