@@ -18,7 +18,7 @@
         <div class="dm-main">
           <div class="border-top-right"></div>
           <div style="padding: 0.13rem">
-            <el-button type="primary" @click="showUpload = true"><i class="el-icon-upload" /> 上传文件</el-button>
+            <el-button type="primary" @click="uploadFile"><i class="el-icon-upload" /> 上传文件</el-button>
           </div>
           <div class="data_table" style="padding: 0 0.2rem">
             <el-table
@@ -29,14 +29,19 @@
               :row-style="{ color: 'white' }"
             >
               <el-table-column prop="id" label="文件ID" width="100" align="center" />
-              <el-table-column prop="name" label="文件名称" align="center" />
+              <el-table-column label="文件名称" align="center">
+                <template slot-scope="scope">
+                  <el-button v-if="scope.row.url" type="text" @click="openUrl(scope.row.url)" style="font-size: 15px; ">{{ scope.row.name }}</el-button>
+                  <span v-else>{{ scope.row.name }}</span>
+                </template>
+              </el-table-column>
               <el-table-column prop="format" label="文件类型" width="100" align="center" />
-              <el-table-column prop="remark" label="文件描述" align="center" />
-              <el-table-column prop="createBy" label="创建人" width="150" align="center" />
-              <el-table-column prop="createTime" label="创建时间" width="150" align="center" />
+              <el-table-column v-if="isActive1 === true" prop="doc_type" label="具体类型" width="150" align="center" />
+              <el-table-column prop="info" label="文件描述" align="center" />
+              <el-table-column prop="update_time" label="创建时间" align="center" />
               <el-table-column label="操作" align="center" width="100">
                 <template slot-scope="scope">
-                  <el-button type="text" size="mini" @click="editInfo(scope.$index, scope.row)"><i class="el-icon-edit" />修改</el-button>
+                  <el-button type="primary" size="mini" @click="editInfo(scope.$index, scope.row)"><i class="el-icon-edit" />修改</el-button>
                 </template>
               </el-table-column>
             </el-table>
@@ -61,27 +66,27 @@
             <el-input v-model="uploadInfo.name" style="width: 50%"></el-input>
           </el-form-item>
           <el-form-item label="文件类型" prop="format">
-            <el-select v-model="uploadInfo.format" placeholder="请选择文件类型" style="width: 50%; ">
+            <el-select v-model="uploadInfo.format" placeholder="请选择文件类型" style="width: 30%; ">
               <el-option label="文字" value="文字" />
               <el-option label="图片" value="图片" />
               <el-option label="视频" value="视频" />
             </el-select>
+            <el-select v-if="uploadInfo.format === '文字'" v-model="uploadInfo.doc_type" placeholder="请选择文字文件类型" style="width: 30%; ">
+              <el-option v-for="(item, i) in docTypeList" :key="i" :label="item" :value="item" />
+            </el-select>
           </el-form-item>
           <el-form-item label="文件描述" prop="remark">
-            <el-input type="textarea" v-model="uploadInfo.remark" style="width: 90%; "></el-input>
-          </el-form-item>
-          <el-form-item label="创建人" prop="createBy">
-            <el-input v-model="uploadInfo.createBy" placeholder="请输入上传人" style="width: 50%; "></el-input>
+            <el-input type="textarea" v-model="uploadInfo.info" style="width: 90%; "></el-input>
           </el-form-item>
           <el-form-item label="上传文件">
             <el-upload
               class="upload-demo"
-              drag
               action="http://121.36.106.18:38080/system/safe/uploadFile"
-              multiple>
-              <i class="el-icon-upload"></i>
-              <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
-<!--              <div class="el-upload__tip" slot="tip">只能上传jpg/png文件，且不超过500kb</div>-->
+              :limit="1"
+              :on-success="handleSuccess"
+              style="width: 50%; "
+            >
+              <el-button slot="trigger" size="small" type="primary" icon="el-icon-plus">选取文件</el-button>
             </el-upload>
           </el-form-item>
           <el-form-item>
@@ -98,20 +103,29 @@
             <el-input v-model="currentInfo.name" style="width: 50%"></el-input>
           </el-form-item>
           <el-form-item label="文件类型" prop="format">
-            <el-select v-model="currentInfo.format" placeholder="请选择文件类型" style="width: 50%; ">
+            <el-select v-model="currentInfo.format" placeholder="请选择文件类型" style="width: 30%; ">
               <el-option label="文字" value="文字" />
               <el-option label="图片" value="图片" />
               <el-option label="视频" value="视频" />
             </el-select>
+            <el-select v-if="currentInfo.format === '文字'" v-model="currentInfo.doc_type" placeholder="请选择文字文件类型" style="width: 30%; ">
+              <el-option v-for="(item, i) in docTypeList" :key="i" :label="item" :value="item" />
+            </el-select>
           </el-form-item>
-          <el-form-item label="文件描述" prop="remark">
-            <el-input type="textarea" v-model="currentInfo.remark" style="width: 90%; "></el-input>
+          <el-form-item label="文件描述" prop="info">
+            <el-input type="textarea" v-model="currentInfo.info" style="width: 90%; "></el-input>
           </el-form-item>
-          <el-form-item label="创建日期" prop="createTime">
-            <el-date-picker v-model="currentInfo.createTime" align="right" type="date" placeholder="选择日期" :picker-options="pickerOptions" style="width: 50%; " />
-          </el-form-item>
-          <el-form-item label="创建人" prop="createBy">
-            <el-input v-model="currentInfo.createBy" placeholder="请输入上传人" style="width: 50%; "></el-input>
+          <el-form-item label="上传文件">
+            <el-upload
+              class="upload-demo"
+              action="http://121.36.106.18:38080/system/safe/uploadFile"
+              :limit="1"
+              :on-success="handleSuccess"
+              :file-list="fileList"
+              style="width: 50%; "
+            >
+              <el-button slot="trigger" size="small" type="primary" icon="el-icon-plus">选取文件</el-button>
+            </el-upload>
           </el-form-item>
           <el-form-item>
             <el-button type="primary" @click="submitEdit('currentInfo')">提交修改</el-button>
@@ -124,7 +138,7 @@
 </template>
 
 <script>
-import {changeDoc, findDoc, insertDoc} from "../../api/dataManage";
+import {changeDoc, docType, findDoc, insertDoc} from "../../api/dataManage";
 
 export default {
   data() {
@@ -136,19 +150,11 @@ export default {
       showUpload: false,
       uploadInfo: {
         constructionSiteId: 0,
-        constructionSiteName: 'string',
-        createBy: '',
-        createTime: '',
-        doc_type: '',
+        constructionSiteName: '',
+        doc_type: '其他',
         format: '',
-        id: 0,
+        info: '',
         name: '',
-        params: {},
-        remark: '',
-        searchValue: '',
-        updateBy: '',
-        updateTime: '',
-        update_time: '',
         url: ''
       },
       rules: {
@@ -187,26 +193,22 @@ export default {
       showEdit: false,
       currentInfo: {
         constructionSiteId: 0,
-        constructionSiteName: 'string',
-        createBy: '',
-        createTime: '',
+        constructionSiteName: '',
         doc_type: '',
         format: '',
-        id: 0,
+        info: '',
         name: '',
-        params: {},
-        remark: '',
-        searchValue: '',
-        updateBy: '',
-        updateTime: '',
-        update_time: '',
+        id: '',
         url: ''
       },
       currentIndex: null,
       isActive1: true,
       isActive2: false,
       isActive3: false,
-      constructionSiteId: 1
+      constructionSiteId: 1,
+      constructionSiteName: '石家庄宝能中心项目二标段',
+      docTypeList: [],
+      fileList: []
     }
   },
   mounted() {
@@ -216,11 +218,21 @@ export default {
     }).then(response => {
       this.alldoc = response.data
       this.fileTable = this.alldoc.word
+    });
+    docType().then(response => {
+      for(var i=0;i<response.data.rows.length;i++) {
+        this.docTypeList.push(response.data.rows[i].name)
+      }
     })
   },
   methods: {
     handleCurrentChange(val) {
       this.currentPage = val
+    },
+    uploadFile() {
+      this.uploadInfo.constructionSiteId = this.constructionSiteId;
+      this.uploadInfo.constructionSiteName = this.constructionSiteName;
+      this.showUpload = true
     },
     submitUpload(formName) {
       this.$refs[formName].validate((valid) => {
@@ -249,15 +261,24 @@ export default {
       this.$refs[formName].resetFields();
     },
     editInfo(index, row) {
-      this.currentInfo = row;
-      this.currentIndex = index;
+      this.currentInfo.constructionSiteId = row.constructionSiteId;
+      this.currentInfo.constructionSiteName = row.constructionSiteName;
+      this.currentInfo.doc_type = row.doc_type;
+      this.currentInfo.format = row.format;
+      this.currentInfo.info = row.info;
+      this.currentInfo.name = row.name;
+      this.currentInfo.url = row.url;
+      this.currentInfo.id = row.id;
+      this.fileList = [{
+        name: row.name,
+        url: row.url
+      }]
+      // this.currentIndex = index;
       this.showEdit = true;
     },
     submitEdit(formName) {
       this.$refs[formName].validate((valid) => {
         if(valid) {
-          this.currentInfo.updateTime = new Date().toString()
-          this.currentInfo.update_time = new Date().toString()
           console.log(this.currentInfo);
           changeDoc({
             docManagement: this.currentInfo
@@ -293,6 +314,12 @@ export default {
       this.isActive2 = false
       this.isActive3 = true
       this.fileTable = this.alldoc.video
+    },
+    openUrl(url) {
+      window.open(url);
+    },
+    handleSuccess(response, file, fileList) {
+      this.uploadInfo.url = response.data
     }
   }
 }
