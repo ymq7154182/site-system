@@ -82,15 +82,14 @@
                 <span>项目进度</span>
                 <div style="margin-top: 3vh;">
                   <el-steps :active="2" align-center>
-                    <el-step title="地基与基础" @click.native="gotoOption(1)"></el-step>
-                    <el-step title="主体结构" @click.native="gotoOption(2)"></el-step>
-                    <el-step title="建筑装饰装修" @click.native="gotoOption(3)"></el-step>
-                    <el-step title="建筑给水排水及采暖" @click.native="gotoOption(4)"></el-step>
-                    <el-step title="建筑电气" @click.native="gotoOption(5)"></el-step>
-                    <el-step title="智能建筑" @click.native="gotoOption(6)"></el-step>
-                    <el-step title="通风与空调" @click.native="gotoOption(7)"></el-step>
-                    <el-step title="电梯" @click.native="gotoOption(8)"></el-step>
-                    <el-step title="建筑节能" @click.native="gotoOption(9)"></el-step>
+                    <el-step  :title="item.durationDictName"  v-for="(item, index) in titleList" :key="index" @click.native="gotoOption(item)">
+                        <template slot="title">
+                          <div>
+                            {{item.durationDictName}}
+                          </div>
+                          <div class="title_font">{{item.scheduleTime}}</div>
+                        </template>
+                    </el-step>
                   </el-steps>
                 </div>
 
@@ -98,44 +97,38 @@
             </div>
           </div>
           <el-dialog
-            title="具体进度情况"
+            :title="title + '具体进度情况'"
             :visible.sync="dialogVisible"
             width="70%"
             class="home_second"
             :before-close="handleClose">
+            <div class="wc_time" v-if="endTime !== null">完成时间：{{endTime}}</div>
+<!--            <div class="box-title">{{title}}</div>-->
             <div class="schedule-press">
-              <el-steps direction="vertical" :active="1" :space="150">
-<!--                <el-step :key="index">-->
-                <el-step :title="item.title" :description="item.content"  v-for="(item, index) in dataList" :key="index">
-                  <template slot="description" >
+              <el-steps direction="vertical" :active="1" :space="120">
+                <el-step :title="item.duration2DictName" v-for="(item, index) in dataList" :key="index">
+                  <!--            <el-step :title="item.duration2DictName" :description="item.content"  v-for="(item, index) in dataList" :key="index">-->
+                  <template slot="description">
                     <div class="step-row">
-<!--                    <div class="step-row" v-for="item in dataList">-->
                       <table width="100%" border="0" cellspacing="0" cellpadding="0" class="processing_content">
-                        <tr style="border-radius: 0.1rem">
-                          <td style="color: #3c3c3c" class="item-td">
-                            <!--                        <div class="processing_content_detail" style="float:left;width:70%"><span >申请人&nbsp;&nbsp;<span style="color:#219AFF">圆领{{}}</span>&nbsp;&nbsp;提交了割接方案</span></div>-->
-                            <div class="processing_content_detail" style="float:left;width:70%"><span >{{item.title}}&nbsp;&nbsp;{{item.content}}</span></div>
-                            <!--                        <div class="processing_content_detail" style="float:right;"><span ><i class="el-icon-time"></i>&nbsp;&nbsp;昨天12:24</span> </div>-->
-                            <div class="processing_content_detail" style="float:right;" v-if="item.time.length > 0"><span ><i class="el-icon-time"></i>&nbsp;&nbsp;{{item.time}}</span> </div>
-                          </td>
-                        </tr>
-                        <tr v-if="form.id!==item.id">
+                        <tr v-if="item.status === 1">
                           <td>
                             <div class="processing_content_detail" style="float:left;width:70%">
                               <div style="float:left;width: 2px;height: 20px; background:#C7D4E9;margin-left:10px;margin-right:10px"></div>
-                                <span style="color:#919FB8" class="status-label" @click="submitOption('延缓', item)">延缓</span>
-                                <span style="color:#919FB8" class="status-label" @click="submitOption('完成', item)">完成</span>
-                              </div>
-<!--                              <span style="color:#919FB8">同意，建议通过</span></div>-->
+                              <span style="color:#919FB8" class="status-label" @click="submitOption('延缓', item)">延缓</span>
+                              <span style="color:#919FB8" class="status-label" @click="submitOption('完成', item)">完成</span>
+                            </div>
                           </td>
                         </tr>
                         <tr v-else>
                           <td>
                             <div class="processing_content_detail" style="float:left;width:70%">
                               <div style="float:left;width: 2px;height: 20px; background:#C7D4E9;margin-left:10px;margin-right:10px"></div>
-                              <span style="color:#919FB8" class="status-label-status">{{item.status}}</span>
+                              <span v-if="item.status === 3" style="color:#919FB8" class="status-label-status" @click="checkStatus(item)">延缓</span>
+                              <span v-if="item.status === 2" style="color:#919FB8" class="status-label-status" @click="checkStatus(item)">完成</span>
                             </div>
-                            <!--                              <span style="color:#919FB8">同意，建议通过</span></div>-->
+                            <div class="processing_content_detail" style="float:right;color: #7c7c7c" v-if="item.endTime !== null"><span ><i class="el-icon-time"></i>&nbsp;&nbsp;{{item.endTime}}</span> </div>
+
                           </td>
                         </tr>
                       </table>
@@ -146,43 +139,96 @@
 
               </el-steps>
             </div>
+<!--            <div class="schedule-press">-->
+<!--              <el-steps direction="vertical" :active="1" :space="150">-->
+<!--&lt;!&ndash;                <el-step :key="index">&ndash;&gt;-->
+<!--                <el-step :title="item.title" :description="item.content"  v-for="(item, index) in dataList" :key="index">-->
+<!--                  <template slot="description" >-->
+<!--                    <div class="step-row">-->
+<!--&lt;!&ndash;                    <div class="step-row" v-for="item in dataList">&ndash;&gt;-->
+<!--                      <table width="100%" border="0" cellspacing="0" cellpadding="0" class="processing_content">-->
+<!--                        <tr style="border-radius: 0.1rem">-->
+<!--                          <td style="color: #3c3c3c" class="item-td">-->
+<!--                            &lt;!&ndash;                        <div class="processing_content_detail" style="float:left;width:70%"><span >申请人&nbsp;&nbsp;<span style="color:#219AFF">圆领{{}}</span>&nbsp;&nbsp;提交了割接方案</span></div>&ndash;&gt;-->
+<!--                            <div class="processing_content_detail" style="float:left;width:70%"><span >{{item.title}}&nbsp;&nbsp;{{item.content}}</span></div>-->
+<!--                            &lt;!&ndash;                        <div class="processing_content_detail" style="float:right;"><span ><i class="el-icon-time"></i>&nbsp;&nbsp;昨天12:24</span> </div>&ndash;&gt;-->
+<!--                            <div class="processing_content_detail" style="float:right;" v-if="item.time.length > 0"><span ><i class="el-icon-time"></i>&nbsp;&nbsp;{{item.time}}</span> </div>-->
+<!--                          </td>-->
+<!--                        </tr>-->
+<!--                        <tr v-if="form.id!==item.id">-->
+<!--                          <td>-->
+<!--                            <div class="processing_content_detail" style="float:left;width:70%">-->
+<!--                              <div style="float:left;width: 2px;height: 20px; background:#C7D4E9;margin-left:10px;margin-right:10px"></div>-->
+<!--                                <span style="color:#919FB8" class="status-label" @click="submitOption('延缓', item)">延缓</span>-->
+<!--                                <span style="color:#919FB8" class="status-label" @click="submitOption('完成', item)">完成</span>-->
+<!--                              </div>-->
+<!--&lt;!&ndash;                              <span style="color:#919FB8">同意，建议通过</span></div>&ndash;&gt;-->
+<!--                          </td>-->
+<!--                        </tr>-->
+<!--                        <tr v-else>-->
+<!--                          <td>-->
+<!--                            <div class="processing_content_detail" style="float:left;width:70%">-->
+<!--                              <div style="float:left;width: 2px;height: 20px; background:#C7D4E9;margin-left:10px;margin-right:10px"></div>-->
+<!--                              <span style="color:#919FB8" class="status-label-status">{{item.status}}</span>-->
+<!--                            </div>-->
+<!--                            &lt;!&ndash;                              <span style="color:#919FB8">同意，建议通过</span></div>&ndash;&gt;-->
+<!--                          </td>-->
+<!--                        </tr>-->
+<!--                      </table>-->
+<!--                    </div>-->
+<!--                  </template>-->
+
+<!--                </el-step>-->
+
+<!--              </el-steps>-->
+<!--            </div>-->
             <span slot="footer" class="dialog-footer">
               <el-button @click="dialogVisible = false">取 消</el-button>
               <el-button type="primary" @click="dialogVisible = false">确 定</el-button>
             </span>
           </el-dialog>
-          <el-dialog title="迟缓/完成操作" :visible.sync="showSlow">
+          <el-dialog title="迟缓操作" :visible.sync="showSlow">
             <el-form :model="form">
               <el-form-item label="名称" :label-width="formLabelWidth">
-                <el-input v-model="form.title" autocomplete="off"></el-input>
+                <el-input v-model="form.duration2DictName" autocomplete="off" class="item-defer" :disabled="disabledStr"></el-input>
               </el-form-item>
               <el-form-item label="描述内容" :label-width="formLabelWidth">
-<!--                <el-select v-model="form.content" placeholder="请选择活动区域">-->
-                  <el-input v-model="form.processData" autocomplete="off"></el-input>
-<!--                  <el-option label="区域一" value="shanghai"></el-option>-->
-<!--                  <el-option label="区域二" value="beijing"></el-option>-->
-<!--                </el-select>-->
+                <!--                <el-select v-model="form.content" placeholder="请选择活动区域">-->
+                <el-input v-model="form.processData" autocomplete="off" class="item-defer" :disabled="disabledStr"></el-input>
+                <!--                  <el-option label="区域一" value="shanghai"></el-option>-->
+                <!--                  <el-option label="区域二" value="beijing"></el-option>-->
+                <!--                </el-select>-->
               </el-form-item>
-              <el-form-item label="延缓/完成原因" :label-width="formLabelWidth">
-                <el-input v-model="form.reason" autocomplete="off"></el-input>
+              <el-form-item label="延缓原因" :label-width="formLabelWidth">
+                <!--                <el-input v-model="form.reason" autocomplete="off"></el-input>-->
+                <el-select v-model="form.reason" placeholder="请选择" class="item-defer" :disabled="disabledStr">
+                  <el-option
+                    v-for="(item, index) in deferReasons"
+                    :key="index"
+                    :label="item.reason"
+                    :value="item.id">
+                  </el-option>
+                </el-select>
               </el-form-item>
               <el-form-item label="负责人" :label-width="formLabelWidth">
-                <el-input v-model="form.principal" autocomplete="off"></el-input>
+                <el-input v-model="form.principal" autocomplete="off" class="item-defer" :disabled="disabledStr"></el-input>
               </el-form-item>
-              <el-form-item label="延缓/完成时间" :label-width="formLabelWidth">
+              <el-form-item label="延缓(预计完成)时间" :label-width="formLabelWidth">
                 <el-date-picker
-                  v-model="form.date"
+                  v-model="form.endTime"
                   type="date"
-                  placeholder="选择日期">
+                  placeholder="选择日期"
+                  class="item-defer" :disabled="disabledStr">
                 </el-date-picker>
-<!--                <el-input v-model="form.date" autocomplete="off"></el-input>-->
+                <!--                <el-input v-model="form.date" autocomplete="off"></el-input>-->
               </el-form-item>
             </el-form>
             <div slot="footer" class="dialog-footer">
               <el-button @click="showSlow = false">取 消</el-button>
-              <el-button type="primary" @click="defineReason()">确 定</el-button>
+              <el-button type="primary" @click="defineReason()" :disabled="disabledStr">确 定</el-button>
             </div>
           </el-dialog>
+
         </el-col>
         <el-col :span="8">
           <el-row>
@@ -230,11 +276,15 @@
 </template>
 
 <script>
+  import {getDeferReasons, submitDeferInfo, getOneSchedules, getTwoSchedules, finishSmallSchedule} from '@/api/scheduleManage'
   require('echarts/theme/macarons')
     export default {
         name: "homePage",
       mounted() {
         this.$store.dispatch('changeMsg', '项目概览')
+        this.getDeferReasons() // 获取滞缓原因
+        this.getOneSchedules() // 获取所有一级进度
+        // this.getTwoSchedules() // 获取所有二级进度
         this.inchart13()
         this.chart13Res()
         this.inchart24()
@@ -247,6 +297,11 @@
       data(){
           return{
             flag: 0, // 是否展示延缓和完成按钮
+            // titleList: [{title: '地基与基础', id: 0, time: '2020-08-01'},{title: '主体结构', id: 1, time: '2020-08-01'},{title: '建筑装饰装修', id: 2, time: '2020-08-01'},{title: '建筑给水排水及采暖', id: 3, time: '2020-08-01'},{title: '建筑电气', id: 4, time: '2020-08-01'},{title: '智能建筑', id: 5, time: '2020-08-01'},
+            //   {title: '通风与空调', id: 6, time: '2020-08-01'},{title: '电梯', id: 7, time: '2020-08-01'},{title: '建筑节能', id: 8, time: '2020-08-01'},],
+            title: '', // 每一个大的进度的名字
+            id: -1, // 当前步骤id
+            titleList: [], // 所有的大任务列表
             myChart13: '',
             myChart24: '',
             myChart22: '',
@@ -257,31 +312,94 @@
             showSlow: false,
             formLabelWidth: '110px',
             option: '', // 完成还是迟缓
+            deferReasons: [], // 滞缓原因列表
             form: {
               id: '',
               title: '',
               content: '',
               status: '',
               reason: '', // 滞缓原因
-              date: '', // 完成时间
+              endTime: '', // 完成时间
               principal: '', // 负责人
               processData: '' // 处理内容
             },
+            disabledStr: false,
+            endTime: '', // 某个大进度完成时间
+          }
+      },
+      computed: {
+          deptId () {
+            return this.$store.state.deptId
+          },
+          schedulePlanId () {
+            return this.$store.state.schedulePlanId
           }
       },
       methods:{
-        defineReason () {
-          this.dataList[this.form.id].time = this.form.date.getFullYear() + '-' + (this.form.date.getMonth() + 1) + '-' + this.form.date.getDate() + ' '
-            // + d.getHours() + ':' + d.getMinutes() + ':' + d.getSeconds();
-          // console.log(this.dataList[this.form.id].time.length, this.form.date)
-          this.dataList[this.form.id].status = this.option
-          this.showSlow = false
+        getDeferReasons () { // 滞缓原因
+          getDeferReasons().then(res => {
+            this.deferReasons = res.data.data
+            // console.log('置换原因', res.data.data)
+          })
+        },
+        checkStatus (item) { // 查看滞缓和完成信息
+          if (item.status === 3) {
+            this.form = item
+            this.showSlow = true
+            this.disabledStr = true
+          }
+        },
+        getOneSchedules () { // 获取所有一级进度
+          getOneSchedules({
+            siteId: this.deptId
+          }).then(res => {
+            this.titleList = res.data.data
+            this.id = res.data.data[0].id
+            this.title = res.data.data[0].durationDictName
+            this.endTime = res.data.data[0].endTime
+            console.log(res.data)
+          })
+        },
+        getTwoSchedules () { // 获取所有二级进度
+          getTwoSchedules({
+            planId: this.id
+          }).then(res => {
+            this.dataList = res.data.data
+          })
+        },
+        defineReason () { // 提交滞缓原因
+          submitDeferInfo({
+            scheduleDurationSectionPlanId: this.form.id,
+            delaysDictId: this.form.reason,
+            context: this.deferReasons[this.form.reason-1].reason,
+            principal: this.form.principal,
+            planTime: this.form.endTime.getFullYear() + '-' + (this.form.endTime.getMonth() + 1) + '-' + this.form.endTime.getDate()
+          }).then(res => {
+            console.log('提交滞缓', res.data)
+            if(res.data.code === 200) {
+              this.showSlow = false
+              this.getTwoSchedules()
+            }
+          })
         },
         submitOption (option, item) {
-          this.form = item
-          this.showSlow = true
-          this.option = option
-          console.log(this.form)
+          if (option === '完成') {
+            finishSmallSchedule({
+              scheduleDurationSectionPlanId: item.id
+            }).then(res => {
+              if (res.data.code === 200) {
+                // console.log('状态为完成')
+                this.getTwoSchedules()
+              }
+            })
+          } else {
+            this.form = item
+            this.showSlow = true
+          }
+          // this.form = item
+          // this.showSlow = true
+          // this.option = option
+          // console.log(this.form)
         },
         handleClose(done) {
           this.$confirm('确认关闭？')
@@ -291,27 +409,33 @@
             .catch(_ => {});
         },
         gotoOption (val) {
+          console.log(val)
+          this.id = val.id
+          this.title = val.durationDictName
           this.dialogVisible = true
-          if (val === 1) {
-            this.dataList = [
-              {id: 0, title: '地基与基础', content: '混凝土，够凝土，混凝土，够凝土，混凝土，够凝土，混凝土，够凝土，', time: '', status: '完成'},
-              {id: 1, title: '地基与基础', content: '混凝土，够凝土，混凝土，够凝土，混凝土，够凝土，混凝土，够凝土，', time: '', status: '完成'},
-              {id: 2, title: '地基与基础', content: '混凝土，够凝土，混凝土，够凝土，混凝土，够凝土，混凝土，够凝土，', time: '', status: '完成'},
-              {id: 3, title: '地基与基础', content: '混凝土，够凝土，混凝土，够凝土，混凝土，够凝土，混凝土，够凝土，', time: '', status: '完成'}
-              ]
-          } else if (val === 2){
-            this.dataList = [
-              {id: 0, title: '主体结构', content: '混凝土，够凝土，混凝土，够凝土，混凝土，够凝土，混凝土，够凝土，', time: '', status: '完成'},
-              {id: 1, title: '主体结构', content: '混凝土，够凝土，混凝土，够凝土，混凝土，够凝土，混凝土，够凝土，', time: '', status: '完成'},
-              {id: 2, title: '主体结构', content: '混凝土，够凝土，混凝土，够凝土，混凝土，够凝土，混凝土，够凝土，', time: '', status: '完成'},
-              {id: 3, title: '主体结构', content: '混凝土，够凝土，混凝土，够凝土，混凝土，够凝土，混凝土，够凝土，', time: '', status: '进行中'}]
-          } else {
-            this.dataList = [
-              {id: 0, title: '流程中' + val, content: '混凝土，够凝土，混凝土，够凝土，混凝土，够凝土，混凝土，够凝土，', time: '', status: '迟缓'},
-              {id: 1, title: '流程中' + val, content: '混凝土，够凝土，混凝土，够凝土，混凝土，够凝土，混凝土，够凝土，', time: '', status: '完成'},
-              {id: 2, title: '流程中' + val, content: '混凝土，够凝土，混凝土，够凝土，混凝土，够凝土，混凝土，够凝土，', time: '', status: '完成'},
-              {id: 3, title: '流程中' + val, content: '混凝土，够凝土，混凝土，够凝土，混凝土，够凝土，混凝土，够凝土，', time: '', status: '完成'}]
-          }
+          this.endTime = val.endTime
+          this.getTwoSchedules()
+          // console.log(val)
+          // if (val === 0) {
+          //   this.dataList = [
+          //     {id: 0, title: '地基与基础', content: '混凝土，够凝土，混凝土，够凝土，混凝土，够凝土，混凝土，够凝土，', time: '', status: '完成'},
+          //     {id: 1, title: '地基与基础', content: '混凝土，够凝土，混凝土，够凝土，混凝土，够凝土，混凝土，够凝土，', time: '', status: '完成'},
+          //     {id: 2, title: '地基与基础', content: '混凝土，够凝土，混凝土，够凝土，混凝土，够凝土，混凝土，够凝土，', time: '', status: '完成'},
+          //     {id: 3, title: '地基与基础', content: '混凝土，够凝土，混凝土，够凝土，混凝土，够凝土，混凝土，够凝土，', time: '', status: '完成'}
+          //     ]
+          // } else if (val === 1){
+          //   this.dataList = [
+          //     {id: 0, title: '主体结构', content: '混凝土，够凝土，混凝土，够凝土，混凝土，够凝土，混凝土，够凝土，', time: '', status: '完成'},
+          //     {id: 1, title: '主体结构', content: '混凝土，够凝土，混凝土，够凝土，混凝土，够凝土，混凝土，够凝土，', time: '', status: '完成'},
+          //     {id: 2, title: '主体结构', content: '混凝土，够凝土，混凝土，够凝土，混凝土，够凝土，混凝土，够凝土，', time: '', status: '完成'},
+          //     {id: 3, title: '主体结构', content: '混凝土，够凝土，混凝土，够凝土，混凝土，够凝土，混凝土，够凝土，', time: '', status: '进行中'}]
+          // } else {
+          //   this.dataList = [
+          //     {id: 0, title: '流程中' + val, content: '混凝土，够凝土，混凝土，够凝土，混凝土，够凝土，混凝土，够凝土，', time: '', status: '迟缓'},
+          //     {id: 1, title: '流程中' + val, content: '混凝土，够凝土，混凝土，够凝土，混凝土，够凝土，混凝土，够凝土，', time: '', status: '完成'},
+          //     {id: 2, title: '流程中' + val, content: '混凝土，够凝土，混凝土，够凝土，混凝土，够凝土，混凝土，够凝土，', time: '', status: '完成'},
+          //     {id: 3, title: '流程中' + val, content: '混凝土，够凝土，混凝土，够凝土，混凝土，够凝土，混凝土，够凝土，', time: '', status: '完成'}]
+          // }
           // console.log(val)
         },
         inchart13() {
@@ -1144,13 +1268,25 @@
     background-color: #ffb91b;
     color: #fff!important;
   }
+  .title_font {
+    font-size: 12px;
+    color: #fff;
+    margin-top: 0.15rem;
+    /*width: 100px;*/
+  }
+  .wc_time {
+    position: absolute;
+    font-size: 16px;
+    top: 3.5vh;
+    left: 25vw;
+  }
 </style>
 <style>
   .process_content .el-step__title.is-finish,
   .process_content .el-step__title.is-process,
   .process_content .el-step__title.is-wait {
     /*color: #409EFF;*/
-    width: 25px;
+    width: 45px;
     margin-left: 50%;
     transform: translateX(-50%);
     height: 1.7rem;
