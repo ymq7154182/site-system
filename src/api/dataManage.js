@@ -12,7 +12,12 @@ export function insertDoc(data) {
   return request({
     url: '/doc/insertDoc',
     method: 'post',
-    data
+    params: data,
+    dataType: 'json',
+    data: JSON.stringify(data),
+    headers: {
+      'content-Type': 'application/json;',
+    }
   })
 }
 
