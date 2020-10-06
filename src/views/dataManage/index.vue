@@ -213,12 +213,7 @@ export default {
   },
   mounted() {
     this.$store.dispatch('changeMsg', '资料管理');
-    findDoc({
-      constructionSiteId: this.constructionSiteId
-    }).then(response => {
-      this.alldoc = response.data
-      this.fileTable = this.alldoc.word
-    });
+    this.refreshTable();
     docType().then(response => {
       for(var i=0;i<response.data.rows.length;i++) {
         this.docTypeList.push(response.data.rows[i].name)
@@ -237,16 +232,14 @@ export default {
     submitUpload(formName) {
       this.$refs[formName].validate((valid) => {
         if(valid) {
-          console.log(this.uploadInfo)
-          insertDoc({
-            docManagement: this.uploadInfo
-          }).then(response => {
+          insertDoc(this.uploadInfo).then(response => {
             if(response.data.code === 200) {
               this.$message({
                 type: 'success',
                 message: '上传成功！'
               })
-              this.showEdit = false;
+              this.refreshTable();
+              this.showUpload = false;
             } else {
               this.$message.error(response.data.msg)
             }
@@ -263,7 +256,11 @@ export default {
     editInfo(index, row) {
       this.currentInfo.constructionSiteId = row.constructionSiteId;
       this.currentInfo.constructionSiteName = row.constructionSiteName;
-      this.currentInfo.doc_type = row.doc_type;
+      if (row.doc_type) {
+        this.currentInfo.doc_type = row.doc_type;
+      } else {
+        this.currentInfo.doc_type = '其他'
+      }
       this.currentInfo.format = row.format;
       this.currentInfo.info = row.info;
       this.currentInfo.name = row.name;
@@ -279,15 +276,14 @@ export default {
     submitEdit(formName) {
       this.$refs[formName].validate((valid) => {
         if(valid) {
-          console.log(this.currentInfo);
-          changeDoc({
-            docManagement: this.currentInfo
-          }).then(response => {
+          changeDoc(this.currentInfo).then(response => {
             if(response.data.code === 200) {
               this.$message({
                 type: 'success',
                 message: '修改成功！'
               })
+              this.refreshTable();
+              this.showEdit = false;
             } else {
               this.$message.error(response.data.msg)
             }
@@ -320,6 +316,14 @@ export default {
     },
     handleSuccess(response, file, fileList) {
       this.uploadInfo.url = response.data
+    },
+    refreshTable() {
+      findDoc({
+        constructionSiteId: this.constructionSiteId
+      }).then(response => {
+        this.alldoc = response.data
+        this.fileTable = this.alldoc.word
+      });
     }
   }
 }
