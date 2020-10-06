@@ -6,3 +6,12 @@ export function test() {
     method: 'get'
   })
 }
+
+export function zijian(data) {
+  return request({
+    url: 'newAj/device/queryDevInstallationList',
+    method: 'get',
+    params: data
+  })
+}
+
