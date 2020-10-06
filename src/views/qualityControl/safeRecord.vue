@@ -11,34 +11,61 @@
           <el-col :span="2">
             <el-button type="warning" icon="el-icon-download" size="mini" @click="handleExport" >下载</el-button>
           </el-col>
+<!--          搜索框-->
+<!--          <el-col :span="6" :offset="12">-->
+<!--            <div>-->
+<!--              <el-input placeholder="请输入内容" v-model="input2">-->
+<!--                <el-button slot="append" icon="el-icon-search"></el-button>-->
+<!--              </el-input>-->
+<!--            </div>-->
+<!--          </el-col>-->
         </el-row>
-<!--        表格部分-->
-        <el-table style="" v-loading="loading" :data="userList" @selection-change="handleSelectionChange"  border >
-          <el-table-column type="selection" width="50" align="center" />
-          <el-table-column label="考评时间" align="center" prop="id" width="100"/>
-          <el-table-column label="项目进度" align="center" prop="progress" :show-overflow-tooltip="true" width="200"/>
-          <el-table-column label="综合得分" align="center" prop="checkCode" :show-overflow-tooltip="true" width="200"/>
-          <el-table-column label="隐患数目" align="center" prop="yhNum" :show-overflow-tooltip="true" width="120"/>
-          <el-table-column label="自评结果" align="center" prop="selfResult" width="120" />
-          <el-table-column label="检查员姓名" align="center" prop="checkUser" width="120" />
-          <el-table-column label="操作" align="center" width="180" class-name="small-padding fixed-width" >
-            <template slot-scope="scope">
-              <el-button size="mini" type="text" icon="el-icon-view" @click="handleView(scope.row)"
-              >查看</el-button>
-            </template>
-          </el-table-column>
-        </el-table>
-        <pagination v-show="total>0" :total="total" :page.sync="queryParams.pageNum" :limit.sync="queryParams.pageSize" @pagination="getList" />
+        <div >
+          <!--        表格部分-->
+          <el-table style="" v-loading="loading" :data="userList" @selection-change="handleSelectionChange"  border >
+            <el-table-column type="selection" width="50" align="center" />
+            <el-table-column label="项目名称" align="center" prop="proid" width="100"/>
+            <el-table-column label="综合得分" align="center" prop="checkCode" :show-overflow-tooltip="true" width="200"/>
+            <el-table-column label="检查人员" align="center" prop="checkUserName" :show-overflow-tooltip="true" width="200"/>
+            <el-table-column label="自评结果" align="center" prop="selfResult" :show-overflow-tooltip="true" width="120"/>
+            <el-table-column label="检查时间" align="center" prop="checkTime" width="200" />
+<!--            <el-table-column label="检查员姓名" align="center" prop="checkUser" width="120" />-->
+            <el-table-column label="操作" align="center" width="180" class-name="small-padding fixed-width" >
+              <template slot-scope="scope">
+                <el-button size="mini" type="text" icon="el-icon-view" @click="handleView(scope.row)"
+                >详情</el-button>
+              </template>
+            </el-table-column>
+          </el-table>
+          <pagination v-show="pageTotal>0" :total="pageTotal" :page.sync="queryParams.pageNum" :limit.sync="queryParams.pageSize" @pagination="getList" />
+        </div>
+        <div class="block">
+          <el-pagination
+            background
+            @size-change="handleSizeChange"
+            @current-change="handleCurrentChange"
+            :current-page="currentPage"
+            :page-sizes="[10, 20, 30, 40]"
+            :page-size="pageSize"
+            layout="total, sizes, prev, pager, next, jumper"
+            :total="pageTotal">
+          </el-pagination>
+        </div>
       </el-col>
     </el-row>
     <!-- 查看对话框 -->
     <el-dialog title="查看" :visible.sync="opencheck" width="960px" append-to-body>
-      <el-form ref="checkForm" :model="checkForm" :rules="rules" label-width="80px" disabled="true">
+      <el-form ref="checkForm" :model="checkForm"  label-width="80px" :disabled="true">
         <el-row>
           <el-col :span="12">
-            <el-form-item label="项目主键" prop="proid" label-width="130px">
-              <el-input v-model="checkForm.proid" placeholder="请输入项目主键" />
+            <el-form-item label="奖惩情况" prop="situation" label-width="130px">
+              <el-input v-model="checkForm.situation" placeholder="请输入奖惩情况" />
             </el-form-item>
+          </el-col>
+<!--          <el-col :span="12">-->
+<!--            <el-form-item label="项目主键" prop="proid" label-width="130px">-->
+<!--              <el-input v-model="checkForm.proid" placeholder="请输入项目主键" />-->
+<!--            </el-form-item>-->
           </el-col>
           <el-col :span="12">
             <el-form-item label="考评时间" prop="evaltime" label-width="130px">
@@ -55,25 +82,25 @@
         </el-row>
         <el-row>
           <el-col :span="12">
-            <el-form-item label="形象进度" prop="progress" label-width="130px">
-              <el-input v-model="checkForm.progress" placeholder="请输入形象进度" />
+            <el-form-item label="项目进度" prop="progress" label-width="130px">
+              <el-input v-model="checkForm.progress" placeholder="请输入项目进度" />
             </el-form-item>
           </el-col>
           <el-col :span="9">
             <el-form-item label="综合得分" prop="checkCode" label-width="130px">
-              <el-input v-model="checkForm.checkCode" placeholder="请输入综合得分" />
+              <el-input v-model="checkForm.checkcode" placeholder="请输入综合得分" />
             </el-form-item>
           </el-col>
         </el-row>
         <el-row>
           <el-col :span="12">
-            <el-form-item label="隐患（条数）" prop="yhNum" label-width="130px">
-              <el-input v-model="checkForm.yhNum" placeholder="请输入隐患条数" />
+            <el-form-item label="隐患（条数）" prop="yhnum" label-width="130px">
+              <el-input v-model="checkForm.yhnum" placeholder="请输入隐患条数" />
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="自评结果" prop="selfRecord" label-width="130px">
-              <el-select v-model="checkForm.selfRecord" placeholder="请选择自评结果">
+            <el-form-item label="自评结果" prop="selfresult" label-width="130px">
+              <el-select v-model="checkForm.selfresult" placeholder="请选择自评结果">
                 <el-option v-for="(selfRecord,index) in selfRecords" :key="index" :label="selfRecord" :value="index"></el-option>
               </el-select>
               <!--              <el-input type="textarea"  v-model="form.selfRecord" placeholder="请输入自评结果" />-->
@@ -82,14 +109,14 @@
         </el-row>
         <el-row>
           <el-col :span="12">
-            <el-form-item label="检查人员" prop="checkUser" label-width="130px">
-              <el-input v-model="checkForm.checkUser" placeholder="请输入检查人员" />
+            <el-form-item label="检查人员" prop="checkuser" label-width="130px">
+              <el-input v-model="checkForm.checkuser" placeholder="请输入检查人员" />
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="检查时间" prop="checkTime" label-width="130px">
+            <el-form-item label="检查时间" prop="checktime" label-width="130px">
               <el-time-picker
-                v-model="checkForm.checkTime"
+                v-model="checkForm.checktime"
                 :picker-options="{
                 selectableRange: '08:30:00 - 20:30:00'
                 }"
@@ -101,17 +128,17 @@
         </el-row>
         <el-row>
           <el-col :span="12">
-            <el-form-item label="整改情况" prop="isRectify" label-width="130px">
-              <el-select v-model="checkForm.isRectify" placeholder="请选择整改情况">
+            <el-form-item label="整改情况" prop="isrectify" label-width="130px">
+              <el-select v-model="checkForm.isrectify" placeholder="请选择整改情况">
                 <el-option v-for="(isRectify,index) in isRectifies" :key="index" :label="isRectify[1]" :value="isRectify[0]"></el-option>
               </el-select>
               <!--              <el-input v-model="form.isRectify" placeholder="请输入整改情况" />-->
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="整改期限" prop="rectifyTime" label-width="130px">
+            <el-form-item label="整改期限" prop="rectifytime" label-width="130px">
               <el-date-picker
-                v-model="checkForm.rectifyTime"
+                v-model="checkForm.rectifytime"
                 type="datetime"
                 placeholder="请选择整改期限">
               </el-date-picker>
@@ -119,30 +146,30 @@
             </el-form-item>
           </el-col>
         </el-row>
-        <el-row>
-          <el-col :span="12">
-            <el-form-item label="奖惩情况" prop="situation" label-width="130px">
-              <el-input v-model="checkForm.situation" placeholder="请输入奖惩情况" />
-            </el-form-item>
-          </el-col>
-        </el-row>
+<!--        <el-row>-->
+<!--          <el-col :span="12">-->
+<!--            <el-form-item label="奖惩情况" prop="situation" label-width="130px">-->
+<!--              <el-input v-model="checkForm.situation" placeholder="请输入奖惩情况" />-->
+<!--            </el-form-item>-->
+<!--          </el-col>-->
+<!--        </el-row>-->
         <el-row>
           <el-col :span="21">
-            <el-form-item label="项目自评意见" prop="selfRecord" label-width="130px">
-              <el-input type="textarea" v-model="checkForm.selfRecord" placeholder="请输入自评意见" />
+            <el-form-item label="项目自评意见" prop="selfrecord" label-width="130px">
+              <el-input type="textarea" v-model="checkForm.selfrecord" placeholder="请输入自评意见" />
             </el-form-item>
           </el-col>
         </el-row>
         <el-row>
           <el-col :span="12">
-            <el-form-item label="项目负责人" prop="selfUser" label-width="130px">
-              <el-input v-model="checkForm.selfUser" placeholder="请输入负责人姓名" />
+            <el-form-item label="项目负责人" prop="selfuser" label-width="130px">
+              <el-input v-model="checkForm.selfuser" placeholder="请输入负责人姓名" />
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="自评时间" prop="selfTime" label-width="130px">
+            <el-form-item label="自评时间" prop="selftime" label-width="130px">
               <el-time-picker
-                v-model="checkForm.selfTime"
+                v-model="checkForm.selftime"
                 :picker-options="{
                 selectableRange: '08:30:00 - 20:30:00'
                 }"
@@ -154,14 +181,13 @@
         </el-row>
         <el-row>
           <el-col :span="14">
-            <el-form-item label="附件_企业盖章页" prop="affixStamp" label-width="160px">
+            <el-form-item label="附件_企业盖章页" prop="affixstamp" label-width="160px">
               <el-upload
                 class="upload-demo"
                 ref="upload"
-                action="https://jsonplaceholder.typicode.com/posts/"
                 :on-preview="handlePreview"
                 :on-remove="handleRemove"
-                :file-list="checkForm.affixStamp"
+                :file-list="checkForm.affixstamp"
                 :auto-upload="false">
                 <el-button slot="trigger" size="small" type="primary">选取文件</el-button>
                 <el-button style="margin-left: 10px;" size="small" type="success" @click="submitUpload">上传到服务器</el-button>
@@ -172,14 +198,13 @@
         </el-row>
         <el-row>
           <el-col :span="14">
-            <el-form-item label="附件_企业机构按期检查" prop="affixOrg" label-width="160px">
+            <el-form-item label="附件_企业机构按期检查" prop="affixorg" label-width="160px">
               <el-upload
                 class="upload-demo"
                 ref="upload"
-                action="https://jsonplaceholder.typicode.com/posts/"
                 :on-preview="handlePreview"
                 :on-remove="handleRemove"
-                :file-list="checkForm.affixOrg"
+                :file-list="checkForm.affixorg"
                 :auto-upload="false">
                 <el-button slot="trigger" size="small" type="primary">选取文件</el-button>
                 <el-button style="margin-left: 10px;" size="small" type="success" @click="submitUpload">上传到服务器</el-button>
@@ -194,22 +219,22 @@
         </el-row>
         <el-row>
           <el-col :span="21">
-            <el-form-item label="检查意见" prop="jsRecord" label-width="130px">
-              <el-input type="textarea" v-model="checkForm.jsRecord" placeholder="请输入检查意见" />
+            <el-form-item label="检查意见" prop="jsrecord" label-width="130px">
+              <el-input type="textarea" v-model="checkForm.jsrecord" placeholder="请输入检查意见" />
             </el-form-item>
           </el-col>
         </el-row>
         <el-row>
 
           <el-col :span="12">
-            <el-form-item label="检查人" prop="jsUser" label-width="130px">
-              <el-input v-model="checkForm.jsUser" placeholder="请输入检查人" />
+            <el-form-item label="检查人" prop="jsuser" label-width="130px">
+              <el-input v-model="checkForm.jsuser" placeholder="请输入检查人" />
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="检查时间" prop="p_content" label-width="130px">
+            <el-form-item label="检查时间" prop="jstime" label-width="130px">
               <el-time-picker
-                v-model="checkForm.jsTime"
+                v-model="checkForm.jstime"
                 :picker-options="{
                 selectableRange: '08:30:00 - 20:30:00'
                 }"
@@ -224,21 +249,21 @@
         </el-row>
         <el-row>
           <el-col :span="21">
-            <el-form-item label="检查意见" prop="p_content" label-width="130px">
-              <el-input type="textarea" v-model="checkForm.jlRecord" placeholder="请输入检查意见" />
+            <el-form-item label="检查意见" prop="jlrecord" label-width="130px">
+              <el-input type="textarea" v-model="checkForm.jlrecord" placeholder="请输入检查意见" />
             </el-form-item>
           </el-col>
         </el-row>
         <el-row>
           <el-col :span="12">
-            <el-form-item label="检查人" prop="jlUser" label-width="130px">
-              <el-input v-model="checkForm.jlUser" placeholder="请输入监理单位检查人" />
+            <el-form-item label="检查人" prop="jluser" label-width="130px">
+              <el-input v-model="checkForm.jluser" placeholder="请输入监理单位检查人" />
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="检查时间" prop="jlTime" label-width="130px">
+            <el-form-item label="检查时间" prop="jltime" label-width="130px">
               <el-time-picker
-                v-model="checkForm.jsTime"
+                v-model="checkForm.jltime"
                 :picker-options="{
                 selectableRange: '08:30:00 - 20:30:00'
                 }"
@@ -256,7 +281,7 @@
 <!--        </el-row>-->
         <el-row>
           <el-form
-            disabled
+            :disabled="true"
             ref="checkForm"
             :rules="checkForm.monthChild"
             :inline="true"
@@ -357,10 +382,16 @@
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
         <el-row>
           <el-col :span="12">
-            <el-form-item label="项目主键" prop="proid" label-width="130px">
-              <el-input v-model="form.proid" placeholder="请输入项目主键" />
+            <el-form-item label="项目进度" prop="progress" label-width="130px">
+              <el-input v-model="form.progress" placeholder="请输入项目进度" />
             </el-form-item>
           </el-col>
+
+<!--          <el-col :span="12">-->
+<!--            <el-form-item label="项目主键" prop="proid" label-width="130px">-->
+<!--              <el-input v-model="form.proid" placeholder="请输入项目主键" />-->
+<!--            </el-form-item>-->
+<!--          </el-col>-->
           <el-col :span="12">
             <el-form-item label="考评时间" prop="evaltime" label-width="130px">
               <el-time-picker
@@ -376,25 +407,25 @@
         </el-row>
         <el-row>
           <el-col :span="12">
-            <el-form-item label="形象进度" prop="progress" label-width="130px">
-              <el-input v-model="form.progress" placeholder="请输入形象进度" />
+            <el-form-item label="奖惩情况" prop="situation" label-width="130px">
+              <el-input v-model="form.situation" placeholder="请输入奖惩情况" />
             </el-form-item>
           </el-col>
           <el-col :span="9">
-            <el-form-item label="综合得分" prop="checkCode" label-width="130px">
-              <el-input v-model="form.checkCode" placeholder="请输入综合得分" />
+            <el-form-item label="综合得分" prop="checkcode" label-width="130px">
+              <el-input v-model="form.checkcode" placeholder="请输入综合得分" />
             </el-form-item>
           </el-col>
         </el-row>
         <el-row>
           <el-col :span="12">
-            <el-form-item label="隐患（条数）" prop="yhNum" label-width="130px">
-              <el-input v-model="form.yhNum" placeholder="请输入隐患条数" />
+            <el-form-item label="隐患（条数）" prop="yhnum" label-width="130px">
+              <el-input v-model="form.yhnum" placeholder="请输入隐患条数" />
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="自评结果" prop="selfRecord" label-width="130px">
-              <el-select v-model="form.selfRecord" placeholder="请选择自评结果">
+            <el-form-item label="自评结果" prop="selfresult" label-width="130px">
+              <el-select v-model="form.selfresult" placeholder="请选择自评结果">
                 <el-option v-for="(selfRecord,index) in selfRecords" :key="index" :label="selfRecord" :value="index"></el-option>
               </el-select>
               <!--              <el-input type="textarea"  v-model="form.selfRecord" placeholder="请输入自评结果" />-->
@@ -403,14 +434,14 @@
         </el-row>
         <el-row>
           <el-col :span="12">
-            <el-form-item label="检查人员" prop="checkUser" label-width="130px">
-              <el-input v-model="form.checkUser" placeholder="请输入检查人员" />
+            <el-form-item label="检查人员" prop="checkuser" label-width="130px">
+              <el-input v-model="form.checkuser" placeholder="请输入检查人员" />
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="检查时间" prop="checkTime" label-width="130px">
+            <el-form-item label="检查时间" prop="checktime" label-width="130px">
               <el-time-picker
-                v-model="form.checkTime"
+                v-model="form.checktime"
                 :picker-options="{
                 selectableRange: '08:30:00 - 20:30:00'
                 }"
@@ -422,17 +453,17 @@
         </el-row>
         <el-row>
           <el-col :span="12">
-            <el-form-item label="整改情况" prop="isRectify" label-width="130px">
-              <el-select v-model="form.isRectify" placeholder="请选择整改情况">
+            <el-form-item label="整改情况" prop="isrectify" label-width="130px">
+              <el-select v-model="form.isrectify" placeholder="请选择整改情况">
                 <el-option v-for="(isRectify,index) in isRectifies" :key="index" :label="isRectify[1]" :value="isRectify[0]"></el-option>
               </el-select>
 <!--              <el-input v-model="form.isRectify" placeholder="请输入整改情况" />-->
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="整改期限" prop="rectifyTime" label-width="130px">
+            <el-form-item label="整改期限" prop="rectifytime" label-width="130px">
               <el-date-picker
-                v-model="form.rectifyTime"
+                v-model="form.rectifytime"
                 type="datetime"
                 placeholder="请选择整改期限">
               </el-date-picker>
@@ -440,30 +471,30 @@
             </el-form-item>
           </el-col>
         </el-row>
-        <el-row>
-          <el-col :span="12">
-            <el-form-item label="奖惩情况" prop="situation" label-width="130px">
-              <el-input v-model="form.situation" placeholder="请输入奖惩情况" />
-            </el-form-item>
-          </el-col>
-        </el-row>
+<!--        <el-row>-->
+<!--          <el-col :span="12">-->
+<!--            <el-form-item label="奖惩情况" prop="situation" label-width="130px">-->
+<!--              <el-input v-model="form.situation" placeholder="请输入奖惩情况" />-->
+<!--            </el-form-item>-->
+<!--          </el-col>-->
+<!--        </el-row>-->
         <el-row>
           <el-col :span="21">
-            <el-form-item label="项目自评意见" prop="selfRecord" label-width="130px">
-              <el-input type="textarea" v-model="form.selfRecord" placeholder="请输入自评意见" />
+            <el-form-item label="项目自评意见" prop="selfrecord" label-width="130px">
+              <el-input type="textarea" v-model="form.selfrecord" placeholder="请输入自评意见" />
             </el-form-item>
           </el-col>
         </el-row>
         <el-row>
           <el-col :span="12">
-            <el-form-item label="项目负责人" prop="selfUser" label-width="130px">
-              <el-input v-model="form.selfUser" placeholder="请输入负责人姓名" />
+            <el-form-item label="项目负责人" prop="selfuser" label-width="130px">
+              <el-input v-model="form.selfuser" placeholder="请输入负责人姓名" />
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="自评时间" prop="selfTime" label-width="130px">
+            <el-form-item label="自评时间" prop="selftime" label-width="130px">
               <el-time-picker
-                v-model="form.selfTime"
+                v-model="form.selftime"
                 :picker-options="{
                 selectableRange: '08:30:00 - 20:30:00'
                 }"
@@ -475,14 +506,13 @@
         </el-row>
         <el-row>
           <el-col :span="14">
-            <el-form-item label="附件_企业盖章页" prop="affixStamp" label-width="160px">
+            <el-form-item label="附件_企业盖章页" prop="affixstamp" label-width="160px">
               <el-upload
                 class="upload-demo"
                 ref="upload"
-                action="https://jsonplaceholder.typicode.com/posts/"
                 :on-preview="handlePreview"
                 :on-remove="handleRemove"
-                :file-list="form.affixStamp"
+                :file-list="form.affixstamp"
                 :auto-upload="false">
                 <el-button slot="trigger" size="small" type="primary">选取文件</el-button>
                 <el-button style="margin-left: 10px;" size="small" type="success" @click="submitUpload">上传到服务器</el-button>
@@ -493,14 +523,13 @@
         </el-row>
         <el-row>
           <el-col :span="14">
-            <el-form-item label="附件_企业机构按期检查" prop="affixOrg" label-width="160px">
+            <el-form-item label="附件_企业机构按期检查" prop="affixorg" label-width="160px">
               <el-upload
                 class="upload-demo"
                 ref="upload"
-                action="https://jsonplaceholder.typicode.com/posts/"
                 :on-preview="handlePreview"
                 :on-remove="handleRemove"
-                :file-list="form.affixOrg"
+                :file-list="form.affixorg"
                 :auto-upload="false">
                 <el-button slot="trigger" size="small" type="primary">选取文件</el-button>
                 <el-button style="margin-left: 10px;" size="small" type="success" @click="submitUpload">上传到服务器</el-button>
@@ -515,22 +544,22 @@
         </el-row>
         <el-row>
           <el-col :span="21">
-            <el-form-item label="检查意见" prop="jsRecord" label-width="130px">
-              <el-input type="textarea" v-model="form.jsRecord" placeholder="请输入检查意见" />
+            <el-form-item label="检查意见" prop="jsrecord" label-width="130px">
+              <el-input type="textarea" v-model="form.jsrecord" placeholder="请输入检查意见" />
             </el-form-item>
           </el-col>
         </el-row>
         <el-row>
 
           <el-col :span="12">
-            <el-form-item label="检查人" prop="jsUser" label-width="130px">
-              <el-input v-model="form.jsUser" placeholder="请输入检查人" />
+            <el-form-item label="检查人" prop="jsuser" label-width="130px">
+              <el-input v-model="form.jsuser" placeholder="请输入检查人" />
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="检查时间" prop="p_content" label-width="130px">
+            <el-form-item label="检查时间" prop="jstime" label-width="130px">
               <el-time-picker
-                v-model="form.jsTime"
+                v-model="form.jstime"
                 :picker-options="{
                 selectableRange: '08:30:00 - 20:30:00'
                 }"
@@ -545,21 +574,21 @@
         </el-row>
         <el-row>
           <el-col :span="21">
-            <el-form-item label="检查意见" prop="p_content" label-width="130px">
-              <el-input type="textarea" v-model="form.jlRecord" placeholder="请输入检查意见" />
+            <el-form-item label="检查意见" prop="jlrecord" label-width="130px">
+              <el-input type="textarea" v-model="form.jlrecord" placeholder="请输入检查意见" />
             </el-form-item>
           </el-col>
         </el-row>
         <el-row>
           <el-col :span="12">
-            <el-form-item label="检查人" prop="jlUser" label-width="130px">
-              <el-input v-model="form.jlUser" placeholder="请输入监理单位检查人" />
+            <el-form-item label="检查人" prop="jluser" label-width="130px">
+              <el-input v-model="form.jluser" placeholder="请输入监理单位检查人" />
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="检查时间" prop="jlTime" label-width="130px">
+            <el-form-item label="检查时间" prop="jltime" label-width="130px">
               <el-time-picker
-                v-model="form.jsTime"
+                v-model="form.jltime"
                 :picker-options="{
                 selectableRange: '08:30:00 - 20:30:00'
                 }"
@@ -672,17 +701,22 @@
         <el-button @click="canceladd">取 消</el-button>
       </div>
     </el-dialog>
-    <el-dialog :visible.sync="dialogVisible">
-      <img width="100%" :src="dialogImageUrl" alt="">
-    </el-dialog>
   </div>
 </template>
 
 <script>
+import {addMonthCheck,getAllCheckMonth,getCheckMonthData,getSafeAdminInfo} from '@/api/qualityControl';
 export default {
   name: "safeRecord",
   data(){
     return{
+
+      // 当前每页数据的条数
+      pageSize:10,
+      // 数据的总条数
+      pageTotal:0,
+      // 翻页功能当前页
+      currentPage: 1,
       // 图片上传的弹出框
       dialogVisible:false,
       dialogImageUrl: '',
@@ -701,25 +735,25 @@ export default {
         proid:null,
         evaltime:'',
         progress:'',
-        checkCode:null,
-        yhNum:null,
-        selfResult:'',
-        checkUser:'',
-        checkTime:'',
-        isRectify:'',
-        rectifyTime:'',
+        checkcode:null,
+        yhnum:null,
+        selfresult:'',
+        checkuser:'',
+        checktime:'',
+        isrectify:'',
+        rectifytime:'',
         situation:'',
-        selfRecord:'',
-        selfUser:'',
-        selfTime:'',
-        affixStamp:'',
-        affixOrg:[],
-        jsRecord:'',
-        jsUser:'',
-        jsTime:'',
-        jlRecord:'',
-        jlUser:'',
-        jlTime:'',
+        selfrecord:'',
+        selfuser:'',
+        selftime:'',
+        affixstamp:'',
+        affixorg:[],
+        jsrecord:'',
+        jsuser:'',
+        jstime:'',
+        jlrecord:'',
+        jluser:'',
+        jltime:'',
         monthChild:[
           {
             diccode: '',
@@ -740,25 +774,25 @@ export default {
         proid:null,
         evaltime:'',
         progress:'',
-        checkCode:null,
-        yhNum:null,
-        selfResult:'',
-        checkUser:'',
-        checkTime:'',
-        isRectify:'',
-        rectifyTime:'',
+        checkcode:null,
+        yhnum:null,
+        selfresult:'',
+        checkuser:'',
+        checktime:'',
+        isrectify:'',
+        rectifytime:'',
         situation:'',
-        selfRecord:'',
-        selfUser:'',
-        selfTime:'',
-        affixStamp:'',
-        affixOrg:[],
-        jsRecord:'',
-        jsUser:'',
-        jsTime:'',
-        jlRecord:'',
-        jlUser:'',
-        jlTime:'',
+        selfrecord:'',
+        selfuser:'',
+        selftime:'',
+        affixstamp:'',
+        affixorg:[],
+        jsrecord:'',
+        jsuser:'',
+        jstime:'',
+        jlrecord:'',
+        jluser:'',
+        jltime:'',
         monthChild:[],
       },
       // 查询参数
@@ -779,39 +813,39 @@ export default {
           { required: true, message: "考评时间不能为空", trigger: "blur" },
         ],
         progress: [
-          { required: true, message: "形象进度不能为空", trigger: "blur" },
+          { required: true, message: "项目进度不能为空", trigger: "blur" },
         ],
-        checkCode: [
+        checkcode: [
           { required: true, message: "综合得分不能为空", trigger: "blur" },
         ],
-        yhNum: [
+        yhnum: [
           { required: true, message: "隐患数目不能为空", trigger: "blur" },
         ],
-        selfResult: [
+        selfresult: [
           { required: true, message: "自评结果不能为空", trigger: "blur" },
         ],
-        checkUser: [
+        checkuser: [
           { required: true, message: "检查人员不能为空", trigger: "blur" },
         ],
-        checkTime: [
+        checktime: [
           { required: true, message: "检查时间不能为空", trigger: "blur" },
         ],
-        isRectify: [
+        isrectify: [
           { required: true, message: "整改情况不能为空", trigger: "blur" },
         ],
-        rectifyTime: [
+        rectifytime: [
           { required: true, message: "整改期限不能为空", trigger: "blur" },
         ],
         situation: [
           { required: true, message: "奖惩情况不能为空", trigger: "blur" },
         ],
-        selfRecord: [
+        selfrecord: [
           { required: true, message: "自评意见不能为空", trigger: "blur" },
         ],
-        selfUser: [
+        selfuser: [
           { required: true, message: "项目负责人不能为空", trigger: "blur" },
         ],
-        selfTime: [
+        selftime: [
           { required: true, message: "自评时间不能为空", trigger: "blur" },
         ],
       },
@@ -821,6 +855,8 @@ export default {
     this.getList()
   },
   methods:{
+    submitUpload(){},
+    handlePreview(){},
     // 月报检查添加一组
     addItem () {
       this.form.monthChild.push({
@@ -839,60 +875,103 @@ export default {
     /** 查询用户列表 */
     getList() {
       this.loading = true
-      var tmplist = [
-        {
-          id:1,
-          progress:"已完成",
-          checkCode:"98",
-          yhNum:"1",
-          selfResult:"优良",
-          checkUser:"张三",
-        },
-        {
-          id:2,
-          progress:"进行中",
-          checkCode:"36",
-          yhNum:"1",
-          selfResult:"合格",
-          checkUser:"李四",
-        },
-        {
-          id:3,
-          progress:"已完成",
-          checkCode:"95",
-          yhNum:"3",
-          selfResult:"优良",
-          checkUser:"李白",
-        },
-        {
-          id:4,
-          progress:"已完成",
-          checkCode:"88",
-          yhNum:"7",
-          selfResult:"合格",
-          checkUser:"李丽",
-        },
-        {
-          id:5,
-          progress:"已完成",
-          checkCode:"100",
-          yhNum:"0",
-          selfResult:"优良",
-          checkUser:"班长",
-        },
-      ]
-      this.userList = tmplist
-      this.total = tmplist.length
+      // 获取所有的月评信息
+      // var total1 = 0
+      // var total2 = 0
+      getAllCheckMonth().then((res) => {
+        this.userList = res.data.rows
+        console.log("所有月评",this.userList)
+        this.pageTotal += res.data.total
+      })
+      // 省安监接口
+      // var prames={
+      //   pageNo:5,
+      //   pageSize:10,
+      //   proid:35051,
+      // }
+      // getSafeAdminInfo(prames).then((res) => {
+      //   pageTotal += res.data.total
+      //   console.log("省安监的数据",res.data.data)
+      // })
+      // console.log(total1)
+      // console.log(total2)
+      // this.pageTotal = total1 + total2
+      console.log("数据条数s",this.pageTotal)
       this.loading = false
     },
     // 新增按钮事件
     addRecord(){
+      //this.reset()
       this.openadd = true
-      // this.reset()
     },
     // 新增按钮的提交
     submitForm(){
+      const prams1 = {
+        proid:12345,
+        evaltime:this.form.evaltime,
+        progress :this.form.progress,
+        checkcode:this.form.checkcode,
+        yhnum:this.form.yhnum,
+        selfresult:this.form.selfresult,
+        checkuser:this.form.checkuser,
+        checktime:this.form.checktime,
+        isrectify:this.form.isrectify,
+        rectifytime:this.form.rectifytime,
+        situation:this.form.situation,
+        selfrecord:this.form.selfrecord,
+        selfuser:this.form.selfuser,
+        selftime:this.form.selftime,
+        affixstamp:this.form.affixstamp,
+        affixorg:this.form.affixorg,
+        jlrecord:this.form.jlrecord,
+        jsuser:this.form.jsuser,
+        jstime:this.form.jstime,
+        jsrecord:this.form.jsrecord,
+        jluser:this.form.jluser,
+        jltime:this.form.jltime,
+        //monthChild:this.form.monthChild,
+      }
+      addMonthCheck(prams1).then((res) => {
+        if(res.data.code === 200){
+          this.$message({
+            message: '表单添加成功！',
+            type: 'success'
+          });
+        }else{
+          this.$message({
+            message: '表单添加失败',
+            type: 'warning'
+          });
+        }
+      })
+      console.log("yuepingzixiang",this.form.monthChild)
+      for(var i=0;i<this.form.monthChild.length;i++){
+        const prams2 = {
+          // pid = row.id
+          diccode:this.form.monthChild[i].diccode,
+          firstCode:this.form.monthChild[i].firstCode,
+          secondCode:this.form.monthChild[i].secondCode,
+          threeCode:this.form.monthChild[i].threeCode,
+          fourCode:this.form.monthChild[i].fourCode,
+          checkCode:this.form.monthChild[i].checkCode,
+        }
+        addCheckMonthChild(prams2).then((res) => {
+          if(res.data.code === 200){
+            this.$message({
+              message: '月报检查记录添加成功！',
+              type: 'success'
+            });
+          }else{
+            this.$message({
+              message: '月报检查记录添加失败',
+              type: 'warning'
+            });
+          }
+        })
+      }
+
       this.openadd = false
+
       // const prams = {
       //   proid:this.form.proid,
       //   evaltime:this.form.evaltime,
@@ -928,26 +1007,45 @@ export default {
     },
     // 查看按钮事件
     handleView(row){
-      this.opencheck = true
-      console.log("row",row.p_name)
-      this.form.p_name = row.p_name
-      this.form.p_unit = row.p_unit
-      this.form.p_time = row.p_time
-      this.form.p_inspector = row.p_inspector
+      console.log("chakan",row)
+      var prams = {
+        id:row.id
+      }
+      getCheckMonthData(prams).then((res) => {
+        console.log("查看接口返回的数据",res.data.data)
+        this.checkForm = res.data.data
 
+      })
+      this.opencheck = true
     },
     // 表单重置
-    reset() {
-      this.form = {
-        p_name: undefined,
-        p_unit: undefined,
-        p_time: undefined,
-        p_inspector: undefined,
-        p_content: undefined,
-        p_url: undefined,
-      };
-      this.resetForm("form");
-    },
+    // reset() {
+    //   form: {
+    //       //proid=null;
+    //       evaltime='';
+    //       progress='';
+    //       checkcode=null;
+    //       yhnum=null;
+    //       selfresult='';
+    //       checkuser='';
+    //       checktime='';
+    //       isrectify='';
+    //       rectifytime='';
+    //       situation='';
+    //       selfrecord='';
+    //       selfuser='';
+    //       selftime='';
+    //       affixstamp='';
+    //       affixorg=[];
+    //       jsrecord='';
+    //       jsuser='';
+    //       jstime='';
+    //       jlrecord='';
+    //       jluser='';
+    //       jltime='';
+    //       monthChild=[];
+    //   }
+    // },
     /** 导出按钮操作 */
     handleExport(){
       const queryParams = this.queryParams
@@ -972,7 +1070,7 @@ export default {
     // 取消按钮
     canceladd() {
       this.openadd = false;
-      // this.reset();
+      //this.reset();
     },
     // 取消按钮
     cancelcheck() {
@@ -1003,6 +1101,16 @@ export default {
       // this.single = selection.length != 1;
       this.multiple = !selection.length;
     },
+    // 更改数据条数
+    handleSizeChange(val) {
+      console.log(`每页 ${val} 条`);
+      this.pageSize = val
+    },
+    // 更改当前页
+    handleCurrentChange(val) {
+      console.log(`当前页: ${val}`);
+      this.currentPage = val
+    }
   },
 
 }
@@ -1024,6 +1132,17 @@ export default {
   font-weight: bold;
   font-size: 16px;
   margin: 10px 0 20px 10px;
+}
+/*翻页*/
+.block{
+  float: right;
+  margin-top: 20px;
+}
+.block >>> .el-pagination__total{
+  color: white;
+}
+.block >>>.el-pagination__jump{
+  color: white;
 }
 </style>
 
