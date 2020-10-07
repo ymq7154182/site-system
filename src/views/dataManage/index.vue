@@ -214,6 +214,7 @@ export default {
   mounted() {
     this.$store.dispatch('changeMsg', '资料管理');
     this.refreshTable();
+    this.constructionSiteId = window.localStorage.getItem('siteId')
     docType().then(response => {
       for(var i=0;i<response.data.rows.length;i++) {
         this.docTypeList.push(response.data.rows[i].name)
