@@ -4,7 +4,6 @@
       <el-steps :active="2" align-center>
         <el-step  :title="item.durationDictName"  v-for="(item, index) in titleList" :key="index" @click.native="gotoOption(item, 'second')">
           <template slot="title">
-
             <div>
               {{item.durationDictName}}
             </div>
