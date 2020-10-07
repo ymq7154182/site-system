@@ -1,7 +1,7 @@
 <template>
   <div>
     <div style="margin-top: 3vh;">
-      <el-steps :active="2" align-center>
+      <el-steps :active="active" align-center class="schedule-item">
         <el-step  :title="item.durationDictName"  v-for="(item, index) in titleList" :key="index" @click.native="gotoOption(item, 'second')">
           <template slot="title">
             <div>
@@ -78,7 +78,7 @@
     <div class="schedule-content">
       <el-row>
         <div class="border-top-left"></div>
-        <div class="box-title">{{title}}</div>
+        <div class="box-title" v-model="title">{{title}}</div>
         <div class="schedule-press">
           <el-steps direction="vertical" :active="1" :space="120">
             <el-step :title="item.duration2DictName" v-for="(item, index) in dataList" :key="index">
@@ -141,6 +141,7 @@
     },
     data() {
       return {
+        active: 0,
         dataList: [], // 点击每一个进度，显示的详细进度条数据
         title: '', // 每一个大的进度的名字
         showRightTime: false, // 是否展示完成时间
@@ -250,6 +251,9 @@
         this.showRightTime = false
       },
       gotoOption (val, num) {
+        let sche = document.querySelector('.schedule-item')
+        console.log('sche:', sche)
+        sche.active = 3
         if (num !== 'init') {
           this.showRightTime = true
           this.id = val.id
@@ -262,10 +266,36 @@
           siteId: this.deptId
         }).then(res => {
           this.titleList = res.data.data
-          this.id = res.data.data[0].id
-          this.title = res.data.data[0].durationDictName
-          this.getTwoSchedules()
-          // console.log(res.data)
+          // this.id = res.data.data[0].id
+          // this.title = res.data.data[0].durationDictName
+
+            for (let i in this.titleList) {
+                if (this.titleList[i].endTime !== null) { // 如果有完成时间，则当前转态变为完成，下一个变成正在进行
+                  this.id = this.titleList[parseInt(i)+1].id
+                  this.title = this.titleList[parseInt(i)+1].durationDictName
+                  this.getTwoSchedules()
+                  this.$nextTick(() => {
+                    let currentNode = document.querySelector('.el-tabs__content .el-tab-pane')
+                    console.log('currentNode:', currentNode)
+                    let steps = currentNode.querySelector('.el-steps')
+                    // console.log('steps', steps)
+                    // console.log(steps[i + 1].querySelector('.el-step__head.is-process'))
+                    let process = steps.querySelector('.el-step .el-step__head.is-process')
+                    let processTitle = steps.querySelector('.el-step .el-step__main .el-step__title.is-process')
+                    process.className = 'el-step__head is-finish'
+                    processTitle.className = 'el-step__title is-finish'
+                    let waitings = steps.querySelectorAll('.el-step .el-step__head.is-wait')
+                    let waitingTitles = steps.querySelectorAll('.el-step .el-step__main .el-step__title.is-wait')
+                    waitings[0].className = 'el-step__head is-process'
+                    waitingTitles[0].className = 'el-step__title is-process'
+                    // that.id = that.titleList[i+1].id
+                    // that.title = that.titleList[i+1].durationDictName
+                    // console.log(that.id, that.title)
+              })
+            }
+              break
+          }
+
         })
       },
       getTwoSchedules () { // 获取所有二级进度
@@ -386,5 +416,12 @@
   .schedule-content .el-step__title {
     font-size: 18px;
     font-weight: bold;
+  }
+   .el-step__head.is-process .is-text {
+    width: 36px;
+    height: 36px;
+    border: 4px solid #3c3c3c;
+    margin-top: -8px;
+     margin-left: -6px;
   }
 </style>
