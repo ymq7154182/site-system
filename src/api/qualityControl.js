@@ -57,11 +57,16 @@ export function addCheckMonthChild (parems) {
   })
 }
 // 新增月评信息
-export function addMonthCheck (parems) {
+export function addMonthCheck(data) {
   return request({
     url: '/system/safe/addMonthCheck',
     method: 'post',
-    params: parems
+    params: data,
+    dataType: 'json',
+    data: JSON.stringify(data),
+    headers: {
+      'content-Type': 'application/json;',
+    }
   })
 }
 // 得到所有月评信息
