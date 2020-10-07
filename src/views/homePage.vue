@@ -192,13 +192,13 @@
               <el-form-item label="名称" :label-width="formLabelWidth">
                 <el-input v-model="form.duration2DictName" autocomplete="off" class="item-defer" :disabled="disabledStr"></el-input>
               </el-form-item>
-              <el-form-item label="描述内容" :label-width="formLabelWidth">
-                <!--                <el-select v-model="form.content" placeholder="请选择活动区域">-->
-                <el-input v-model="form.processData" autocomplete="off" class="item-defer" :disabled="disabledStr"></el-input>
-                <!--                  <el-option label="区域一" value="shanghai"></el-option>-->
-                <!--                  <el-option label="区域二" value="beijing"></el-option>-->
-                <!--                </el-select>-->
-              </el-form-item>
+<!--              <el-form-item label="描述内容" :label-width="formLabelWidth">-->
+<!--                &lt;!&ndash;                <el-select v-model="form.content" placeholder="请选择活动区域">&ndash;&gt;-->
+<!--                <el-input v-model="form.processData" autocomplete="off" class="item-defer" :disabled="disabledStr"></el-input>-->
+<!--                &lt;!&ndash;                  <el-option label="区域一" value="shanghai"></el-option>&ndash;&gt;-->
+<!--                &lt;!&ndash;                  <el-option label="区域二" value="beijing"></el-option>&ndash;&gt;-->
+<!--                &lt;!&ndash;                </el-select>&ndash;&gt;-->
+<!--              </el-form-item>-->
               <el-form-item label="延缓原因" :label-width="formLabelWidth">
                 <!--                <el-input v-model="form.reason" autocomplete="off"></el-input>-->
                 <el-select v-model="form.reason" placeholder="请选择" class="item-defer" :disabled="disabledStr">
@@ -276,7 +276,7 @@
 </template>
 
 <script>
-  import {getDeferReasons, submitDeferInfo, getOneSchedules, getTwoSchedules, finishSmallSchedule} from '@/api/scheduleManage'
+  import {getDeferReasons, getDeferInfo, submitDeferInfo, getOneSchedules, getTwoSchedules, finishSmallSchedule} from '@/api/scheduleManage'
   require('echarts/theme/macarons')
     export default {
         name: "homePage",
@@ -316,7 +316,7 @@
             deferReasons: [], // 滞缓原因列表
             form: {
               id: '',
-              title: '',
+              duration2DictName: '',
               content: '',
               status: '',
               reason: '', // 滞缓原因
@@ -345,9 +345,19 @@
         },
         checkStatus (item) { // 查看滞缓和完成信息
           if (item.status === 3) {
-            this.form = item
-            this.showSlow = true
-            this.disabledStr = true
+            getDeferInfo({
+              scheduleDurationSectionPlanId: item.id
+            }).then(res => {
+              console.log(res.data, item)
+              this.form.principal = res.data.data.principal
+              this.form.duration2DictName = item.duration2DictName
+              this.form.endTime = res.data.data.planTime
+              this.form.reason = res.data.data.delaysDictId
+              this.showSlow = true
+              this.disabledStr = true
+            })
+            // this.formDefer = item
+
           }
         },
         getOneSchedules () { // 获取所有一级进度
@@ -394,6 +404,7 @@
               }
             })
           } else {
+            this.disabledStr = false
             this.form = item
             this.showSlow = true
           }
