@@ -81,7 +81,7 @@
 <!--                <div class="box-title">项目进度</div>-->
                 <span>项目进度</span>
                 <div style="margin-top: 3vh;">
-                  <el-steps :active="2" align-center>
+                  <el-steps :active="1" align-center>
                     <el-step  :title="item.durationDictName"  v-for="(item, index) in titleList" :key="index" @click.native="gotoOption(item)">
                         <template slot="title">
                           <div>
