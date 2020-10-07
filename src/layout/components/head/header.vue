@@ -138,7 +138,7 @@
         gotoPage() {
           // this.textStyle = '项目概览'
 
-          this.$router.push('/home')
+          this.$router.push('/')
           // this.textStyle = this.$store.state.textStyle
 
         },
