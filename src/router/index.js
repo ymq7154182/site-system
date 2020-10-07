@@ -4,7 +4,12 @@ import Layout from '../layout/index'
 
 Vue.use(VueRouter)
 
-const routes = [{
+const routes = [
+  // {
+  //   path:'/',
+  //   redirect:'/home'
+  // },
+  {
   path: '/',
   component: Layout,
   name: 'index',

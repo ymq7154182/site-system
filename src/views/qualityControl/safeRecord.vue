@@ -357,14 +357,15 @@
       </div>
     </el-dialog>
     <!-- 新增对话框 -->
-    <el-dialog title="新增" :visible.sync="openadd" width="960px" append-to-body>
-      <el-form ref="form" :model="form" :rules="rules" label-width="80px">
-        <el-row>
-          <el-col :span="12">
-            <el-form-item label="项目进度" prop="progress" label-width="130px">
-              <el-input v-model="form.progress" placeholder="请输入项目进度" />
-            </el-form-item>
-          </el-col>
+    <el-dialog title="新增" :visible.sync="openadd" width="80%" append-to-body>
+      <div style="overflow-y: scroll; height: 60vh; ">
+        <el-form ref="form" :model="form" :rules="rules" label-width="80px">
+          <el-row>
+            <el-col :span="12">
+              <el-form-item label="项目进度" prop="progress" label-width="130px">
+                <el-input v-model="form.progress" placeholder="请输入项目进度" />
+              </el-form-item>
+            </el-col>
 
 <!--          <el-col :span="12">-->
 <!--            <el-form-item label="项目主键" prop="proid" label-width="130px">-->
@@ -524,150 +525,149 @@
           </el-col>
         </el-row>
         <el-row>
-
-          <el-col :span="12">
-            <el-form-item label="检查人" prop="jsuser" label-width="130px">
-              <el-input v-model="form.jsuser" placeholder="请输入检查人" />
-            </el-form-item>
-          </el-col>
-          <el-col :span="12">
-            <el-form-item label="检查时间" prop="jstime" label-width="130px">
-              <el-date-picker
-                v-model="form.jstime"
-                type="date"
-                placeholder="选择日期">
-              </el-date-picker>
-              </el-date-picker>
-            </el-form-item>
-          </el-col>
-        </el-row>
-        <el-row>
-          <div class="divider">监理单位:</div>
-        </el-row>
-        <el-row>
-          <el-col :span="21">
-            <el-form-item label="检查意见" prop="jlrecord" label-width="130px">
-              <el-input type="textarea" v-model="form.jlrecord" placeholder="请输入检查意见" />
-            </el-form-item>
-          </el-col>
-        </el-row>
-        <el-row>
-          <el-col :span="12">
-            <el-form-item label="检查人" prop="jluser" label-width="130px">
-              <el-input v-model="form.jluser" placeholder="请输入监理单位检查人" />
-            </el-form-item>
-          </el-col>
-          <el-col :span="12">
-            <el-form-item label="检查时间" prop="jltime" label-width="130px">
-              <el-date-picker
-                v-model="form.jltime"
-                type="date"
-                placeholder="选择日期">
-              </el-date-picker>
-            </el-form-item>
-          </el-col>
-        </el-row>
-        <el-row>
-          <div class="divider">月报检查记录:</div>
-        </el-row>
-        <el-row>
-          <el-button @click="addItem" type="primary"  style="width: 200px;margin-bottom: 20px">增加</el-button>
-        </el-row>
-        <el-row>
-          <el-form
-            ref="form"
-            :rules="form.monthChild"
-            :inline="true"
-            :model="form"
-            label-width="80px"
-          >
-            <div v-for="(item, index) in form.monthChild" :key="index" style="border-bottom: dashed 1px #DCDFE6;margin-bottom: 20px">
-              <el-row>
-                <el-col :span="12">
-                  <el-form-item
-                    label-width="130px"
-                    label="diccode"
-                    :prop="'form.monthChild.' + index + '.diccode'"
-                    :rules="{
+            <el-col :span="12">
+              <el-form-item label="检查人" prop="jsuser" label-width="130px">
+                <el-input v-model="form.jsuser" placeholder="请输入检查人" />
+              </el-form-item>
+            </el-col>
+            <el-col :span="12">
+              <el-form-item label="检查时间" prop="jstime" label-width="130px">
+                <el-date-picker
+                  v-model="form.jstime"
+                  type="date"
+                  placeholder="选择日期">
+                </el-date-picker>
+              </el-form-item>
+            </el-col>
+          </el-row>
+          <el-row>
+            <div class="divider">监理单位:</div>
+          </el-row>
+          <el-row>
+            <el-col :span="21">
+              <el-form-item label="检查意见" prop="jlrecord" label-width="130px">
+                <el-input type="textarea" v-model="form.jlrecord" placeholder="请输入检查意见" />
+              </el-form-item>
+            </el-col>
+          </el-row>
+          <el-row>
+            <el-col :span="12">
+              <el-form-item label="检查人" prop="jluser" label-width="130px">
+                <el-input v-model="form.jluser" placeholder="请输入监理单位检查人" />
+              </el-form-item>
+            </el-col>
+            <el-col :span="12">
+              <el-form-item label="检查时间" prop="jltime" label-width="130px">
+                <el-date-picker
+                  v-model="form.jltime"
+                  type="date"
+                  placeholder="选择日期">
+                </el-date-picker>
+              </el-form-item>
+            </el-col>
+          </el-row>
+          <el-row>
+            <div class="divider">月报检查记录:</div>
+          </el-row>
+          <el-row>
+            <el-button @click="addItem" type="primary"  style="width: 200px;margin-bottom: 20px">增加</el-button>
+          </el-row>
+          <el-row>
+            <el-form
+              ref="form"
+              :rules="form.monthChild"
+              :inline="true"
+              :model="form"
+              label-width="80px"
+            >
+              <div v-for="(item, index) in form.monthChild" :key="index" style="border-bottom: dashed 1px #DCDFE6;margin-bottom: 20px">
+                <el-row>
+                  <el-col :span="12">
+                    <el-form-item
+                      label-width="130px"
+                      label="diccode"
+                      :prop="'form.monthChild.' + index + '.diccode'"
+                      :rules="{
                       required: true, message: 'diccode不能为空', trigger: 'blur'
                       }"
-                     >
-                    <el-input v-model="item.diccode"></el-input>
-                  </el-form-item>
-                </el-col>
-                <el-col :span="12">
-                  <el-form-item
-                    label-width="130px"
-                    label="检查项"
-                    :prop="'form.monthChild.' + index + '.firstCode'"
-                    :rules="{required: true, message: '检查项不能为空', trigger: 'blur'}"
                     >
-                    <el-input v-model="item.firstCode"></el-input>
-                  </el-form-item>
-                </el-col>
-              </el-row>
-              <el-row>
-                <el-col :span="12">
-                  <el-form-item
-                    label-width="130px"
-                    label="检查子项"
-                    :prop="'form.monthChild.' + index + '.secondCode'"
-                    :rules="{
+                      <el-input v-model="item.diccode"></el-input>
+                    </el-form-item>
+                  </el-col>
+                  <el-col :span="12">
+                    <el-form-item
+                      label-width="130px"
+                      label="检查项"
+                      :prop="'form.monthChild.' + index + '.firstCode'"
+                      :rules="{required: true, message: '检查项不能为空', trigger: 'blur'}"
+                    >
+                      <el-input v-model="item.firstCode"></el-input>
+                    </el-form-item>
+                  </el-col>
+                </el-row>
+                <el-row>
+                  <el-col :span="12">
+                    <el-form-item
+                      label-width="130px"
+                      label="检查子项"
+                      :prop="'form.monthChild.' + index + '.secondCode'"
+                      :rules="{
               required: true, message: '检查子项不能为空', trigger: 'blur'
               }"
-                  >
-                    <el-input v-model="item.secondCode"></el-input>
-                  </el-form-item>
-                </el-col>
-                <el-col :span="10">
-                  <el-form-item
-                    label-width="130px"
-                    label="检查部位及内容"
-                    :prop="'form.monthChild.' + index + '.threeCode'"
-                    :rules="{
+                    >
+                      <el-input v-model="item.secondCode"></el-input>
+                    </el-form-item>
+                  </el-col>
+                  <el-col :span="10">
+                    <el-form-item
+                      label-width="130px"
+                      label="检查部位及内容"
+                      :prop="'form.monthChild.' + index + '.threeCode'"
+                      :rules="{
               required: true, message: '检查部位及内容不能为空', trigger: 'blur'
               }"
-                  >
-                    <el-input v-model="item.threeCode"></el-input>
-                  </el-form-item>
-                </el-col>
-                <el-col :span="2">
-                  <el-button type="danger" icon="el-icon-delete" circle @click="deleteItem(item, index)" ></el-button>
-                </el-col>
-              </el-row>
-              <el-row>
-                <el-col :span="12">
-                  <el-form-item
-                    label-width="130px"
-                    label="存在的问题"
-                    :prop="'form.monthChild.' + index + '.fourCode'"
-                    :rules="{
+                    >
+                      <el-input v-model="item.threeCode"></el-input>
+                    </el-form-item>
+                  </el-col>
+                  <el-col :span="2">
+                    <el-button type="danger" icon="el-icon-delete" circle @click="deleteItem(item, index)" ></el-button>
+                  </el-col>
+                </el-row>
+                <el-row>
+                  <el-col :span="12">
+                    <el-form-item
+                      label-width="130px"
+                      label="存在的问题"
+                      :prop="'form.monthChild.' + index + '.fourCode'"
+                      :rules="{
               required: true, message: '存在的问题不能为空', trigger: 'blur'
               }"
-                  >
-                    <el-input v-model="item.fourCode"></el-input>
-                  </el-form-item>
-                </el-col>
-                <el-col :span="12">
-                  <el-form-item
-                    label-width="130px"
-                    label="所扣分值"
-                    :prop="'form.monthChild.' + index + '.checkCode'"
-                    :rules="{
+                    >
+                      <el-input v-model="item.fourCode"></el-input>
+                    </el-form-item>
+                  </el-col>
+                  <el-col :span="12">
+                    <el-form-item
+                      label-width="130px"
+                      label="所扣分值"
+                      :prop="'form.monthChild.' + index + '.checkCode'"
+                      :rules="{
               required: true, message: '所扣分值不能为空', trigger: 'blur'
               }"
-                  >
-                    <el-input v-model="item.checkCode"></el-input>
-                  </el-form-item>
-                </el-col>
-              </el-row>
-            </div>
-          </el-form>
-        </el-row>
-      </el-form>
-      <div slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="submitForm">确 定</el-button>
-        <el-button @click="canceladd">取 消</el-button>
+                    >
+                      <el-input v-model="item.checkCode"></el-input>
+                    </el-form-item>
+                  </el-col>
+                </el-row>
+              </div>
+            </el-form>
+          </el-row>
+        </el-form>
+        <div slot="footer" class="dialog-footer" style="float: right; margin-right: 10px; ">
+          <el-button type="primary" @click="submitForm">确 定</el-button>
+          <el-button @click="canceladd">取 消</el-button>
+        </div>
       </div>
     </el-dialog>
   </div>

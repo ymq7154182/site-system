@@ -81,7 +81,7 @@
 <!--                <div class="box-title">项目进度</div>-->
                 <span>项目进度</span>
                 <div style="margin-top: 3vh;">
-                  <el-steps :active="2" align-center>
+                  <el-steps :active="active" align-center>
                     <el-step  :title="item.durationDictName"  v-for="(item, index) in titleList" :key="index" @click.native="gotoOption(item)">
                         <template slot="title">
                           <div>
@@ -192,13 +192,13 @@
               <el-form-item label="名称" :label-width="formLabelWidth">
                 <el-input v-model="form.duration2DictName" autocomplete="off" class="item-defer" :disabled="disabledStr"></el-input>
               </el-form-item>
-              <el-form-item label="描述内容" :label-width="formLabelWidth">
-                <!--                <el-select v-model="form.content" placeholder="请选择活动区域">-->
-                <el-input v-model="form.processData" autocomplete="off" class="item-defer" :disabled="disabledStr"></el-input>
-                <!--                  <el-option label="区域一" value="shanghai"></el-option>-->
-                <!--                  <el-option label="区域二" value="beijing"></el-option>-->
-                <!--                </el-select>-->
-              </el-form-item>
+<!--              <el-form-item label="描述内容" :label-width="formLabelWidth">-->
+<!--                &lt;!&ndash;                <el-select v-model="form.content" placeholder="请选择活动区域">&ndash;&gt;-->
+<!--                <el-input v-model="form.processData" autocomplete="off" class="item-defer" :disabled="disabledStr"></el-input>-->
+<!--                &lt;!&ndash;                  <el-option label="区域一" value="shanghai"></el-option>&ndash;&gt;-->
+<!--                &lt;!&ndash;                  <el-option label="区域二" value="beijing"></el-option>&ndash;&gt;-->
+<!--                &lt;!&ndash;                </el-select>&ndash;&gt;-->
+<!--              </el-form-item>-->
               <el-form-item label="延缓原因" :label-width="formLabelWidth">
                 <!--                <el-input v-model="form.reason" autocomplete="off"></el-input>-->
                 <el-select v-model="form.reason" placeholder="请选择" class="item-defer" :disabled="disabledStr">
@@ -276,7 +276,7 @@
 </template>
 
 <script>
-  import {getDeferReasons, submitDeferInfo, getOneSchedules, getTwoSchedules, finishSmallSchedule} from '@/api/scheduleManage'
+  import {getDeferReasons, getDeferInfo, submitDeferInfo, getOneSchedules, getTwoSchedules, finishSmallSchedule} from '@/api/scheduleManage'
   require('echarts/theme/macarons')
     export default {
         name: "homePage",
@@ -293,6 +293,7 @@
         this.chart22Res()
         this.inchart21()
         this.chart21Res()
+        this.getUrl()
       },
       data(){
           return{
@@ -313,9 +314,10 @@
             formLabelWidth: '110px',
             option: '', // 完成还是迟缓
             deferReasons: [], // 滞缓原因列表
+            active: 0,
             form: {
               id: '',
-              title: '',
+              duration2DictName: '',
               content: '',
               status: '',
               reason: '', // 滞缓原因
@@ -344,20 +346,67 @@
         },
         checkStatus (item) { // 查看滞缓和完成信息
           if (item.status === 3) {
-            this.form = item
-            this.showSlow = true
-            this.disabledStr = true
+            getDeferInfo({
+              scheduleDurationSectionPlanId: item.id
+            }).then(res => {
+              console.log(res.data, item)
+              this.form.principal = res.data.data.principal
+              this.form.duration2DictName = item.duration2DictName
+              this.form.endTime = res.data.data.planTime
+              this.form.reason = res.data.data.delaysDictId
+              this.showSlow = true
+              this.disabledStr = true
+            })
+            // this.formDefer = item
+
           }
         },
+        // getOneSchedules () { // 获取所有一级进度
+        //   getOneSchedules({
+        //     siteId: this.deptId
+        //   }).then(res => {
+        //     this.titleList = res.data.data
+        //     this.id = res.data.data[0].id
+        //     this.title = res.data.data[0].durationDictName
+        //     this.endTime = res.data.data[0].endTime
+        //     console.log(res.data)
+        //   })
+        // },
         getOneSchedules () { // 获取所有一级进度
           getOneSchedules({
             siteId: this.deptId
           }).then(res => {
             this.titleList = res.data.data
-            this.id = res.data.data[0].id
-            this.title = res.data.data[0].durationDictName
-            this.endTime = res.data.data[0].endTime
-            console.log(res.data)
+            // this.id = res.data.data[0].id
+            // this.title = res.data.data[0].durationDictName
+
+            for (let i in this.titleList) {
+              if (this.titleList[i].endTime !== null) { // 如果有完成时间，则当前转态变为完成，下一个变成正在进行
+                this.id = this.titleList[parseInt(i)+1].id
+                this.title = this.titleList[parseInt(i)+1].durationDictName
+                // this.getTwoSchedules()
+                this.$nextTick(() => {
+                  // let currentNode = document.querySelector('.el-tabs__content .el-tab-pane')
+                  // console.log('currentNode:', currentNode)
+                  let steps = document.querySelector('.el-steps')
+                  console.log('steps', steps)
+                  // console.log(steps[i + 1].querySelector('.el-step__head.is-process'))
+                  let process = steps.querySelector('.el-step .el-step__head.is-process')
+                  let processTitle = steps.querySelector('.el-step .el-step__main .el-step__title.is-process')
+                  process.className = 'el-step__head is-finish'
+                  processTitle.className = 'el-step__title is-finish'
+                  let waitings = steps.querySelectorAll('.el-step .el-step__head.is-wait')
+                  let waitingTitles = steps.querySelectorAll('.el-step .el-step__main .el-step__title.is-wait')
+                  waitings[0].className = 'el-step__head is-process'
+                  waitingTitles[0].className = 'el-step__title is-process'
+                  // that.id = that.titleList[i+1].id
+                  // that.title = that.titleList[i+1].durationDictName
+                  // console.log(that.id, that.title)
+                })
+              }
+              // break
+            }
+
           })
         },
         getTwoSchedules () { // 获取所有二级进度
@@ -393,6 +442,7 @@
               }
             })
           } else {
+            this.disabledStr = false
             this.form = item
             this.showSlow = true
           }
@@ -1048,6 +1098,15 @@
             },100)
           })
         },
+        getUrl() {
+          // var url = ''
+          // url = window.location.href
+          var str = window.location.search
+          var siteId = str.split('=')[1]
+          localStorage.setItem('siteId', siteId)
+          // console.log(url)
+          // console.log(siteId)
+        }
 
       }
     }
