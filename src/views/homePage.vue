@@ -293,6 +293,7 @@
         this.chart22Res()
         this.inchart21()
         this.chart21Res()
+        this.getUrl()
       },
       data(){
           return{
@@ -1048,6 +1049,15 @@
             },100)
           })
         },
+        getUrl() {
+          // var url = ''
+          // url = window.location.href
+          var str = window.location.search
+          var siteId = str.split('=')[1]
+          localStorage.setItem('siteId', siteId)
+          // console.log(url)
+          // console.log(siteId)
+        }
 
       }
     }
