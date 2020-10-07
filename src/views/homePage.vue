@@ -81,7 +81,7 @@
 <!--                <div class="box-title">项目进度</div>-->
                 <span>项目进度</span>
                 <div style="margin-top: 3vh;">
-                  <el-steps :active="1" align-center>
+                  <el-steps :active="active" align-center>
                     <el-step  :title="item.durationDictName"  v-for="(item, index) in titleList" :key="index" @click.native="gotoOption(item)">
                         <template slot="title">
                           <div>
@@ -314,6 +314,7 @@
             formLabelWidth: '110px',
             option: '', // 完成还是迟缓
             deferReasons: [], // 滞缓原因列表
+            active: 0,
             form: {
               id: '',
               duration2DictName: '',
@@ -360,15 +361,52 @@
 
           }
         },
+        // getOneSchedules () { // 获取所有一级进度
+        //   getOneSchedules({
+        //     siteId: this.deptId
+        //   }).then(res => {
+        //     this.titleList = res.data.data
+        //     this.id = res.data.data[0].id
+        //     this.title = res.data.data[0].durationDictName
+        //     this.endTime = res.data.data[0].endTime
+        //     console.log(res.data)
+        //   })
+        // },
         getOneSchedules () { // 获取所有一级进度
           getOneSchedules({
             siteId: this.deptId
           }).then(res => {
             this.titleList = res.data.data
-            this.id = res.data.data[0].id
-            this.title = res.data.data[0].durationDictName
-            this.endTime = res.data.data[0].endTime
-            console.log(res.data)
+            // this.id = res.data.data[0].id
+            // this.title = res.data.data[0].durationDictName
+
+            for (let i in this.titleList) {
+              if (this.titleList[i].endTime !== null) { // 如果有完成时间，则当前转态变为完成，下一个变成正在进行
+                this.id = this.titleList[parseInt(i)+1].id
+                this.title = this.titleList[parseInt(i)+1].durationDictName
+                // this.getTwoSchedules()
+                this.$nextTick(() => {
+                  // let currentNode = document.querySelector('.el-tabs__content .el-tab-pane')
+                  // console.log('currentNode:', currentNode)
+                  let steps = document.querySelector('.el-steps')
+                  console.log('steps', steps)
+                  // console.log(steps[i + 1].querySelector('.el-step__head.is-process'))
+                  let process = steps.querySelector('.el-step .el-step__head.is-process')
+                  let processTitle = steps.querySelector('.el-step .el-step__main .el-step__title.is-process')
+                  process.className = 'el-step__head is-finish'
+                  processTitle.className = 'el-step__title is-finish'
+                  let waitings = steps.querySelectorAll('.el-step .el-step__head.is-wait')
+                  let waitingTitles = steps.querySelectorAll('.el-step .el-step__main .el-step__title.is-wait')
+                  waitings[0].className = 'el-step__head is-process'
+                  waitingTitles[0].className = 'el-step__title is-process'
+                  // that.id = that.titleList[i+1].id
+                  // that.title = that.titleList[i+1].durationDictName
+                  // console.log(that.id, that.title)
+                })
+              }
+              // break
+            }
+
           })
         },
         getTwoSchedules () { // 获取所有二级进度

@@ -303,7 +303,7 @@
                     // console.log(that.id, that.title)
               })
             }
-              break
+              // break
           }
 
         })
@@ -322,8 +322,12 @@
             scheduleDurationSectionPlanId: item.id
           }).then(res => {
             if (res.data.code === 200) {
+              console.log('完成按钮', item)
               // console.log('状态为完成')
               this.getTwoSchedules()
+              if (item.scheduleEnd === 1) { // 表示是最后一个小进度
+                this.getOneSchedules()
+              }
             }
           })
         } else {
