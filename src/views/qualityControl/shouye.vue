@@ -11,6 +11,7 @@
                     <span>安全检查</span>
                   </div>
                   <div id="mychart1"></div>
+                  <div class="saftNum">总数：{{sumNum}}件</div>
                 </div>
               </el-col>
               <el-col :span="12">
@@ -122,10 +123,53 @@
 
 <script>
   import echarts from 'echarts';
+  import {getSafetyRecord,getDanger,getRectification,getSafetyCheck,getProblem,getSafetyTrouble} from '@/api/qualityControl';
     export default {
         name: "index",
       data() {
         return {
+          // 安全检查的总数目
+          sumNum:0,
+          // 新增问题数目
+          newProblem:[],
+          // 消除问题数目
+          delProblem:[],
+          // 现存问题数目
+          curProblem:[],
+          // 问题趋势分析的x轴
+          progressXData:[],
+          // 安全隐患统计
+          innerData:[],
+          outerData:[],
+          // innerData:[
+          //         {value:335,unit:'次', name:'易燃物乱摆放',},
+          //         {value:679,unit:'次', name:'未正确佩戴安全帽'},
+          //         {value:1548,unit:'次', name:'基坑支护安全'}
+          //          ],
+          // outerData:[
+          //         {value:310,unit:'次', name:'模板工程安全'},
+          //         {value:234, unit:'次',name:'施工用电'},
+          //         {value:135, unit:'次',name:'物料提升机'},
+          //         ],
+          // 整改情况
+          //横坐标（年份）
+          changeYear:[],
+          // 未整改
+          noChangeData:[],
+          // 总数
+          allData:[],
+          // 安全隐患的key
+          safeTroubleKey:[],
+          // 安全隐患的Value
+          safeTroubleValue:[],
+          // 问题趋势分析的年份
+          trendData:[],
+          // 安全检查数据
+          checkValue:[],
+          checkKey:[],
+          // 重大危险源的标签
+          dangerTitle:[],
+          dangerData:[],
           loading: true,
           myChart1: '',
           myChart12: '',
@@ -151,14 +195,14 @@
             header: ['安全事件', '记录时间', '安全类型', '处理情况'],
             headerHeight: 45,
             data: [
-              ['设备安全检查', '2019-10-13', '1号塔机检测', '<span style="color: #67c23a; ">通过</span>'],
-              ['人员安全检查', '2019-10-13', '员工未佩戴安全帽', '<span style="color: #f56c6c; ">整改</span>'],
-              ['用电安全检查', '2020-10-13', '用电规范', '<span style="color: #67c23a; ">通过</span>'],
-              ['设备安全检查', '2020-01-13', '2号塔机检测', '<span style="color: #e6a23c; ">警告</span>'],
-              ['人员安全检查', '2019-01-10', '佩戴安全带作业', '<span style="color: #67c23a; ">通过</span>'],
-              ['消防检查', '2019-12-30', '灭火器材配备不合理', '<span style="color: #f56c6c; ">整改</span>'],
-              ['施工现场标牌', '2020-01-15', '安全标语不醒目', '<span style="color: #f56c6c; ">整改</span>'],
-              ['基坑支护', '2020-09-07', '防护措施不符合要求', '<span style="color: #e6a23c; ">警告</span>'],
+              // ['设备安全检查', '2019-10-13', '1号塔机检测', '<span style="color: #67c23a; ">通过</span>'],
+              // ['人员安全检查', '2019-10-13', '员工未佩戴安全帽', '<span style="color: #f56c6c; ">整改</span>'],
+              // ['用电安全检查', '2020-10-13', '用电规范', '<span style="color: #67c23a; ">通过</span>'],
+              // ['设备安全检查', '2020-01-13', '2号塔机检测', '<span style="color: #e6a23c; ">警告</span>'],
+              // ['人员安全检查', '2019-01-10', '佩戴安全带作业', '<span style="color: #67c23a; ">通过</span>'],
+              // ['消防检查', '2019-12-30', '灭火器材配备不合理', '<span style="color: #f56c6c; ">整改</span>'],
+              // ['施工现场标牌', '2020-01-15', '安全标语不醒目', '<span style="color: #f56c6c; ">整改</span>'],
+              // ['基坑支护', '2020-09-07', '防护措施不符合要求', '<span style="color: #e6a23c; ">警告</span>'],
             ],
             rowNum: 7,
             align: ['center', 'center', 'center', 'center', 'center'],
@@ -168,6 +212,12 @@
         }
       },
       mounted() {
+        this.getProblem()
+        this.getSafetyTrouble()
+        this.getSafetyRecord()
+        this.getDanger()
+        this.getRectification()
+        this.getSafetyCheck()
           var _this = this
         this.$store.dispatch('changeMsg', '安全管理')
         setTimeout(() => {
@@ -225,10 +275,9 @@
         this.chart13Res()
         this.chart32Res()
 
-
       },
       methods: {
-          inchart1() {
+        inchart1() {
             this.myChart1 = this.$echarts.init(document.getElementById('mychart1'));
             var num1 = 45;
             var num2 = 70;
@@ -250,7 +299,7 @@
                   textAlign: 'center',
                 },
               },{
-                text: '130',
+                text: this.checkValue[0],
                 left: '14%',
                 top: '40%',
                 textAlign: 'center',
@@ -261,7 +310,7 @@
                   textAlign: 'center',
                 },
               }, {
-                text: '累计检查',
+                text: this.checkKey[0],
                 left: '14%',
                 top: '50%',
                 textAlign: 'center',
@@ -272,7 +321,7 @@
                   textAlign: 'center',
                 },
               },{
-                text: '45',
+                text: this.checkValue[1],
                 left: '37%',
                 top: '40%',
                 textAlign: 'center',
@@ -283,7 +332,7 @@
                   textAlign: 'center',
                 },
               }, {
-                text: '警告',
+                text: this.checkKey[1],
                 left: '37%',
                 top: '50%',
                 textAlign: 'center',
@@ -294,7 +343,7 @@
                   textAlign: 'center',
                 },
               },{
-                text: '70',
+                text: this.checkValue[2],
                 left: '61.5%',
                 top: '40%',
                 textAlign: 'center',
@@ -305,7 +354,7 @@
                   textAlign: 'center',
                 },
               },{
-                text: '整改',
+                text: this.checkKey[2],
                 left: '61.5%',
                 top: '50%',
                 textAlign: 'center',
@@ -316,7 +365,7 @@
                   textAlign: 'center',
                 },
               },{
-                text: '15',
+                text: this.checkValue[3],
                 left: '84.5%',
                 top: '40%',
                 textAlign: 'center',
@@ -327,7 +376,7 @@
                   textAlign: 'center',
                 },
               },{
-                text: '通过',
+                text: this.checkKey[3],
                 left: '84.5%',
                 top: '50%',
                 textAlign: 'center',
@@ -1591,17 +1640,8 @@
           let outerFontColor = '#666666';
           let scale = 1;
           let echartData = {
-            inner: [
-              {value:335,unit:'次', name:'易燃物乱摆放', selected:true,
-              },
-              {value:679,unit:'次', name:'未正确佩戴安全帽'},
-              {value:1548,unit:'次', name:'基坑支护安全'}
-            ],
-            outer: [
-              {value:310,unit:'次', name:'模板工程安全'},
-              {value:234, unit:'次',name:'施工用电'},
-              {value:135, unit:'次',name:'物料提升机'},
-            ]
+            inner: this.innerData,
+            outer: this.outerData,
           }
 
           let legend1 = echartData.inner.map(v => v.name);
@@ -1635,6 +1675,7 @@
                 type:'pie',
                 selectedMode: 'single',
                 radius: [0, '40%'],
+                center:["40%","50%"],
                 label: {
                   normal: {
                     position: 'inner'
@@ -1652,6 +1693,7 @@
                 name:'安全隐患统计',
                 type:'pie',
                 radius: ['60%', '80%'],
+                center:["40%","50%"],
                 data:echartData.outer,
                 // label: {
                 //   normal: {
@@ -1681,14 +1723,10 @@
           this.myChart12 = this.$echarts.init(document.getElementById('mychart12'))
           var category = [];
           var dottedBase = [];
-          var lineData = [192,128,145,148,118
-            ,197,167,115,144,115
-            ,161,177,121,160,138
-            ,177,168];
-          var barData = [46,50,55,65,75
-            ,85,99,12,14,21
-            ,232,244,25,33,35
-            ,45,59];
+          var lineData = this.allData;
+          var barData = this.noChangeData;
+          // var lineData = [12,9];
+          // var barData = [1,2];
           var rateData = [];
 
           for (var i = 0; i < 17; i++) {
@@ -1722,7 +1760,7 @@
               }
             },
             legend: {
-              data: ['已整改', '未整改','总数',],
+              data: ['整改率', '未整改','总数',],
               textStyle: {
                 color: '#B4B4B4'
               },
@@ -1734,7 +1772,7 @@
               y:'22%',
             },
             xAxis: {
-              data: category,
+              data: this.changeYear,
               axisLine: {
                 lineStyle: {
                   color: '#B4B4B4'
@@ -1754,7 +1792,7 @@
               },
 
               axisLabel:{
-                formatter:'{value} 人',
+                formatter:'{value} 个',
               }
             },
               {
@@ -1771,7 +1809,7 @@
               }],
 
             series: [{
-              name: '总数',
+              name: '整改率',
               type: 'line',
               smooth: true,
               showAllSymbol: true,
@@ -1786,7 +1824,7 @@
             },
 
               {
-                name: '整改率',
+                name: '未整改',
                 type: 'bar',
                 barWidth: 10,
                 itemStyle: {
@@ -1805,7 +1843,7 @@
               },
 
               {
-                name: '未整改',
+                name: '总数',
                 type: 'bar',
                 barGap: '-100%',
                 barWidth: 10,
@@ -2092,7 +2130,8 @@
           this.myChart24 = this.$echarts.init(document.getElementById('mychart24'))
           var option = {
             // backgroundColor:"#0B1837",
-            color: ["#EAEA26", "#906BF9", "#FE5656", "#01E17E", "#3DD1F9", "#FFAD05"],
+            color: ["#FC9D9A","#F9CDAD","#C8C8A9","#dc69aa","#2ec7c9","#b6a2de","#5ab1ef","#ffb980","#d87a80","#07a2a4","#9a7fd1","#588dd5","#f5994e","#c05050","#59678c","#c9ab00","#7eb00a",
+              "#8d98b3","#FFEA01","#B8D07C","#fca4bb","#6f5553","#c14089",],
             // title: {
             //     text: '网络/安全设备',
             //     left: '60',
@@ -2130,7 +2169,8 @@
                 fontSize: 12,
                 fontWeight: 0
               },
-              data: ['火灾', '触电', '其他', '设备倾覆', '结构坍塌', '高空坠物']
+              data:this.dangerTitle
+              // data: ['火灾', '触电', '其他', '设备倾覆', '结构坍塌', '高空坠物']
             },
             polar: {},
             angleAxis: {
@@ -2258,31 +2298,33 @@
                   show: false
                 }
               },
-              data: [{
-                value: 10,
-                name: '火灾'
-              },
-                {
-                  value: 5,
-                  name: '触电'
-                },
-                {
-                  value: 15,
-                  name: '其他'
-                },
-                {
-                  value: 25,
-                  name: '设备倾覆'
-                },
-                {
-                  value: 20,
-                  name: '结构坍塌'
-                },
-                {
-                  value: 35,
-                  name: '高空坠物'
-                }
-              ]
+              data:this.dangerData
+              //   [
+              //   {
+              //   value: 10,
+              //   name: '火灾'
+              // },
+              //   {
+              //     value: 5,
+              //     name: '触电'
+              //   },
+              //   {
+              //     value: 15,
+              //     name: '其他'
+              //   },
+              //   {
+              //     value: 25,
+              //     name: '设备倾覆'
+              //   },
+              //   {
+              //     value: 20,
+              //     name: '结构坍塌'
+              //   },
+              //   {
+              //     value: 35,
+              //     name: '高空坠物'
+              //   }
+              // ]
             }, ]
           }
           this.myChart24.setOption(option)
@@ -2347,8 +2389,8 @@
                 show: false
               },
               boundaryGap: false,
-              data: ["2020-06-21","2020-06-22","2020-06-23","2020-06-24","2020-06-25","2020-06-26","2020-06-27"]//this.$moment(data.times).format("HH-mm") ,
-
+              //data: ["2020-06-21","2020-06-22","2020-06-23","2020-06-24","2020-06-25","2020-06-26","2020-06-27"]//this.$moment(data.times).format("HH-mm") ,
+              data:this.progressXData
             }],
 
             yAxis: [{
@@ -2416,7 +2458,8 @@
                     ], false),
                   }
                 },
-                data: [4,7,5,4,3,5,8]//data.values
+                //data: [4,7,5,4,3,5,8]//data.values
+                 data:this.newProblem
               },
               {
                 name:'消除问题数',
@@ -2455,7 +2498,8 @@
                     ], false),
                   }
                 },
-                data: [3,5,4,2,1,7,6]//data.values
+                //data: [3,5,4,2,1,7,6]//data.values
+                data:this.delProblem
               },
               {
                 name:'现存问题数',
@@ -2494,7 +2538,8 @@
                     ], false),
                   }
                 },
-                data: [5,2,3,1,8,3,4]//data.values
+                //data: [5,2,3,1,8,3,4]//data.values
+                data:this.curProblem
               },
             ]
           }
@@ -4153,7 +4198,154 @@
         stopTimer() {
           clearInterval(this.timer);
           // xzTimer = null;
-        }
+        },
+        // 获取安全检查记录
+        getSafetyRecord(){
+          const prames = {
+          }
+          getSafetyRecord(prames).then((res) => {
+            //console.log("后端传回监督记录",res.data.data)
+
+            var data2 = []
+            for(var i = 0 ;i < res.data.data.length;i++ ){
+              var data1 = []
+              data1.push(res.data.data[i].checkTypeOffspring)
+              data1.push(res.data.data[i].startTime)
+              data1.push(res.data.data[i].checkType)
+              if(res.data.data[i].processStatus === 1){
+                data1.push("未处理")
+              } else if (res.data.data[i].processStatus === 2) {
+                data1.push("处理中")
+              } else if (res.data.data[i].processStatus === 3) {
+                data1.push("已完成")
+              } else if (res.data.data[i].processStatus === 4) {
+                data1.push("逾期")
+              }
+              data2.push(data1)
+
+            }
+            //console.log("data2",data2)
+            this.configTable = {
+              header: ['安全事件', '记录时间', '安全类型', '处理情况'],
+              headerHeight: 45,
+              data: data2,
+              rowNum: 7,
+              align: ['center', 'center', 'center', 'center', 'center'],
+              headerBGC: '',
+              evenRowBGC: ''
+            }
+          })
+        },
+        // 重大危险源信息
+        getDanger (){
+          const prames = {
+          }
+          getDanger(prames).then((res) => {
+            let dangerArr = res.data.data.map(item => {
+              return{
+                name:item.danger,
+                value:item.count,
+              }
+            })
+
+             for(var i=0;i<dangerArr.length;i++) {
+               if (dangerArr[i].name === 0) {
+                 dangerArr[i].name = "非重大危险源"
+               } else if (dangerArr[i].name === 1) {
+                 dangerArr[i].name = "重大危险源"
+               }
+               this.dangerTitle.push(dangerArr[i].name)
+             }
+            this.dangerData = dangerArr
+            this.inchart24()
+          })
+
+        },
+        // 获取整改信息
+        getRectification (){
+          getRectification ().then((res) => {
+            for(var key in res.data.data){
+              // console.log("key",key)
+              this.changeYear.push(key)
+              // console.log("value",res.data.data[key])
+              this.noChangeData.push(res.data.data[key].unRectification)
+              this.allData.push(res.data.data[key].rectificationSum)
+            }
+            this.noChangeData = Object.values(this.noChangeData)
+            this.allData = Object.values(this.allData)
+            // console.log("allData",this.allData)
+            // console.log("noChangeData",this.noChangeData)
+            this.inchart12()
+          })
+
+        },
+        // 获取安全检查记录信息
+        getSafetyCheck (){
+          getSafetyCheck ().then((res) => {
+            //console.log(res.data.data[0].key)
+            this.sumNum = res.data.data.length
+            for(var i=0;i<res.data.data.length;i++) {
+              if(res.data.data[i].key === 1){
+                this.checkKey.push("未处理")
+              } else if (res.data.data[i].key === 2) {
+                this.checkKey.push("处理中")
+              } else if (res.data.data[i].key === 3) {
+                this.checkKey.push("已完成")
+              } else if (res.data.data[i].key === 4) {
+                this.checkKey.push("逾期")
+              }
+              this.checkValue.push(res.data.data[i].value)
+            }
+            //console.log("安全检查",this.checkData)
+            this.inchart1()
+          })
+        },
+        // 获取问题趋势接口
+        getProblem (){
+
+          getProblem ().then((res) => {
+            //console.log("趋势分析",res.data.data)
+            if(res.data.data) {
+              for(var key in res.data.data){
+                this.progressXData.push(key)
+                this.newProblem.push(res.data.data[key].newProblem)
+                this.delProblem.push(res.data.data[key].delProblem)
+                this.curProblem.push(res.data.data[key].curProblem)
+
+              }
+              // console.log("key",this.progressXData)
+              // console.log("newProblem",this.newProblem)
+              // console.log("delProblem",this.delProblem)
+              // console.log("curProblem",this.curProblem)
+            }
+            this.inchart32()
+          })
+        },
+        // 获取安全隐患各个类型的数目
+        getSafetyTrouble (){
+          getSafetyTrouble ().then((res) => {
+            //console.log("安全隐患统计")
+            // {value:335,unit:'次', name:'易燃物乱摆放',},
+             var Arr= res.data.data.map(item =>{
+              return{
+                value:item.value,
+                unit:'次',
+                name:item.key
+              }
+            })
+            //console.log("Arr",Arr)
+            for(var i=0;i<Arr.length;i++){
+              if(i<Arr.length/2){
+                this.innerData.push(Arr[i])
+              }else{
+                this.outerData.push(Arr[i])
+              }
+            }
+            // console.log(this.innerData)
+            // console.log(this.outerData)
+            this.inchart13()
+          })
+        },
       },
       destroyed() {
         clearInterval(this.timer);
@@ -4309,5 +4501,14 @@
     background-image: url("../../assets/border/right-top.png");
     background-size: 100% 100%;
     width: 100%;
+  }
+  .saftNum{
+    color: white;
+    font-size: 16px;
+    font-weight: 700;
+    position: absolute;
+    left: 44%;
+    bottom: 10px;
+    letter-spacing: 2px;
   }
 </style>
