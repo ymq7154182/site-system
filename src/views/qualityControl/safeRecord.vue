@@ -57,303 +57,307 @@
       </el-col>
     </el-row>
     <!-- 查看对话框 -->
-    <el-dialog title="查看" :visible.sync="opencheck" width="960px" append-to-body>
-      <el-form ref="checkForm" :model="checkForm"  label-width="80px" :disabled="true">
-        <el-row>
-          <el-col :span="12">
-            <el-form-item label="奖惩情况" prop="situation" label-width="130px">
-              <el-input v-model="checkForm.situation" placeholder="请输入奖惩情况" />
-            </el-form-item>
-          </el-col>
-<!--          <el-col :span="12">-->
-<!--            <el-form-item label="项目主键" prop="proid" label-width="130px">-->
-<!--              <el-input v-model="checkForm.proid" placeholder="请输入项目主键" />-->
-<!--            </el-form-item>-->
-          </el-col>
-          <el-col :span="12">
-            <el-form-item label="考评时间" prop="evaltime" label-width="130px">
-              <el-date-picker
-                v-model="checkForm.evaltime"
-                type="date"
-                placeholder="选择日期">
-              </el-date-picker>
+    <el-dialog title="查看" :visible.sync="opencheck" width="80%" append-to-body>
+      <div style="overflow-y: scroll; height: 60vh; ">
+        <el-form ref="checkForm" :model="checkForm"  label-width="80px" :disabled="true">
+          <el-row>
+            <el-col :span="12">
+              <el-form-item label="奖惩情况" prop="situation" label-width="130px">
+                <el-input v-model="checkForm.situation" placeholder="请输入奖惩情况" />
+              </el-form-item>
+            </el-col>
+            <!--          <el-col :span="12">-->
+            <!--            <el-form-item label="项目主键" prop="proid" label-width="130px">-->
+            <!--              <el-input v-model="checkForm.proid" placeholder="请输入项目主键" />-->
+            <!--            </el-form-item>-->
+            <!--          </el-col>-->
+            <el-col :span="12">
+              <el-form-item label="考评时间" prop="evaltime" label-width="130px">
+                <el-date-picker
+                  v-model="checkForm.evaltime"
+                  type="date"
+                  placeholder="选择日期">
+                </el-date-picker>
 
-              <!--              <el-input v-model="form.evaltime" placeholder="请输入考评时间" />-->
-            </el-form-item>
-          </el-col>
-        </el-row>
-        <el-row>
-          <el-col :span="12">
-            <el-form-item label="项目进度" prop="progress" label-width="130px">
-              <el-input v-model="checkForm.progress" placeholder="请输入项目进度" />
-            </el-form-item>
-          </el-col>
-          <el-col :span="9">
-            <el-form-item label="综合得分" prop="checkCode" label-width="130px">
-              <el-input v-model="checkForm.checkCode" placeholder="请输入综合得分" />
-            </el-form-item>
-          </el-col>
-        </el-row>
-        <el-row>
-          <el-col :span="12">
-            <el-form-item label="隐患（条数）" prop="yhNum" label-width="130px">
-              <el-input v-model="checkForm.yhNum" placeholder="请输入隐患条数" />
-            </el-form-item>
-          </el-col>
-          <el-col :span="12">
-            <el-form-item label="自评结果" prop="selfResult" label-width="130px">
-              <el-select v-model="checkForm.selfResult" placeholder="请选择自评结果">
-                <el-option v-for="(selfRecord,index) in selfRecords" :key="index" :label="selfRecord" :value="index"></el-option>
-              </el-select>
-              <!--              <el-input type="textarea"  v-model="form.selfRecord" placeholder="请输入自评结果" />-->
-            </el-form-item>
-          </el-col>
-        </el-row>
-        <el-row>
-          <el-col :span="12">
-            <el-form-item label="检查人员" prop="checkUser" label-width="130px">
-              <el-input v-model="checkForm.checkUser" placeholder="请输入检查人员" />
-            </el-form-item>
-          </el-col>
-          <el-col :span="12">
-            <el-form-item label="检查时间" prop="checkTime" label-width="130px">
-              <el-date-picker
-                v-model="checkForm.checkTime"
-                type="date"
-                placeholder="选择日期">
-              </el-date-picker>
-              <!--              <el-input v-model="form.checkTime" placeholder="请输入检查时间" />-->
-            </el-form-item>
-          </el-col>
-        </el-row>
-        <el-row>
-          <el-col :span="12">
-            <el-form-item label="整改情况" prop="isRectify" label-width="130px">
-              <el-select v-model="checkForm.isRectify" placeholder="请选择整改情况">
-                <el-option v-for="(isRectify,index) in isRectifies" :key="index" :label="isRectify[1]" :value="isRectify[0]"></el-option>
-              </el-select>
-              <!--              <el-input v-model="form.isRectify" placeholder="请输入整改情况" />-->
-            </el-form-item>
-          </el-col>
-          <el-col :span="12">
-            <el-form-item label="整改期限" prop="rectifyTime" label-width="130px">
-              <el-date-picker
-                v-model="checkForm.rectifyTime"
-                type="date"
-                placeholder="选择日期">
-              </el-date-picker>
-<!--              <el-date-picker-->
-<!--                v-model="checkForm.rectifytime"-->
-<!--                type="datetime"-->
-<!--                placeholder="请选择整改期限">-->
-<!--              </el-date-picker>-->
-              <!--              <el-input v-model="form.rectifyTime" placeholder="请输入整改期限" />-->
-            </el-form-item>
-          </el-col>
-        </el-row>
-<!--        <el-row>-->
-<!--          <el-col :span="12">-->
-<!--            <el-form-item label="奖惩情况" prop="situation" label-width="130px">-->
-<!--              <el-input v-model="checkForm.situation" placeholder="请输入奖惩情况" />-->
-<!--            </el-form-item>-->
-<!--          </el-col>-->
-<!--        </el-row>-->
-        <el-row>
-          <el-col :span="21">
-            <el-form-item label="项目自评意见" prop="selfRecord" label-width="130px">
-              <el-input type="textarea" v-model="checkForm.selfRecord" placeholder="请输入自评意见" />
-            </el-form-item>
-          </el-col>
-        </el-row>
-        <el-row>
-          <el-col :span="12">
-            <el-form-item label="项目负责人" prop="selfUser" label-width="130px">
-              <el-input v-model="checkForm.selfUser" placeholder="请输入负责人姓名" />
-            </el-form-item>
-          </el-col>
-          <el-col :span="12">
-            <el-form-item label="自评时间" prop="selfTime" label-width="130px">
-              <el-date-picker
-                v-model="checkForm.selfTime"
-                type="date"
-                placeholder="选择日期">
-              </el-date-picker>
-              <!--              <el-input v-model="form.selfTime" placeholder="请输入自评时间" />-->
-            </el-form-item>
-          </el-col>
-        </el-row>
-        <el-row>
-          <el-col :span="14">
-            <el-form-item label="附件_企业盖章页" prop="affixStamp" label-width="160px">
+                <!--              <el-input v-model="form.evaltime" placeholder="请输入考评时间" />-->
+              </el-form-item>
+            </el-col>
+          </el-row>
+          <el-row>
+            <el-col :span="12">
+              <el-form-item label="项目进度" prop="progress" label-width="130px">
+                <el-input v-model="checkForm.progress" placeholder="请输入项目进度" />
+              </el-form-item>
+            </el-col>
+            <el-col :span="9">
+              <el-form-item label="综合得分" prop="checkCode" label-width="130px">
+                <el-input v-model="checkForm.checkCode" placeholder="请输入综合得分" />
+              </el-form-item>
+            </el-col>
+          </el-row>
+          <el-row>
+            <el-col :span="12">
+              <el-form-item label="隐患（条数）" prop="yhNum" label-width="130px">
+                <el-input v-model="checkForm.yhNum" placeholder="请输入隐患条数" />
+              </el-form-item>
+            </el-col>
+            <el-col :span="12">
+              <el-form-item label="自评结果" prop="selfResult" label-width="130px">
+                <el-select v-model="checkForm.selfResult" placeholder="请选择自评结果">
+                  <el-option v-for="(selfRecord,index) in selfRecords" :key="index" :label="selfRecord" :value="index"></el-option>
+                </el-select>
+                <!--              <el-input type="textarea"  v-model="form.selfRecord" placeholder="请输入自评结果" />-->
+              </el-form-item>
+            </el-col>
+          </el-row>
+          <el-row>
+            <el-col :span="12">
+              <el-form-item label="检查人员" prop="checkUser" label-width="130px">
+                <el-input v-model="checkForm.checkUser" placeholder="请输入检查人员" />
+              </el-form-item>
+            </el-col>
+            <el-col :span="12">
+              <el-form-item label="检查时间" prop="checkTime" label-width="130px">
+                <el-date-picker
+                  v-model="checkForm.checkTime"
+                  type="date"
+                  placeholder="选择日期">
+                </el-date-picker>
+                <!--              <el-input v-model="form.checkTime" placeholder="请输入检查时间" />-->
+              </el-form-item>
+            </el-col>
+          </el-row>
+          <el-row>
+            <el-col :span="12">
+              <el-form-item label="整改情况" prop="isRectify" label-width="130px">
+                <el-select v-model="checkForm.isRectify" placeholder="请选择整改情况">
+                  <el-option v-for="(isRectify,index) in isRectifies" :key="index" :label="isRectify[1]" :value="isRectify[0]"></el-option>
+                </el-select>
+                <!--              <el-input v-model="form.isRectify" placeholder="请输入整改情况" />-->
+              </el-form-item>
+            </el-col>
+            <el-col :span="12">
+              <el-form-item label="整改期限" prop="rectifyTime" label-width="130px">
+                <el-date-picker
+                  v-model="checkForm.rectifyTime"
+                  type="date"
+                  placeholder="选择日期">
+                </el-date-picker>
+                <!--              <el-date-picker-->
+                <!--                v-model="checkForm.rectifytime"-->
+                <!--                type="datetime"-->
+                <!--                placeholder="请选择整改期限">-->
+                <!--              </el-date-picker>-->
+                <!--              <el-input v-model="form.rectifyTime" placeholder="请输入整改期限" />-->
+              </el-form-item>
+            </el-col>
+          </el-row>
+          <!--        <el-row>-->
+          <!--          <el-col :span="12">-->
+          <!--            <el-form-item label="奖惩情况" prop="situation" label-width="130px">-->
+          <!--              <el-input v-model="checkForm.situation" placeholder="请输入奖惩情况" />-->
+          <!--            </el-form-item>-->
+          <!--          </el-col>-->
+          <!--        </el-row>-->
+          <el-row>
+            <el-col :span="21">
+              <el-form-item label="项目自评意见" prop="selfRecord" label-width="130px">
+                <el-input type="textarea" v-model="checkForm.selfRecord" placeholder="请输入自评意见" />
+              </el-form-item>
+            </el-col>
+          </el-row>
+          <el-row>
+            <el-col :span="12">
+              <el-form-item label="项目负责人" prop="selfUser" label-width="130px">
+                <el-input v-model="checkForm.selfUser" placeholder="请输入负责人姓名" />
+              </el-form-item>
+            </el-col>
+            <el-col :span="12">
+              <el-form-item label="自评时间" prop="selfTime" label-width="130px">
+                <el-date-picker
+                  v-model="checkForm.selfTime"
+                  type="date"
+                  placeholder="选择日期">
+                </el-date-picker>
+                <!--              <el-input v-model="form.selfTime" placeholder="请输入自评时间" />-->
+              </el-form-item>
+            </el-col>
+          </el-row>
+          <el-row>
+            <el-col :span="14">
+              <el-form-item label="附件_企业盖章页" prop="affixStamp" label-width="160px">
+<!--                <el-button type="text" @click="openFile(checkForm.affixStamp)" :disabled="false">{{ '查看附件' }}</el-button>-->
+                <a :href="'http://' + checkForm.affixStamp" target="_blank">{{ '查看附件' }}</a>
+              </el-form-item>
+            </el-col>
+          </el-row>
+          <el-row>
+            <el-col :span="14">
+              <el-form-item label="附件_企业机构按期检查" prop="affixOrg" label-width="160px">
+                <a :href="'http://' + checkForm.affixOrg" target="_blank">{{ '查看附件' }}</a>
+                <!--              <img src="checkForm.affixOrg" alt="">-->
+                <!--              <el-input v-model="form.affixOrg" placeholder="请输入整改内容" />-->
+              </el-form-item>
+            </el-col>
+          </el-row>
+          <el-row>
+            <div class="divider">建设单位:</div>
+          </el-row>
+          <el-row>
+            <el-col :span="21">
+              <el-form-item label="检查意见" prop="jsRecord" label-width="130px">
+                <el-input type="textarea" v-model="checkForm.jsRecord" placeholder="请输入检查意见" />
+              </el-form-item>
+            </el-col>
+          </el-row>
+          <el-row>
 
-            </el-form-item>
-          </el-col>
-        </el-row>
-        <el-row>
-          <el-col :span="14">
-            <el-form-item label="附件_企业机构按期检查" prop="affixOrg" label-width="160px">
-<!--              <img src="checkForm.affixOrg" alt="">-->
-              <!--              <el-input v-model="form.affixOrg" placeholder="请输入整改内容" />-->
-            </el-form-item>
-          </el-col>
-        </el-row>
-        <el-row>
-          <div class="divider">建设单位:</div>
-        </el-row>
-        <el-row>
-          <el-col :span="21">
-            <el-form-item label="检查意见" prop="jsRecord" label-width="130px">
-              <el-input type="textarea" v-model="checkForm.jsRecord" placeholder="请输入检查意见" />
-            </el-form-item>
-          </el-col>
-        </el-row>
-        <el-row>
-
-          <el-col :span="12">
-            <el-form-item label="检查人" prop="jsUser" label-width="130px">
-              <el-input v-model="checkForm.jsUser" placeholder="请输入检查人" />
-            </el-form-item>
-          </el-col>
-          <el-col :span="12">
-            <el-form-item label="检查时间" prop="jsTime" label-width="130px">
-              <el-date-picker
-                v-model="checkForm.jsTime"
-                type="date"
-                placeholder="选择日期">
-              </el-date-picker>
-              <!--              <el-input v-model="form.jsTime" placeholder="请输入检查时间" />-->
-            </el-form-item>
-          </el-col>
-        </el-row>
-        <el-row>
-          <div class="divider">监理单位:</div>
-        </el-row>
-        <el-row>
-          <el-col :span="21">
-            <el-form-item label="检查意见" prop="jlRecord" label-width="130px">
-              <el-input type="textarea" v-model="checkForm.jlRecord" placeholder="请输入检查意见" />
-            </el-form-item>
-          </el-col>
-        </el-row>
-        <el-row>
-          <el-col :span="12">
-            <el-form-item label="检查人" prop="jlUser" label-width="130px">
-              <el-input v-model="checkForm.jlUser" placeholder="请输入监理单位检查人" />
-            </el-form-item>
-          </el-col>
-          <el-col :span="12">
-            <el-form-item label="检查时间" prop="jlTime" label-width="130px">
-              <el-date-picker
-                v-model="checkForm.jlTime"
-                type="date"
-                placeholder="选择日期">
-              </el-date-picker>
-              <!--              <el-input v-model="form.jlTime" placeholder="请输入监理单位检查时间" />-->
-            </el-form-item>
-          </el-col>
-        </el-row>
-        <el-row>
-          <div class="divider">月报检查记录:</div>
-        </el-row>
-<!--        <el-row>-->
-<!--          <el-button @click="addItem" type="primary"  style="width: 200px;margin-bottom: 20px">增加</el-button>-->
-<!--        </el-row>-->
-        <el-row>
-          <el-form
-            :disabled="true"
-            ref="checkForm"
-            :rules="checkForm.checkMonthChildList"
-            :inline="true"
-            :model="checkForm"
-            label-width="80px"
-          >
-            <div v-for="(item, index) in checkForm.checkMonthChildList" :key="index" style="border-bottom: dashed 1px #DCDFE6;margin-bottom: 20px">
-              <el-row>
-                <el-col :span="12">
-                  <el-form-item
-                    label-width="130px"
-                    label="diccode"
-                    :prop="'checkForm.checkMonthChildList.' + index + '.diccode'"
-                    :rules="{
+            <el-col :span="12">
+              <el-form-item label="检查人" prop="jsUser" label-width="130px">
+                <el-input v-model="checkForm.jsUser" placeholder="请输入检查人" />
+              </el-form-item>
+            </el-col>
+            <el-col :span="12">
+              <el-form-item label="检查时间" prop="jsTime" label-width="130px">
+                <el-date-picker
+                  v-model="checkForm.jsTime"
+                  type="date"
+                  placeholder="选择日期">
+                </el-date-picker>
+                <!--              <el-input v-model="form.jsTime" placeholder="请输入检查时间" />-->
+              </el-form-item>
+            </el-col>
+          </el-row>
+          <el-row>
+            <div class="divider">监理单位:</div>
+          </el-row>
+          <el-row>
+            <el-col :span="21">
+              <el-form-item label="检查意见" prop="jlRecord" label-width="130px">
+                <el-input type="textarea" v-model="checkForm.jlRecord" placeholder="请输入检查意见" />
+              </el-form-item>
+            </el-col>
+          </el-row>
+          <el-row>
+            <el-col :span="12">
+              <el-form-item label="检查人" prop="jlUser" label-width="130px">
+                <el-input v-model="checkForm.jlUser" placeholder="请输入监理单位检查人" />
+              </el-form-item>
+            </el-col>
+            <el-col :span="12">
+              <el-form-item label="检查时间" prop="jlTime" label-width="130px">
+                <el-date-picker
+                  v-model="checkForm.jlTime"
+                  type="date"
+                  placeholder="选择日期">
+                </el-date-picker>
+                <!--              <el-input v-model="form.jlTime" placeholder="请输入监理单位检查时间" />-->
+              </el-form-item>
+            </el-col>
+          </el-row>
+          <el-row>
+            <div class="divider">月报检查记录:</div>
+          </el-row>
+          <!--        <el-row>-->
+          <!--          <el-button @click="addItem" type="primary"  style="width: 200px;margin-bottom: 20px">增加</el-button>-->
+          <!--        </el-row>-->
+          <el-row>
+            <el-form
+              :disabled="true"
+              ref="checkForm"
+              :rules="checkForm.checkMonthChildList"
+              :inline="true"
+              :model="checkForm"
+              label-width="80px"
+            >
+              <div v-for="(item, index) in checkForm.checkMonthChildList" :key="index" style="border-bottom: dashed 1px #DCDFE6;margin-bottom: 20px">
+                <el-row>
+                  <el-col :span="12">
+                    <el-form-item
+                      label-width="130px"
+                      label="diccode"
+                      :prop="'checkForm.checkMonthChildList.' + index + '.diccode'"
+                      :rules="{
                       required: true, message: 'diccode不能为空', trigger: 'blur'
                       }"
-                  >
-                    <el-input v-model="item.diccode"></el-input>
-                  </el-form-item>
-                </el-col>
-                <el-col :span="12">
-                  <el-form-item
-                    label-width="130px"
-                    label="检查项"
-                    :prop="'checkForm.checkMonthChildList.' + index + '.firstcode'"
-                    :rules="{required: true, message: '检查项不能为空', trigger: 'blur'}"
-                  >
-                    <el-input v-model="item.firstcode"></el-input>
-                  </el-form-item>
-                </el-col>
-              </el-row>
-              <el-row>
-                <el-col :span="12">
-                  <el-form-item
-                    label-width="130px"
-                    label="检查子项"
-                    :prop="'checkForm.checkMonthChildList.' + index + '.secondcode'"
-                    :rules="{
+                    >
+                      <el-input v-model="item.diccode"></el-input>
+                    </el-form-item>
+                  </el-col>
+                  <el-col :span="12">
+                    <el-form-item
+                      label-width="130px"
+                      label="检查项"
+                      :prop="'checkForm.checkMonthChildList.' + index + '.firstcode'"
+                      :rules="{required: true, message: '检查项不能为空', trigger: 'blur'}"
+                    >
+                      <el-input v-model="item.firstcode"></el-input>
+                    </el-form-item>
+                  </el-col>
+                </el-row>
+                <el-row>
+                  <el-col :span="12">
+                    <el-form-item
+                      label-width="130px"
+                      label="检查子项"
+                      :prop="'checkForm.checkMonthChildList.' + index + '.secondcode'"
+                      :rules="{
               required: true, message: '检查子项不能为空', trigger: 'blur'
               }"
-                  >
-                    <el-input v-model="item.secondcode"></el-input>
-                  </el-form-item>
-                </el-col>
-                <el-col :span="10">
-                  <el-form-item
-                    label-width="130px"
-                    label="检查部位及内容"
-                    :prop="'checkForm.checkMonthChildList.' + index + '.threecode'"
-                    :rules="{
+                    >
+                      <el-input v-model="item.secondcode"></el-input>
+                    </el-form-item>
+                  </el-col>
+                  <el-col :span="10">
+                    <el-form-item
+                      label-width="130px"
+                      label="检查部位及内容"
+                      :prop="'checkForm.checkMonthChildList.' + index + '.threecode'"
+                      :rules="{
               required: true, message: '检查部位及内容不能为空', trigger: 'blur'
               }"
-                  >
-                    <el-input v-model="item.threecode"></el-input>
-                  </el-form-item>
-                </el-col>
-<!--                <el-col :span="2">-->
-<!--                  <el-button type="danger" icon="el-icon-delete" circle @click="deleteItem(item, index)" ></el-button>-->
-<!--                </el-col>-->
-              </el-row>
-              <el-row>
-                <el-col :span="12">
-                  <el-form-item
-                    label-width="130px"
-                    label="存在的问题"
-                    :prop="'checkForm.checkMonthChildList.' + index + '.fourcode'"
-                    :rules="{
+                    >
+                      <el-input v-model="item.threecode"></el-input>
+                    </el-form-item>
+                  </el-col>
+                  <!--                <el-col :span="2">-->
+                  <!--                  <el-button type="danger" icon="el-icon-delete" circle @click="deleteItem(item, index)" ></el-button>-->
+                  <!--                </el-col>-->
+                </el-row>
+                <el-row>
+                  <el-col :span="12">
+                    <el-form-item
+                      label-width="130px"
+                      label="存在的问题"
+                      :prop="'checkForm.checkMonthChildList.' + index + '.fourcode'"
+                      :rules="{
               required: true, message: '存在的问题不能为空', trigger: 'blur'
               }"
-                  >
-                    <el-input v-model="item.fourcode"></el-input>
-                  </el-form-item>
-                </el-col>
-                <el-col :span="12">
-                  <el-form-item
-                    label-width="130px"
-                    label="所扣分值"
-                    :prop="'checkForm.checkMonthChildList.' + index + '.checkcode'"
-                    :rules="{
+                    >
+                      <el-input v-model="item.fourcode"></el-input>
+                    </el-form-item>
+                  </el-col>
+                  <el-col :span="12">
+                    <el-form-item
+                      label-width="130px"
+                      label="所扣分值"
+                      :prop="'checkForm.checkMonthChildList.' + index + '.checkcode'"
+                      :rules="{
               required: true, message: '所扣分值不能为空', trigger: 'blur'
               }"
-                  >
-                    <el-input v-model="item.checkcode"></el-input>
-                  </el-form-item>
-                </el-col>
-              </el-row>
-            </div>
-          </el-form>
-        </el-row>
-      </el-form>
-      <div slot="footer" class="dialog-footer">
-<!--        <el-button type="primary" @click="submitForm">确 定</el-button>-->
-        <el-button @click="cancelcheck">取 消</el-button>
+                    >
+                      <el-input v-model="item.checkcode"></el-input>
+                    </el-form-item>
+                  </el-col>
+                </el-row>
+              </div>
+            </el-form>
+          </el-row>
+        </el-form>
+        <div slot="footer" class="dialog-footer" style="float: right; margin-right: 10px; ">
+          <!--        <el-button type="primary" @click="submitForm">确 定</el-button>-->
+          <el-button @click="cancelcheck">取 消</el-button>
+        </div>
       </div>
     </el-dialog>
     <!-- 新增对话框 -->
@@ -485,13 +489,13 @@
               <el-upload
                 class="upload-demo"
                 ref="upload"
-                :on-preview="handlePreview"
-                :on-remove="handleRemove"
-                :file-list="form.affixstamp"
-                :auto-upload="false">
-                <el-button slot="trigger" size="small" type="primary">选取文件</el-button>
-                <el-button style="margin-left: 10px;" size="small" type="success" @click="submitUpload">上传到服务器</el-button>
-                <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb</div>
+                :limit="1"
+                action="http://121.36.106.18:38080/system/safe/uploadFile"
+                :on-success="saveAffixStampUrl"
+              >
+                <el-button slot="trigger" size="small" type="primary">上传文件</el-button>
+<!--                <el-button style="margin-left: 10px;" size="small" type="success" @click="submitUpload">上传到服务器</el-button>-->
+<!--                <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb</div>-->
               </el-upload>
             </el-form-item>
           </el-col>
@@ -502,13 +506,12 @@
               <el-upload
                 class="upload-demo"
                 ref="upload"
-                :on-preview="handlePreview"
-                :on-remove="handleRemove"
-                :file-list="form.affixorg"
-                :auto-upload="false">
-                <el-button slot="trigger" size="small" type="primary">选取文件</el-button>
-                <el-button style="margin-left: 10px;" size="small" type="success" @click="submitUpload">上传到服务器</el-button>
-                <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb</div>
+                :limit="1"
+                action="http://121.36.106.18:38080/system/safe/uploadFile"
+                :on-success="saveAffixOrgUrl"
+              >
+                <el-button slot="trigger" size="small" type="primary">上传文件</el-button>
+<!--                <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb</div>-->
               </el-upload>
 <!--              <el-input v-model="form.affixOrg" placeholder="请输入整改内容" />-->
             </el-form-item>
@@ -665,7 +668,7 @@
           </el-row>
         </el-form>
         <div slot="footer" class="dialog-footer" style="float: right; margin-right: 10px; ">
-          <el-button type="primary" @click="submitForm">确 定</el-button>
+          <el-button type="primary" @click="submitForm('form')">确 定</el-button>
           <el-button @click="canceladd">取 消</el-button>
         </div>
       </div>
@@ -740,7 +743,7 @@ export default {
       selfRecords:['优良','合格','不合格'],
       // 表单参数
       form: {
-        proid:null,
+        proid: 27467,
         addressAll:'',
         evaltime:'',
         progress:'',
@@ -755,8 +758,8 @@ export default {
         selfrecord:'',
         selfuser:'',
         selftime:'',
-        affixstamp:'',
-        affixorg:[],
+        affixstamp: '',
+        affixorg: '',
         jsrecord:'',
         jsuser:'',
         jstime:'',
@@ -876,74 +879,93 @@ export default {
       this.openadd = true
     },
     // 新增按钮的提交
-    submitForm(){
-      const prams1 = {
-        proid:35051,
-        // addressAll:this.form.addressAll,
-        addressAll:1,
-        evaltime:this.form.evaltime,
-        progress :this.form.progress,
-        checkCode:this.form.checkcode,
-        yhNum:this.form.yhnum,
-        selfResult:this.form.selfresult,
-        checkUser:this.form.checkuser,
-        checkTime:this.form.checktime,
-        isRectify:this.form.isrectify,
-        rectifyTime:this.form.rectifytime,
-        situation:this.form.situation,
-        selfRecord:this.form.selfrecord,
-        selfUser:this.form.selfuser,
-        selfTime:this.form.selftime,
-        affixStamp:this.form.affixstamp,
-        affixOrg:this.form.affixorg,
-        jlRecord:this.form.jlrecord,
-        jsUser:this.form.jsuser,
-        jsTime:this.form.jstime,
-        jsRecord:this.form.jsrecord,
-        jlUser:this.form.jluser,
-        jlTime:this.form.jltime,
-        //monthChild:this.form.monthChild,
-      }
-      addMonthCheck(prams1).then((res) => {
-        if(res.data.code === 200){
-          this.$message({
-            message: '表单添加成功！',
-            type: 'success'
-          });
-        }else{
-          this.$message({
-            message: '表单添加失败',
-            type: 'warning'
-          });
+    submitForm(formName){
+      this.$refs[formName].validate((valid) => {
+        if(valid) {
+          console.log(this.form);
+          addMonthCheck(this.form).then(response => {
+            if (response.data.code === 200) {
+              this.getList();
+              this.$message({
+                type: 'success',
+                message: '上传成功'
+              })
+              this.openadd = false
+            } else {
+              this.$message.error(response.data.msg)
+            }
+          })
+        } else {
+          return false;
         }
       })
-      console.log("yuepingzixiang",this.form.monthChild)
-      for(var i=0;i<this.form.monthChild.length;i++){
-        const prams2 = {
-          // pid = row.id
-          diccode:this.form.monthChild[i].diccode,
-          firstCode:this.form.monthChild[i].firstCode,
-          secondCode:this.form.monthChild[i].secondCode,
-          threeCode:this.form.monthChild[i].threeCode,
-          fourCode:this.form.monthChild[i].fourCode,
-          checkCode:this.form.monthChild[i].checkCode,
-        }
-        addCheckMonthChild(prams2).then((res) => {
-          if(res.data.code === 200){
-            this.$message({
-              message: '月报检查记录添加成功！',
-              type: 'success'
-            });
-          }else{
-            this.$message({
-              message: '月报检查记录添加失败',
-              type: 'warning'
-            });
-          }
-        })
-      }
-
-      this.openadd = false
+      // const prams1 = {
+      //   proid:35051,
+      //   // addressAll:this.form.addressAll,
+      //   addressAll:1,
+      //   evaltime:this.form.evaltime,
+      //   progress :this.form.progress,
+      //   checkCode:this.form.checkcode,
+      //   yhNum:this.form.yhnum,
+      //   selfResult:this.form.selfresult,
+      //   checkUser:this.form.checkuser,
+      //   checkTime:this.form.checktime,
+      //   isRectify:this.form.isrectify,
+      //   rectifyTime:this.form.rectifytime,
+      //   situation:this.form.situation,
+      //   selfRecord:this.form.selfrecord,
+      //   selfUser:this.form.selfuser,
+      //   selfTime:this.form.selftime,
+      //   affixStamp:this.form.affixstamp,
+      //   affixOrg:this.form.affixorg,
+      //   jlRecord:this.form.jlrecord,
+      //   jsUser:this.form.jsuser,
+      //   jsTime:this.form.jstime,
+      //   jsRecord:this.form.jsrecord,
+      //   jlUser:this.form.jluser,
+      //   jlTime:this.form.jltime,
+      //   //monthChild:this.form.monthChild,
+      // }
+      // addMonthCheck(prams1).then((res) => {
+      //   if(res.data.code === 200){
+      //     this.$message({
+      //       message: '表单添加成功！',
+      //       type: 'success'
+      //     });
+      //   }else{
+      //     this.$message({
+      //       message: '表单添加失败',
+      //       type: 'warning'
+      //     });
+      //   }
+      // })
+      // console.log("yuepingzixiang",this.form.monthChild)
+      // for(var i=0;i<this.form.monthChild.length;i++){
+      //   const prams2 = {
+      //     // pid = row.id
+      //     diccode:this.form.monthChild[i].diccode,
+      //     firstCode:this.form.monthChild[i].firstCode,
+      //     secondCode:this.form.monthChild[i].secondCode,
+      //     threeCode:this.form.monthChild[i].threeCode,
+      //     fourCode:this.form.monthChild[i].fourCode,
+      //     checkCode:this.form.monthChild[i].checkCode,
+      //   }
+      //   addCheckMonthChild(prams2).then((res) => {
+      //     if(res.data.code === 200){
+      //       this.$message({
+      //         message: '月报检查记录添加成功！',
+      //         type: 'success'
+      //       });
+      //     }else{
+      //       this.$message({
+      //         message: '月报检查记录添加失败',
+      //         type: 'warning'
+      //       });
+      //     }
+      //   })
+      // }
+      //
+      // this.openadd = false
 
       // const prams = {
       //   proid:this.form.proid,
@@ -1083,6 +1105,15 @@ export default {
     handleCurrentChange(val) {
       console.log(`当前页: ${val}`);
       this.currentPage = val
+    },
+    openFile(url) {
+      window.open(url);
+    },
+    saveAffixStampUrl(response, file, fileList) {
+      this.form.affixstamp = response.data;
+    },
+    saveAffixOrgUrl(response, file, fileList) {
+      this.form.affixorg = response.data;
     }
   },
 
