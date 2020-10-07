@@ -36,3 +36,11 @@ export function docType(data) {
     params: data
   })
 }
+
+export function getSite(data) {
+  return request({
+    url: '/getSite',
+    method: 'get',
+    params: data
+  })
+}

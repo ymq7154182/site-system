@@ -56,3 +56,17 @@ export function finishSmallSchedule(params) { // 完成每一个大进度下的�
     params: params
   })
 }
+export function getImageList(params) { // 上传图片处获取所有图片
+  return request({
+    url: 'schedule/getSysProData',
+    method: 'get',
+    params: params
+  })
+}
+export function getDeferInfo(params) { // 展示延期信息
+  return request({
+    url: 'schedule/getDelaysReason',
+    method: 'post',
+    params: params
+  })
+}

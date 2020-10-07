@@ -8,7 +8,7 @@
               <el-col :span="12">
                 <div class="col-div">
                   <div class="box-txt">
-                    <span>安全检查</span>
+                    <span>安质检查</span>
                   </div>
                   <div id="mychart1"></div>
                   <div class="saftNum">总数：{{sumNum}}件</div>
@@ -37,7 +37,7 @@
               <el-col :span="12">
                 <div class="col-div">
                   <div class="box-txt">
-                    <span>安全隐患统计</span>
+                    <span>安质隐患统计</span>
                   </div>
                   <!--<div id="mychart21">-->
                   <!---->
@@ -88,7 +88,7 @@
           <el-col :span="12">
             <div class="col-div2">
               <div class="box-txt">
-                安全教育培训
+                安质教育培训
               </div>
               <div>
                 <el-row>
@@ -4243,8 +4243,8 @@
           getDanger(prames).then((res) => {
             let dangerArr = res.data.data.map(item => {
               return{
-                name:item.danger,
-                value:item.count,
+                name:item.check_type_offspring,
+                value:item.nums,
               }
             })
 
@@ -4283,7 +4283,7 @@
         getSafetyCheck (){
           getSafetyCheck ().then((res) => {
             //console.log(res.data.data[0].key)
-            this.sumNum = res.data.data.length
+            // this.sumNum = res.data.data.length
             for(var i=0;i<res.data.data.length;i++) {
               if(res.data.data[i].key === 1){
                 this.checkKey.push("未处理")
@@ -4295,6 +4295,7 @@
                 this.checkKey.push("逾期")
               }
               this.checkValue.push(res.data.data[i].value)
+              this.sumNum += res.data.data[i].value
             }
             //console.log("安全检查",this.checkData)
             this.inchart1()
@@ -4507,7 +4508,7 @@
     font-size: 16px;
     font-weight: 700;
     position: absolute;
-    left: 44%;
+    left: 40%;
     bottom: 10px;
     letter-spacing: 2px;
   }

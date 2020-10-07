@@ -1,10 +1,9 @@
 <template>
   <div>
     <div style="margin-top: 3vh;">
-      <el-steps :active="2" align-center>
+      <el-steps :active="active" align-center class="schedule-item">
         <el-step  :title="item.durationDictName"  v-for="(item, index) in titleList" :key="index" @click.native="gotoOption(item, 'second')">
           <template slot="title">
-
             <div>
               {{item.durationDictName}}
             </div>
@@ -40,13 +39,13 @@
         <el-form-item label="名称" :label-width="formLabelWidth">
           <el-input v-model="formDefer.duration2DictName" autocomplete="off" class="item-defer" :disabled="disabledStr"></el-input>
         </el-form-item>
-        <el-form-item label="描述内容" :label-width="formLabelWidth">
-          <!--                <el-select v-model="form.content" placeholder="请选择活动区域">-->
-          <el-input v-model="formDefer.processData" autocomplete="off" class="item-defer" :disabled="disabledStr"></el-input>
-          <!--                  <el-option label="区域一" value="shanghai"></el-option>-->
-          <!--                  <el-option label="区域二" value="beijing"></el-option>-->
-          <!--                </el-select>-->
-        </el-form-item>
+<!--        <el-form-item label="描述内容" :label-width="formLabelWidth">-->
+<!--          &lt;!&ndash;                <el-select v-model="form.content" placeholder="请选择活动区域">&ndash;&gt;-->
+<!--          <el-input v-model="formDefer.processData" autocomplete="off" class="item-defer" :disabled="disabledStr"></el-input>-->
+<!--          &lt;!&ndash;                  <el-option label="区域一" value="shanghai"></el-option>&ndash;&gt;-->
+<!--          &lt;!&ndash;                  <el-option label="区域二" value="beijing"></el-option>&ndash;&gt;-->
+<!--          &lt;!&ndash;                </el-select>&ndash;&gt;-->
+<!--        </el-form-item>-->
         <el-form-item label="延缓原因" :label-width="formLabelWidth">
           <!--                <el-input v-model="form.reason" autocomplete="off"></el-input>-->
           <el-select v-model="formDefer.reason" placeholder="请选择" class="item-defer" :disabled="disabledStr">
@@ -79,7 +78,7 @@
     <div class="schedule-content">
       <el-row>
         <div class="border-top-left"></div>
-        <div class="box-title">{{title}}</div>
+        <div class="box-title" v-model="title">{{title}}</div>
         <div class="schedule-press">
           <el-steps direction="vertical" :active="1" :space="120">
             <el-step :title="item.duration2DictName" v-for="(item, index) in dataList" :key="index">
@@ -130,7 +129,7 @@
   </div>
 </template>
 <script>
-  import {getOneSchedules, getTwoSchedules, submitDeferInfo, getDeferReasons, updateTimeByPlanId, finishSmallSchedule} from '@/api/scheduleManage'
+  import {getOneSchedules, getTwoSchedules, getDeferInfo, submitDeferInfo, getDeferReasons, updateTimeByPlanId, finishSmallSchedule} from '@/api/scheduleManage'
   export default {
     name: 'checkProgress',
     mounted() {
@@ -142,6 +141,7 @@
     },
     data() {
       return {
+        active: 0,
         dataList: [], // 点击每一个进度，显示的详细进度条数据
         title: '', // 每一个大的进度的名字
         showRightTime: false, // 是否展示完成时间
@@ -151,7 +151,7 @@
         disabledStr: false,
         formDefer: { // 迟缓对象
           id: '',
-          title: '',
+          duration2DictName: '',
           content: '',
           status: '',
           reason: '', // 滞缓原因
@@ -195,9 +195,19 @@
       },
       checkStatus (item) { // 查看滞缓和完成信息
         if (item.status === 3) {
-          this.formDefer = item
-          this.showSlow = true
-          this.disabledStr = true
+          getDeferInfo({
+            scheduleDurationSectionPlanId: item.id
+          }).then(res => {
+            console.log(res.data, item)
+            this.formDefer.principal = res.data.data.principal
+            this.formDefer.duration2DictName = item.duration2DictName
+            this.formDefer.endTime = res.data.data.planTime
+            this.formDefer.reason = res.data.data.delaysDictId
+            this.showSlow = true
+            this.disabledStr = true
+          })
+          // this.formDefer = item
+
         }
 
         // this.$nextTick(() =>{
@@ -251,6 +261,9 @@
         this.showRightTime = false
       },
       gotoOption (val, num) {
+        let sche = document.querySelector('.schedule-item')
+        console.log('sche:', sche)
+        sche.active = 3
         if (num !== 'init') {
           this.showRightTime = true
           this.id = val.id
@@ -263,10 +276,36 @@
           siteId: this.deptId
         }).then(res => {
           this.titleList = res.data.data
-          this.id = res.data.data[0].id
-          this.title = res.data.data[0].durationDictName
-          this.getTwoSchedules()
-          // console.log(res.data)
+          // this.id = res.data.data[0].id
+          // this.title = res.data.data[0].durationDictName
+
+            for (let i in this.titleList) {
+                if (this.titleList[i].endTime !== null) { // 如果有完成时间，则当前转态变为完成，下一个变成正在进行
+                  this.id = this.titleList[parseInt(i)+1].id
+                  this.title = this.titleList[parseInt(i)+1].durationDictName
+                  this.getTwoSchedules()
+                  this.$nextTick(() => {
+                    let currentNode = document.querySelector('.el-tabs__content .el-tab-pane')
+                    console.log('currentNode:', currentNode)
+                    let steps = currentNode.querySelector('.el-steps')
+                    // console.log('steps', steps)
+                    // console.log(steps[i + 1].querySelector('.el-step__head.is-process'))
+                    let process = steps.querySelector('.el-step .el-step__head.is-process')
+                    let processTitle = steps.querySelector('.el-step .el-step__main .el-step__title.is-process')
+                    process.className = 'el-step__head is-finish'
+                    processTitle.className = 'el-step__title is-finish'
+                    let waitings = steps.querySelectorAll('.el-step .el-step__head.is-wait')
+                    let waitingTitles = steps.querySelectorAll('.el-step .el-step__main .el-step__title.is-wait')
+                    waitings[0].className = 'el-step__head is-process'
+                    waitingTitles[0].className = 'el-step__title is-process'
+                    // that.id = that.titleList[i+1].id
+                    // that.title = that.titleList[i+1].durationDictName
+                    // console.log(that.id, that.title)
+              })
+            }
+              // break
+          }
+
         })
       },
       getTwoSchedules () { // 获取所有二级进度
@@ -283,11 +322,16 @@
             scheduleDurationSectionPlanId: item.id
           }).then(res => {
             if (res.data.code === 200) {
+              console.log('完成按钮', item)
               // console.log('状态为完成')
               this.getTwoSchedules()
+              if (item.scheduleEnd === 1) { // 表示是最后一个小进度
+                this.getOneSchedules()
+              }
             }
           })
         } else {
+          this.disabledStr = false
           this.formDefer = item
           this.showSlow = true
         }
@@ -387,5 +431,12 @@
   .schedule-content .el-step__title {
     font-size: 18px;
     font-weight: bold;
+  }
+   .el-step__head.is-process .is-text {
+    width: 36px;
+    height: 36px;
+    border: 4px solid #3c3c3c;
+    margin-top: -8px;
+     margin-left: -6px;
   }
 </style>

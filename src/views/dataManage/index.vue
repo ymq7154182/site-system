@@ -20,7 +20,7 @@
           <div style="padding: 0.13rem">
             <el-button type="primary" @click="uploadFile"><i class="el-icon-upload" /> 上传文件</el-button>
           </div>
-          <div class="data_table" style="padding: 0 0.2rem">
+          <div class="data_table">
             <el-table
               :data="fileTable.slice((currentPage - 1) * pageSize, currentPage * pageSize)"
               class="file-table"
@@ -31,7 +31,7 @@
               <el-table-column prop="id" label="文件ID" width="100" align="center" />
               <el-table-column label="文件名称" align="center">
                 <template slot-scope="scope">
-                  <el-button v-if="scope.row.url" type="text" @click="openUrl(scope.row.url)" style="font-size: 15px; ">{{ scope.row.name }}</el-button>
+                  <el-button v-if="scope.row.url" type="text" @click="openUrl(scope.row.url)" style="font-size: 0.22rem; ">{{ scope.row.name }}</el-button>
                   <span v-else>{{ scope.row.name }}</span>
                 </template>
               </el-table-column>
@@ -39,7 +39,7 @@
               <el-table-column v-if="isActive1 === true" prop="doc_type" label="具体类型" width="150" align="center" />
               <el-table-column prop="info" label="文件描述" align="center" />
               <el-table-column prop="update_time" label="创建时间" align="center" />
-              <el-table-column label="操作" align="center" width="100">
+              <el-table-column label="操作" align="center" width="100" fixed="right">
                 <template slot-scope="scope">
                   <el-button type="primary" size="mini" @click="editInfo(scope.$index, scope.row)"><i class="el-icon-edit" />修改</el-button>
                 </template>
@@ -138,7 +138,7 @@
 </template>
 
 <script>
-import {changeDoc, docType, findDoc, insertDoc} from "../../api/dataManage";
+import {changeDoc, docType, findDoc, getSite, insertDoc} from "../../api/dataManage";
 
 export default {
   data() {
@@ -146,7 +146,7 @@ export default {
       alldoc: {},
       fileTable: [],
       currentPage: 1,
-      pageSize: 10,
+      pageSize: 7,
       showUpload: false,
       uploadInfo: {
         constructionSiteId: 0,
@@ -214,6 +214,8 @@ export default {
   mounted() {
     this.$store.dispatch('changeMsg', '资料管理');
     this.refreshTable();
+    this.constructionSiteId = window.localStorage.getItem('siteId')
+    this.getConstructionSiteName(this.constructionSiteId);
     docType().then(response => {
       for(var i=0;i<response.data.rows.length;i++) {
         this.docTypeList.push(response.data.rows[i].name)
@@ -324,6 +326,15 @@ export default {
         this.alldoc = response.data
         this.fileTable = this.alldoc.word
       });
+    },
+    getConstructionSiteName(id) {
+      getSite({
+        siteId: id
+      }).then(response => {
+        if(response.data.code === 200) {
+          this.constructionSiteName = response.data.data.deptName
+        }
+      })
     }
   }
 }
@@ -340,8 +351,10 @@ export default {
 .dm-main {
   background-color: rgba(0, 36, 78, 0.5);
   height: 83vh;
+  width: 100%;
   margin: 0 5px;
   border-radius: 2px;
+  overflow-x: hidden;
 }
 
 .dm-title {
@@ -375,6 +388,13 @@ export default {
 
 .block >>> .el-pagination__total {
   color: #409eff;
+}
+
+.data_table {
+  height: 80%;
+  overflow-y: scroll;
+  width: 100%;
+  padding: 0 0.2rem;
 }
 
 /*透明化整体*/
