@@ -190,7 +190,7 @@
                 :file-list="checkForm.affixstamp"
                 :auto-upload="false">
                 <el-button slot="trigger" size="small" type="primary">选取文件</el-button>
-                <el-button style="margin-left: 10px;" size="small" type="success" @click="submitUpload">上传到服务器</el-button>
+                <el-button style="margin-left: 10px;" size="small" type="success" @click="submitUpload">上传</el-button>
                 <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb</div>
               </el-upload>
             </el-form-item>
@@ -394,14 +394,11 @@
 <!--          </el-col>-->
           <el-col :span="12">
             <el-form-item label="考评时间" prop="evaltime" label-width="130px">
-              <el-time-picker
+              <el-date-picker
                 v-model="form.evaltime"
-                :picker-options="{
-                selectableRange: '08:30:00 - 20:30:00'
-                }"
-                placeholder="请输入考评时间">
-              </el-time-picker>
-<!--              <el-input v-model="form.evaltime" placeholder="请输入考评时间" />-->
+                type="date"
+                placeholder="选择日期">
+              </el-date-picker>
             </el-form-item>
           </el-col>
         </el-row>
@@ -440,14 +437,11 @@
           </el-col>
           <el-col :span="12">
             <el-form-item label="检查时间" prop="checktime" label-width="130px">
-              <el-time-picker
+              <el-date-picker
                 v-model="form.checktime"
-                :picker-options="{
-                selectableRange: '08:30:00 - 20:30:00'
-                }"
-                placeholder="请输入检查时间">
-              </el-time-picker>
-<!--              <el-input v-model="form.checkTime" placeholder="请输入检查时间" />-->
+                type="date"
+                placeholder="选择日期">
+              </el-date-picker>
             </el-form-item>
           </el-col>
         </el-row>
@@ -464,10 +458,9 @@
             <el-form-item label="整改期限" prop="rectifytime" label-width="130px">
               <el-date-picker
                 v-model="form.rectifytime"
-                type="datetime"
-                placeholder="请选择整改期限">
+                type="date"
+                placeholder="选择日期">
               </el-date-picker>
-<!--              <el-input v-model="form.rectifyTime" placeholder="请输入整改期限" />-->
             </el-form-item>
           </el-col>
         </el-row>
@@ -493,14 +486,11 @@
           </el-col>
           <el-col :span="12">
             <el-form-item label="自评时间" prop="selftime" label-width="130px">
-              <el-time-picker
+              <el-date-picker
                 v-model="form.selftime"
-                :picker-options="{
-                selectableRange: '08:30:00 - 20:30:00'
-                }"
-                placeholder="请输入自评时间">
-              </el-time-picker>
-<!--              <el-input v-model="form.selfTime" placeholder="请输入自评时间" />-->
+                type="date"
+                placeholder="选择日期">
+              </el-date-picker>
             </el-form-item>
           </el-col>
         </el-row>
@@ -558,14 +548,12 @@
           </el-col>
           <el-col :span="12">
             <el-form-item label="检查时间" prop="jstime" label-width="130px">
-              <el-time-picker
+              <el-date-picker
                 v-model="form.jstime"
-                :picker-options="{
-                selectableRange: '08:30:00 - 20:30:00'
-                }"
-                placeholder="请输入检查时间">
-              </el-time-picker>
-<!--              <el-input v-model="form.jsTime" placeholder="请输入检查时间" />-->
+                type="date"
+                placeholder="选择日期">
+              </el-date-picker>
+              </el-date-picker>
             </el-form-item>
           </el-col>
         </el-row>
@@ -587,14 +575,11 @@
           </el-col>
           <el-col :span="12">
             <el-form-item label="检查时间" prop="jltime" label-width="130px">
-              <el-time-picker
+              <el-date-picker
                 v-model="form.jltime"
-                :picker-options="{
-                selectableRange: '08:30:00 - 20:30:00'
-                }"
-                placeholder="请输入检查时间">
-              </el-time-picker>
-<!--              <el-input v-model="form.jlTime" placeholder="请输入监理单位检查时间" />-->
+                type="date"
+                placeholder="选择日期">
+              </el-date-picker>
             </el-form-item>
           </el-col>
         </el-row>
