@@ -105,7 +105,8 @@
             <div class="wc_time" v-if="endTime !== null">完成时间：{{endTime}}</div>
 <!--            <div class="box-title">{{title}}</div>-->
             <div class="schedule-press">
-              <el-steps direction="vertical" :active="1" :space="120">
+              <el-steps direction="vertical" :space="120">
+<!--              <el-steps direction="vertical" :active="1" :space="120">-->
                 <el-step :title="item.duration2DictName" v-for="(item, index) in dataList" :key="index">
                   <!--            <el-step :title="item.duration2DictName" :description="item.content"  v-for="(item, index) in dataList" :key="index">-->
                   <template slot="description">
@@ -1352,11 +1353,21 @@
     overflow: hidden;
     text-overflow: ellipsis;
   }
+  .el-step__title.is-process {
+    color: #ffb91b;
+  }
+  .el-steps .el-step__head.is-process .is-text {
+    border: 4px solid #ffb91b;
+    width: 36px;
+    height: 36px;
+    margin-top: -8px;
+    margin-left: -6px;
+  }
+  .schedule-press .el-steps .el-step:last-of-type .el-step__description {
+    padding-right: 10%;
+  }
   .process_content .el-step__title {
     line-height: 26px;
-  }
-  .el-step:last-of-type .el-step__description {
-    padding-right: 10%;
   }
   .schedule-content .el-step__title {
     font-size: 18px;
