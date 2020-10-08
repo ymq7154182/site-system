@@ -57,11 +57,16 @@ export function addCheckMonthChild (parems) {
   })
 }
 // 新增月评信息
-export function addMonthCheck (parems) {
+export function addMonthCheck(data) {
   return request({
     url: '/system/safe/addMonthCheck',
     method: 'post',
-    params: parems
+    params: data,
+    dataType: 'json',
+    data: JSON.stringify(data),
+    headers: {
+      'content-Type': 'application/json;',
+    }
   })
 }
 // 得到所有月评信息
@@ -86,6 +91,22 @@ export function getCheckMonthData (parems) {
 export function getSafeAdminInfo (parems) {
   return request({
     url: '/system/safe/getSafeAdminInfo',
+    method: 'get',
+    params: parems
+  })
+}
+// 根据时间范围锁定数据
+export function getCheckRecordByTime (parems) {
+  return request({
+    url: '/system/safe/getCheckRecordByTime',
+    method: 'get',
+    params: parems
+  })
+}
+// 根据工地id获取整条记录
+export function getSysProData (parems) {
+  return request({
+    url: '/getSysProData',
     method: 'get',
     params: parems
   })

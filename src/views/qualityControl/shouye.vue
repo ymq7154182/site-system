@@ -8,7 +8,7 @@
               <el-col :span="12">
                 <div class="col-div">
                   <div class="box-txt">
-                    <span>安全检查</span>
+                    <span>安质检查</span>
                   </div>
                   <div id="mychart1"></div>
                   <div class="saftNum">总数：{{sumNum}}件</div>
@@ -37,7 +37,7 @@
               <el-col :span="12">
                 <div class="col-div">
                   <div class="box-txt">
-                    <span>安全隐患统计</span>
+                    <span>安质隐患统计</span>
                   </div>
                   <!--<div id="mychart21">-->
                   <!---->
@@ -88,7 +88,7 @@
           <el-col :span="12">
             <div class="col-div2">
               <div class="box-txt">
-                安全教育培训
+                安质教育培训
               </div>
               <div>
                 <el-row>
@@ -223,6 +223,7 @@
         setTimeout(() => {
           this.loading = false
         }, 600)
+        this.changeColor()
         // setTimeout(() => {
         //
         //
@@ -277,6 +278,9 @@
 
       },
       methods: {
+        changeColor(){
+
+        },
         inchart1() {
             this.myChart1 = this.$echarts.init(document.getElementById('mychart1'));
             var num1 = 45;
@@ -350,7 +354,7 @@
                 textStyle: {
                   fontSize: '16',
                   // fontWeight:'600',
-                  color: 'rgba(232, 85, 63, 1)',
+                  color: 'rgba(89, 180, 157, 1)',
                   textAlign: 'center',
                 },
               },{
@@ -361,7 +365,7 @@
                 textStyle: {
                   fontSize: '16',
                   // fontWeight:'600',
-                  color: 'rgba(232, 85, 63, 1)',
+                  color: 'rgba(89, 180, 157, 1)',
                   textAlign: 'center',
                 },
               },{
@@ -372,7 +376,7 @@
                 textStyle: {
                   fontSize: '16',
                   // fontWeight:'600',
-                  color: 'rgba(89, 180, 157, 1)',
+                  color: 'rgba(232, 85, 63, 1)',
                   textAlign: 'center',
                 },
               },{
@@ -383,7 +387,7 @@
                 textStyle: {
                   fontSize: '16',
                   // fontWeight:'600',
-                  color: 'rgba(89, 180, 157, 1)',
+                  color: 'rgba(232, 85, 63, 1)',
                   textAlign: 'center',
                 },
               },
@@ -670,7 +674,7 @@
                     value: num2,
                     name: '虚拟主机',
                     itemStyle: {
-                      color: 'rgba(232, 85, 63, 1)',
+                      color: 'rgba(89, 180, 157, 1)',
                     },
                     label: {
                       show: false
@@ -700,7 +704,7 @@
                       value: 100 - num2,
                       hoverAnimation: false,
                       itemStyle: {
-                        color: 'rgba(232, 85, 63, .2)',
+                        color: 'rgba(89, 180, 157, .2)',
                       },
                     }
                   ]
@@ -761,7 +765,7 @@
                     value: num3,
                     name: '虚拟主机',
                     itemStyle: {
-                      color: 'rgba(89, 180, 157, 1)',
+                      color: 'rgba(232,85,63, 1)',
                     },
                     label: {
                       show: false
@@ -791,7 +795,7 @@
                       value: 100 - num3,
                       hoverAnimation: false,
                       itemStyle: {
-                        color: 'rgba(89, 180, 157, .2)',
+                        color: 'rgba(232,85,63, .2)',
                       },
                     }
                   ]
@@ -1656,19 +1660,19 @@
               trigger: 'item',
               formatter: "{a} <br/>{b}: {c} ({d}%)"
             },
-            legend: {
-              orient: 'vertical',
-              right: 0,
-              top: 'center',
-              itemWidth: 14 * scale,
-              itemHeight: 14 * scale,
-              data:legendData,
-              textStyle: {
-                color: '#2CABE3',
-                fontSize: 12,
-              },
-
-            },
+            // legend: {
+            //   orient: 'vertical',
+            //   right: 0,
+            //   top: 'center',
+            //   itemWidth: 14 * scale,
+            //   itemHeight: 14 * scale,
+            //   data:legendData,
+            //   textStyle: {
+            //     color: '#2CABE3',
+            //     fontSize: 12,
+            //   },
+            //
+            // },
             series: [
               {
                 name:'安全隐患统计',
@@ -1783,7 +1787,8 @@
               },
             },
             yAxis: [{
-
+              // name:'问题个数',
+              // nameLocation:'start',
               splitLine: {show: false},
               axisLine: {
                 lineStyle: {
@@ -1796,7 +1801,8 @@
               }
             },
               {
-
+                name:'整改率',
+                nameLocation:'start',
                 splitLine: {show: false},
                 axisLine: {
                   lineStyle: {
@@ -2159,7 +2165,7 @@
               orient: "vartical",
               // x: "right",
               top: "center",
-              right: "15",
+              left: "15",
               // bottom: "0%",
               itemWidth: 16,
               itemHeight: 8,
@@ -4213,17 +4219,31 @@
               data1.push(res.data.data[i].startTime)
               data1.push(res.data.data[i].checkType)
               if(res.data.data[i].processStatus === 1){
-                data1.push("未处理")
+                data1.push("<span style='color: #3ad7fa'>未处理</span>")
               } else if (res.data.data[i].processStatus === 2) {
-                data1.push("处理中")
+                data1.push("<span style='color: rgb(251,200,79)'>处理中</span>")
               } else if (res.data.data[i].processStatus === 3) {
-                data1.push("已完成")
+                data1.push("<span style='color: rgb(89,180,157)'>已完成</span>")
               } else if (res.data.data[i].processStatus === 4) {
-                data1.push("逾期")
+                data1.push("<span style='color: rgb(232,85,63)'>逾期</span>")
               }
               data2.push(data1)
 
+
             }
+            // console.log("data2",data2)
+            // 快速找到
+            // for(var i=0;i<data2.length;i++){
+            //   if(data[i][4]==="未处理"){
+            //
+            //   }else if(data[i][4]==="处理中"){
+            //
+            //   }else if(data[i][4]==="已完成"){
+            //
+            //   }else if(data[i][4]==="逾期"){
+            //
+            //   }
+            // }
             //console.log("data2",data2)
             this.configTable = {
               header: ['安全事件', '记录时间', '安全类型', '处理情况'],
@@ -4243,8 +4263,8 @@
           getDanger(prames).then((res) => {
             let dangerArr = res.data.data.map(item => {
               return{
-                name:item.danger,
-                value:item.count,
+                name:item.check_type_offspring,
+                value:item.nums,
               }
             })
 
@@ -4264,13 +4284,16 @@
         // 获取整改信息
         getRectification (){
           getRectification ().then((res) => {
-            for(var key in res.data.data){
+            for(var key in res.data.data.data){
               // console.log("key",key)
               this.changeYear.push(key)
               // console.log("value",res.data.data[key])
-              this.noChangeData.push(res.data.data[key].unRectification)
-              this.allData.push(res.data.data[key].rectificationSum)
+              this.noChangeData.push(res.data.data.data[key].unRectification)
+              this.allData.push(res.data.data.data[key].rectificationSum)
             }
+            this.changeYear.reverse()
+            this.noChangeData.reverse()
+            this.allData.reverse()
             this.noChangeData = Object.values(this.noChangeData)
             this.allData = Object.values(this.allData)
             // console.log("allData",this.allData)
@@ -4283,7 +4306,7 @@
         getSafetyCheck (){
           getSafetyCheck ().then((res) => {
             //console.log(res.data.data[0].key)
-            this.sumNum = res.data.data.length
+            // this.sumNum = res.data.data.length
             for(var i=0;i<res.data.data.length;i++) {
               if(res.data.data[i].key === 1){
                 this.checkKey.push("未处理")
@@ -4295,6 +4318,7 @@
                 this.checkKey.push("逾期")
               }
               this.checkValue.push(res.data.data[i].value)
+              this.sumNum += res.data.data[i].value
             }
             //console.log("安全检查",this.checkData)
             this.inchart1()
@@ -4305,14 +4329,18 @@
 
           getProblem ().then((res) => {
             //console.log("趋势分析",res.data.data)
-            if(res.data.data) {
-              for(var key in res.data.data){
+            if(res.data.data.data) {
+              for(var key in res.data.data.data){
                 this.progressXData.push(key)
-                this.newProblem.push(res.data.data[key].newProblem)
-                this.delProblem.push(res.data.data[key].delProblem)
-                this.curProblem.push(res.data.data[key].curProblem)
-
+                this.newProblem.push(res.data.data.data[key].newProblem)
+                this.delProblem.push(res.data.data.data[key].delProblem)
+                this.curProblem.push(res.data.data.data[key].curProblem)
               }
+              this.progressXData.reverse()
+              // console.log("riqi",this.progressXData)
+              this.newProblem.reverse()
+              this.delProblem.reverse()
+              this.curProblem.reverse()
               // console.log("key",this.progressXData)
               // console.log("newProblem",this.newProblem)
               // console.log("delProblem",this.delProblem)
@@ -4335,7 +4363,7 @@
             })
             //console.log("Arr",Arr)
             for(var i=0;i<Arr.length;i++){
-              if(i<Arr.length/2){
+              if(i<Arr.length/2-1){
                 this.innerData.push(Arr[i])
               }else{
                 this.outerData.push(Arr[i])
@@ -4507,7 +4535,7 @@
     font-size: 16px;
     font-weight: 700;
     position: absolute;
-    left: 44%;
+    left: 40%;
     bottom: 10px;
     letter-spacing: 2px;
   }

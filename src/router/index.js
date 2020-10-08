@@ -52,6 +52,17 @@ const routes = [
     ]
   },
   {
+    path: '/safeRecord',
+    component: Layout,
+    name: 'safeRecord',
+    children: [
+      {
+        path: '/safeRecord',
+        component: () => import('@/views/safeRecord/safeRecord'),
+      }
+    ]
+  },
+  {
     path: '/videoManager',
     component: Layout,
     name: 'videoManager',

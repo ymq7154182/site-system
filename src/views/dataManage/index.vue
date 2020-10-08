@@ -31,7 +31,7 @@
               <el-table-column prop="id" label="文件ID" width="100" align="center" />
               <el-table-column label="文件名称" align="center">
                 <template slot-scope="scope">
-                  <el-button v-if="scope.row.url" type="text" @click="openUrl(scope.row.url)" style="font-size: 15px; ">{{ scope.row.name }}</el-button>
+                  <el-button v-if="scope.row.url" type="text" @click="openUrl(scope.row.url)" style="font-size: 0.22rem; ">{{ scope.row.name }}</el-button>
                   <span v-else>{{ scope.row.name }}</span>
                 </template>
               </el-table-column>
@@ -138,7 +138,7 @@
 </template>
 
 <script>
-import {changeDoc, docType, findDoc, insertDoc} from "../../api/dataManage";
+import {changeDoc, docType, findDoc, getSite, insertDoc} from "../../api/dataManage";
 
 export default {
   data() {
@@ -215,6 +215,7 @@ export default {
     this.$store.dispatch('changeMsg', '资料管理');
     this.refreshTable();
     this.constructionSiteId = window.localStorage.getItem('siteId')
+    this.getConstructionSiteName(this.constructionSiteId);
     docType().then(response => {
       for(var i=0;i<response.data.rows.length;i++) {
         this.docTypeList.push(response.data.rows[i].name)
@@ -325,6 +326,15 @@ export default {
         this.alldoc = response.data
         this.fileTable = this.alldoc.word
       });
+    },
+    getConstructionSiteName(id) {
+      getSite({
+        siteId: id
+      }).then(response => {
+        if(response.data.code === 200) {
+          this.constructionSiteName = response.data.data.deptName
+        }
+      })
     }
   }
 }

@@ -54,21 +54,21 @@
             <li>
               <div class="li-text2 pos-style2 " :class="{'bg-img1': textStyle=== '安全管理', 'bg-img2': textStyle!== '安全管理'}" @click="securityControl">
                   <span>
-                   安全管理
+                   安质管理
                 </span>
               </div>
             </li>
             <li>
-              <div class="li-text2 pos-style3" :class="{'bg-img1': textStyle=== '设备管理', 'bg-img2': textStyle!== '设备管理'}" @click="gotoDevice">
+              <div class="li-text2 pos-style3" :class="{'bg-img1': textStyle=== '考评月报', 'bg-img2': textStyle!== '考评月报'}" @click="gotosafeRecord">
                   <span>
-                   设备管理
+                   考评月报
                 </span>
               </div>
             </li>
             <li>
-              <div class="li-text2 pos-style4" :class="{'bg-img1': textStyle=== '视频监控', 'bg-img2': textStyle!== '视频监控'}" @click="gotoVideo">
+              <div class="li-text2 pos-style4" :class="{'bg-img1': textStyle=== '进度管理', 'bg-img2': textStyle!== '进度管理'}" @click="gotoPress">
                   <span>
-                   视频监控
+                   进度管理
                 </span>
               </div>
             </li>
@@ -93,16 +93,16 @@
             </div>
           </li>
           <li>
-            <div class="li-text2 pos-style-right2" :class="{'bg-img23': textStyle=== '质量管理', 'bg-img22': textStyle!== '质量管理'}" >
+            <div class="li-text2 pos-style-right2" :class="{'bg-img23': textStyle=== '视频监控', 'bg-img22': textStyle!== '视频监控'}" @click="gotoVideo">
                   <span>
-                   质量管理
+                   视频监控
                 </span>
             </div>
           </li>
           <li>
-            <div class="li-text2 pos-style-right3" :class="{'bg-img23': textStyle=== '进度管理', 'bg-img22': textStyle!== '进度管理'}" @click="gotoPress">
+            <div class="li-text2 pos-style-right3" :class="{'bg-img23': textStyle=== '设备管理', 'bg-img22': textStyle!== '设备管理'}" @click="gotoDevice">
                   <span>
-                   进度管理
+                   设备管理
                 </span>
             </div>
           </li>
@@ -161,6 +161,9 @@
         },
         gotoPress () {
           this.$router.push('/scheduleManage')
+        },
+        gotosafeRecord() {
+          this.$router.push('/safeRecord')
         },
         gotoSystem() {
           // var url = 'http://121.36.106.18:38088/index'

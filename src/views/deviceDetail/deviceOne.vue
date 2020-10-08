@@ -27,7 +27,7 @@
             <el-button type="primary" @click="showUpload = true"><i class="el-icon-plus" /> 新增</el-button>
           </div>
           <div v-show="tableShow === 'table1'">
-            <div style="padding: 0 0.2rem">
+            <div class="data_table">
               <el-table
                 :data="fileTable.slice((currentPage - 1) * pageSize, currentPage * pageSize)"
                 class="file-table"
@@ -35,8 +35,8 @@
                 :header-row-style="{ color: '#409eff' }"
                 :row-style="{ color: 'white' }"
               >
-                <el-table-column prop="name" label="设备名称" align="center" />
-                <el-table-column prop="type" label="设备编号" width="100" align="center" />
+                <!--<el-table-column prop="name" label="设备名称" align="center" />-->
+                <!--<el-table-column prop="type" label="设备编号" width="100" align="center" />-->
                 <el-table-column prop="leftHeight" label="起升高度" />
                 <el-table-column prop="towerHeight" label="塔高" width="150" align="center" />
                 <el-table-column prop="installHeigth" label="安装高度" align="center" />
@@ -67,7 +67,7 @@
           </div>
 
           <div v-show="tableShow === 'table2'">
-            <div style="padding: 0 0.2rem">
+            <div  class="data_table">
               <el-table
                 :data="fileTable.slice((currentPage - 1) * pageSize, currentPage * pageSize)"
                 class="file-table"
@@ -75,8 +75,8 @@
                 :header-row-style="{ color: '#409eff' }"
                 :row-style="{ color: 'white' }"
               >
-                <el-table-column prop="name" label="设备名称" align="center" />
-                <el-table-column prop="type" label="设备编号" width="100" align="center" />
+                <!--<el-table-column prop="name" label="设备名称" align="center" />-->
+                <!--<el-table-column prop="type" label="设备编号" width="100" align="center" />-->
                 <el-table-column prop="leftHeight" label="起升高度" />
                 <el-table-column prop="towerHeight" label="塔高" width="150" align="center" />
                 <el-table-column prop="installHeigth" label="安装高度" align="center" />
@@ -105,7 +105,7 @@
           </div>
 
           <div v-show="tableShow === 'table3'">
-            <div style="padding: 0 0.2rem">
+            <div class="data_table">
               <el-table
                 :data="fileTable.slice((currentPage - 1) * pageSize, currentPage * pageSize)"
                 class="file-table"
@@ -149,7 +149,7 @@
           </div>
 
           <div v-show="tableShow === 'table4'">
-            <div style="padding: 0 0.2rem">
+            <div class="data_table">
               <el-table
                 :data="fileTable.slice((currentPage - 1) * pageSize, currentPage * pageSize)"
                 class="file-table"
@@ -193,7 +193,7 @@
           </div>
 
           <div v-show="tableShow === 'table5'">
-            <div style="padding: 0 0.2rem">
+            <div class="data_table">
               <el-table
                 :data="fileTable.slice((currentPage - 1) * pageSize, currentPage * pageSize)"
                 class="file-table"
@@ -233,7 +233,7 @@
           </div>
 
           <div v-show="tableShow === 'table6'">
-            <div style="padding: 0 0.2rem">
+            <div class="data_table">
               <el-table
                 :data="fileTable.slice((currentPage - 1) * pageSize, currentPage * pageSize)"
                 class="file-table"
@@ -242,13 +242,13 @@
                 :row-style="{ color: 'white' }"
               >
                 <el-table-column prop="weibaotime" label="维保时间" />
-                <el-table-column prop="maxCapacity" label="运转台时" />
-                <el-table-column prop="maxRange" label="更换主要零部件" />
-                <el-table-column prop="leftHeight" label="维管负责人" />
-                <el-table-column prop="towerHeight" label="维保人员" width="150" align="center" />
-                <el-table-column prop="installHeigth" label="维修（保养）内容" align="center" />
-                <el-table-column prop="installUserAqjg" label="监理单位审核意见" align="center" />
-                <el-table-column prop="installUserZc" label="监理单位审核日期" align="center" />
+                <el-table-column prop="maxcapacity" label="运转台时" />
+                <el-table-column prop="maxrange" label="更换主要零部件" />
+                <el-table-column prop="leftheight" label="维管负责人" />
+                <el-table-column prop="towerheight" label="维保人员" width="150" align="center" />
+                <el-table-column prop="installheigth" label="维修（保养）内容" align="center" />
+                <el-table-column prop="installuseraqjg" label="监理单位审核意见" align="center" />
+                <el-table-column prop="installuserzc" label="监理单位审核日期" align="center" />
                 <el-table-column prop="reporttime" label="上报时间" align="center" />
               </el-table>
             </div>
@@ -269,6 +269,15 @@
     <el-dialog :visible.sync="showUpload" title="新增信息" width="40%">
       <div style="height: 55vh; overflow-y: scroll; ">
         <el-form :model="uploadInfo"   label-width="1.5rem" v-show="tableShow === 'table1'">
+          <el-form-item label="设备id" >
+            <el-input v-model="uploadInfo.devid" style="width: 50%" placeholder="请输入设备id"></el-input>
+          </el-form-item>
+          <el-form-item label="安装id" >
+            <el-input v-model="uploadInfo.setupId" style="width: 50%" placeholder="请输入安装id"></el-input>
+          </el-form-item>
+          <el-form-item label="当前登录人id" >
+            <el-input v-model="uploadInfo.userid" style="width: 50%" placeholder="请输入当前登录人id"></el-input>
+          </el-form-item>
           <el-form-item label="起升高度" >
             <el-input v-model="uploadInfo.leftHeight" style="width: 50%" placeholder="请输入起升高度"></el-input>
           </el-form-item>
@@ -320,6 +329,15 @@
           </el-form-item>
         </el-form>
         <el-form :model="uploadInfo2"   label-width="1.5rem" v-show="tableShow === 'table2'">
+          <el-form-item label="设备id" >
+            <el-input v-model="uploadInfo2.devid" style="width: 50%" placeholder="请输入设备id"></el-input>
+          </el-form-item>
+          <el-form-item label="安装id" >
+            <el-input v-model="uploadInfo2.setupId" style="width: 50%" placeholder="请输入安装id"></el-input>
+          </el-form-item>
+          <el-form-item label="当前登录人id" >
+            <el-input v-model="uploadInfo2.userid" style="width: 50%" placeholder="请输入当前登录人id"></el-input>
+          </el-form-item>
           <el-form-item label="起升高度" >
             <el-input v-model="uploadInfo2.leftHeight" style="width: 50%" placeholder="请输入起升高度"></el-input>
           </el-form-item>
@@ -497,14 +515,17 @@
           </el-form-item>
         </el-form>
         <el-form :model="uploadInfo5"   label-width="1.5rem" v-show="tableShow === 'table5'">
+          <el-form-item label="设备id" >
+            <el-input v-model="uploadInfo5.devid" style="width: 50%" placeholder="请输入设备id"></el-input>
+          </el-form-item>
+          <el-form-item label="当前登录人id" >
+            <el-input v-model="uploadInfo5.userid" style="width: 50%" placeholder="请输入当前登录人id"></el-input>
+          </el-form-item>
           <el-form-item label="起升高度" >
             <el-input v-model="uploadInfo5.leftHeight" style="width: 50%" placeholder="请输入起升高度"></el-input>
           </el-form-item>
           <el-form-item label="塔高" >
             <el-input v-model="uploadInfo5.towerHeight" style="width: 50%" placeholder="塔高"></el-input>
-          </el-form-item>
-          <el-form-item label="当前标准节" >
-            <el-input v-model="uploadInfo5.installHeigth" style="width: 50%" placeholder="请输入当前标准节"></el-input>
           </el-form-item>
           <el-form-item label="新安装标准节" >
             <el-input v-model="uploadInfo5.maxLoad" style="width: 50%" placeholder="请输入新安装标准节"></el-input>
@@ -545,7 +566,7 @@
           <el-form-item label="结论" >
             <el-input v-model="uploadInfo5.conclusion" style="width: 50%" placeholder="请输入结论"></el-input>
           </el-form-item>
-          <el-form-item label="上报时间时间">
+          <el-form-item label="上报时间">
             <el-date-picker v-model="uploadInfo5.reporttime" align="right" type="date" placeholder="选择日期" :picker-options="pickerOptions" style="width: 50%; " />
           </el-form-item>
           <el-form-item>
@@ -554,30 +575,39 @@
           </el-form-item>
         </el-form>
         <el-form :model="uploadInfo6"   label-width="1.5rem" v-show="tableShow === 'table6'">
+          <el-form-item label="设备id" >
+            <el-input v-model="uploadInfo6.devid" style="width: 50%" placeholder="请输入设备id"></el-input>
+          </el-form-item>
+          <el-form-item label="使用id" >
+            <el-input v-model="uploadInfo6.useId" style="width: 50%" placeholder="请输入使用id"></el-input>
+          </el-form-item>
+          <el-form-item label="当前登录人id" >
+            <el-input v-model="uploadInfo6.userid" style="width: 50%" placeholder="请输入当前登录人id"></el-input>
+          </el-form-item>
           <el-form-item label="维保时间" >
-            <el-input v-model="uploadInfo6.weibaotime" style="width: 50%" placeholder="请输入维保时间"></el-input>
+            <el-date-picker v-model="uploadInfo6.weibaotime" align="right" type="date" placeholder="选择日期" :picker-options="pickerOptions" style="width: 50%; " />
           </el-form-item>
           <el-form-item label="运转台时" >
-            <el-input v-model="uploadInfo6.maxCapacity" style="width: 50%" placeholder="请输入运转台时"></el-input>
+            <el-input v-model="uploadInfo6.maxcapacity" style="width: 50%" placeholder="请输入运转台时"></el-input>
           </el-form-item>
           <el-form-item label="更换主要零部件" >
-            <el-input v-model="uploadInfo6.maxRange" style="width: 50%" placeholder="请输入更换主要零部件"></el-input>
+            <el-input v-model="uploadInfo6.maxrange" style="width: 50%" placeholder="请输入更换主要零部件"></el-input>
           </el-form-item>
 
           <el-form-item label="维管负责人" >
-            <el-input v-model="uploadInfo6.leftHeight" style="width: 50%" placeholder="请输入维管负责人"></el-input>
+            <el-input v-model="uploadInfo6.leftheight" style="width: 50%" placeholder="请输入维管负责人"></el-input>
           </el-form-item>
           <el-form-item label="维保人员" >
-            <el-input v-model="uploadInfo6.towerHeight" style="width: 50%" placeholder="维保人员"></el-input>
+            <el-input v-model="uploadInfo6.towerheight" style="width: 50%" placeholder="维保人员"></el-input>
           </el-form-item>
           <el-form-item label="维修（保养）内容" >
-            <el-input v-model="uploadInfo6.installHeigth" style="width: 50%" placeholder="请输入维修（保养）内容"></el-input>
+            <el-input v-model="uploadInfo6.installheigth" style="width: 50%" placeholder="请输入维修（保养）内容"></el-input>
           </el-form-item>
           <el-form-item label="监理单位审核意见" >
-            <el-input v-model="uploadInfo6.installUserAqjg" style="width: 50%" placeholder="请输入监理单位审核意见"></el-input>
+            <el-input v-model="uploadInfo6.installuseraqjg" style="width: 50%" placeholder="请输入监理单位审核意见"></el-input>
           </el-form-item>
           <el-form-item label="监理单位审核日期" >
-            <el-date-picker v-model="uploadInfo6.installUserZc" align="right" type="date" placeholder="选择日期" :picker-options="pickerOptions" style="width: 50%; " />
+            <el-date-picker v-model="uploadInfo6.installuserzc" align="right" type="date" placeholder="选择日期" :picker-options="pickerOptions" style="width: 50%; " />
           </el-form-item>
           <el-form-item label="上报时间">
             <el-date-picker v-model="uploadInfo6.reporttime" align="right" type="date" placeholder="选择日期" :picker-options="pickerOptions" style="width: 50%; " />
@@ -622,7 +652,8 @@
 </template>
 
 <script>
-  import { zijian } from "@/api/getData";
+  import { zijian, addZijian,getSysProData,yanshou, addyanshou,weihu, addweihu, dingqi, adddingqi } from "@/api/deviceManage";
+  import axios from 'axios'
   export default {
     data() {
       return {
@@ -630,6 +661,7 @@
         tableShow: 'table1',
         currentPage: 1,
         pageSize: 10,
+        siteId: '',
         showUpload: false,
         uploadInfo: {
           proid: '', // 项目id
@@ -724,7 +756,7 @@
         uploadInfo5: {
           proid: '', // 项目id
           devid: '', // 设备id
-          setupId: '', // 安装id
+          // setupId: '', // 安装id
           userid: '', // 当前登录人id
           leftHeight: '',// 起升高度
           towerHeight: '', // 塔高
@@ -746,16 +778,16 @@
         uploadInfo6: {
           proid: '', // 项目id
           devid: '', // 设备id
-          setupId: '', // 安装id
+          useId: '', // 使用id
           userid: '', // 当前登录人id
           weibaotime: '', // 维保时间
-          maxCapacity: '', // 运转台时
-          maxRange: '', // 更换主要零部件
-          leftHeight: '', // 维管负责人
-          towerHeight: '', // 维保人员
-          installHeigth: '', // 维修（保养）内容
-          installUserAqjg: '', // 监理单位审核意见
-          installUserZc: '', // 监理单位审核日期
+          maxcapacity: '', // 运转台时
+          maxrange: '', // 更换主要零部件
+          leftheight: '', // 维管负责人
+          towerheight: '', // 维保人员
+          installheigth: '', // 维修（保养）内容
+          installuseraqjg: '', // 监理单位审核意见
+          installuserzc: '', // 监理单位审核日期
           reporttime: '',  // 上报时间
         },
         rules: {
@@ -812,56 +844,155 @@
       }
     },
     mounted() {
-      // this.getZiJian()
+      this.getZiJian()
+      this.getAllData()
     },
     methods: {
-      getZiJian() {
+      getAllData() {
+        this.siteId = localStorage.getItem('siteId')
         var data = {
-          limit: 10,
-          page: 1,
-          setupId: 14,
-          starttime: '',
-          endtime: '',
-          ent_name: ''
+          deptId: this.siteId
         }
-        zijian(data).then((res) => {
-
+        getSysProData(data).then((res) => {
+          this.uploadInfo.proid = res.data.guid
+          this.uploadInfo2.proid = res.data.guid
+          this.uploadInfo3.proid = res.data.guid
+          this.uploadInfo4.proid = res.data.guid
+          this.uploadInfo5.proid = res.data.guid
+          this.uploadInfo6.proid = res.data.guid
+        })
+      },
+      getZiJian() {
+        zijian().then((res) => {
+          this.fileTable = res.data.data
         })
       },
       getShow1() {
         this.tableShow = 'table1'
+        this.getZiJian()
       },
       getShow2() {
         this.tableShow = 'table2'
+        this.getyanshou()
       },
       getShow3() {
         this.tableShow = 'table3'
+        this.fileTable = []
       },
       getShow4() {
         this.tableShow = 'table4'
+        this.fileTable = []
       },
       getShow5() {
         this.tableShow = 'table5'
+        this.getdingqi()
       },
       getShow6() {
         this.tableShow = 'table6'
+        this.getweihu()
       },
       handleCurrentChange(val) {
         this.currentPage = val
       },
-      submitUpload(formName) {
-        this.$refs[formName].validate((valid) => {
-          if(valid) {
-            this.$message({
-              type: 'success',
-              message: '上传成功'
-            });
-            this.showEdit = false;
+      submitUpload() {
+        // this.$refs[formName].validate((valid) => {
+        //   if(valid) {
+        //     this.$message({
+        //       type: 'success',
+        //       message: '上传成功'
+        //     });
+        //     this.showEdit = false;
+        //   } else {
+        //     this.$message.error('上传失败')
+        //     return false
+        //   }
+        // });
+        if (this.tableShow === 'table1') {
+          this.getaddZijian()
+        } else if (this.tableShow === 'table2') {
+          this.getaddyanshou()
+        }else if(this.tableShow === 'table3') {
+
+        }else if(this.tableShow === 'table4') {
+
+        }else if(this.tableShow === 'table5') {
+          this.getadddingqi()
+        }else if(this.tableShow === 'table6') {
+          this.getaddweihu()
+        }
+      },
+      getaddZijian() {
+        var data = this.uploadInfo
+        addZijian(data).then((res) => {
+          if(res.data.code === 200) {
+            this.$message.success(res.data.msg)
+            this.getyanshou()
+            this.showUpload = false
           } else {
-            this.$message.error('上传失败')
-            return false
+            this.$message.error(res.data.msg)
           }
-        });
+        })
+      },
+      getyanshou() {
+        yanshou().then((res) => {
+          this.fileTable = res.data.data
+        })
+      },
+      getaddyanshou() {
+        var data = this.uploadInfo2
+        addyanshou(data).then((res) => {
+          if(res.data.code === 200) {
+            this.$message.success(res.data.msg)
+            this.getZiJian()
+            this.showUpload = false
+          } else {
+            this.$message.error(res.data.msg)
+          }
+        })
+      },
+      getweihu() {
+        weihu().then((res) => {
+          this.fileTable = res.data.rows
+        })
+      },
+      getaddweihu() {
+        var data = this.uploadInfo6
+        // var url = 'http://121.36.106.18:38080/device/maintenance'
+        // axios.post(url, data).then((res) =>{
+        //     if(res.data.code === 200) {
+        //       this.$message.success(res.data.msg)
+        //       this.getweihu()
+        //       this.showUpload = false
+        //     } else {
+        //       this.$message.error(res.data.msg)
+        //     }
+        // })
+        addweihu(data).then((res) => {
+          if(res.data.code === 200) {
+            this.$message.success(res.data.msg)
+            this.getweihu()
+            this.showUpload = false
+          } else {
+            this.$message.error(res.data.msg)
+          }
+        })
+      },
+      getdingqi() {
+        dingqi().then((res) => {
+          this.fileTable = res.data.rows
+        })
+      },
+      getadddingqi() {
+        var data = this.uploadInfo5
+        adddingqi(data).then((res) => {
+          if(res.data.code === 200) {
+            this.$message.success(res.data.msg)
+            this.getdingqi()
+            this.showUpload = false
+          } else {
+            this.$message.error(res.data.msg)
+          }
+        })
       },
       resetForm(formName) {
         this.$refs[formName].resetFields();
@@ -891,7 +1022,7 @@
   }
 </script>
 
-<style>
+<style scoped>
   .dm-aside {
     background-color: rgba(0, 36, 78, 0.5);
     height: 83vh;
@@ -939,30 +1070,30 @@
     color: #409eff;
   }
 
-  /*透明化整体*/
-  .el-table,
-  .el-table__expanded-cell {
-    background-color: transparent !important;
-  }
-  /*透明化行、单元格*/
-  .el-table th,
-  .el-table tr,
-  .el-table td {
-    background-color: transparent !important;
-  }
-  /*hover时样式*/
-  .el-table tbody tr:hover>td {
-    background-color: #367f7f78 !important
-  }
+  /*!*透明化整体*!*/
+  /*.el-table,*/
+  /*.el-table__expanded-cell {*/
+    /*background-color: transparent !important;*/
+  /*}*/
+  /*!*透明化行、单元格*!*/
+  /*.el-table th,*/
+  /*.el-table tr,*/
+  /*.el-table td {*/
+    /*background-color: transparent !important;*/
+  /*}*/
+  /*!*hover时样式*!*/
+  /*.el-table tbody tr:hover>td {*/
+    /*background-color: #367f7f78 !important*/
+  /*}*/
 
-  /*偶数行样式*/
-  .el-table__row--striped td {
-    background-color: #45797b33 !important
-  }
-  /*奇数行样式*/
-  .el-table__row:not(.el-table__row--striped) {
-    background: #1439391c !important;
-  }
+  /*!*偶数行样式*!*/
+  /*.el-table__row--striped td {*/
+    /*background-color: #45797b33 !important*/
+  /*}*/
+  /*!*奇数行样式*!*/
+  /*.el-table__row:not(.el-table__row--striped) {*/
+    /*background: #1439391c !important;*/
+  /*}*/
 
   .type-list {
     font-size: 0.26rem;
@@ -986,5 +1117,35 @@
 
   .type-icon {
     padding: 0 0.2rem;
+  }
+  .data_table {
+    /*height: 80%;*/
+    /*overflow-y: scroll;*/
+    /*width: 100%;*/
+    padding: 0 0.2rem;
+  }
+  /*透明化整体*/
+  .data_table >>> .el-table,
+  .data_table >>> .el-table__expanded-cell {
+    background-color: transparent !important;
+  }
+  /*透明化行、单元格*/
+  .data_table >>> .el-table th,
+  .data_table >>> .el-table tr,
+  .data_table >>> .el-table td {
+    background-color: transparent !important;
+  }
+  /*hover时样式*/
+  .data_table >>> .el-table tbody tr:hover>td {
+    background-color: #367f7f78 !important
+  }
+
+  /*偶数行样式*/
+  .data_table >>> .el-table__row--striped td {
+    background-color: #45797b33 !important
+  }
+  /*奇数行样式*/
+  .data_table >>> .el-table__row:not(.el-table__row--striped) {
+    background: #1439391c !important;
   }
 </style>
