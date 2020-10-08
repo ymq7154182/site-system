@@ -425,18 +425,21 @@
   }
 </style>
 <style>
-  .el-step:last-of-type .el-step__description {
+  .schedule-press .el-steps .el-step:last-of-type .el-step__description {
     padding-right: 10%;
+  }
+  .el-step__title.is-process {
+    color: #ffb91b;
+  }
+  .el-steps .el-step__head.is-process .is-text {
+    border: 4px solid #ffb91b;
+    width: 36px;
+    height: 36px;
+    margin-top: -8px;
+    margin-left: -6px;
   }
   .schedule-content .el-step__title {
     font-size: 18px;
     font-weight: bold;
-  }
-   .el-step__head.is-process .is-text {
-    width: 36px;
-    height: 36px;
-    border: 4px solid #3c3c3c;
-    margin-top: -8px;
-     margin-left: -6px;
   }
 </style>
