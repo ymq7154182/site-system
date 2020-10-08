@@ -877,9 +877,11 @@
       },
       getShow3() {
         this.tableShow = 'table3'
+        this.fileTable = []
       },
       getShow4() {
         this.tableShow = 'table4'
+        this.fileTable = []
       },
       getShow5() {
         this.tableShow = 'table5'
@@ -1020,7 +1022,7 @@
   }
 </script>
 
-<style>
+<style scoped>
   .dm-aside {
     background-color: rgba(0, 36, 78, 0.5);
     height: 83vh;
