@@ -9,34 +9,43 @@
             <el-button type="success" icon="el-icon-edit" size="mini"  @click="addRecord" >新增</el-button>
           </el-col>
           <el-col :span="2">
-            <el-button type="warning" icon="el-icon-download" size="mini" @click="handleExport" >下载</el-button>
+            <el-button type="warning" icon="el-icon-download" size="mini" @click="handleExport" style="background-color: #7c7c7c;border:1px solid #7c7c7c">下载</el-button>
           </el-col>
 <!--          搜索框-->
-<!--          <el-col :span="6" :offset="12">-->
-<!--            <div>-->
-<!--              <el-input placeholder="请输入内容" v-model="input2">-->
-<!--                <el-button slot="append" icon="el-icon-search"></el-button>-->
-<!--              </el-input>-->
-<!--            </div>-->
-<!--          </el-col>-->
+          <el-col :span="11" :offset="7">
+            <el-date-picker
+              v-model="startTime"
+              type="date"
+              value-format="yyyy-MM-dd"
+              placeholder="选择开始日期">
+            </el-date-picker>
+            <el-date-picker
+              v-model="endTime"
+              type="date"
+              value-format="yyyy-MM-dd"
+              placeholder="选择结束日期">
+            </el-date-picker>
+          </el-col>
+          <el-button type="primary" @click="getDataByTime">点击搜索</el-button>
         </el-row>
         <div class="safeTable">
           <!--        表格部分-->
           <el-table style="" v-loading="loading" :data="userList.slice((currentPage - 1) * pageSize, currentPage * pageSize)" @selection-change="handleSelectionChange"  border >
             <el-table-column type="selection" width="50" align="center" />
-<!--            <el-table-column label="项目名称" align="center" prop="proid" width="100"/>-->
-            <el-table-column label="项目名称" align="center" prop="proName" width="200" />
-            <el-table-column label="项目地址" align="center" prop="addressAll" width="100"/>
-            <el-table-column label="综合得分" align="center" prop="checkCode" :show-overflow-tooltip="true" width="200"/>
-            <el-table-column label="检查人员" align="center" prop="checkUser" :show-overflow-tooltip="true" width="200"/>
+            <el-table-column label="项目序号" align="center" prop="id" width="100"/>
+<!--            <el-table-column label="项目名称" align="center" prop="proName" width="160" />-->
+            <el-table-column label="项目地址" align="center" prop="addressAll" width="200"/>
+            <el-table-column label="综合得分" align="center" prop="checkCode" :show-overflow-tooltip="true" width="120"/>
+            <el-table-column label="检查人员" align="center" prop="checkUser" :show-overflow-tooltip="true" width="120"/>
             <el-table-column label="自评结果" align="center" prop="selfResult" :show-overflow-tooltip="true" width="120"/>
             <el-table-column label="检查时间" align="center" prop="checkTime" width="200" />
 
 <!--            <el-table-column label="检查员姓名" align="center" prop="checkUser" width="120" />-->
-            <el-table-column label="操作" align="center" width="180" class-name="small-padding fixed-width" >
+            <el-table-column label="操作" align="center" width="160" class-name="small-padding fixed-width" >
               <template slot-scope="scope">
                 <el-button size="mini" type="text" icon="el-icon-view" @click="handleView(scope.row)"
                 >详情</el-button>
+                <el-button size="mini" type="text" icon="el-icon-refresh" style="color: #7c7c7c">同步</el-button>
               </template>
             </el-table-column>
           </el-table>
@@ -354,6 +363,18 @@
         <el-form ref="form" :model="form" :rules="rules" label-width="80px">
           <el-row>
             <el-col :span="12">
+              <el-form-item label="项目地址" prop="addressAll" label-width="130px">
+                <el-input v-model="form.addressAll" placeholder="请输入项目地址" />
+              </el-form-item>
+            </el-col>
+            <el-col :span="9">
+              <el-form-item label="综合得分" prop="checkCode" label-width="130px">
+                <el-input v-model="form.checkCode" placeholder="请输入综合得分" />
+              </el-form-item>
+            </el-col>
+          </el-row>
+          <el-row>
+            <el-col :span="12">
               <el-form-item label="项目进度" prop="progress" label-width="130px">
                 <el-input v-model="form.progress" placeholder="请输入项目进度" />
               </el-form-item>
@@ -376,16 +397,8 @@
           </el-col>
         </el-row>
         <el-row>
-          <el-col :span="12">
-            <el-form-item label="奖惩情况" prop="situation" label-width="130px">
-              <el-input v-model="form.situation" placeholder="请输入奖惩情况" />
-            </el-form-item>
-          </el-col>
-          <el-col :span="9">
-            <el-form-item label="综合得分" prop="checkCode" label-width="130px">
-              <el-input v-model="form.checkCode" placeholder="请输入综合得分" />
-            </el-form-item>
-          </el-col>
+
+
         </el-row>
         <el-row>
           <el-col :span="12">
@@ -445,13 +458,13 @@
             </el-form-item>
           </el-col>
         </el-row>
-<!--        <el-row>-->
-<!--          <el-col :span="12">-->
-<!--            <el-form-item label="奖惩情况" prop="situation" label-width="130px">-->
-<!--              <el-input v-model="form.situation" placeholder="请输入奖惩情况" />-->
-<!--            </el-form-item>-->
-<!--          </el-col>-->
-<!--        </el-row>-->
+        <el-row>
+          <el-col :span="12">
+            <el-form-item label="奖惩情况" prop="situation" label-width="130px">
+              <el-input v-model="form.situation" placeholder="请输入奖惩情况" />
+            </el-form-item>
+          </el-col>
+        </el-row>
         <el-row>
           <el-col :span="21">
             <el-form-item label="项目自评意见" prop="selfRecord" label-width="130px">
@@ -672,12 +685,14 @@
 </template>
 
 <script>
-import {addCheckMonthChild,addMonthCheck,getAllCheckMonth,getCheckMonthData,getSafeAdminInfo} from '@/api/qualityControl';
+import {screenName,getSysProData,getCheckRecordByTime,addCheckMonthChild,addMonthCheck,getAllCheckMonth,getCheckMonthData,getSafeAdminInfo} from '@/api/qualityControl';
+import {getSite} from "../../api/dataManage";
 export default {
   name: "safeRecord",
   data(){
     return{
-
+      startTime:'',
+      endTime:'',
       // 当前每页数据的条数
       pageSize:10,
       // 数据的总条数
@@ -736,6 +751,8 @@ export default {
       isRectifies:[['1','是'],['-1','否']],
       // 自评结果选择
       selfRecords:['优良','合格','不合格'],
+      // 工地名称
+      proName:'',
       // 表单参数
       form: {
         proid: 27467,
@@ -774,6 +791,9 @@ export default {
       },
       // 表单校验
       rules: {
+        addressAll:[
+          { required: true, message: "项目地址不能为空", trigger: "change" },
+        ],
         evaltime: [
           { required: true, message: "考评时间不能为空", trigger: "change" },
         ],
@@ -849,9 +869,39 @@ export default {
     }
   },
   created() {
+    this.getConstructionSiteName(localStorage.getItem('siteId'))
+    console.log("siteId",localStorage.getItem('siteId'))
     this.getList()
+
+  },
+  mounted() {
+
   },
   methods:{
+    // 根据工地id获取
+    getConstructionSiteName(id) {
+      getSysProData({
+        deptId: id
+        // deptId: 1031
+      }).then(response => {
+          console.log(response.data)
+          console.log("取到的proid",response.data.proName)
+          this.proName = response.data.proName
+          console.log("拿到的proname",this.proName)
+          this.screenName()
+
+      })
+    },
+    screenName(){
+      screenName({
+        name: this.proName
+      }).then(response => {
+        if(response.data.code === 200) {
+          console.log("proName返回成功！")
+        }
+
+      })
+    },
     submitUpload(){},
     handlePreview(){},
     // 月报检查添加一组
@@ -877,9 +927,9 @@ export default {
       // var total2 = 0
       getAllCheckMonth().then((res) => {
         this.userList = res.data.rows
-        console.log("所有月评",this.userList)
+        // console.log("所有月评",this.userList)
         this.pageTotal += res.data.total
-        console.log("数据总数",this.pageTotal)
+        // console.log("数据总数",this.pageTotal)
       })
       // 省安监接口
       // var prames={
@@ -1028,7 +1078,7 @@ export default {
     handleView(row){
       console.log("chakan",row)
       var prams = {
-        id:row.proid
+        id:row.id
       }
       getCheckMonthData(prams).then((res) => {
         console.log("查看接口返回的数据",res.data.data)
@@ -1138,7 +1188,19 @@ export default {
     },
     saveAffixOrgUrl(response, file, fileList) {
       this.form.affixOrg = response.data;
-    }
+    },
+    // 搜索功能
+    getDataByTime(){
+      var prams = {
+        start:this.startTime,
+        end:this.endTime
+      }
+      getCheckRecordByTime(prams).then((res) => {
+        this.userList = res.data.data
+        console.log("时间搜索成功！")
+      })
+    },
+
   },
 
 }

@@ -80,7 +80,8 @@
         <div class="border-top-left"></div>
         <div class="box-title" v-model="title">{{title}}</div>
         <div class="schedule-press">
-          <el-steps direction="vertical" :active="1" :space="120">
+          <el-steps direction="vertical" :space="120">
+<!--          <el-steps direction="vertical" :active="smallActive" :space="120">-->
             <el-step :title="item.duration2DictName" v-for="(item, index) in dataList" :key="index">
 <!--            <el-step :title="item.duration2DictName" :description="item.content"  v-for="(item, index) in dataList" :key="index">-->
               <template slot="description">
@@ -142,6 +143,7 @@
     data() {
       return {
         active: 0,
+        smallActive: 0,
         dataList: [], // 点击每一个进度，显示的详细进度条数据
         title: '', // 每一个大的进度的名字
         showRightTime: false, // 是否展示完成时间
@@ -425,18 +427,21 @@
   }
 </style>
 <style>
-  .el-step:last-of-type .el-step__description {
+  .schedule-press .el-steps .el-step:last-of-type .el-step__description {
     padding-right: 10%;
+  }
+  .el-step__title.is-process {
+    color: #ffb91b;
+  }
+  .el-steps .el-step__head.is-process .is-text {
+    border: 4px solid #ffb91b;
+    width: 36px;
+    height: 36px;
+    margin-top: -8px;
+    margin-left: -6px;
   }
   .schedule-content .el-step__title {
     font-size: 18px;
     font-weight: bold;
-  }
-   .el-step__head.is-process .is-text {
-    width: 36px;
-    height: 36px;
-    border: 4px solid #3c3c3c;
-    margin-top: -8px;
-     margin-left: -6px;
   }
 </style>
