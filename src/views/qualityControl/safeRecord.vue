@@ -9,7 +9,7 @@
             <el-button type="success" icon="el-icon-edit" size="mini"  @click="addRecord" >新增</el-button>
           </el-col>
           <el-col :span="2">
-            <el-button type="warning" icon="el-icon-download" size="mini" @click="handleExport" >下载</el-button>
+            <el-button type="warning" icon="el-icon-download" size="mini" @click="handleExport" style="background-color: #7c7c7c;border:1px solid #7c7c7c">下载</el-button>
           </el-col>
 <!--          搜索框-->
           <el-col :span="11" :offset="7">
@@ -45,6 +45,7 @@
               <template slot-scope="scope">
                 <el-button size="mini" type="text" icon="el-icon-view" @click="handleView(scope.row)"
                 >详情</el-button>
+                <el-button size="mini" type="text" icon="el-icon-refresh" style="color: #7c7c7c">同步</el-button>
               </template>
             </el-table-column>
           </el-table>
@@ -684,7 +685,7 @@
 </template>
 
 <script>
-import {getSysProData,getCheckRecordByTime,addCheckMonthChild,addMonthCheck,getAllCheckMonth,getCheckMonthData,getSafeAdminInfo} from '@/api/qualityControl';
+import {screenName,getSysProData,getCheckRecordByTime,addCheckMonthChild,addMonthCheck,getAllCheckMonth,getCheckMonthData,getSafeAdminInfo} from '@/api/qualityControl';
 import {getSite} from "../../api/dataManage";
 export default {
   name: "safeRecord",
@@ -750,6 +751,8 @@ export default {
       isRectifies:[['1','是'],['-1','否']],
       // 自评结果选择
       selfRecords:['优良','合格','不合格'],
+      // 工地名称
+      proName:'',
       // 表单参数
       form: {
         proid: 27467,
@@ -866,14 +869,39 @@ export default {
     }
   },
   created() {
+    this.getConstructionSiteName(localStorage.getItem('siteId'))
+    console.log("siteId",localStorage.getItem('siteId'))
     this.getList()
 
   },
   mounted() {
-    this.getConstructionSiteName(window.localStorage.getItem('siteId'))
-    console.log("siteId",window.localStorage.getItem('siteId'))
+
   },
   methods:{
+    // 根据工地id获取
+    getConstructionSiteName(id) {
+      getSysProData({
+        deptId: id
+        // deptId: 1031
+      }).then(response => {
+          console.log(response.data)
+          console.log("取到的proid",response.data.proName)
+          this.proName = response.data.proName
+          console.log("拿到的proname",this.proName)
+          this.screenName()
+
+      })
+    },
+    screenName(){
+      screenName({
+        name: this.proName
+      }).then(response => {
+        if(response.data.code === 200) {
+          console.log("proName返回成功！")
+        }
+
+      })
+    },
     submitUpload(){},
     handlePreview(){},
     // 月报检查添加一组
@@ -1172,15 +1200,7 @@ export default {
         console.log("时间搜索成功！")
       })
     },
-    getConstructionSiteName(id) {
-      getSysProData({
-        deptId: id
-      }).then(response => {
-        if(response.data.code === 200) {
-          console.log("取到的proid",response.data.data)
-        }
-      })
-    }
+
   },
 
 }

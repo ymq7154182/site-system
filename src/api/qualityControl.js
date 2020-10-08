@@ -111,3 +111,11 @@ export function getSysProData (parems) {
     params: parems
   })
 }
+// 大屏端输入项目名称
+export function screenName (parems) {
+  return request({
+    url: '/system/safe/screenName',
+    method: 'post',
+    params: parems
+  })
+}
