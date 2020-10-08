@@ -84,11 +84,108 @@
         <el-col :span="8">
           <el-row>
             <div class="green">
-              <div style="position: absolute;top: 0.2rem;left: 0.2rem">
+              <div style="padding-top: 0.2rem;margin-left: 0.2rem">
                 <span style="font-size: 0.2rem;color: #ffa454;">绿色施工</span>
               </div>
-              <div class="green_container">
-                <img src="../assets/homepage/shigong.png" style="margin-left: 1.6rem;width:6rem;height: 3rem">
+              <div class="green_container" style="display: flex;justify-content:space-evenly">
+                <div class="green_one" style="font-size: 0.15rem">
+                  <div style="text-align: center">
+                    <img src="../assets/homepage/yin.png">
+                  </div>
+                  <div style="text-align: center">
+                    <p style="color: #fefefe">周五</p>
+                    <p style="color: #fefefe">07月17日</p>
+                  </div>
+                  <div style="text-align: center">
+                    <p style="color: #fefefe"><span style="font-size: 0.5rem">28</span>阴</p>
+                    <p style="color: #fefefe">25-33℃</p>
+                  </div>
+                  <div style="text-align: center;margin-top: 0.1rem">
+                    <p style="color: #fefefe">多云转雷阵雨</p>
+                    <p style="color: #fefefe">西南风3-6级</p>
+                  </div>
+                </div>
+                <div class="green_two" style="width: 1.5rem">
+                  <div style="position: relative;margin-top: 0.1rem">
+                    <img style="width: 0.3rem;position: absolute;top: -0.05rem" src="../assets/homepage/wendu.png">
+                    <span style="color: #fefefe;margin-left: 0.4rem">温度</span>
+                    <span style="color:#d15765;margin-left: 0.25rem;float: right">6.6</span>
+                  </div>
+                  <div style="position: relative;margin-top: 0.17rem">
+                    <img style="width: 0.3rem;position: absolute;top: -0.05rem" src="../assets/homepage/shidu.png">
+                    <span style="color: #fefefe;margin-left: 0.4rem">湿度</span>
+                    <span style="color:#d15765;margin-left: 0.25rem;float: right">6.6</span>
+                  </div>
+                  <div style="position: relative;margin-top: 0.17rem">
+                    <img style="width: 0.3rem;position: absolute;top: -0.05rem" src="../assets/homepage/fengsu.png">
+                    <span style="color: #fefefe;margin-left: 0.4rem">风速</span>
+                    <span style="color:#d15765;margin-left: 0.25rem;float: right">6.6</span>
+                  </div>
+                  <div style="position: relative;margin-top: 0.17rem">
+                    <img style="width: 0.3rem;position: absolute;top: -0.05rem" src="../assets/homepage/zaoying.png">
+                    <span style="color: #fefefe;margin-left: 0.4rem">噪音</span>
+                    <span style="color:#d15765;margin-left: 0.25rem;float: right">6.6</span>
+                  </div>
+                  <div style="position: relative;margin-top: 0.17rem">
+                    <img style="width: 0.3rem;position: absolute;top: -0.05rem" src="../assets/homepage/pm.png">
+                    <span style="color: #fefefe;margin-left: 0.4rem">PM2.5</span>
+                    <span style="color:#d15765;margin-left: 0.25rem;float: right">6.6</span>
+                  </div>
+                  <div style="position: relative;margin-top: 0.17rem">
+                    <img style="width: 0.3rem;position: absolute;top: -0.05rem" src="../assets/homepage/ten.png">
+                    <span style="color: #fefefe;margin-left: 0.4rem">PM10</span>
+                    <span style="color:#d15765;margin-left: 0.25rem;float: right">6.6</span>
+                  </div>
+                </div>
+                <div class="green_three">
+                  <div style="text-align: center">
+                    <p style="color: #fefefe">周六</p>
+                    <p style="color: #fefefe;margin-top: 0.15rem">07月18日</p>
+                  </div>
+                  <div style="text-align: center;margin-top: 0.17rem">
+                    <img src="../assets/homepage/leizhenyu.png">
+                  </div>
+                  <div style="text-align: center">
+                    <p style="color: #fefefe">25-33℃</p>
+                  </div>
+                  <div style="text-align: center;margin-top: 0.15rem">
+                    <p style="color: #fefefe">多云转雷阵雨</p>
+                    <p style="color: #fefefe">西南风3-6级</p>
+                  </div>
+                </div>
+                <div class="green_three">
+                  <div style="text-align: center">
+                    <p style="color: #fefefe">周日</p>
+                    <p style="color: #fefefe;margin-top: 0.15rem">07月19日</p>
+                  </div>
+                  <div style="text-align: center;margin-top: 0.17rem">
+                    <img src="../assets/homepage/leizhenyu.png">
+                  </div>
+                  <div style="text-align: center">
+                    <p style="color: #fefefe">25-33℃</p>
+                  </div>
+                  <div style="text-align: center;margin-top: 0.15rem">
+                    <p style="color: #fefefe">多云转雷阵雨</p>
+                    <p style="color: #fefefe">西南风3-6级</p>
+                  </div>
+                </div>
+                <div class="green_three">
+                  <div style="text-align: center">
+                    <p style="color: #fefefe">周一</p>
+                    <p style="color: #fefefe;margin-top: 0.15rem">07月20日</p>
+                  </div>
+                  <div style="text-align: center;margin-top: 0.17rem">
+                    <img src="../assets/homepage/qingtian.png">
+                  </div>
+                  <div style="text-align: center">
+                    <p style="color: #fefefe">25-33℃</p>
+                  </div>
+                  <div style="text-align: center;margin-top: 0.15rem">
+                    <p style="color: #fefefe">雷阵雨转晴</p>
+                    <p style="color: #fefefe">西南风3-6级</p>
+                  </div>
+                </div>
+<!--                <img src="../assets/homepage/shigong.png" style="margin-left: 1.6rem;width:6rem;height: 3rem">-->
               </div>
             </div>
           </el-row>
