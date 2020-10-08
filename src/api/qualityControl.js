@@ -103,3 +103,11 @@ export function getCheckRecordByTime (parems) {
     params: parems
   })
 }
+// 根据工地id获取整条记录
+export function getSysProData (parems) {
+  return request({
+    url: '/getSysProData',
+    method: 'get',
+    params: parems
+  })
+}
