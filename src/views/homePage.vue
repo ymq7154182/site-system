@@ -1363,6 +1363,9 @@
     margin-top: -8px;
     margin-left: -6px;
   }
+  .schedule-press .el-steps .el-step:last-of-type .el-step__description {
+    padding-right: 10%;
+  }
   .process_content .el-step__title {
     line-height: 26px;
   }
