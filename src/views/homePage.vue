@@ -105,7 +105,8 @@
             <div class="wc_time" v-if="endTime !== null">完成时间：{{endTime}}</div>
 <!--            <div class="box-title">{{title}}</div>-->
             <div class="schedule-press">
-              <el-steps direction="vertical" :active="1" :space="120">
+              <el-steps direction="vertical" :space="120">
+<!--              <el-steps direction="vertical" :active="1" :space="120">-->
                 <el-step :title="item.duration2DictName" v-for="(item, index) in dataList" :key="index">
                   <!--            <el-step :title="item.duration2DictName" :description="item.content"  v-for="(item, index) in dataList" :key="index">-->
                   <template slot="description">

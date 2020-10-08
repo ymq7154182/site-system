@@ -80,7 +80,8 @@
         <div class="border-top-left"></div>
         <div class="box-title" v-model="title">{{title}}</div>
         <div class="schedule-press">
-          <el-steps direction="vertical" :active="1" :space="120">
+          <el-steps direction="vertical" :space="120">
+<!--          <el-steps direction="vertical" :active="smallActive" :space="120">-->
             <el-step :title="item.duration2DictName" v-for="(item, index) in dataList" :key="index">
 <!--            <el-step :title="item.duration2DictName" :description="item.content"  v-for="(item, index) in dataList" :key="index">-->
               <template slot="description">
@@ -142,6 +143,7 @@
     data() {
       return {
         active: 0,
+        smallActive: 0,
         dataList: [], // 点击每一个进度，显示的详细进度条数据
         title: '', // 每一个大的进度的名字
         showRightTime: false, // 是否展示完成时间
