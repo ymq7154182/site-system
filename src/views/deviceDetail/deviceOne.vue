@@ -27,7 +27,7 @@
             <el-button type="primary" @click="showUpload = true"><i class="el-icon-plus" /> 新增</el-button>
           </div>
           <div v-show="tableShow === 'table1'">
-            <div style="padding: 0 0.2rem">
+            <div class="data_table">
               <el-table
                 :data="fileTable.slice((currentPage - 1) * pageSize, currentPage * pageSize)"
                 class="file-table"
@@ -67,7 +67,7 @@
           </div>
 
           <div v-show="tableShow === 'table2'">
-            <div style="padding: 0 0.2rem">
+            <div  class="data_table">
               <el-table
                 :data="fileTable.slice((currentPage - 1) * pageSize, currentPage * pageSize)"
                 class="file-table"
@@ -105,7 +105,7 @@
           </div>
 
           <div v-show="tableShow === 'table3'">
-            <div style="padding: 0 0.2rem">
+            <div class="data_table">
               <el-table
                 :data="fileTable.slice((currentPage - 1) * pageSize, currentPage * pageSize)"
                 class="file-table"
@@ -149,7 +149,7 @@
           </div>
 
           <div v-show="tableShow === 'table4'">
-            <div style="padding: 0 0.2rem">
+            <div class="data_table">
               <el-table
                 :data="fileTable.slice((currentPage - 1) * pageSize, currentPage * pageSize)"
                 class="file-table"
@@ -193,7 +193,7 @@
           </div>
 
           <div v-show="tableShow === 'table5'">
-            <div style="padding: 0 0.2rem">
+            <div class="data_table">
               <el-table
                 :data="fileTable.slice((currentPage - 1) * pageSize, currentPage * pageSize)"
                 class="file-table"
@@ -233,7 +233,7 @@
           </div>
 
           <div v-show="tableShow === 'table6'">
-            <div style="padding: 0 0.2rem">
+            <div class="data_table">
               <el-table
                 :data="fileTable.slice((currentPage - 1) * pageSize, currentPage * pageSize)"
                 class="file-table"
@@ -1070,30 +1070,30 @@
     color: #409eff;
   }
 
-  /*透明化整体*/
-  .el-table,
-  .el-table__expanded-cell {
-    background-color: transparent !important;
-  }
-  /*透明化行、单元格*/
-  .el-table th,
-  .el-table tr,
-  .el-table td {
-    background-color: transparent !important;
-  }
-  /*hover时样式*/
-  .el-table tbody tr:hover>td {
-    background-color: #367f7f78 !important
-  }
+  /*!*透明化整体*!*/
+  /*.el-table,*/
+  /*.el-table__expanded-cell {*/
+    /*background-color: transparent !important;*/
+  /*}*/
+  /*!*透明化行、单元格*!*/
+  /*.el-table th,*/
+  /*.el-table tr,*/
+  /*.el-table td {*/
+    /*background-color: transparent !important;*/
+  /*}*/
+  /*!*hover时样式*!*/
+  /*.el-table tbody tr:hover>td {*/
+    /*background-color: #367f7f78 !important*/
+  /*}*/
 
-  /*偶数行样式*/
-  .el-table__row--striped td {
-    background-color: #45797b33 !important
-  }
-  /*奇数行样式*/
-  .el-table__row:not(.el-table__row--striped) {
-    background: #1439391c !important;
-  }
+  /*!*偶数行样式*!*/
+  /*.el-table__row--striped td {*/
+    /*background-color: #45797b33 !important*/
+  /*}*/
+  /*!*奇数行样式*!*/
+  /*.el-table__row:not(.el-table__row--striped) {*/
+    /*background: #1439391c !important;*/
+  /*}*/
 
   .type-list {
     font-size: 0.26rem;
@@ -1117,5 +1117,35 @@
 
   .type-icon {
     padding: 0 0.2rem;
+  }
+  .data_table {
+    /*height: 80%;*/
+    /*overflow-y: scroll;*/
+    /*width: 100%;*/
+    padding: 0 0.2rem;
+  }
+  /*透明化整体*/
+  .data_table >>> .el-table,
+  .data_table >>> .el-table__expanded-cell {
+    background-color: transparent !important;
+  }
+  /*透明化行、单元格*/
+  .data_table >>> .el-table th,
+  .data_table >>> .el-table tr,
+  .data_table >>> .el-table td {
+    background-color: transparent !important;
+  }
+  /*hover时样式*/
+  .data_table >>> .el-table tbody tr:hover>td {
+    background-color: #367f7f78 !important
+  }
+
+  /*偶数行样式*/
+  .data_table >>> .el-table__row--striped td {
+    background-color: #45797b33 !important
+  }
+  /*奇数行样式*/
+  .data_table >>> .el-table__row:not(.el-table__row--striped) {
+    background: #1439391c !important;
   }
 </style>
