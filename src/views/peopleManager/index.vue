@@ -8,7 +8,7 @@
         <el-tab-pane label="历史考勤" name="second" class="label_top">
           <kq-history></kq-history>
         </el-tab-pane>
-        <el-tab-pane label="特种作业人员" name="third" >
+        <el-tab-pane label="特种作业人员" name="third" class="label_top">
           <special-equ> </special-equ>
           <!-- <span style="color: white">施工升降机</span> -->
         </el-tab-pane>
@@ -16,7 +16,7 @@
 <!--          -->
 <!--          &lt;!&ndash; <span style="color: white">特种设备</span> &ndash;&gt;-->
 <!--        </el-tab-pane>-->
-        <el-tab-pane label="视频设备" name="five">
+        <el-tab-pane label="视频设备" name="five" class="label_top">
           <!-- <span style="color: white">视频设备</span> -->
         </el-tab-pane>
       </el-tabs>
@@ -57,7 +57,15 @@ export default {
 </script>
 
 <style scoped>
-
+.tabs  >>>.el-tabs__item{
+  color: #fff;
+}
+.tabs >>>.el-tabs__item.is-active {
+  color: #409EFF;
+}
+.tabs >>> .el-tabs__item:hover {
+  color: #409EFF;
+}
 .tabs >>> .el-tabs__nav-wrap::after {
     height: 0;
   }
