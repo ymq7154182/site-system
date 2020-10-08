@@ -277,6 +277,7 @@
 
 <script>
   import {getDeferReasons, getDeferInfo, submitDeferInfo, getOneSchedules, getTwoSchedules, finishSmallSchedule} from '@/api/scheduleManage'
+  import { getSite } from '@/api/dataManage'
   require('echarts/theme/macarons')
     export default {
         name: "homePage",
@@ -294,6 +295,7 @@
         this.inchart21()
         this.chart21Res()
         this.getUrl()
+        this.getsiteName()
       },
       data(){
           return{
@@ -1106,6 +1108,15 @@
           localStorage.setItem('siteId', siteId)
           // console.log(url)
           // console.log(siteId)
+        },
+        getsiteName() {
+          var siteId = localStorage.getItem('siteId')
+          var data = {
+            siteId: siteId
+          }
+          getSite(data).then((res) => {
+            localStorage.setItem('siteName', res.data.data.deptName)
+          })
         }
 
       }

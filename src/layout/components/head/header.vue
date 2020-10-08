@@ -74,13 +74,13 @@
             </li>
           </ul>
         </div>
-        <div class="head-text">智慧工地</div>
+        <div class="head-text">{{siteName}}</div>
         <div class="div-tag right-tag" style="padding-right: 0.15rem;">
           <ul class="ul2">
           <li>
-            <div class="li-text2" :class="{'bg-img23': textStyle=== '进入系统', 'bg-img22': textStyle!== '进入系统'}" @click="gotoSystem">
+            <div class="li-text2" :class="{'bg-img23': textStyle=== '管理系统', 'bg-img22': textStyle!== '管理系统'}" @click="gotoSystem">
                 <span>
-                   进入系统
+                   管理系统
                 </span>
 
             </div>
@@ -121,11 +121,11 @@
 <script>
     export default {
         name: "header",
-      // data() {
-      //   return {
-      //     textStyle: ''
-      //   }
-      // },
+      data() {
+        return {
+          siteName: ''
+        }
+      },
       computed: {
         textStyle() {
           return this.$store.state.textStyle
@@ -133,6 +133,7 @@
       },
       mounted() {
         // this.textStyle = this.$store.state.textStyle
+        this.siteName = localStorage.getItem('siteName')
       },
       methods: {
         gotoPage() {
@@ -296,11 +297,11 @@
   }
   .head-text {
     text-align: center;
-    width: 4rem;
+    width: 5rem;
     height: 0.45rem;
     /* background-size: 100% 100%; */
-    font-size: 0.48rem;
-    font-weight: 500;
+    font-size: 0.37rem;
+    font-weight: 700;
     color: rgb(255, 255, 255);
     text-transform: uppercase;
     line-height: 0.45rem;
