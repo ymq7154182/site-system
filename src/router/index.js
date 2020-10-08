@@ -4,7 +4,12 @@ import Layout from '../layout/index'
 
 Vue.use(VueRouter)
 
-const routes = [{
+const routes = [
+  // {
+  //   path:'/',
+  //   redirect:'/home'
+  // },
+  {
   path: '/',
   component: Layout,
   name: 'index',
@@ -38,11 +43,22 @@ const routes = [{
   },{
     path: '/qualityControl',
     component: Layout,
-    name: 'index',
+    name: 'Quality Control',
     children: [
       {
         path: '/qualityControl',
         component: () => import('@/views/qualityControl/index'),
+      }
+    ]
+  },
+  {
+    path: '/safeRecord',
+    component: Layout,
+    name: 'safeRecord',
+    children: [
+      {
+        path: '/safeRecord',
+        component: () => import('@/views/safeRecord/safeRecord'),
       }
     ]
   },
@@ -67,7 +83,40 @@ const routes = [{
         component: () => import('@/views/greenConstruction/index'),
       }
     ]
-  }
+  },
+  {
+    path: '/scheduleManage',
+    component: Layout,
+    name: 'scheduleManage',
+    children: [
+      {
+        path: '/scheduleManage',
+        component: () => import('@/views/scheduleManage/index'),
+      }
+    ]
+  },
+  {
+    path: '/dataManage',
+    component: Layout,
+    name: 'dataManage',
+    children: [
+      {
+        path: '/dataManage',
+        component: () => import('@/views/dataManage/index'),
+      }
+    ]
+  },
+  {
+    path: '/deviceOne',
+    component: Layout,
+    name: 'deviceOne',
+    children: [
+      {
+        path: '/deviceOne',
+        component: () => import('@/views/deviceDetail/deviceOne'),
+      }
+    ]
+  },
 ]
 const router = new VueRouter({
   mode: "history",

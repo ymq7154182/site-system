@@ -54,31 +54,31 @@
             <li>
               <div class="li-text2 pos-style2 " :class="{'bg-img1': textStyle=== '安全管理', 'bg-img2': textStyle!== '安全管理'}" @click="securityControl">
                   <span>
-                   安全管理
+                   安质管理
                 </span>
               </div>
             </li>
             <li>
-              <div class="li-text2 pos-style3" :class="{'bg-img1': textStyle=== '设备管理', 'bg-img2': textStyle!== '设备管理'}" @click="gotoDevice">
+              <div class="li-text2 pos-style3" :class="{'bg-img1': textStyle=== '考评月报', 'bg-img2': textStyle!== '考评月报'}" @click="gotosafeRecord">
                   <span>
-                   设备管理
+                   考评月报
                 </span>
               </div>
             </li>
             <li>
-              <div class="li-text2 pos-style4" :class="{'bg-img1': textStyle=== '视频监控', 'bg-img2': textStyle!== '视频监控'}" @click="gotoVideo">
+              <div class="li-text2 pos-style4" :class="{'bg-img1': textStyle=== '进度管理', 'bg-img2': textStyle!== '进度管理'}" @click="gotoPress">
                   <span>
-                   视频监控
+                   进度管理
                 </span>
               </div>
             </li>
           </ul>
         </div>
-        <div class="head-text"></div>
+        <div class="head-text">智慧工地</div>
         <div class="div-tag right-tag" style="padding-right: 0.15rem;">
           <ul class="ul2">
           <li>
-            <div class="li-text2" :class="{'bg-img23': textStyle=== '进入系统', 'bg-img22': textStyle!== '进入系统'}">
+            <div class="li-text2" :class="{'bg-img23': textStyle=== '进入系统', 'bg-img22': textStyle!== '进入系统'}" @click="gotoSystem">
                 <span>
                    进入系统
                 </span>
@@ -86,23 +86,23 @@
             </div>
           </li>
           <li>
-            <div class="li-text2 pos-style-right1" :class="{'bg-img23': textStyle=== '资料管理', 'bg-img22': textStyle!== '资料管理'}">
+            <div class="li-text2 pos-style-right1" :class="{'bg-img23': textStyle=== '资料管理', 'bg-img22': textStyle!== '资料管理' }" @click="gotoDataManage">
                 <span>
                    资料管理
                 </span>
             </div>
           </li>
           <li>
-            <div class="li-text2 pos-style-right2" :class="{'bg-img23': textStyle=== '质量管理', 'bg-img22': textStyle!== '质量管理'}" >
+            <div class="li-text2 pos-style-right2" :class="{'bg-img23': textStyle=== '视频监控', 'bg-img22': textStyle!== '视频监控'}" @click="gotoVideo">
                   <span>
-                   质量管理
+                   视频监控
                 </span>
             </div>
           </li>
           <li>
-            <div class="li-text2 pos-style-right3" :class="{'bg-img23': textStyle=== '生产管理', 'bg-img22': textStyle!== '生产管理'}">
+            <div class="li-text2 pos-style-right3" :class="{'bg-img23': textStyle=== '设备管理', 'bg-img22': textStyle!== '设备管理'}" @click="gotoDevice">
                   <span>
-                   生产管理
+                   设备管理
                 </span>
             </div>
           </li>
@@ -158,6 +158,20 @@
         },
         gotoGreen () {
           this.$router.push('/greenConstruction')
+        },
+        gotoPress () {
+          this.$router.push('/scheduleManage')
+        },
+        gotosafeRecord() {
+          this.$router.push('/safeRecord')
+        },
+        gotoSystem() {
+          // var url = 'http://121.36.106.18:38088/index'
+          // window.open(url,'_self')
+          window.location.href = "http://121.36.106.18:38088/index"
+        },
+        gotoDataManage() {
+          this.$router.push('/dataManage')
         }
       }
     }
@@ -281,18 +295,22 @@
     background-image: url("../../../assets/header/rightcheck.png");
   }
   .head-text {
+    text-align: center;
     width: 4rem;
     height: 0.45rem;
-    background-size: 100% 100%;
-    /*font-size: 0.4rem;*/
-    /*font-family: "Adobe Heiti Std";*/
-    /*color: rgb(255, 255, 255);*/
-    /*text-transform: uppercase;*/
-    /*line-height: 1.934;*/
-    /*-moz-transform: matrix( 1.12300210614388,0,0,1.12300210614388,0,0);*/
-    /*-webkit-transform: matrix( 1.12300210614388,0,0,1.12300210614388,0,0);*/
-    /*-ms-transform: matrix( 1.12300210614388,0,0,1.12300210614388,0,0);*/
-    background-image: url("../../../assets/header/titletext.png");
+    /* background-size: 100% 100%; */
+    font-size: 0.48rem;
+    font-weight: 500;
+    color: rgb(255, 255, 255);
+    text-transform: uppercase;
+    line-height: 0.45rem;
+    /* -moz-transform: matrix( 1.12300210614388,0,0,1.12300210614388,0,0);
+    -webkit-transform: matrix( 1.12300210614388,0,0,1.12300210614388,0,0);
+    -ms-transform: matrix( 1.12300210614388,0,0,1.12300210614388,0,0); */
+    /* background-image: url("../../../assets/header/titletext.png"); */
+    background-image:-webkit-linear-gradient(bottom,#3d7af1,#3ca3f5, #3ad7fa);
+    -webkit-background-clip:text;
+    -webkit-text-fill-color:transparent;
     position: absolute;
     left: 50%;
     transform: translateX(-50%);

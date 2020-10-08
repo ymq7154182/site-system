@@ -33,4 +33,7 @@ html,body {
   height: 100%;
   /*overflow:-Scroll;overflow:hidden;*/
 }
+.el-tabs__item {
+  color: white;
+}
 </style>
