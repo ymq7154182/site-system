@@ -59,9 +59,14 @@
               </div>
             </li>
             <li>
-              <div class="li-text2 pos-style3" :class="{'bg-img1': textStyle=== '考评月报', 'bg-img2': textStyle!== '考评月报'}" @click="gotosafeRecord">
+              <!--<div class="li-text2 pos-style3" :class="{'bg-img1': textStyle=== '考评月报', 'bg-img2': textStyle!== '考评月报'}" @click="gotosafeRecord">-->
+                  <!--<span>-->
+                   <!--考评月报-->
+                <!--</span>-->
+              <!--</div>-->
+              <div class="li-text2 pos-style3" :class="{'bg-img1': textStyle=== '设备管理', 'bg-img2': textStyle!== '设备管理'}" @click="gotoDevice">
                   <span>
-                   考评月报
+                   设备管理
                 </span>
               </div>
             </li>
@@ -86,34 +91,35 @@
             </div>
           </li>
           <li>
-            <div class="li-text2 pos-style-right1" :class="{'bg-img23': textStyle=== '资料管理', 'bg-img22': textStyle!== '资料管理' }" @click="gotoDataManage">
+            <div class="li-text2 pos-style-right1" :class="{'bg-img23': textStyle=== '监控管理', 'bg-img22': textStyle!== '监控管理' }" @click="gotoVideo">
                 <span>
-                   资料管理
+                   监控管理
                 </span>
             </div>
           </li>
           <li>
-            <div class="li-text2 pos-style-right2" :class="{'bg-img23': textStyle=== '视频监控', 'bg-img22': textStyle!== '视频监控'}" @click="gotoVideo">
-                  <span>
-                   视频监控
-                </span>
-            </div>
-          </li>
-          <li>
-            <div class="li-text2 pos-style-right3" :class="{'bg-img23': textStyle=== '设备管理', 'bg-img22': textStyle!== '设备管理'}" @click="gotoDevice">
-                  <span>
-                   设备管理
-                </span>
-            </div>
-          </li>
-          <li>
-            <div class="li-text2 pos-style-right4" :class="{'bg-img23': textStyle=== '绿色施工', 'bg-img22': textStyle!== '绿色施工'}" @click="gotoGreen">
+            <div class="li-text2 pos-style-right2" :class="{'bg-img23': textStyle=== '绿色施工', 'bg-img22': textStyle!== '绿色施工'}" @click="gotoGreen">
                   <span>
                    绿色施工
                 </span>
             </div>
           </li>
-        </ul></div>
+          <li>
+            <div class="li-text2 pos-style-right3" :class="{'bg-img23': textStyle=== '资料管理', 'bg-img22': textStyle!== '资料管理'}" @click="gotoDataManage">
+                  <span>
+                   资料管理
+                </span>
+            </div>
+          </li>
+          <li>
+            <div class="li-text2 pos-style-right4" :class="{'bg-img23': textStyle=== '考评月报', 'bg-img22': textStyle!== '考评月报'}" @click="gotosafeRecord">
+                  <span>
+                   考评月报
+                  </span>
+            </div>
+          </li>
+        </ul>
+        </div>
       </div>
     </div>
 </template>

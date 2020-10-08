@@ -2,7 +2,7 @@
   <div>
     <div style="padding: 0.11rem">
       <el-tabs v-model="activeName" class="tabs" @click="handleTabs" >
-        <el-tab-pane label="首页" name="first" class="label_top">
+        <el-tab-pane label="人员管理" name="first" class="label_top">
           <shou-ye></shou-ye>
         </el-tab-pane>
         <el-tab-pane label="历史考勤" name="second" class="label_top">
@@ -16,9 +16,9 @@
 <!--          -->
 <!--          &lt;!&ndash; <span style="color: white">特种设备</span> &ndash;&gt;-->
 <!--        </el-tab-pane>-->
-        <el-tab-pane label="视频设备" name="five" class="label_top">
-          <!-- <span style="color: white">视频设备</span> -->
-        </el-tab-pane>
+        <!--<el-tab-pane label="视频设备" name="five" class="label_top">-->
+          <!--&lt;!&ndash; <span style="color: white">视频设备</span> &ndash;&gt;-->
+        <!--</el-tab-pane>-->
       </el-tabs>
     </div>
 
