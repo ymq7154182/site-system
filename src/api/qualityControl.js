@@ -95,3 +95,11 @@ export function getSafeAdminInfo (parems) {
     params: parems
   })
 }
+// 根据时间范围锁定数据
+export function getCheckRecordByTime (parems) {
+  return request({
+    url: '/system/safe/getCheckRecordByTime',
+    method: 'get',
+    params: parems
+  })
+}
