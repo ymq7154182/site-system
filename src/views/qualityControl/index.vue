@@ -2,7 +2,7 @@
   <div>
     <div style="padding: 0.11rem">
       <el-tabs v-model="activeName" class="tabs" @click="handleTabs">
-        <el-tab-pane label="安质管理" name="first" >
+        <el-tab-pane label="安质管理" name="first"  >
           <shou-ye></shou-ye>
         </el-tab-pane>
         <el-tab-pane label="考评月报" name="second" >
@@ -44,8 +44,15 @@ export default {
 </script>
 
 <style scoped>
-
-
+.tabs >>>.el-tabs__item{
+  color: #fff;
+}
+.tabs >>>.el-tabs__item.is-active {
+  color: #409EFF;
+}
+.tabs >>> .el-tabs__item:hover {
+  color: #409EFF;
+}
 .tabs >>> .el-tabs__nav-wrap::after {
   height: 0;
 }
