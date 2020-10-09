@@ -197,13 +197,7 @@
               <el-form-item label="名称" :label-width="formLabelWidth">
                 <el-input v-model="form.duration2DictName" autocomplete="off" class="item-defer" :disabled="disabledStr"></el-input>
               </el-form-item>
-<!--              <el-form-item label="描述内容" :label-width="formLabelWidth">-->
-<!--                &lt;!&ndash;                <el-select v-model="form.content" placeholder="请选择活动区域">&ndash;&gt;-->
-<!--                <el-input v-model="form.processData" autocomplete="off" class="item-defer" :disabled="disabledStr"></el-input>-->
-<!--                &lt;!&ndash;                  <el-option label="区域一" value="shanghai"></el-option>&ndash;&gt;-->
-<!--                &lt;!&ndash;                  <el-option label="区域二" value="beijing"></el-option>&ndash;&gt;-->
-<!--                &lt;!&ndash;                </el-select>&ndash;&gt;-->
-<!--              </el-form-item>-->
+
               <el-form-item label="延缓原因" :label-width="formLabelWidth">
                 <!--                <el-input v-model="form.reason" autocomplete="off"></el-input>-->
                 <el-select v-model="form.reason" placeholder="请选择" class="item-defer" :disabled="disabledStr">
@@ -214,6 +208,9 @@
                     :value="item.id">
                   </el-option>
                 </el-select>
+              </el-form-item>
+              <el-form-item label="原因描述" :label-width="formLabelWidth">
+                <el-input v-model="form.context" autocomplete="off" class="item-defer" :disabled="disabledStr"></el-input>
               </el-form-item>
               <el-form-item label="负责人" :label-width="formLabelWidth">
                 <el-input v-model="form.principal" autocomplete="off" class="item-defer" :disabled="disabledStr"></el-input>
@@ -439,7 +436,7 @@
             form: {
               id: '',
               duration2DictName: '',
-              content: '',
+              context: '',
               status: '',
               reason: '', // 滞缓原因
               endTime: '', // 完成时间
@@ -526,6 +523,7 @@
               this.form.duration2DictName = item.duration2DictName
               this.form.endTime = res.data.data.planTime
               this.form.reason = res.data.data.delaysDictId
+              this.form.context = res.data.data.context
               this.showSlow = true
               this.disabledStr = true
             })
@@ -592,7 +590,7 @@
           submitDeferInfo({
             scheduleDurationSectionPlanId: this.form.id,
             delaysDictId: this.form.reason,
-            context: this.deferReasons[this.form.reason-1].reason,
+            context: this.form.context,
             principal: this.form.principal,
             planTime: this.form.endTime.getFullYear() + '-' + (this.form.endTime.getMonth() + 1) + '-' + this.form.endTime.getDate()
           }).then(res => {
