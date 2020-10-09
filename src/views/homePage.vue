@@ -773,7 +773,7 @@
           };
           setTimeout(()=>{
             this.myChart13.setOption(option)
-          },500)
+          },600)
         },
         inchart24() {
           this.myChart24 = this.$echarts.init(document.getElementById('mychart24'),'macarons')
@@ -1152,7 +1152,7 @@
           };
           setTimeout(()=>{
             this.myChart22.setOption(option)
-          },500)
+          },600)
         },
         inchart21() {
           this.myChart21 = this.$echarts.init(document.getElementById('mychart21'));
