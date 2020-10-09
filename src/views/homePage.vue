@@ -1578,11 +1578,13 @@
     overflow: hidden;
     text-overflow: ellipsis;
   }
-  .el-step__title.is-process {
-    color: #ffb91b;
+  .el-steps .el-step__title.is-process {
+    color: rgb(89, 180, 157);;
+    /*color: #4dd209;*/
   }
   .el-steps .el-step__head.is-process .is-text {
-    border: 4px solid #ffb91b;
+    border: 4px solid rgb(89, 180, 157);
+    /*border: 4px solid #4dd209;*/
     width: 36px;
     height: 36px;
     margin-top: -8px;

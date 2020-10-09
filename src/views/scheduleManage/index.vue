@@ -47,6 +47,9 @@
 </script>
 
 <style scoped>
+  .tabs  >>>.el-tabs__item{
+    color: #fff;
+  }
   .border-top-left {
     height: 10px;
     background-image: url("../../../src/assets/border/top-center.png");
