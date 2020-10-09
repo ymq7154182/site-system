@@ -59,9 +59,14 @@
               </div>
             </li>
             <li>
-              <div class="li-text2 pos-style3" :class="{'bg-img1': textStyle=== '考评月报', 'bg-img2': textStyle!== '考评月报'}" @click="gotosafeRecord">
+              <!--<div class="li-text2 pos-style3" :class="{'bg-img1': textStyle=== '考评月报', 'bg-img2': textStyle!== '考评月报'}" @click="gotosafeRecord">-->
+                  <!--<span>-->
+                   <!--考评月报-->
+                <!--</span>-->
+              <!--</div>-->
+              <div class="li-text2 pos-style3" :class="{'bg-img1': textStyle=== '设备管理', 'bg-img2': textStyle!== '设备管理'}" @click="gotoDevice">
                   <span>
-                   考评月报
+                   设备管理
                 </span>
               </div>
             </li>
@@ -74,46 +79,47 @@
             </li>
           </ul>
         </div>
-        <div class="head-text">智慧工地</div>
+        <div class="head-text">{{siteName}}</div>
         <div class="div-tag right-tag" style="padding-right: 0.15rem;">
           <ul class="ul2">
           <li>
-            <div class="li-text2" :class="{'bg-img23': textStyle=== '进入系统', 'bg-img22': textStyle!== '进入系统'}" @click="gotoSystem">
+            <div class="li-text2" :class="{'bg-img23': textStyle=== '管理系统', 'bg-img22': textStyle!== '管理系统'}" @click="gotoSystem">
                 <span>
-                   进入系统
+                   管理系统
                 </span>
 
             </div>
           </li>
           <li>
-            <div class="li-text2 pos-style-right1" :class="{'bg-img23': textStyle=== '资料管理', 'bg-img22': textStyle!== '资料管理' }" @click="gotoDataManage">
+            <div class="li-text2 pos-style-right1" :class="{'bg-img23': textStyle=== '监控管理', 'bg-img22': textStyle!== '监控管理' }" @click="gotoVideo">
                 <span>
-                   资料管理
+                   监控管理
                 </span>
             </div>
           </li>
           <li>
-            <div class="li-text2 pos-style-right2" :class="{'bg-img23': textStyle=== '视频监控', 'bg-img22': textStyle!== '视频监控'}" @click="gotoVideo">
-                  <span>
-                   视频监控
-                </span>
-            </div>
-          </li>
-          <li>
-            <div class="li-text2 pos-style-right3" :class="{'bg-img23': textStyle=== '设备管理', 'bg-img22': textStyle!== '设备管理'}" @click="gotoDevice">
-                  <span>
-                   设备管理
-                </span>
-            </div>
-          </li>
-          <li>
-            <div class="li-text2 pos-style-right4" :class="{'bg-img23': textStyle=== '绿色施工', 'bg-img22': textStyle!== '绿色施工'}" @click="gotoGreen">
+            <div class="li-text2 pos-style-right2" :class="{'bg-img23': textStyle=== '绿色施工', 'bg-img22': textStyle!== '绿色施工'}" @click="gotoGreen">
                   <span>
                    绿色施工
                 </span>
             </div>
           </li>
-        </ul></div>
+          <li>
+            <div class="li-text2 pos-style-right3" :class="{'bg-img23': textStyle=== '资料管理', 'bg-img22': textStyle!== '资料管理'}" @click="gotoDataManage">
+                  <span>
+                   资料管理
+                </span>
+            </div>
+          </li>
+          <li>
+            <div class="li-text2 pos-style-right4" :class="{'bg-img23': textStyle=== '考评月报', 'bg-img22': textStyle!== '考评月报'}" @click="gotosafeRecord">
+                  <span>
+                   考评月报
+                  </span>
+            </div>
+          </li>
+        </ul>
+        </div>
       </div>
     </div>
 </template>
@@ -121,11 +127,11 @@
 <script>
     export default {
         name: "header",
-      // data() {
-      //   return {
-      //     textStyle: ''
-      //   }
-      // },
+      data() {
+        return {
+          siteName: ''
+        }
+      },
       computed: {
         textStyle() {
           return this.$store.state.textStyle
@@ -133,6 +139,7 @@
       },
       mounted() {
         // this.textStyle = this.$store.state.textStyle
+        this.siteName = localStorage.getItem('siteName')
       },
       methods: {
         gotoPage() {
@@ -296,11 +303,11 @@
   }
   .head-text {
     text-align: center;
-    width: 4rem;
+    width: 5rem;
     height: 0.45rem;
     /* background-size: 100% 100%; */
-    font-size: 0.48rem;
-    font-weight: 500;
+    font-size: 0.37rem;
+    font-weight: 700;
     color: rgb(255, 255, 255);
     text-transform: uppercase;
     line-height: 0.45rem;

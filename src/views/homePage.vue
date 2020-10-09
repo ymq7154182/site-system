@@ -29,19 +29,20 @@
               </div>
             </div>
             <div class="project_item">
-              <span style="height: 0.43rem;line-height: 0.43rem;font-size: 0.08rem;color: #d2d7dc;margin-left: 0.1rem">建设单位：精准医疗中心责任有限公司</span>
+<!--              <span style="height: 0.43rem;line-height: 0.43rem;font-size: 0.08rem;color: #d2d7dc;margin-left: 0.1rem">建设单位：精准医疗中心责任有限公司</span>-->
+              <span style="height: 0.43rem;line-height: 0.43rem;font-size: 0.08rem;color: #d2d7dc;margin-left: 0.1rem">建设单位：<span>{{this.projectDetails.constructionUnitJs}}</span></span>
             </div>
             <div class="project_item">
-              <span style="height: 0.43rem;line-height: 0.43rem;font-size: 0.08rem;color: #d2d7dc;padding-right: 0.1rem;margin-left: 0.1rem">设计单位：中路设计研究院</span>
+              <span style="height: 0.43rem;line-height: 0.43rem;font-size: 0.08rem;color: #d2d7dc;margin-left: 0.1rem">监理单位：<span>{{this.projectDetails.constructionControlUnit}}</span></span>
             </div>
             <div class="project_item">
-              <span style="height: 0.43rem;line-height: 0.43rem;font-size: 0.08rem;color: #d2d7dc;padding-right: 0.1rem;margin-left: 0.1rem">监理单位：建设监理有限公司</span>
+              <span style="height: 0.43rem;line-height: 0.43rem;font-size: 0.08rem;color: #d2d7dc;margin-left: 0.1rem">施工单位：<span>{{this.projectDetails.constructionUnitSg}}</span></span>
             </div>
             <div class="project_item">
-              <span style="height: 0.43rem;line-height: 0.43rem;font-size: 0.08rem;color: #d2d7dc;margin-left: 0.1rem">施工单位：建工集团第一建筑有限公司</span>
+              <span style="height: 0.43rem;line-height: 0.43rem;font-size: 0.08rem;color: #d2d7dc;margin-left: 0.1rem">工程类别：<span>{{this.projectDetails.protype}}</span></span>
             </div>
             <div class="project_item">
-              <span style="height: 0.43rem;line-height: 0.43rem;font-size: 0.08rem;color: #d2d7dc;padding-right: 0.1rem;margin-left: 0.1rem">备案编号：98387009JDHWUH</span>
+              <span style="height: 0.43rem;line-height: 0.43rem;font-size: 0.08rem;color: #d2d7dc;margin-left: 0.1rem">备案编号：<span>{{this.projectDetails.proCode}}</span></span>
             </div>
           </div>
           <div class="people">
@@ -234,11 +235,108 @@
         <el-col :span="8">
           <el-row>
             <div class="green">
-              <div style="position: absolute;top: 0.2rem;left: 0.2rem">
+              <div style="padding-top: 0.2rem;margin-left: 0.2rem">
                 <span style="font-size: 0.2rem;color: #ffa454;">绿色施工</span>
               </div>
-              <div class="green_container">
-                <img src="../assets/homepage/shigong.png" style="margin-left: 1.2rem;width:6.2rem;height: 3rem">
+              <div class="green_container" style="display: flex;justify-content:space-evenly">
+                <div class="green_one" style="font-size: 0.15rem">
+                  <div style="text-align: center">
+                    <img src="../assets/homepage/yin.png">
+                  </div>
+                  <div style="text-align: center">
+                    <p style="color: #fefefe">周五</p>
+                    <p style="color: #fefefe">07月17日</p>
+                  </div>
+                  <div style="text-align: center">
+                    <p style="color: #fefefe"><span style="font-size: 0.5rem">28</span>阴</p>
+                    <p style="color: #fefefe">25-33℃</p>
+                  </div>
+                  <div style="text-align: center;margin-top: 0.1rem">
+                    <p style="color: #fefefe">多云转雷阵雨</p>
+                    <p style="color: #fefefe">西南风3-6级</p>
+                  </div>
+                </div>
+                <div class="green_two" style="width: 1.5rem">
+                  <div style="position: relative;margin-top: 0.1rem">
+                    <img style="width: 0.3rem;position: absolute;top: -0.05rem" src="../assets/homepage/wendu.png">
+                    <span style="color: #fefefe;margin-left: 0.4rem">温度</span>
+                    <span style="color:#d15765;margin-left: 0.25rem;float: right">6.6</span>
+                  </div>
+                  <div style="position: relative;margin-top: 0.17rem">
+                    <img style="width: 0.3rem;position: absolute;top: -0.05rem" src="../assets/homepage/shidu.png">
+                    <span style="color: #fefefe;margin-left: 0.4rem">湿度</span>
+                    <span style="color:#d15765;margin-left: 0.25rem;float: right">6.6</span>
+                  </div>
+                  <div style="position: relative;margin-top: 0.17rem">
+                    <img style="width: 0.3rem;position: absolute;top: -0.05rem" src="../assets/homepage/fengsu.png">
+                    <span style="color: #fefefe;margin-left: 0.4rem">风速</span>
+                    <span style="color:#d15765;margin-left: 0.25rem;float: right">6.6</span>
+                  </div>
+                  <div style="position: relative;margin-top: 0.17rem">
+                    <img style="width: 0.3rem;position: absolute;top: -0.05rem" src="../assets/homepage/zaoying.png">
+                    <span style="color: #fefefe;margin-left: 0.4rem">噪音</span>
+                    <span style="color:#d15765;margin-left: 0.25rem;float: right">6.6</span>
+                  </div>
+                  <div style="position: relative;margin-top: 0.17rem">
+                    <img style="width: 0.3rem;position: absolute;top: -0.05rem" src="../assets/homepage/pm.png">
+                    <span style="color: #fefefe;margin-left: 0.4rem">PM2.5</span>
+                    <span style="color:#d15765;margin-left: 0.25rem;float: right">6.6</span>
+                  </div>
+                  <div style="position: relative;margin-top: 0.17rem">
+                    <img style="width: 0.3rem;position: absolute;top: -0.05rem" src="../assets/homepage/ten.png">
+                    <span style="color: #fefefe;margin-left: 0.4rem">PM10</span>
+                    <span style="color:#d15765;margin-left: 0.25rem;float: right">6.6</span>
+                  </div>
+                </div>
+                <div class="green_three">
+                  <div style="text-align: center">
+                    <p style="color: #fefefe">周六</p>
+                    <p style="color: #fefefe;margin-top: 0.15rem">07月18日</p>
+                  </div>
+                  <div style="text-align: center;margin-top: 0.17rem">
+                    <img src="../assets/homepage/leizhenyu.png">
+                  </div>
+                  <div style="text-align: center">
+                    <p style="color: #fefefe">25-33℃</p>
+                  </div>
+                  <div style="text-align: center;margin-top: 0.15rem">
+                    <p style="color: #fefefe">多云转雷阵雨</p>
+                    <p style="color: #fefefe">西南风3-6级</p>
+                  </div>
+                </div>
+                <div class="green_three">
+                  <div style="text-align: center">
+                    <p style="color: #fefefe">周日</p>
+                    <p style="color: #fefefe;margin-top: 0.15rem">07月19日</p>
+                  </div>
+                  <div style="text-align: center;margin-top: 0.17rem">
+                    <img src="../assets/homepage/leizhenyu.png">
+                  </div>
+                  <div style="text-align: center">
+                    <p style="color: #fefefe">25-33℃</p>
+                  </div>
+                  <div style="text-align: center;margin-top: 0.15rem">
+                    <p style="color: #fefefe">多云转雷阵雨</p>
+                    <p style="color: #fefefe">西南风3-6级</p>
+                  </div>
+                </div>
+                <div class="green_three">
+                  <div style="text-align: center">
+                    <p style="color: #fefefe">周一</p>
+                    <p style="color: #fefefe;margin-top: 0.15rem">07月20日</p>
+                  </div>
+                  <div style="text-align: center;margin-top: 0.17rem">
+                    <img src="../assets/homepage/qingtian.png">
+                  </div>
+                  <div style="text-align: center">
+                    <p style="color: #fefefe">25-33℃</p>
+                  </div>
+                  <div style="text-align: center;margin-top: 0.15rem">
+                    <p style="color: #fefefe">雷阵雨转晴</p>
+                    <p style="color: #fefefe">西南风3-6级</p>
+                  </div>
+                </div>
+                <!--                <img src="../assets/homepage/shigong.png" style="margin-left: 1.6rem;width:6rem;height: 3rem">-->
               </div>
             </div>
           </el-row>
@@ -278,15 +376,21 @@
 
 <script>
   import {getDeferReasons, getDeferInfo, submitDeferInfo, getOneSchedules, getTwoSchedules, finishSmallSchedule} from '@/api/scheduleManage'
+  import { getSite } from '@/api/dataManage'
+  import { getGongDiNameById,screenName } from '@/api/projectOverview'
+  import { getSafeOrQualityChartData,getProjectDetails } from '@/api/projectOverview.js'
   require('echarts/theme/macarons')
     export default {
         name: "homePage",
+      Create(){
+        this.getProDetails()
+      },
       mounted() {
         this.$store.dispatch('changeMsg', '项目概览')
         this.getDeferReasons() // 获取滞缓原因
         this.getOneSchedules() // 获取所有一级进度
         // this.getTwoSchedules() // 获取所有二级进度
-        this.inchart13()
+        // this.inchart13()
         this.chart13Res()
         this.inchart24()
         this.chart24Res()
@@ -295,9 +399,20 @@
         this.inchart21()
         this.chart21Res()
         this.getUrl()
+        this.getsiteName()
+        this.getProjectName()
+        this.getProDetails()
+        setTimeout(()=>{
+          this.verifyProjectName()
+        },100)
+        setTimeout(()=>{
+          this.inchart13()
+        },200)
       },
       data(){
           return{
+            projectDetails: {},
+            projectName: '',
             flag: 0, // 是否展示延缓和完成按钮
             // titleList: [{title: '地基与基础', id: 0, time: '2020-08-01'},{title: '主体结构', id: 1, time: '2020-08-01'},{title: '建筑装饰装修', id: 2, time: '2020-08-01'},{title: '建筑给水排水及采暖', id: 3, time: '2020-08-01'},{title: '建筑电气', id: 4, time: '2020-08-01'},{title: '智能建筑', id: 5, time: '2020-08-01'},
             //   {title: '通风与空调', id: 6, time: '2020-08-01'},{title: '电梯', id: 7, time: '2020-08-01'},{title: '建筑节能', id: 8, time: '2020-08-01'},],
@@ -339,6 +454,35 @@
           }
       },
       methods:{
+        getProDetails: function(){
+          const prams = {
+            deptId: localStorage.getItem('siteId')
+          }
+          getProjectDetails(prams).then(response=>{
+            console.log('获取项目的详细数据')
+            console.log(response.data)
+            this.projectDetails = response.data
+          })
+        },
+        getProjectName: function(){
+          const prams = {
+            siteId: localStorage.getItem('siteId')
+          }
+          getGongDiNameById(prams).then(response=>{
+            console.log('测试根据id获取项目名')
+            console.log(response.data.data)
+            this.projectName = response.data.data.deptName
+          })
+        },
+        verifyProjectName: function(){
+          const prams = {
+            name: this.projectName
+          }
+          screenName(prams).then(response=>{
+            console.log('测试校验项目名称')
+            console.log(response.data)
+          })
+        },
         getDeferReasons () { // 滞缓原因
           getDeferReasons().then(res => {
             this.deferReasons = res.data.data
@@ -490,6 +634,23 @@
           // console.log(val)
         },
         inchart13() {
+          const prams = {
+            classes: '质量'
+          }
+          var getData = []
+          getSafeOrQualityChartData(prams).then(response=>{
+            console.log('测试质量管理获取数据')
+            console.log(response.data.data)
+            for(let i = 0;i<response.data.data.length;i++){
+              let obj = {}
+              obj.value = response.data.data[i].counts
+              obj.unit = '人'
+              obj.name  = response.data.data[i].check_type_offspring
+              getData.push(obj)
+            }
+            console.log('测试getData')
+            console.log(getData)
+          })
           this.myChart13 = this.$echarts.init(document.getElementById('mychart13'));
           let innerFontColor = '#FFFFFF';
           let outerFontColor = '#666666';
@@ -510,7 +671,9 @@
               {value:135, unit:'人',name:'建筑智能化工程'},
             ]
           }
-
+          echartData.outer = getData
+          console.log('测试outer')
+          console.log(echartData.outer)
           let legend1 = echartData.inner.map(v => v.name);
           let legend2 = echartData.outer.map(v => v.name);
           let legendData = [...legend1, ...legend2];
@@ -557,7 +720,7 @@
               {
                 name:'人员统计',
                 type:'pie',
-                radius: ['47%', '63%'],
+                radius: ['60%', '80%'],
                 data:echartData.outer,
                 // label: {
                 //   normal: {
@@ -581,7 +744,9 @@
               }
             ]
           };
-          this.myChart13.setOption(option)
+          setTimeout(()=>{
+            this.myChart13.setOption(option)
+          },500)
         },
         inchart24() {
           this.myChart24 = this.$echarts.init(document.getElementById('mychart24'),'macarons')
@@ -828,25 +993,41 @@
           this.myChart24.setOption(option)
         },
         inchart22() {
-          this.myChart22 = this.$echarts.init(document.getElementById('mychart22'));
-          var data = [
-            {
-              value: 12,
-              name: '施工安全'
-            },
-            {
-              value: 5,
-              name: '物资安全'
-            },
-            {
-              value: 13,
-              name: '设备安全'
-            },
-            {
-              value: 5,
-              name: '人员安全'
+          const prams = {
+            classes: '安全'
+          }
+          var data = []
+          getSafeOrQualityChartData(prams).then(response=>{
+            console.log('测试安全管理获取数据')
+            console.log(response.data.data)
+            for(let i = 0;i<response.data.data.length;i++){
+              let obj = {}
+              obj.value = response.data.data[i].counts
+              obj.name  = response.data.data[i].check_type_offspring
+              data.push(obj)
             }
-          ];
+            console.log('测试safeData')
+            console.log(data)
+          })
+          this.myChart22 = this.$echarts.init(document.getElementById('mychart22'));
+          // var data = [
+          //   {
+          //     value: 12,
+          //     name: '施工安全'
+          //   },
+          //   {
+          //     value: 5,
+          //     name: '物资安全'
+          //   },
+          //   {
+          //     value: 13,
+          //     name: '设备安全'
+          //   },
+          //   {
+          //     value: 5,
+          //     name: '人员安全'
+          //   }
+          // ];
           var color = ['#61a0a8', '#F87D7C', '#41E1FF', '#55D5B5', '#616BA6', '#6978F2', '#3769F4', '#01FFFF', '#FEDF00']
           var option = {
             // backgroundColor:'#021434',
@@ -873,7 +1054,7 @@
                 color: '#ACCFFF',
                 fontSize: 12,
               },
-              data: ['施工安全', '物资安全', '人员安全', '设备安全']
+              data: ['塔吊', '遵章守纪', '楼梯口、电梯口防护', '安全教育','施工机具']
             },
             tooltip: {
               trigger: 'item',
@@ -884,7 +1065,7 @@
               type: 'pie',
               selectedMode: 'single',
               radius: [0, '30%'],
-              center: ["43%", "50%"],
+              center: ["43%", "60%"],
 
               label: {
                 normal: {
@@ -942,7 +1123,9 @@
               }
             ]
           };
-          this.myChart22.setOption(option)
+          setTimeout(()=>{
+            this.myChart22.setOption(option)
+          },500)
         },
         inchart21() {
           this.myChart21 = this.$echarts.init(document.getElementById('mychart21'));
@@ -1107,6 +1290,15 @@
           localStorage.setItem('siteId', siteId)
           // console.log(url)
           // console.log(siteId)
+        },
+        getsiteName() {
+          var siteId = localStorage.getItem('siteId')
+          var data = {
+            siteId: siteId
+          }
+          getSite(data).then((res) => {
+            localStorage.setItem('siteName', res.data.data.deptName)
+          })
         }
 
       }
@@ -1201,9 +1393,11 @@
   .project_item{
     margin-left: 0.1rem;
     margin-top: 0.1rem;
-    width: 95%;
+    width: 93%;
     height: 0.43rem;
+    font-size: 3px;
     background-image:url("../assets/homepage/project_item_bg.png") ;
+    background-size: 100% 100%
   }
   .video_container {
     width: 100%;
