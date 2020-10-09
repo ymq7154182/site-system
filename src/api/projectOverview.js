@@ -35,3 +35,12 @@ export function getProjectDetails (parems) {
     params: parems
   })
 }
+
+// 获取项目时间信息
+export function getProjectTimeInformation (parems) {
+  return request({
+    url: '/schedule/getScheduleTime',
+    method: 'get',
+    params: parems
+  })
+}

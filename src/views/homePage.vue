@@ -22,27 +22,30 @@
             </div>
             <div class="project_head">
               <div class="pro_item">
+                <span style="position: absolute;top: 0.4rem;left: 0.4rem;color: #b0d530;">{{projectDetails.proCost}}</span>
               </div>
               <div class="pro_item_two">
+                <span style="position: absolute;top: 0.4rem;left: 0.5rem;color: #e06666">{{projectTime}}</span>
               </div>
               <div class="pro_item_three">
+                <span style="position: absolute;top: 0.4rem;left: 0.4rem;color: #e06666">{{projectDetails.proArea}}</span>
               </div>
             </div>
             <div class="project_item">
 <!--              <span style="height: 0.43rem;line-height: 0.43rem;font-size: 0.08rem;color: #d2d7dc;margin-left: 0.1rem">建设单位：精准医疗中心责任有限公司</span>-->
-              <span style="height: 0.43rem;line-height: 0.43rem;font-size: 0.08rem;color: #d2d7dc;margin-left: 0.1rem">建设单位：<span>{{this.projectDetails.constructionUnitJs}}</span></span>
+              <span style="height: 0.43rem;line-height: 0.43rem;font-size: 0.08rem;color: #d2d7dc;margin-left: 0.1rem">建设单位：<span>{{projectDetails.constructionUnitJs}}</span></span>
             </div>
             <div class="project_item">
-              <span style="height: 0.43rem;line-height: 0.43rem;font-size: 0.08rem;color: #d2d7dc;margin-left: 0.1rem">监理单位：<span>{{this.projectDetails.constructionControlUnit}}</span></span>
+              <span style="height: 0.43rem;line-height: 0.43rem;font-size: 0.08rem;color: #d2d7dc;margin-left: 0.1rem">监理单位：<span>{{projectDetails.constructionControlUnit}}</span></span>
             </div>
             <div class="project_item">
-              <span style="height: 0.43rem;line-height: 0.43rem;font-size: 0.08rem;color: #d2d7dc;margin-left: 0.1rem">施工单位：<span>{{this.projectDetails.constructionUnitSg}}</span></span>
+              <span style="height: 0.43rem;line-height: 0.43rem;font-size: 0.08rem;color: #d2d7dc;margin-left: 0.1rem">施工单位：<span>{{projectDetails.constructionUnitSg}}</span></span>
             </div>
             <div class="project_item">
-              <span style="height: 0.43rem;line-height: 0.43rem;font-size: 0.08rem;color: #d2d7dc;margin-left: 0.1rem">工程类别：<span>{{this.projectDetails.protype}}</span></span>
+              <span style="height: 0.43rem;line-height: 0.43rem;font-size: 0.08rem;color: #d2d7dc;margin-left: 0.1rem">工程类别：<span v-if="projectDetails.protype===1">省重点项目</span></span>
             </div>
             <div class="project_item">
-              <span style="height: 0.43rem;line-height: 0.43rem;font-size: 0.08rem;color: #d2d7dc;margin-left: 0.1rem">备案编号：<span>{{this.projectDetails.proCode}}</span></span>
+              <span style="height: 0.43rem;line-height: 0.43rem;font-size: 0.08rem;color: #d2d7dc;margin-left: 0.1rem">备案编号：<span>{{projectDetails.proCode}}</span></span>
             </div>
           </div>
           <div class="people">
@@ -245,94 +248,94 @@
                   </div>
                   <div style="text-align: center">
                     <p style="color: #fefefe">周五</p>
-                    <p style="color: #fefefe">07月17日</p>
+                    <p style="color: #fefefe">10月10日</p>
                   </div>
                   <div style="text-align: center">
-                    <p style="color: #fefefe"><span style="font-size: 0.5rem">28</span>阴</p>
-                    <p style="color: #fefefe">25-33℃</p>
+                    <p style="color: #fefefe"><span style="font-size: 0.5rem">18</span>阴</p>
+                    <p style="color: #fefefe">10-21℃</p>
                   </div>
                   <div style="text-align: center;margin-top: 0.1rem">
-                    <p style="color: #fefefe">多云转雷阵雨</p>
-                    <p style="color: #fefefe">西南风3-6级</p>
+                    <p style="color: #fefefe">多云转阴</p>
+                    <p style="color: #fefefe">东风2级</p>
                   </div>
                 </div>
                 <div class="green_two" style="width: 1.5rem">
                   <div style="position: relative;margin-top: 0.1rem">
                     <img style="width: 0.3rem;position: absolute;top: -0.05rem" src="../assets/homepage/wendu.png">
                     <span style="color: #fefefe;margin-left: 0.4rem">温度</span>
-                    <span style="color:#d15765;margin-left: 0.25rem;float: right">6.6</span>
+                    <span style="color:#d15765;margin-left: 0.25rem;float: right">12℃</span>
                   </div>
                   <div style="position: relative;margin-top: 0.17rem">
                     <img style="width: 0.3rem;position: absolute;top: -0.05rem" src="../assets/homepage/shidu.png">
                     <span style="color: #fefefe;margin-left: 0.4rem">湿度</span>
-                    <span style="color:#d15765;margin-left: 0.25rem;float: right">6.6</span>
+                    <span style="color:#d15765;margin-left: 0.25rem;float: right">84%</span>
                   </div>
                   <div style="position: relative;margin-top: 0.17rem">
                     <img style="width: 0.3rem;position: absolute;top: -0.05rem" src="../assets/homepage/fengsu.png">
                     <span style="color: #fefefe;margin-left: 0.4rem">风速</span>
-                    <span style="color:#d15765;margin-left: 0.25rem;float: right">6.6</span>
+                    <span style="color:#d15765;margin-left: 0.25rem;float: right">6</span>
                   </div>
                   <div style="position: relative;margin-top: 0.17rem">
                     <img style="width: 0.3rem;position: absolute;top: -0.05rem" src="../assets/homepage/zaoying.png">
                     <span style="color: #fefefe;margin-left: 0.4rem">噪音</span>
-                    <span style="color:#d15765;margin-left: 0.25rem;float: right">6.6</span>
+                    <span style="color:#d15765;margin-left: 0.25rem;float: right">43</span>
                   </div>
                   <div style="position: relative;margin-top: 0.17rem">
                     <img style="width: 0.3rem;position: absolute;top: -0.05rem" src="../assets/homepage/pm.png">
                     <span style="color: #fefefe;margin-left: 0.4rem">PM2.5</span>
-                    <span style="color:#d15765;margin-left: 0.25rem;float: right">6.6</span>
+                    <span style="color:#d15765;margin-left: 0.25rem;float: right">274</span>
                   </div>
                   <div style="position: relative;margin-top: 0.17rem">
                     <img style="width: 0.3rem;position: absolute;top: -0.05rem" src="../assets/homepage/ten.png">
                     <span style="color: #fefefe;margin-left: 0.4rem">PM10</span>
-                    <span style="color:#d15765;margin-left: 0.25rem;float: right">6.6</span>
+                    <span style="color:#d15765;margin-left: 0.25rem;float: right">358</span>
                   </div>
                 </div>
                 <div class="green_three">
                   <div style="text-align: center">
                     <p style="color: #fefefe">周六</p>
-                    <p style="color: #fefefe;margin-top: 0.15rem">07月18日</p>
+                    <p style="color: #fefefe;margin-top: 0.15rem">10月11日</p>
                   </div>
                   <div style="text-align: center;margin-top: 0.17rem">
-                    <img src="../assets/homepage/leizhenyu.png">
+                    <img src="../assets/homepage/yingtian.png">
                   </div>
                   <div style="text-align: center">
-                    <p style="color: #fefefe">25-33℃</p>
+                    <p style="color: #fefefe">10-25℃</p>
                   </div>
                   <div style="text-align: center;margin-top: 0.15rem">
-                    <p style="color: #fefefe">多云转雷阵雨</p>
-                    <p style="color: #fefefe">西南风3-6级</p>
+                    <p style="color: #fefefe">霾转阴</p>
+                    <p style="color: #fefefe">东风3-6级</p>
                   </div>
                 </div>
                 <div class="green_three">
                   <div style="text-align: center">
                     <p style="color: #fefefe">周日</p>
-                    <p style="color: #fefefe;margin-top: 0.15rem">07月19日</p>
+                    <p style="color: #fefefe;margin-top: 0.15rem">10月12日</p>
                   </div>
                   <div style="text-align: center;margin-top: 0.17rem">
-                    <img src="../assets/homepage/leizhenyu.png">
+                    <img src="../assets/homepage/yingtian.png">
                   </div>
                   <div style="text-align: center">
                     <p style="color: #fefefe">25-33℃</p>
                   </div>
                   <div style="text-align: center;margin-top: 0.15rem">
-                    <p style="color: #fefefe">多云转雷阵雨</p>
-                    <p style="color: #fefefe">西南风3-6级</p>
+                    <p style="color: #fefefe">霾转阴</p>
+                    <p style="color: #fefefe">东风3-6级</p>
                   </div>
                 </div>
                 <div class="green_three">
                   <div style="text-align: center">
                     <p style="color: #fefefe">周一</p>
-                    <p style="color: #fefefe;margin-top: 0.15rem">07月20日</p>
+                    <p style="color: #fefefe;margin-top: 0.15rem">10月11日</p>
                   </div>
                   <div style="text-align: center;margin-top: 0.17rem">
                     <img src="../assets/homepage/qingtian.png">
                   </div>
                   <div style="text-align: center">
-                    <p style="color: #fefefe">25-33℃</p>
+                    <p style="color: #fefefe">14-22℃</p>
                   </div>
                   <div style="text-align: center;margin-top: 0.15rem">
-                    <p style="color: #fefefe">雷阵雨转晴</p>
+                    <p style="color: #fefefe">阴转晴</p>
                     <p style="color: #fefefe">西南风3-6级</p>
                   </div>
                 </div>
@@ -378,12 +381,12 @@
   import {getDeferReasons, getDeferInfo, submitDeferInfo, getOneSchedules, getTwoSchedules, finishSmallSchedule} from '@/api/scheduleManage'
   import { getSite } from '@/api/dataManage'
   import { getGongDiNameById,screenName } from '@/api/projectOverview'
-  import { getSafeOrQualityChartData,getProjectDetails } from '@/api/projectOverview.js'
+  import { getSafeOrQualityChartData,getProjectDetails,getProjectTimeInformation } from '@/api/projectOverview.js'
   require('echarts/theme/macarons')
     export default {
         name: "homePage",
-      Create(){
-        this.getProDetails()
+      beforeMount(){
+        // this.getProDetails()
       },
       mounted() {
         this.$store.dispatch('changeMsg', '项目概览')
@@ -399,9 +402,10 @@
         this.inchart21()
         this.chart21Res()
         this.getUrl()
+        this.getProDetails()
         this.getsiteName()
         this.getProjectName()
-        this.getProDetails()
+        this.getProjectTime()
         setTimeout(()=>{
           this.verifyProjectName()
         },100)
@@ -411,6 +415,7 @@
       },
       data(){
           return{
+            projectTime: '',
             projectDetails: {},
             projectName: '',
             flag: 0, // 是否展示延缓和完成按钮
@@ -462,6 +467,28 @@
             console.log('获取项目的详细数据')
             console.log(response.data)
             this.projectDetails = response.data
+            console.log('测试projectDetails')
+            console.log(this.projectDetails.addressAll)
+          })
+        },
+        getProjectTime: function(){
+          const prams = {
+            deptId: localStorage.getItem('siteId')
+          }
+          getProjectTimeInformation(prams).then(response=>{
+            console.log('获取项目的时间详细数据')
+            console.log(response.data.msg)
+            var temTime = response.data.msg
+            var index = 0
+            for(let i = 0;i<temTime.length;i++){
+              if(temTime[i] === '天' ){
+                index= i
+                break
+              }
+            }
+            console.log(temTime.substring(0,index))
+            this.projectTime = temTime.substring(0,index)
+            console.log(this.projectTime)
           })
         },
         getProjectName: function(){
@@ -1370,6 +1397,8 @@
     justify-content: space-around;
   }
   .pro_item{
+    text-align: center;
+    position: relative;
     margin-top: 0.5rem;
     width: 1.2rem;
     height: 0.7rem;
@@ -1377,6 +1406,7 @@
     background-size:contain
   }
   .pro_item_two{
+    position: relative;
     margin-top: 0.5rem;
     width: 1.2rem;
     height: 0.7rem;
@@ -1384,6 +1414,7 @@
     background-size:contain
   }
   .pro_item_three{
+    position: relative;
     margin-top: 0.5rem;
     width: 1.2rem;
     height: 0.7rem;
