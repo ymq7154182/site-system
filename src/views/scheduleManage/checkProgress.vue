@@ -7,7 +7,8 @@
             <div>
               {{item.durationDictName}}
             </div>
-            <div class="title_font" v-if="item.scheduleTime !== null">预估：{{item.scheduleTime}}</div>
+            <div class="title_font" v-if="item.scheduleTime !== null" @click.stop="gotoEstimate(item)">预估：{{item.scheduleTime}}</div>
+            <el-button class="title_font_null" v-if="item.scheduleTime === null" @click.stop="gotoEstimate(item)">预估</el-button>
             <div class="title_font" v-if="item.endTime !== null">完成：{{item.endTime}}</div>
           </template>
         </el-step>
@@ -263,15 +264,16 @@
         this.showRightTime = false
       },
       gotoOption (val, num) {
-        let sche = document.querySelector('.schedule-item')
-        console.log('sche:', sche)
-        sche.active = 3
         if (num !== 'init') {
-          this.showRightTime = true
           this.id = val.id
           this.title = val.durationDictName
         }
         this.getTwoSchedules()
+      },
+      gotoEstimate (val) {
+        this.id = val.id
+        this.showRightTime = true
+
       },
       getOneSchedules () { // 获取所有一级进度
         getOneSchedules({
@@ -410,6 +412,14 @@
     /*margin-bottom: 0.15rem;*/
     /*width: 100px;*/
   }
+  .title_font_null {
+    font-size: 12px;
+    color: #fff;
+    background-color: transparent;
+    border: 1px solid #eee;
+    border-radius: 5px;
+    padding: 3px;
+  }
   .step-row{
     min-width:500px;
     margin-bottom:12px;
@@ -431,10 +441,12 @@
     padding-right: 10%;
   }
   .el-steps .el-step__title.is-process {
-    color: #4dd209;
+    color: rgb(89, 180, 157);;
+    /*color: #4dd209;*/
   }
   .el-steps .el-step__head.is-process .is-text {
-    border: 4px solid #4dd209;
+    border: 4px solid rgb(89, 180, 157);
+    /*border: 4px solid #4dd209;*/
     width: 36px;
     height: 36px;
     margin-top: -8px;
