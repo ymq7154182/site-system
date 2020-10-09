@@ -40,13 +40,7 @@
         <el-form-item label="名称" :label-width="formLabelWidth">
           <el-input v-model="formDefer.duration2DictName" autocomplete="off" class="item-defer" :disabled="disabledStr"></el-input>
         </el-form-item>
-<!--        <el-form-item label="描述内容" :label-width="formLabelWidth">-->
-<!--          &lt;!&ndash;                <el-select v-model="form.content" placeholder="请选择活动区域">&ndash;&gt;-->
-<!--          <el-input v-model="formDefer.processData" autocomplete="off" class="item-defer" :disabled="disabledStr"></el-input>-->
-<!--          &lt;!&ndash;                  <el-option label="区域一" value="shanghai"></el-option>&ndash;&gt;-->
-<!--          &lt;!&ndash;                  <el-option label="区域二" value="beijing"></el-option>&ndash;&gt;-->
-<!--          &lt;!&ndash;                </el-select>&ndash;&gt;-->
-<!--        </el-form-item>-->
+
         <el-form-item label="延缓原因" :label-width="formLabelWidth">
           <!--                <el-input v-model="form.reason" autocomplete="off"></el-input>-->
           <el-select v-model="formDefer.reason" placeholder="请选择" class="item-defer" :disabled="disabledStr">
@@ -57,6 +51,9 @@
               :value="item.id">
             </el-option>
           </el-select>
+        </el-form-item>
+        <el-form-item label="原因描述" :label-width="formLabelWidth">
+          <el-input v-model="formDefer.context" autocomplete="off" class="item-defer" :disabled="disabledStr"></el-input>
         </el-form-item>
         <el-form-item label="负责人" :label-width="formLabelWidth">
           <el-input v-model="formDefer.principal" autocomplete="off" class="item-defer" :disabled="disabledStr"></el-input>
@@ -155,7 +152,7 @@
         formDefer: { // 迟缓对象
           id: '',
           duration2DictName: '',
-          content: '',
+          context: '',
           status: '',
           reason: '', // 滞缓原因
           endTime: '', // 完成时间
@@ -185,7 +182,7 @@
         submitDeferInfo({
           scheduleDurationSectionPlanId: this.formDefer.id,
           delaysDictId: this.formDefer.reason,
-          context: this.deferReasons[this.formDefer.reason-1].reason,
+          context: this.formDefer.context,
           principal: this.formDefer.principal,
           planTime: this.formDefer.endTime.getFullYear() + '-' + (this.formDefer.endTime.getMonth() + 1) + '-' + this.formDefer.endTime.getDate()
         }).then(res => {
@@ -201,11 +198,12 @@
           getDeferInfo({
             scheduleDurationSectionPlanId: item.id
           }).then(res => {
-            console.log(res.data, item)
+            // console.log(res.data, item)
             this.formDefer.principal = res.data.data.principal
             this.formDefer.duration2DictName = item.duration2DictName
             this.formDefer.endTime = res.data.data.planTime
             this.formDefer.reason = res.data.data.delaysDictId
+            this.formDefer.context = res.data.data.context
             this.showSlow = true
             this.disabledStr = true
           })

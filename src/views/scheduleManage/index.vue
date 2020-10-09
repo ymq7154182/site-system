@@ -50,6 +50,12 @@
   .tabs  >>>.el-tabs__item{
     color: #fff;
   }
+  .tabs >>>.el-tabs__item.is-active {
+    color: #409EFF;
+  }
+  .tabs >>> .el-tabs__item:hover {
+    color: #409EFF;
+  }
   .border-top-left {
     height: 10px;
     background-image: url("../../../src/assets/border/top-center.png");
