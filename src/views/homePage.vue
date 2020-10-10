@@ -247,16 +247,16 @@
                     <img src="../assets/homepage/yin.png">
                   </div>
                   <div style="text-align: center">
-                    <p style="color: #fefefe">周五</p>
-                    <p style="color: #fefefe">10月10日</p>
+                    <p style="color: #fefefe">{{this.todayweather.week}}</p>
+                    <p style="color: #fefefe">{{this.todayweather.day}}</p>
                   </div>
                   <div style="text-align: center">
-                    <p style="color: #fefefe"><span style="font-size: 0.5rem">18</span>阴</p>
-                    <p style="color: #fefefe">10-21℃</p>
+                    <p style="color: #fefefe"><span style="font-size: 0.5rem">{{this.todayweather.tem}}</span>晴</p>
+                    <p style="color: #fefefe">{{this.todayweather.tem1}}-{{this.todayweather.tem2}}</p>
                   </div>
                   <div style="text-align: center;margin-top: 0.1rem">
-                    <p style="color: #fefefe">多云转阴</p>
-                    <p style="color: #fefefe">东风2级</p>
+                    <p style="color: #fefefe">{{this.todayweather.wea}}</p>
+                    <p style="color: #fefefe">{{this.todayweather.win_speed}}</p>
                   </div>
                 </div>
                 <div class="green_two" style="width: 1.5rem">
@@ -293,50 +293,50 @@
                 </div>
                 <div class="green_three">
                   <div style="text-align: center">
-                    <p style="color: #fefefe">周六</p>
-                    <p style="color: #fefefe;margin-top: 0.15rem">10月11日</p>
+                    <p style="color: #fefefe">{{this.firstweather.week}}</p>
+                    <p style="color: #fefefe;margin-top: 0.15rem">{{this.firstweather.day}}</p>
                   </div>
                   <div style="text-align: center;margin-top: 0.17rem">
                     <img src="../assets/homepage/yingtian.png">
                   </div>
                   <div style="text-align: center">
-                    <p style="color: #fefefe">10-25℃</p>
+                    <p style="color: #fefefe">{{this.firstweather.tem1}}-{{this.firstweather.tem2}}</p>
                   </div>
                   <div style="text-align: center;margin-top: 0.15rem">
-                    <p style="color: #fefefe">霾转阴</p>
-                    <p style="color: #fefefe">东风3-6级</p>
+                    <p style="color: #fefefe">{{this.firstweather.wea}}</p>
+                    <p style="color: #fefefe">{{this.firstweather.win_speed}}</p>
                   </div>
                 </div>
                 <div class="green_three">
                   <div style="text-align: center">
-                    <p style="color: #fefefe">周日</p>
-                    <p style="color: #fefefe;margin-top: 0.15rem">10月12日</p>
+                    <p style="color: #fefefe">{{this.secondweather.week}}</p>
+                    <p style="color: #fefefe;margin-top: 0.15rem">{{this.secondweather.day}}</p>
                   </div>
                   <div style="text-align: center;margin-top: 0.17rem">
                     <img src="../assets/homepage/yingtian.png">
                   </div>
                   <div style="text-align: center">
-                    <p style="color: #fefefe">25-33℃</p>
+                    <p style="color: #fefefe">{{this.secondweather.tem1}}-{{this.secondweather.tem2}}</p>
                   </div>
                   <div style="text-align: center;margin-top: 0.15rem">
-                    <p style="color: #fefefe">霾转阴</p>
-                    <p style="color: #fefefe">东风3-6级</p>
+                    <p style="color: #fefefe">{{this.secondweather.wea}}</p>
+                    <p style="color: #fefefe">{{this.secondweather.win_speed}}</p>
                   </div>
                 </div>
                 <div class="green_three">
                   <div style="text-align: center">
-                    <p style="color: #fefefe">周一</p>
-                    <p style="color: #fefefe;margin-top: 0.15rem">10月11日</p>
+                    <p style="color: #fefefe">{{this.thirdweather.week}}</p>
+                    <p style="color: #fefefe;margin-top: 0.15rem">{{this.thirdweather.day}}</p>
                   </div>
                   <div style="text-align: center;margin-top: 0.17rem">
                     <img src="../assets/homepage/qingtian.png">
                   </div>
                   <div style="text-align: center">
-                    <p style="color: #fefefe">14-22℃</p>
+                    <p style="color: #fefefe">{{this.thirdweather.tem1}}-{{this.thirdweather.tem2}}</p>
                   </div>
                   <div style="text-align: center;margin-top: 0.15rem">
-                    <p style="color: #fefefe">阴转晴</p>
-                    <p style="color: #fefefe">西南风3-6级</p>
+                    <p style="color: #fefefe">{{this.thirdweather.wea}}</p>
+                    <p style="color: #fefefe">{{this.thirdweather.win_speed}}</p>
                   </div>
                 </div>
                 <!--                <img src="../assets/homepage/shigong.png" style="margin-left: 1.6rem;width:6rem;height: 3rem">-->
@@ -382,6 +382,7 @@
   import { getSite } from '@/api/dataManage'
   import { getGongDiNameById,screenName } from '@/api/projectOverview'
   import { getSafeOrQualityChartData,getProjectDetails,getProjectTimeInformation } from '@/api/projectOverview.js'
+  import axios from 'axios'
   require('echarts/theme/macarons')
     export default {
         name: "homePage",
@@ -401,6 +402,7 @@
         this.chart22Res()
         this.inchart21()
         this.chart21Res()
+        this.getWeatherData()
         this.getUrl()
         this.getProDetails()
         this.getsiteName()
@@ -415,6 +417,10 @@
       },
       data(){
           return{
+            todayweather:[],
+            firstweather:[],
+            secondweather:[],
+            thirdweather:[],
             projectTime: '',
             projectDetails: {},
             projectName: '',
@@ -459,6 +465,29 @@
           }
       },
       methods:{
+          getWeatherData:function(){
+            axios({
+              url: 'https://www.tianqiapi.com/api/',
+              method: "get",
+              params: {
+                version: 'v1',
+                city: '石家庄',      // 若不提供城市名，会根据本机IP获取当地天气
+                appid: '55828931',      // 到该网站上注册申请（操作很简单）
+                appsecret: 'U54NAK5q'
+              },
+              headers: {
+                'Content-type':'application/x-www-form-urlencoded'
+              },
+              data: []
+            }).then(response=>{
+              console.log('测试天气数据')
+              console.log(response.data.data)
+              this.todayweather = response.data.data[0]
+              this.firstweather = response.data.data[1]
+              this.secondweather = response.data.data[2]
+              this.thirdweather = response.data.data[3]
+            })
+          },
         getProDetails: function(){
           const prams = {
             deptId: localStorage.getItem('siteId')
