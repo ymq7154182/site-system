@@ -8,11 +8,11 @@
           <el-col :span="2">
             <el-button type="success" icon="el-icon-edit" size="mini"  @click="addRecord" >新增</el-button>
           </el-col>
-          <el-col :span="2">
-            <el-button type="warning" icon="el-icon-download" size="mini" @click="handleExport" style="background-color: #7c7c7c;border:1px solid #7c7c7c">下载</el-button>
-          </el-col>
+          <!--<el-col :span="2">-->
+            <!--<el-button type="warning" icon="el-icon-download" size="mini" @click="handleExport" style="background-color: #7c7c7c;border:1px solid #7c7c7c">下载</el-button>-->
+          <!--</el-col>-->
 <!--          搜索框-->
-          <el-col :span="11" :offset="7">
+          <el-col :span="11" :offset="8">
             <el-date-picker
               v-model="startTime"
               type="date"
@@ -25,23 +25,24 @@
               value-format="yyyy-MM-dd"
               placeholder="选择结束日期">
             </el-date-picker>
+            <el-button type="primary" @click="getDataByTime">点击搜索</el-button>
           </el-col>
-          <el-button type="primary" @click="getDataByTime">点击搜索</el-button>
+
         </el-row>
         <div class="safeTable">
           <!--        表格部分-->
           <el-table style="" v-loading="loading" :data="userList.slice((currentPage - 1) * pageSize, currentPage * pageSize)" @selection-change="handleSelectionChange"  border >
-            <el-table-column type="selection" width="50" align="center" />
-            <el-table-column label="项目序号" align="center" prop="id" width="100"/>
+            <!--<el-table-column type="selection" width="50" align="center" />-->
+            <el-table-column label="项目序号" align="center" prop="id" width="120"/>
 <!--            <el-table-column label="项目名称" align="center" prop="proName" width="160" />-->
-            <el-table-column label="项目地址" align="center" prop="addressAll" width="200"/>
-            <el-table-column label="综合得分" align="center" prop="checkCode" :show-overflow-tooltip="true" width="120"/>
-            <el-table-column label="检查人员" align="center" prop="checkUser" :show-overflow-tooltip="true" width="120"/>
-            <el-table-column label="自评结果" align="center" prop="selfResult" :show-overflow-tooltip="true" width="120"/>
-            <el-table-column label="检查时间" align="center" prop="checkTime" width="200" />
+            <el-table-column label="项目地址" align="center" prop="addressAll" width="280"/>
+            <el-table-column label="综合得分" align="center" prop="checkCode" :show-overflow-tooltip="true" width="140"/>
+            <el-table-column label="检查人员" align="center" prop="checkUser" :show-overflow-tooltip="true" width="140"/>
+            <el-table-column label="自评结果" align="center" prop="selfResult" :show-overflow-tooltip="true" width="140"/>
+            <el-table-column label="检查时间" align="center" prop="checkTime" width="260" />
 
 <!--            <el-table-column label="检查员姓名" align="center" prop="checkUser" width="120" />-->
-            <el-table-column label="操作" align="center" width="160" class-name="small-padding fixed-width" >
+            <el-table-column label="操作" align="center" width="200" class-name="small-padding fixed-width" >
               <template slot-scope="scope">
                 <el-button size="mini" type="text" icon="el-icon-view" @click="handleView(scope.row)"
                 >详情</el-button>
@@ -1233,6 +1234,11 @@ export default {
 }
 .block >>>.el-pagination__jump{
   color: white;
+}
+
+.safeTable >>> .el-table,
+.safeTable >>> .el-table__expanded-cell {
+  background-color: transparent !important;
 }
 /*.safeTable >>>.el-table{*/
 /*  background-color: rgba(1,53,96,0.3);*/

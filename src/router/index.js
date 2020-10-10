@@ -117,6 +117,28 @@ const routes = [
       }
     ]
   },
+  {
+    path: '/historyData',
+    component: Layout,
+    name: 'historyData',
+    children: [
+      {
+        path: '/historyData',
+        component: () => import('@/views/deviceDetail/historyData'),
+      }
+    ]
+  },
+  {
+    path: '/historySJ',
+    component: Layout,
+    name: 'historySJ',
+    children: [
+      {
+        path: '/historySJ',
+        component: () => import('@/views/deviceDetail/historySJ'),
+      }
+    ]
+  },
 ]
 const router = new VueRouter({
   mode: "history",
