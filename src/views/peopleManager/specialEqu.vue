@@ -22,8 +22,8 @@
               </el-form-item>
             </el-form>
             <div style="float: right; ">
-              <el-button type="primary" icon="el-icon-search" @click="handleQuery">搜索</el-button>
-              <el-button type="primary" icon="el-icon-refresh" @click="resetSearch('queryForm')">重置</el-button>
+              <el-button type="success" icon="el-icon-search" @click="handleQuery">搜索</el-button>
+              <el-button type="warning" icon="el-icon-refresh" @click="resetSearch('queryForm')">重置</el-button>
             </div>
           </el-col>
         </el-row>
