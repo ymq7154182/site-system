@@ -395,7 +395,7 @@
         this.chart13Res()
         this.inchart24()
         this.chart24Res()
-        this.inchart22()
+        // this.inchart22()
         this.chart22Res()
         this.inchart21()
         this.chart21Res()
@@ -405,11 +405,14 @@
         this.getsiteName()
         this.getProjectName()
         this.getProjectTime()
-        setTimeout(()=>{
-          this.verifyProjectName()
-        },100)
+        // setTimeout(()=>{
+        //   this.verifyProjectName()
+        // },100)
         setTimeout(()=>{
           this.inchart13()
+        },200)
+        setTimeout(()=>{
+          this.inchart22()
         },200)
       },
       data(){
@@ -572,9 +575,13 @@
         //   })
         // },
         getOneSchedules () { // 获取所有一级进度
+            console.log('进度测试id')
+          console.log( this.deptId)
           getOneSchedules({
             siteId: this.deptId
           }).then(res => {
+            console.log('获取进度数据')
+            console.log(res.data.data)
             this.titleList = res.data.data
             // this.id = res.data.data[0].id
             // this.title = res.data.data[0].durationDictName
@@ -689,7 +696,8 @@
         },
         inchart13() {
           const prams = {
-            classes: '质量'
+            classes: '质量',
+            sitename: this.projectName
           }
           var getData = []
           getSafeOrQualityChartData(prams).then(response=>{
@@ -1048,7 +1056,8 @@
         },
         inchart22() {
           const prams = {
-            classes: '安全'
+            classes: '安全',
+            sitename: this.projectName
           }
           var data = []
           getSafeOrQualityChartData(prams).then(response=>{
