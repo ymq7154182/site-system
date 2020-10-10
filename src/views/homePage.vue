@@ -410,10 +410,10 @@
         // },100)
         setTimeout(()=>{
           this.inchart13()
-        },200)
+        },100)
         setTimeout(()=>{
           this.inchart22()
-        },200)
+        },100)
       },
       data(){
           return{
@@ -576,9 +576,9 @@
         // },
         getOneSchedules () { // 获取所有一级进度
             console.log('进度测试id')
-          console.log( this.deptId)
+          console.log(localStorage.getItem('siteId'))
           getOneSchedules({
-            siteId: this.deptId
+            siteId: localStorage.getItem('siteId')
           }).then(res => {
             console.log('获取进度数据')
             console.log(res.data.data)
