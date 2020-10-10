@@ -7,12 +7,12 @@
           <div class="dm-title">七张表</div>
           <div class="type-list">
             <ul>
-              <li @click="getShow1"><i class="el-icon-document type-icon" />安装自检列表</li>
-              <li @click="getShow2"><i class="el-icon-document type-icon" />安装验收列表</li>
-              <li @click="getShow3"><i class="el-icon-document type-icon" />顶升加节列表</li>
+              <li @click="getShow1"><i class="el-icon-document type-icon" />安装自检</li>
+              <li @click="getShow2"><i class="el-icon-document type-icon" />安装验收</li>
+              <li @click="getShow3"><i class="el-icon-document type-icon" />顶升加节</li>
               <li @click="getShow4"><i class="el-icon-document type-icon" />附着列表</li>
-              <li @click="getShow5"><i class="el-icon-document type-icon" />定期检查列表</li>
-              <li @click="getShow6"><i class="el-icon-document type-icon" />维护保养列表</li>
+              <li @click="getShow5"><i class="el-icon-document type-icon" />定期检查</li>
+              <li @click="getShow6"><i class="el-icon-document type-icon" />维护保养</li>
               <!--<li><i class="el-icon-picture-outline type-icon" />图片</li>-->
               <!--<li><i class="el-icon-video-camera-solid type-icon" />视频</li>-->
             </ul>
@@ -37,6 +37,9 @@
               >
                 <!--<el-table-column prop="name" label="设备名称" align="center" />-->
                 <!--<el-table-column prop="type" label="设备编号" width="100" align="center" />-->
+                <el-table-column prop="devId" label="设备id" />
+                <el-table-column prop="setupId" label="安装id" />
+                <el-table-column prop="userid" label="当前登录人id" />
                 <el-table-column prop="leftHeight" label="起升高度" />
                 <el-table-column prop="towerHeight" label="塔高" width="150" align="center" />
                 <el-table-column prop="installHeigth" label="安装高度" align="center" />
@@ -77,6 +80,9 @@
               >
                 <!--<el-table-column prop="name" label="设备名称" align="center" />-->
                 <!--<el-table-column prop="type" label="设备编号" width="100" align="center" />-->
+                <el-table-column prop="devId" label="设备id" />
+                <el-table-column prop="setupId" label="安装id" />
+                <el-table-column prop="userid" label="当前登录人id" />
                 <el-table-column prop="leftHeight" label="起升高度" />
                 <el-table-column prop="towerHeight" label="塔高" width="150" align="center" />
                 <el-table-column prop="installHeigth" label="安装高度" align="center" />
@@ -113,6 +119,9 @@
                 :header-row-style="{ color: '#409eff' }"
                 :row-style="{ color: 'white' }"
               >
+                <el-table-column prop="devid" label="设备id" />
+                <el-table-column prop="installid" label="安装单位id" />
+                <el-table-column prop="userid" label="当前登录人id" />
                 <el-table-column prop="leftHeight" label="附着道数" />
                 <el-table-column prop="towerHeight" label="当前已安装附着" width="150" align="center" />
                 <el-table-column prop="installHeigth" label="当前标准节" align="center" />
@@ -157,6 +166,9 @@
                 :header-row-style="{ color: '#409eff' }"
                 :row-style="{ color: 'white' }"
               >
+                <el-table-column prop="devid" label="设备id" />
+                <el-table-column prop="installid" label="安装单位id" />
+                <el-table-column prop="userid" label="当前登录人id" />
                 <el-table-column prop="leftHeight" label="附着道数" />
                 <el-table-column prop="towerHeight" label="当前已安装附着" width="150" align="center" />
                 <el-table-column prop="installHeigth" label="当前标准节" align="center" />
@@ -201,6 +213,9 @@
                 :header-row-style="{ color: '#409eff' }"
                 :row-style="{ color: 'white' }"
               >
+                <el-table-column prop="devid" label="设备id" />
+                <el-table-column prop="useId" label="使用id" />
+                <el-table-column prop="userid" label="当前登录人id" />
                 <el-table-column prop="leftHeight" label="附着道数" />
                 <el-table-column prop="towerHeight" label="当前已安装附着" width="150" align="center" />
                 <el-table-column prop="installHeigth" label="当前标准节" align="center" />
@@ -241,6 +256,9 @@
                 :header-row-style="{ color: '#409eff' }"
                 :row-style="{ color: 'white' }"
               >
+                <el-table-column prop="devid" label="设备id" />
+                <el-table-column prop="useId" label="使用id" />
+                <el-table-column prop="userid" label="当前登录人id" />
                 <el-table-column prop="weibaotime" label="维保时间" />
                 <el-table-column prop="maxcapacity" label="运转台时" />
                 <el-table-column prop="maxrange" label="更换主要零部件" />
@@ -291,7 +309,7 @@
             <el-input v-model="uploadInfo.maxLoad" style="width: 50%" placeholder="请输入最大载重量"></el-input>
           </el-form-item>
           <el-form-item label="检查时间" >
-            <el-date-picker v-model="uploadInfo.checkTime" align="right" type="date" placeholder="选择日期" :picker-options="pickerOptions" style="width: 50%; " />
+            <el-date-picker v-model="uploadInfo.checkTime" align="right" type="date" placeholder="选择日期" :picker-options="pickerOptions" value-format="yyyy-MM-dd" style="width: 50%; " />
           </el-form-item>
           <el-form-item label="安装单位负责人" >
             <el-input v-model="uploadInfo.checkUser" placeholder="请输入安装单位负责人" style="width: 50%; "></el-input>
@@ -300,7 +318,7 @@
             <el-input v-model="uploadInfo.checkContent" type="textarea" placeholder="请输入安装单位自检意见" style="width: 70%; "></el-input>
           </el-form-item>
           <el-form-item label="检查填写时间" >
-            <el-date-picker v-model="uploadInfo.checkWriteTime" align="right" type="date" placeholder="选择日期" :picker-options="pickerOptions" style="width: 50%; " />
+            <el-date-picker v-model="uploadInfo.checkWriteTime" align="right" type="date" placeholder="选择日期" :picker-options="pickerOptions" value-format="yyyy-MM-dd" style="width: 50%; " />
           </el-form-item>
           <el-form-item label="安装单位技术负责人" >
             <el-input v-model="uploadInfo.installUser" placeholder="请输入安装单位技术负责人" style="width: 50%; "></el-input>
@@ -315,7 +333,7 @@
             <el-input v-model="uploadInfo.installUserJzry" placeholder="请输入机组人员" style="width: 50%; "></el-input>
           </el-form-item>
           <el-form-item label="填写时间" >
-            <el-date-picker v-model="uploadInfo.writeTime" align="right" type="date" placeholder="选择日期" :picker-options="pickerOptions" style="width: 50%; " />
+            <el-date-picker v-model="uploadInfo.writeTime" align="right" type="date" placeholder="选择日期" :picker-options="pickerOptions" value-format="yyyy-MM-dd" style="width: 50%; " />
           </el-form-item>
           <el-form-item label="最大起重量" >
             <el-input v-model="uploadInfo.maxCapacity" placeholder="请输入最大起重量" style="width: 50%; "></el-input>
@@ -357,7 +375,7 @@
             <el-input v-model="uploadInfo2.userSg" style="width: 50%" placeholder="请输入内容"></el-input>
           </el-form-item>
           <el-form-item label="时间" >
-            <el-date-picker v-model="uploadInfo2.timeSg" align="right" type="date" placeholder="选择日期" :picker-options="pickerOptions" style="width: 50%; " />
+            <el-date-picker v-model="uploadInfo2.timeSg" align="right" type="date" placeholder="选择日期" :picker-options="pickerOptions" value-format="yyyy-MM-dd" style="width: 50%; " />
           </el-form-item>
           <el-form-item label="监理单位意见" >
             <el-input v-model="uploadInfo2.opinionJl" style="width: 50%" placeholder="请输入监理单位意见" type="textarea"></el-input>
@@ -366,10 +384,10 @@
             <el-input v-model="uploadInfo2.userJl" style="width: 50%" placeholder="请输入内容"></el-input>
           </el-form-item>
           <el-form-item label="时间" >
-            <el-date-picker v-model="uploadInfo2.timeJl" align="right" type="date" placeholder="选择日期" :picker-options="pickerOptions" style="width: 50%; " />
+            <el-date-picker v-model="uploadInfo2.timeJl" align="right" type="date" placeholder="选择日期" :picker-options="pickerOptions" value-format="yyyy-MM-dd" style="width: 50%; " />
           </el-form-item>
           <el-form-item label="上报时间时间">
-            <el-date-picker v-model="uploadInfo2.reporttime" align="right" type="date" placeholder="选择日期" :picker-options="pickerOptions" style="width: 50%; " />
+            <el-date-picker v-model="uploadInfo2.reporttime" align="right" type="date" placeholder="选择日期" :picker-options="pickerOptions" value-format="yyyy-MM-dd" style="width: 50%; " />
           </el-form-item>
           <el-form-item label="最大起重量" >
             <el-input v-model="uploadInfo2.maxCapacity" placeholder="请输入最大起重量" style="width: 50%; "></el-input>
@@ -383,6 +401,15 @@
           </el-form-item>
         </el-form>
         <el-form :model="uploadInfo3"   label-width="1.5rem" v-show="tableShow === 'table3'">
+          <el-form-item label="设备id" >
+            <el-input v-model="uploadInfo3.devid" style="width: 50%" placeholder="请输入设备id"></el-input>
+          </el-form-item>
+          <el-form-item label="安装单位id" >
+            <el-input v-model="uploadInfo3.installid" style="width: 50%" placeholder="安装单位id"></el-input>
+          </el-form-item>
+          <el-form-item label="当前登录人id" >
+            <el-input v-model="uploadInfo3.userid" style="width: 50%" placeholder="请输入当前登录人id"></el-input>
+          </el-form-item>
           <el-form-item label="附着道数" >
             <el-input v-model="uploadInfo3.leftHeight" style="width: 50%" placeholder="请输入起升高度"></el-input>
           </el-form-item>
@@ -402,7 +429,7 @@
             <el-input v-model="uploadInfo3.useId" style="width: 50%" placeholder="请输入内容设备使用ID"></el-input>
           </el-form-item>
           <el-form-item label="安装时间" >
-            <el-date-picker v-model="uploadInfo3.installtime" align="right" type="date" placeholder="选择日期" :picker-options="pickerOptions" style="width: 50%; " />
+            <el-date-picker v-model="uploadInfo3.installtime" align="right" type="date" placeholder="选择日期" :picker-options="pickerOptions" value-format="yyyy-MM-dd" style="width: 50%; " />
           </el-form-item>
           <el-form-item label="顶升后高度" >
             <el-input v-model="uploadInfo3.checkTime" style="width: 50%" placeholder="请输入顶升后高度" type="textarea"></el-input>
@@ -411,10 +438,10 @@
             <el-input v-model="uploadInfo3.spacing" style="width: 50%" placeholder="请输入附着间距"></el-input>
           </el-form-item>
           <el-form-item label="监理单位审核日期" >
-            <el-date-picker v-model="uploadInfo3.installUserZcs" align="right" type="date" placeholder="选择日期" :picker-options="pickerOptions" style="width: 50%; " />
+            <el-date-picker v-model="uploadInfo3.installUserZcs" align="right" type="date" placeholder="选择日期" :picker-options="pickerOptions" value-format="yyyy-MM-dd" style="width: 50%; " />
           </el-form-item>
           <el-form-item label="上报时间时间">
-            <el-date-picker v-model="uploadInfo3.reporttime" align="right" type="date" placeholder="选择日期" :picker-options="pickerOptions" style="width: 50%; " />
+            <el-date-picker v-model="uploadInfo3.reporttime" align="right" type="date" placeholder="选择日期" :picker-options="pickerOptions" value-format="yyyy-MM-dd" style="width: 50%; " />
           </el-form-item>
           <el-form-item label="与建筑物水平中心距离" >
             <el-input v-model="uploadInfo3.maxCapacity" placeholder="请输入与建筑物水平中心距离" style="width: 50%; "></el-input>
@@ -441,7 +468,7 @@
             <el-input v-model="uploadInfo3.installUserAqjg" placeholder="请输入监理单位审核意见" style="width: 50%; "></el-input>
           </el-form-item>
           <el-form-item label="施工总承包审核日期">
-            <el-date-picker v-model="uploadInfo3.installUser" align="right" type="date" placeholder="选择日期" :picker-options="pickerOptions" style="width: 50%; " />
+            <el-date-picker v-model="uploadInfo3.installUser" align="right" type="date" placeholder="选择日期" :picker-options="pickerOptions" value-format="yyyy-MM-dd" style="width: 50%; " />
           </el-form-item>
           <el-form-item>
             <el-button type="primary" @click="submitUpload('uploadInfo')">提交</el-button>
@@ -449,6 +476,15 @@
           </el-form-item>
         </el-form>
         <el-form :model="uploadInfo4"   label-width="1.5rem" v-show="tableShow === 'table4'">
+          <el-form-item label="设备id" >
+            <el-input v-model="uploadInfo4.devid" style="width: 50%" placeholder="请输入设备id"></el-input>
+          </el-form-item>
+          <el-form-item label="安装单位id" >
+            <el-input v-model="uploadInfo4.installid" style="width: 50%" placeholder="安装单位id"></el-input>
+          </el-form-item>
+          <el-form-item label="当前登录人id" >
+            <el-input v-model="uploadInfo4.userid" style="width: 50%" placeholder="请输入当前登录人id"></el-input>
+          </el-form-item>
           <el-form-item label="附着道数" >
             <el-input v-model="uploadInfo4.leftHeight" style="width: 50%" placeholder="请输入起升高度"></el-input>
           </el-form-item>
@@ -468,7 +504,7 @@
             <el-input v-model="uploadInfo4.useId" style="width: 50%" placeholder="请输入内容设备使用ID"></el-input>
           </el-form-item>
           <el-form-item label="安装时间" >
-            <el-date-picker v-model="uploadInfo4.installtime" align="right" type="date" placeholder="选择日期" :picker-options="pickerOptions" style="width: 50%; " />
+            <el-date-picker v-model="uploadInfo4.installtime" align="right" type="date" placeholder="选择日期" :picker-options="pickerOptions" value-format="yyyy-MM-dd" style="width: 50%; " />
           </el-form-item>
           <el-form-item label="顶升后高度" >
             <el-input v-model="uploadInfo4.checkTime" style="width: 50%" placeholder="请输入顶升后高度" type="textarea"></el-input>
@@ -477,10 +513,10 @@
             <el-input v-model="uploadInfo4.spacing" style="width: 50%" placeholder="请输入附着间距"></el-input>
           </el-form-item>
           <el-form-item label="监理单位审核日期" >
-            <el-date-picker v-model="uploadInfo4.installUserZcs" align="right" type="date" placeholder="选择日期" :picker-options="pickerOptions" style="width: 50%; " />
+            <el-date-picker v-model="uploadInfo4.installUserZcs" align="right" type="date" placeholder="选择日期" :picker-options="pickerOptions" value-format="yyyy-MM-dd" style="width: 50%; " />
           </el-form-item>
           <el-form-item label="上报时间时间">
-            <el-date-picker v-model="uploadInfo4.reporttime" align="right" type="date" placeholder="选择日期" :picker-options="pickerOptions" style="width: 50%; " />
+            <el-date-picker v-model="uploadInfo4.reporttime" align="right" type="date" placeholder="选择日期" :picker-options="pickerOptions" value-format="yyyy-MM-dd" style="width: 50%; " />
           </el-form-item>
           <el-form-item label="与建筑物水平中心距离" >
             <el-input v-model="uploadInfo4.maxCapacity" placeholder="请输入与建筑物水平中心距离" style="width: 50%; "></el-input>
@@ -507,7 +543,7 @@
             <el-input v-model="uploadInfo4.installUserAqjg" placeholder="请输入监理单位审核意见" style="width: 50%; "></el-input>
           </el-form-item>
           <el-form-item label="施工总承包审核日期">
-            <el-date-picker v-model="uploadInfo4.installUser" align="right" type="date" placeholder="选择日期" :picker-options="pickerOptions" style="width: 50%; " />
+            <el-date-picker v-model="uploadInfo4.installUser" align="right" type="date" placeholder="选择日期" :picker-options="pickerOptions" value-format="yyyy-MM-dd" style="width: 50%; " />
           </el-form-item>
           <el-form-item>
             <el-button type="primary" @click="submitUpload('uploadInfo')">提交</el-button>
@@ -537,7 +573,7 @@
             <el-input v-model="uploadInfo5.useId" style="width: 50%" placeholder="请输入内容设备使用ID"></el-input>
           </el-form-item>
           <el-form-item label="检查时间" >
-            <el-date-picker v-model="uploadInfo5.checkTime" align="right" type="date" placeholder="选择日期" :picker-options="pickerOptions" style="width: 50%; " />
+            <el-date-picker v-model="uploadInfo5.checkTime" align="right" type="date" placeholder="选择日期" :picker-options="pickerOptions" value-format="yyyy-MM-dd" style="width: 50%; " />
           </el-form-item>
           <el-form-item label="最大起重量" >
             <el-input v-model="uploadInfo5.maxCapacity" style="width: 50%" placeholder="请输入最大起重量" type="textarea"></el-input>
@@ -558,7 +594,7 @@
             <el-input v-model="uploadInfo5.userContent" style="width: 50%" placeholder="请输入使用单位意见"></el-input>
           </el-form-item>
           <el-form-item label="使用单位填写时间" >
-            <el-date-picker v-model="uploadInfo5.userTime" align="right" type="date" placeholder="选择日期" :picker-options="pickerOptions" style="width: 50%; " />
+            <el-date-picker v-model="uploadInfo5.userTime" align="right" type="date" placeholder="选择日期" :picker-options="pickerOptions" value-format="yyyy-MM-dd" style="width: 50%; " />
           </el-form-item>
           <el-form-item label="检查人员" >
             <el-input v-model="uploadInfo5.checkUser" style="width: 50%" placeholder="请输入检查人员"></el-input>
@@ -567,7 +603,7 @@
             <el-input v-model="uploadInfo5.conclusion" style="width: 50%" placeholder="请输入结论"></el-input>
           </el-form-item>
           <el-form-item label="上报时间">
-            <el-date-picker v-model="uploadInfo5.reporttime" align="right" type="date" placeholder="选择日期" :picker-options="pickerOptions" style="width: 50%; " />
+            <el-date-picker v-model="uploadInfo5.reporttime" align="right" type="date" placeholder="选择日期" :picker-options="pickerOptions" value-format="yyyy-MM-dd" style="width: 50%; " />
           </el-form-item>
           <el-form-item>
             <el-button type="primary" @click="submitUpload('uploadInfo')">提交</el-button>
@@ -585,7 +621,7 @@
             <el-input v-model="uploadInfo6.userid" style="width: 50%" placeholder="请输入当前登录人id"></el-input>
           </el-form-item>
           <el-form-item label="维保时间" >
-            <el-date-picker v-model="uploadInfo6.weibaotime" align="right" type="date" placeholder="选择日期" :picker-options="pickerOptions" style="width: 50%; " />
+            <el-date-picker v-model="uploadInfo6.weibaotime" align="right" type="date" placeholder="选择日期" :picker-options="pickerOptions" value-format="yyyy-MM-dd" style="width: 50%; " />
           </el-form-item>
           <el-form-item label="运转台时" >
             <el-input v-model="uploadInfo6.maxcapacity" style="width: 50%" placeholder="请输入运转台时"></el-input>
@@ -607,10 +643,10 @@
             <el-input v-model="uploadInfo6.installuseraqjg" style="width: 50%" placeholder="请输入监理单位审核意见"></el-input>
           </el-form-item>
           <el-form-item label="监理单位审核日期" >
-            <el-date-picker v-model="uploadInfo6.installuserzc" align="right" type="date" placeholder="选择日期" :picker-options="pickerOptions" style="width: 50%; " />
+            <el-date-picker v-model="uploadInfo6.installuserzc" align="right" type="date" placeholder="选择日期" :picker-options="pickerOptions" value-format="yyyy-MM-dd" style="width: 50%; " />
           </el-form-item>
           <el-form-item label="上报时间">
-            <el-date-picker v-model="uploadInfo6.reporttime" align="right" type="date" placeholder="选择日期" :picker-options="pickerOptions" style="width: 50%; " />
+            <el-date-picker v-model="uploadInfo6.reporttime" align="right" type="date" placeholder="选择日期" :picker-options="pickerOptions" value-format="yyyy-MM-dd"  style="width: 50%; " />
           </el-form-item>
           <el-form-item>
             <el-button type="primary" @click="submitUpload('uploadInfo')">提交</el-button>
@@ -636,7 +672,7 @@
             <el-input type="textarea" v-model="currentInfo.description" style="width: 90%; "></el-input>
           </el-form-item>
           <el-form-item label="上传日期" prop="uploadTime">
-            <el-date-picker v-model="currentInfo.uploadTime" align="right" type="date" placeholder="选择日期" :picker-options="pickerOptions" style="width: 50%; " />
+            <el-date-picker v-model="currentInfo.uploadTime" align="right" type="date" placeholder="选择日期" :picker-options="pickerOptions" value-format="yyyy-MM-dd" style="width: 50%; " />
           </el-form-item>
           <el-form-item label="上传人" prop="uploader">
             <el-input v-model="currentInfo.uploader" placeholder="请输入上传人" style="width: 50%; "></el-input>
@@ -652,8 +688,8 @@
 </template>
 
 <script>
-  import { zijian, addZijian,getSysProData,yanshou, addyanshou,weihu, addweihu, dingqi, adddingqi } from "@/api/deviceManage";
-  import axios from 'axios'
+  import { zijian, addZijian,getSysProData,yanshou, addyanshou,weihu, addweihu, dingqi, adddingqi, dingsheng,adddingsheng,fuzhuo, addfuzhuo } from "@/api/deviceManage";
+  // import axios from 'axios'
   export default {
     data() {
       return {
@@ -706,7 +742,7 @@
         uploadInfo3: {
           proid: '', // 项目id
           devid: '', // 设备id
-          setupId: '', // 安装id
+          installid: '', // 安装单位id
           userid: '', // 当前登录人id
           leftHeight: '', // 附着道数
           towerHeight: '', // 当前已安装附着
@@ -724,6 +760,7 @@
           checkUser: '', // 是否附着0.是 1.否
           installmanager: '', // 安装单位负责人
           installphone: '', // 联系电话
+          checkContent: '', // 现场专业技术人员
           checkWriteTime: '', // 施工总承包单位审核意见
           installUserAqjg: '', // 监理单位审核意见
           installUser: '', // 施工总承包审核日期
@@ -731,7 +768,7 @@
         uploadInfo4: {
           proid: '', // 项目id
           devid: '', // 设备id
-          setupId: '', // 安装id
+          installid: '', // 安装单位id
           userid: '', // 当前登录人id
           leftHeight: '', // 附着道数
           towerHeight: '', // 当前已安装附着
@@ -749,6 +786,7 @@
           checkUser: '', // 是否附着0.是 1.否
           installmanager: '', // 安装单位负责人
           installphone: '', // 联系电话
+          checkContent: '', // 现场专业技术人员
           checkWriteTime: '', // 施工总承包单位审核意见
           installUserAqjg: '', // 监理单位审核意见
           installUser: '', // 施工总承包审核日期
@@ -877,11 +915,11 @@
       },
       getShow3() {
         this.tableShow = 'table3'
-        this.fileTable = []
+        this.getdingsheng()
       },
       getShow4() {
         this.tableShow = 'table4'
-        this.fileTable = []
+        this.getfuzhuo()
       },
       getShow5() {
         this.tableShow = 'table5'
@@ -912,9 +950,9 @@
         } else if (this.tableShow === 'table2') {
           this.getaddyanshou()
         }else if(this.tableShow === 'table3') {
-
+          this.getadddingsheng()
         }else if(this.tableShow === 'table4') {
-
+          this.getaddfuzhuo()
         }else if(this.tableShow === 'table5') {
           this.getadddingqi()
         }else if(this.tableShow === 'table6') {
@@ -988,6 +1026,40 @@
           if(res.data.code === 200) {
             this.$message.success(res.data.msg)
             this.getdingqi()
+            this.showUpload = false
+          } else {
+            this.$message.error(res.data.msg)
+          }
+        })
+      },
+      getdingsheng() {
+        dingsheng().then((res) => {
+          this.fileTable = res.data.rows
+        })
+      },
+      getadddingsheng() {
+        var data = this.uploadInfo3
+        adddingsheng(data).then((res) => {
+          if(res.data.code === 200) {
+            this.$message.success(res.data.msg)
+            this.getdingsheng()
+            this.showUpload = false
+          } else {
+            this.$message.error(res.data.msg)
+          }
+        })
+      },
+      getfuzhuo() {
+        fuzhuo().then((res) => {
+          this.fileTable = res.data.rows
+        })
+      },
+      getaddfuzhuo() {
+        var data = this.uploadInfo4
+        addfuzhuo(data).then((res) => {
+          if(res.data.code === 200) {
+            this.$message.success(res.data.msg)
+            this.getfuzhuo()
             this.showUpload = false
           } else {
             this.$message.error(res.data.msg)
