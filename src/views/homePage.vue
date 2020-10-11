@@ -388,6 +388,7 @@
       },
       mounted() {
         this.$store.dispatch('changeMsg', '项目概览')
+        this.getUrl()
         this.getDeferReasons() // 获取滞缓原因
         this.getOneSchedules() // 获取所有一级进度
         // this.getTwoSchedules() // 获取所有二级进度
@@ -400,7 +401,7 @@
         this.inchart21()
         this.chart21Res()
         this.getWeatherData()
-        this.getUrl()
+
         this.getProDetails()
         this.getsiteName()
         this.getProjectName()

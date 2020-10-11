@@ -213,18 +213,15 @@
         }
       },
       created() {
-        this.getConstructionSiteName(localStorage.getItem('siteId'))
-        console.log("siteId",localStorage.getItem('siteId'))
+
+        // console.log("siteId",localStorage.getItem('siteId'))
       },
       mounted() {
-        this.getProblem()
-        this.getSafetyTrouble()
-        this.getSafetyRecord()
-        this.getDanger()
-        this.getRectification()
-        this.getSafetyCheck()
-          var _this = this
         this.$store.dispatch('changeMsg', '安全管理')
+        this.getConstructionSiteName(localStorage.getItem('siteId'))
+
+          var _this = this
+
         setTimeout(() => {
           this.loading = false
         }, 600)
@@ -4337,7 +4334,8 @@
         },
         // 获取问题趋势接口
         getProblem (){
-
+          console.log('获取问题趋势接口')
+          console.log(this.proName)
           getProblem ({
             sitename:this.proName
           }).then((res) => {
@@ -4398,7 +4396,13 @@
             console.log("2222222",response.data)
             console.log("2取到的proid",response.data.proName)
             this.proName = response.data.proName
-            console.log("2拿到的proname",this.proName)
+            // console.log("2拿到的proname",this.proName)
+            this.getProblem()
+            this.getSafetyTrouble()
+            this.getSafetyRecord()
+            this.getDanger()
+            this.getRectification()
+            this.getSafetyCheck()
 
           })
         },
