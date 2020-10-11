@@ -91,9 +91,9 @@
             </div>
           </li>
           <li>
-            <div class="li-text2 pos-style-right1" :class="{'bg-img23': textStyle=== '监控管理', 'bg-img22': textStyle!== '监控管理' }" @click="gotoVideo">
+            <div class="li-text2 pos-style-right1" :class="{'bg-img23': textStyle=== '视频管理', 'bg-img22': textStyle!== '视频管理' }" @click="gotoVideo">
                 <span>
-                   监控管理
+                   视频管理
                 </span>
             </div>
           </li>

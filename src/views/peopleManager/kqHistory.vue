@@ -11,10 +11,10 @@
 <!--            <el-button type="success" icon="el-icon-edit" size="mini" :disabled="single" @click="handleUpdate()" >修改</el-button>-->
 <!--                <el-button type="warning" icon="el-icon-download" size="mini" @click="handleExport" >下载</el-button>-->
 <!--          </el-col>-->
-          <el-col :span="18">
+          <el-col :span="24">
             <el-form :model="queryParams" ref="queryForm" :inline="true" v-show="showSearch" label-width="68px">
-              <el-form-item label="工地名称" prop="constructionSiteName" class="fixColor">
-                <el-input v-model="queryParams.constructionSiteName" placeholder="请输入工地名称" clearable size="small" style="width: 240px" @keyup.enter.native="handleQuery" />
+              <el-form-item label="用户名" prop="userSignName" class="fixColor">
+                <el-input v-model="queryParams.userSignName" placeholder="请输入用户名" clearable size="small" style="width: 240px" @keyup.enter.native="handleQuery" />
               </el-form-item>
               <el-form-item label="打卡状态" prop="userSignStatus" class="fixColor">
                 <el-input v-model="queryParams.userSignStatus" placeholder="请输入打卡状态" clearable size="small" style="width: 240px" @keyup.enter.native="handleQuery" />
@@ -46,13 +46,13 @@
                     :row-style="{ color: 'white' }">
             <!--          <el-table-column type="selection" width="50" align="center" />-->
             <!--          <el-table-column label="项目序号" align="center" prop="id" width="200"/>-->
-            <el-table-column label="工地编号" align="center" prop="id" width="160"/>
-            <el-table-column label="工地名称" align="center" prop="constructionSiteName" :show-overflow-tooltip="true" width="220"/>
+            <el-table-column label="工地编号" align="center" prop="id" width="120"/>
+            <el-table-column label="用户名称" align="center" prop="userSignName" :show-overflow-tooltip="true" width="180"/>
             <!--          <el-table-column label="用户昵称" align="center" prop="nickName" :show-overflow-tooltip="true" />-->
-            <el-table-column label="工种" align="center" prop="userType" :show-overflow-tooltip="true" width="200"/>
-            <el-table-column label="年龄" align="center" prop="userAge" :show-overflow-tooltip="true" width="160"/>
-            <el-table-column label="手机号码" align="center" prop="phone" width="240" />
-            <el-table-column label="打卡状态" align="center" prop="userSignStatus" width="200">
+            <el-table-column label="工种" align="center" prop="userType" :show-overflow-tooltip="true" width="120"/>
+            <el-table-column label="年龄" align="center" prop="userAge" :show-overflow-tooltip="true" width="120"/>
+            <el-table-column label="手机号码" align="center" prop="phone" width="160" />
+            <el-table-column label="打卡状态" align="center" prop="userSignStatus" width="120">
               <!--            <template slot-scope="scope">-->
               <!--              <el-switch v-model="scope.row.status" active-value="0" inactive-value="1" @change="handleStatusChange(scope.row)"></el-switch>-->
               <!--            </template>-->
@@ -234,6 +234,7 @@ export default {
       },
       // 查询参数
       queryParams: {
+        userSignName:'',
         constructionSiteName:'',
         userSignStatus:'',
         userSignTime:'',
@@ -281,7 +282,7 @@ export default {
   created() {
     this.getConstructionSiteName(localStorage.getItem('siteId'))
     console.log("siteId",localStorage.getItem('siteId'))
-    this.getList();
+    // this.getList();
 
   },
   methods: {
@@ -295,6 +296,7 @@ export default {
         console.log("根据工地id获取工地名")
         this.proName = response.data.proName
         console.log("拿到的proname",this.proName)
+        this.getList()
       })
     },
     // 更改当前页
@@ -322,6 +324,7 @@ export default {
               constructionSiteName:item.constructionSiteName,
               userType:item.userType,
               userAge:item.userAge,
+              userSignName:item.userSignName,
               phone:item.phone,
               userSignStatus:item.userSignStatus,
               userSignTime:item.userSignTime,
@@ -399,18 +402,20 @@ export default {
       }
       this.loading = true;
       list({
-        constructionSiteName:this.queryParams.proName,
+        constructionSiteName:this.proName,
         //constructionSiteName: '石家庄宝能中心项目二标段',
         //id:100,
         //userSignCode:'',
-        //userSignName:'',
+        userSignName:this.queryParams.userSignName,
         userSignStatus:sousuo,
         userSignTime: this.queryParams.userSignTime,
       }).then(response => {
+        console.log("搜索返回的结果",response.data.rows)
         if(response.data.rows.length>0){
           this.userList = response.data.rows.map(item =>{
             return{
               id:item.id,
+              userSignName:item.userSignName,
               constructionSiteName:item.constructionSiteName,
               userType:item.userType,
               userAge:item.userAge,
@@ -419,7 +424,10 @@ export default {
               userSignTime:item.userSignTime,
             }
           })
+        }else if(response.data.rows.length === 0){
+          this.userList=[]
         }
+        // console.log("cishid",this.userList)
         this.userList.reverse()
         this.userListTotal = response.data.total
         for(var i = 0;i<this.userListTotal;i++){
