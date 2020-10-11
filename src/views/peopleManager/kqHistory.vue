@@ -47,7 +47,7 @@
             <!--          <el-table-column type="selection" width="50" align="center" />-->
             <!--          <el-table-column label="项目序号" align="center" prop="id" width="200"/>-->
             <el-table-column label="工地编号" align="center" prop="id" width="120"/>
-            <el-table-column label="工地名称" align="center" prop="constructionSiteName" :show-overflow-tooltip="true" width="180"/>
+            <el-table-column label="用户名称" align="center" prop="userSignName" :show-overflow-tooltip="true" width="180"/>
             <!--          <el-table-column label="用户昵称" align="center" prop="nickName" :show-overflow-tooltip="true" />-->
             <el-table-column label="工种" align="center" prop="userType" :show-overflow-tooltip="true" width="120"/>
             <el-table-column label="年龄" align="center" prop="userAge" :show-overflow-tooltip="true" width="120"/>
@@ -234,6 +234,7 @@ export default {
       },
       // 查询参数
       queryParams: {
+        userSignName:'',
         constructionSiteName:'',
         userSignStatus:'',
         userSignTime:'',
@@ -409,6 +410,7 @@ export default {
         userSignStatus:sousuo,
         userSignTime: this.queryParams.userSignTime,
       }).then(response => {
+        console.log("搜索返回的结果",response.data.rows)
         if(response.data.rows.length>0){
           this.userList = response.data.rows.map(item =>{
             return{
@@ -422,7 +424,10 @@ export default {
               userSignTime:item.userSignTime,
             }
           })
+        }else if(response.data.rows.length === 0){
+          this.userList=[]
         }
+        // console.log("cishid",this.userList)
         this.userList.reverse()
         this.userListTotal = response.data.total
         for(var i = 0;i<this.userListTotal;i++){
