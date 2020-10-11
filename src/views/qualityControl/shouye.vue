@@ -217,12 +217,12 @@
         console.log("siteId",localStorage.getItem('siteId'))
       },
       mounted() {
-        this.getProblem()
-        this.getSafetyTrouble()
-        this.getSafetyRecord()
-        this.getDanger()
-        this.getRectification()
-        this.getSafetyCheck()
+        // this.getProblem()
+        // this.getSafetyTrouble()
+        // this.getSafetyRecord()
+        // this.getDanger()
+        // this.getRectification()
+        // this.getSafetyCheck()
           var _this = this
         this.$store.dispatch('changeMsg', '安全管理')
         setTimeout(() => {
@@ -1665,36 +1665,38 @@
               trigger: 'item',
               formatter: "{a} <br/>{b}: {c} ({d}%)"
             },
-            // legend: {
-            //   orient: 'vertical',
-            //   right: 0,
-            //   top: 'center',
-            //   itemWidth: 14 * scale,
-            //   itemHeight: 14 * scale,
-            //   data:legendData,
-            //   textStyle: {
-            //     color: '#2CABE3',
-            //     fontSize: 12,
-            //   },
-            //
-            // },
+            legend: {
+              orient: 'vertical',
+              right: 0,
+              top: '20',
+              itemWidth: 14 * scale,
+              itemHeight: 8 * scale,
+              data:legendData,
+              textStyle: {
+                color: '#2CABE3',
+                fontSize: 12,
+              },
+
+            },
             series: [
               {
                 name:'安全隐患统计',
                 type:'pie',
                 selectedMode: 'single',
                 radius: [0, '40%'],
-                center:["40%","50%"],
+                center:["30%","50%"],
                 label: {
-                  normal: {
-                    position: 'inner'
-                  }
+                  show:false
+                  // normal: {
+                  //   position: 'inner'
+                  // }
                 },
                 labelLine: {
-                  normal: {
-                    show: false,
-
-                  }
+                  show:false
+                  // normal: {
+                  //   show: false,
+                  //
+                  // }
                 },
                 data:echartData.inner
               },
@@ -1702,8 +1704,14 @@
                 name:'安全隐患统计',
                 type:'pie',
                 radius: ['60%', '80%'],
-                center:["40%","50%"],
+                center:["30%","50%"],
                 data:echartData.outer,
+                label: {
+                  show:false
+                },
+                labelLine: {
+                  show:false
+                },
                 // label: {
                 //   normal: {
                 //     color: outerFontColor,
@@ -2169,12 +2177,12 @@
               type: "scroll",
               orient: "vartical",
               // x: "right",
-              top: "center",
+              top: "25",
               left: "15",
               // bottom: "0%",
               itemWidth: 16,
               itemHeight: 8,
-              itemGap: 16,
+              itemGap: 10,
               textStyle: {
                 color: '#A3E2F4',
                 fontSize: 12,
@@ -2286,29 +2294,35 @@
               radius: ['20%', '80%'],
               roseType: 'area',
               zlevel:10,
-              label: {
-                normal: {
-                  show: true,
-                  formatter: "{c}",
-                  textStyle: {
-                    fontSize: 12,
-                  },
-                  position: 'outside'
-                },
-                emphasis: {
-                  show: true
-                }
+              label:{
+                show:false
               },
-              labelLine: {
-                normal: {
-                  show: true,
-                  length: 20,
-                  length2: 55
-                },
-                emphasis: {
-                  show: false
-                }
+              labelLine:{
+                show:false,
               },
+              // label: {
+              //   normal: {
+              //     show: true,
+              //     formatter: "{c}",
+              //     textStyle: {
+              //       fontSize: 12,
+              //     },
+              //     position: 'outside'
+              //   },
+              //   emphasis: {
+              //     show: true
+              //   }
+              // },
+              // labelLine: {
+              //   normal: {
+              //     show: true,
+              //     length: 20,
+              //     length2: 55
+              //   },
+              //   emphasis: {
+              //     show: false
+              //   }
+              // },
               data:this.dangerData
               //   [
               //   {
@@ -4399,7 +4413,12 @@
             console.log("2取到的proid",response.data.proName)
             this.proName = response.data.proName
             console.log("2拿到的proname",this.proName)
-
+            this.getProblem()
+            this.getSafetyTrouble()
+            this.getSafetyRecord()
+            this.getDanger()
+            this.getRectification()
+            this.getSafetyCheck()
           })
         },
       },
