@@ -189,7 +189,7 @@
 <!--            </div>-->
             <span slot="footer" class="dialog-footer">
               <el-button @click="dialogVisible = false">取 消</el-button>
-              <el-button type="primary" @click="dialogVisible = false">确 定</el-button>
+              <el-button type="primary" @click="requestData">确 定</el-button>
             </span>
           </el-dialog>
           <el-dialog title="迟缓操作" :visible.sync="showSlow">
@@ -260,7 +260,7 @@
                   <div style="position: relative;margin-top: 0.1rem">
                     <img style="width: 0.3rem;position: absolute;top: -0.05rem" src="../assets/homepage/wendu.png">
                     <span style="color: #fefefe;margin-left: 0.4rem">温度</span>
-                    <span style="color:#d15765;margin-left: 0.25rem;float: right">12℃</span>
+                    <span style="color:#d15765;margin-left: 0.25rem;float: right">{{this.todayweather.tem}}</span>
                   </div>
                   <div style="position: relative;margin-top: 0.17rem">
                     <img style="width: 0.3rem;position: absolute;top: -0.05rem" src="../assets/homepage/shidu.png">
@@ -465,6 +465,11 @@
           }
       },
       methods:{
+        requestData: function(){
+          this.dialogVisible = false
+          console.log('重新获取信息')
+          this.getOneSchedules() // 获取所有一级进度
+        },
           getWeatherData:function(){
             axios({
               url: 'https://www.tianqiapi.com/api/',
@@ -697,7 +702,7 @@
         inchart13() {
           const prams = {
             classes: '质量',
-            sitename: this.projectName
+            sitename: localStorage.getItem('siteName')
           }
           var getData = []
           getSafeOrQualityChartData(prams).then(response=>{
@@ -1057,7 +1062,7 @@
         inchart22() {
           const prams = {
             classes: '安全',
-            sitename: this.projectName
+            sitename: localStorage.getItem('siteName')
           }
           var data = []
           getSafeOrQualityChartData(prams).then(response=>{
