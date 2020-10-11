@@ -5,6 +5,23 @@
         <div>
           <el-button type="success" icon="el-icon-edit" size="mini"  @click="addRecord" >新增</el-button>
           <el-button type="warning" icon="el-icon-download" size="mini" @click="handleExport" >下载</el-button>
+          <div style="float: right; ">
+            <el-date-picker
+              v-model="startTime"
+              type="date"
+              value-format="yyyy-MM-dd"
+              placeholder="选择开始日期">
+            </el-date-picker>
+            <el-date-picker
+              v-model="endTime"
+              type="date"
+              value-format="yyyy-MM-dd"
+              placeholder="选择结束日期">
+            </el-date-picker>
+
+            <el-button type="primary" @click="getDataByTime">点击搜索</el-button>
+            <el-button type="danger" @click="resetTime" plain>重置</el-button>
+          </div>
         </div>
       </li>
       <li>
@@ -26,9 +43,10 @@
             <el-table-column label="自评结果" align="center" width="100" prop="selfResult" />
             <el-table-column label="检查时间" align="center" width="150" prop="checkTime" />
             <!--            <el-table-column label="检查员姓名" align="center" prop="checkUser" width="120" />-->
-            <el-table-column label="操作" align="center" width="100" fixed="right">
+            <el-table-column label="操作" align="center" width="150" fixed="right">
               <template slot-scope="scope">
                 <el-button size="mini" type="text" icon="el-icon-view" style="font-size: 0.22rem; " @click="handleView(scope.row)">详情</el-button>
+                <el-button size="mini" type="text" icon="el-icon-refresh" style=" font-size: 0.22rem; " disabled>同步</el-button>
               </template>
             </el-table-column>
           </el-table>
@@ -671,7 +689,7 @@
 </template>
 
 <script>
-  import {addCheckMonthChild,addMonthCheck,getAllCheckMonth,getCheckMonthData,getSafeAdminInfo} from '@/api/qualityControl';
+  import {addCheckMonthChild,addMonthCheck,getAllCheckMonth,getCheckMonthData,getSafeAdminInfo,getCheckRecordByTime} from '@/api/qualityControl';
   export default {
     name: "safeRecord",
     mounted() {
@@ -683,6 +701,8 @@
         pageSize:10,
         // 翻页功能当前页
         currentPage: 1,
+        startTime: '',
+        endTime: '',
         // 图片上传的弹出框
         dialogVisible:false,
         dialogImageUrl: '',
@@ -838,6 +858,21 @@
       // 月报检查删除一组
       deleteItem (item, index) {
         this.form.monthChild.splice(index, 1)
+      },
+      getDataByTime(){
+        var prams = {
+          start:this.startTime,
+          end:this.endTime
+        }
+        getCheckRecordByTime(prams).then((res) => {
+          this.userList = res.data.data
+          console.log("时间搜索成功！")
+        })
+      },
+      resetTime() {
+        this.startTime = ''
+        this.endTime = ''
+        this.getList()
       },
       /** 查询用户列表 */
       getList() {
@@ -998,7 +1033,7 @@
       handleView(row){
         console.log("chakan",row)
         var prams = {
-          id:row.proid
+          id:row.id
         }
         getCheckMonthData(prams).then((res) => {
           console.log("查看接口返回的数据",res.data.data)

@@ -5,16 +5,16 @@
 
                 <!-- 只有一个视频 -->
                 <div class="videoArea" v-if="videoOne">
-                    
-                    
+
+
                     <!-- <dv-border-box-8> -->
                         <div class="oneArea" id="one" >
-                            
+
                             <img src="../../assets/videoManager/1.png" />
-                            
+
                         </div>
                     <!-- </dv-border-box-8>  -->
-                    
+
                 </div>
 
                 <!-- 两个视频 -->
@@ -23,13 +23,13 @@
                         <div class="twoArea" id="two1" >
                             <img src="../../assets/videoManager/1.png" />
                         </div>
-                    <!-- </dv-border-box-8> 
+                    <!-- </dv-border-box-8>
                      <dv-border-box-8> -->
                         <div class="twoArea" id="two2" >
                             <img src="../../assets/videoManager/2.png" />
                         </div>
                     <!-- </dv-border-box-8>  -->
-                    
+
                 </div>
 
                 <!-- 四个视频 -->
@@ -39,7 +39,7 @@
                             <div class="fourArea" id="four1" >
                                 <img src="../../assets/videoManager/1.png" />
                             </div>
-                        <!-- </dv-border-box-8> 
+                        <!-- </dv-border-box-8>
                         <dv-border-box-8> -->
                             <div class="fourArea" id="four2" >
                                 <img src="../../assets/videoManager/2.png" />
@@ -51,7 +51,7 @@
                             <div class="fourArea" id="four3" >
                                 <img src="../../assets/videoManager/3.png" />
                             </div>
-                        <!-- </dv-border-box-8> 
+                        <!-- </dv-border-box-8>
                         <dv-border-box-8> -->
                             <div class="fourArea" id="four4" >
                                 <img src="../../assets/videoManager/4.png" />
@@ -59,13 +59,13 @@
                         <!-- </dv-border-box-8>  -->
                     </div>
                    <div class="shengluehao">...</div>
-                    
-                    
-                </div>         
-                
+
+
+                </div>
+
             </el-col>
             <el-col :span="1"><div class="fenge"></div></el-col>
-           
+
             <el-col :span="5">
                 <el-row>
                     <div class="controllerArea">
@@ -97,14 +97,14 @@
                                     <span class="custom-tree-node" slot-scope="{ node, data }">
                                         <span>
                                             <i :class="data.icon"></i>{{ node.label }}
-                                        </span>              
+                                        </span>
                                     </span>
                                 </el-tree>
                             </div>
                         </dv-border-box-7>
                     </div>
-                    
-                    
+
+
                 </el-row>
             </el-col>
         </el-row>
@@ -125,76 +125,76 @@ export default {
                     {
                         id: 1,
                         label: '大门',
-                        icon: 'el-icon-video-camera' 
+                        icon: 'el-icon-video-camera'
                     },
                     {
                         id: 2,
                         label: '人行通道',
-                        icon: 'el-icon-video-camera' 
+                        icon: 'el-icon-video-camera'
                     },
                     {
                         id: 3,
                         label: '大门口',
-                        icon: 'el-icon-video-camera' 
+                        icon: 'el-icon-video-camera'
                     },
                     {
                         id: 4,
                         label: '东南角',
-                        icon: 'el-icon-video-camera' 
+                        icon: 'el-icon-video-camera'
                     },
 
                     {
                         id: 5,
                         label: '西南角',
-                        icon: 'el-icon-video-camera' 
+                        icon: 'el-icon-video-camera'
                     },
                     {
                         id: 6,
                         label: '钢筋加工区',
-                        icon: 'el-icon-video-camera' 
+                        icon: 'el-icon-video-camera'
                     },
 
                     {
                         id: 7,
                         label: '南大门外',
-                        icon: 'el-icon-video-camera' 
+                        icon: 'el-icon-video-camera'
                     },
                     {
                         id: 8,
                         label: '中间通道',
-                        icon: 'el-icon-video-camera' 
+                        icon: 'el-icon-video-camera'
                     },
                     {
                         id: 9,
                         label: '南侧大门内',
-                        icon: 'el-icon-video-camera' 
+                        icon: 'el-icon-video-camera'
                     },
                     {
                         id: 10,
                         label: '西侧大门',
-                        icon: 'el-icon-video-camera' 
+                        icon: 'el-icon-video-camera'
                     },
                     {
                         id: 11,
                         label: '东侧大门',
-                        icon: 'el-icon-video-camera' 
+                        icon: 'el-icon-video-camera'
                     }
-                    
-                    
+
+
                     ]
                 }],
 
-            
-                
-                
+
+
+
         }
     },
     mounted() {
-        this.$store.dispatch('changeMsg', '视频监控')
+        this.$store.dispatch('changeMsg', '视频管理')
     },
     methods: {
         selectOne() {
-           
+
             this.videoOne = true;
             this.videoTwo = false;
             this.videoFour = false;
@@ -220,17 +220,17 @@ export default {
 <style >
 .videoManager {
     margin: 0.1667rem;
-   
+
 }
 .videoArea {
-    
+
     display: flex;
     justify-content: center;
-    align-items: center; 
+    align-items: center;
     height: 10rem;
     /* animation: daxiao_1 1s linear; */
     margin: 0 auto;
-   
+
 }
 @keyframes daxiao_1 {
 	from {
@@ -246,18 +246,18 @@ export default {
 .oneArea {
     width:100%;
     height: 100%;
-    /* background-image: url("../../assets/videoManager/bg_chang.png"); 
-    background-size: 100% 100%; 
+    /* background-image: url("../../assets/videoManager/bg_chang.png");
+    background-size: 100% 100%;
     background-repeat: no-repeat; */
     display: flex;
     justify-content: center;
-    align-items: center; 
+    align-items: center;
    margin: 0 auto;
    margin-right: 0.6rem;
     margin-left: 0.5rem;
-   border:1px solid rgb(223, 187, 187); 
+   border:1px solid rgb(223, 187, 187);
    animation: daxiao_1 1s linear;
-    
+
 }
 
 .twoVideoArea {
@@ -266,7 +266,7 @@ export default {
     align-items: center;
     height: 9rem;
     animation: daxiao_1 1s linear;
-    
+
 }
 .twoArea {
     display: flex;
@@ -277,14 +277,14 @@ export default {
     margin: 0 auto;
     margin-right: 0.6rem;
     margin-left: 0.5rem;
-   border:1px solid rgb(223, 187, 187); 
+   border:1px solid rgb(223, 187, 187);
 
 }
 .fourVideoArea {
     display: flex;
     flex-wrap: wrap;
     align-content: space-between;
-   
+
     height: 9rem;
     animation: daxiao_1 1s linear;
 }
@@ -308,16 +308,16 @@ export default {
     margin: 0 auto;
     margin-right: 0.6rem;
     margin-left: 0.5rem;
-    border:1px solid rgb(223, 187, 187); 
+    border:1px solid rgb(223, 187, 187);
 }
 .fenge {
     background: transparent;
     height: 10rem;
 }
 .controllerArea {
-    
-    background-image: url("../../assets/videoManager/bg_chang.png"); 
-    background-size:  100% 70%; 
+
+    background-image: url("../../assets/videoManager/bg_chang.png");
+    background-size:  100% 70%;
     background-repeat: no-repeat;
     height: 3rem;
 }
@@ -338,20 +338,20 @@ export default {
 }
 .controllerIcon span {
     display: block;
-    width: 38px; 
-    height: 38px; 
+    width: 38px;
+    height: 38px;
     margin: 0 auto;
 }
 .oneIcon {
-    
+
     margin: 0 auto;
 }
 .twoIcon {
-    
+
     margin: 0 auto;
 }
 .fourIcon {
-    
+
     margin: 0 auto;
 }
 .sp_1 {
@@ -374,15 +374,15 @@ export default {
 }
 .fenleiController {
     margin-top: -0.5rem;
-   
+
 }
 .treeController {
     /* background-image: url("../../assets/videoManager/bg_chang.png");  */
     /* background-size:  50% 100%;  */
     /* background-repeat: no-repeat; */
      height: 6rem;
-    
-    
+
+
 }
  .el-tree {
     position: relative;
@@ -401,7 +401,7 @@ export default {
   .el-icon-video-camera {
       color: rgb(230, 92, 92);
       font-size: 13px;
-      padding-right:8px; 
+      padding-right:8px;
   }
 </style>
 
