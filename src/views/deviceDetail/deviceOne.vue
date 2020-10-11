@@ -262,9 +262,9 @@
                 <el-table-column prop="weibaotime" label="维保时间" />
                 <el-table-column prop="maxcapacity" label="运转台时" />
                 <el-table-column prop="maxrange" label="更换主要零部件" />
-                <el-table-column prop="leftheight" label="维管负责人" />
+                <!-- <el-table-column prop="leftheight" label="维管负责人" />
                 <el-table-column prop="towerheight" label="维保人员" width="150" align="center" />
-                <el-table-column prop="installheigth" label="维修（保养）内容" align="center" />
+                <el-table-column prop="installheigth" label="维修（保养）内容" align="center" /> -->
                 <el-table-column prop="installuseraqjg" label="监理单位审核意见" align="center" />
                 <el-table-column prop="installuserzc" label="监理单位审核日期" align="center" />
                 <el-table-column prop="reporttime" label="上报时间" align="center" />
