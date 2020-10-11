@@ -614,9 +614,11 @@ export default {
   align-items: center;
   margin: 0.5rem .3rem;
 }
+
  .fixColor >>> .el-form-item__label{
   color: white;
 }
+
 /*翻页*/
 .block{
   float: right;

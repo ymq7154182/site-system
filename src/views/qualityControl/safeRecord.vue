@@ -1,18 +1,12 @@
 <template>
   <div class="safeRecord">
-    <el-row style="margin-top:0.3rem; " >
-      <!--用户数据-->
-      <el-col :span="24" :xs="24">
-        <!--        按钮部分-->
-        <el-row :gutter="10" style="margin-bottom: 0.3rem;">
-          <el-col :span="2">
-            <el-button type="success" icon="el-icon-edit" size="mini"  @click="addRecord" >新增</el-button>
-          </el-col>
-          <el-col :span="2">
-            <el-button type="warning" icon="el-icon-download" size="mini" @click="handleExport" style="background-color: #7c7c7c;border:1px solid #7c7c7c">下载</el-button>
-          </el-col>
-          <!--          搜索框-->
-          <el-col :span="11" :offset="7">
+    <ul>
+      <li>
+        <div>
+          <div style="float: left; ">
+            <el-button type="success" icon="el-icon-edit" size="mini" style="font-size: 0.22rem; " @click="addRecord" >新增</el-button>
+          </div>
+          <div style="float: right; ">
             <el-date-picker
               v-model="startTime"
               type="date"
@@ -25,32 +19,41 @@
               value-format="yyyy-MM-dd"
               placeholder="选择结束日期">
             </el-date-picker>
-          </el-col>
-          <el-button type="primary" @click="getDataByTime">点击搜索</el-button>
-        </el-row>
+            <el-button type="primary" @click="getDataByTime">点击搜索</el-button>
+          </div>
+        </div>
+      </li>
+      <li>
         <div class="safeTable">
           <!--        表格部分-->
-          <el-table style="" v-loading="loading" :data="userList.slice((currentPage - 1) * pageSize, currentPage * pageSize)" @selection-change="handleSelectionChange"  border >
-            <el-table-column type="selection" width="50" align="center" />
-            <el-table-column label="项目序号" align="center" prop="id" width="100"/>
+          <el-table
+            :data="userList.slice((currentPage - 1) * pageSize, currentPage * pageSize)"
+            style="font-size: 0.22rem; width: 100%; "
+            stripe
+            :header-row-style="{ color: '#409eff' }"
+            :row-style="{ color: 'white' }"
+          >
+            <!--<el-table-column type="selection" width="50" align="center" />-->
+            <el-table-column label="项目序号" align="center" prop="id" width="150" />
             <!--            <el-table-column label="项目名称" align="center" prop="proName" width="160" />-->
-            <el-table-column label="项目地址" align="center" prop="addressAll" width="200"/>
-            <el-table-column label="综合得分" align="center" prop="checkCode" :show-overflow-tooltip="true" width="120"/>
-            <el-table-column label="检查人员" align="center" prop="checkUser" :show-overflow-tooltip="true" width="120"/>
-            <el-table-column label="自评结果" align="center" prop="selfResult" :show-overflow-tooltip="true" width="120"/>
-            <el-table-column label="检查时间" align="center" prop="checkTime" width="200" />
+            <el-table-column label="项目地址" align="center" prop="addressAll" />
+            <el-table-column label="综合得分" align="center" width="150" prop="checkCode" />
+            <el-table-column label="检查人员" align="center" width="150" prop="checkUser" />
+            <el-table-column label="自评结果" align="center" width="150" prop="selfResult" />
+            <el-table-column label="检查时间" align="center" width="200" prop="checkTime" />
 
             <!--            <el-table-column label="检查员姓名" align="center" prop="checkUser" width="120" />-->
-            <el-table-column label="操作" align="center" width="160" class-name="small-padding fixed-width" >
+            <el-table-column label="操作" align="center" width="150" fixed="right">
               <template slot-scope="scope">
-                <el-button size="mini" type="text" icon="el-icon-view" @click="handleView(scope.row)"
-                >详情</el-button>
-                <el-button size="mini" type="text" icon="el-icon-refresh" style="color: #7c7c7c">同步</el-button>
+                <el-button size="mini" type="text" icon="el-icon-view" @click="handleView(scope.row)" style="font-size: 0.22rem; ">详情</el-button>
+                <el-button size="mini" type="text" icon="el-icon-refresh" style="color: #7c7c7c; font-size: 0.22rem; ">同步</el-button>
               </template>
             </el-table-column>
           </el-table>
           <!--          <pagination v-show="pageTotal>0" :total="pageTotal" :page.sync="queryParams.pageNum" :limit.sync="queryParams.pageSize" @pagination="getList" />-->
         </div>
+      </li>
+      <li>
         <div class="block">
           <el-pagination
             background
@@ -61,8 +64,9 @@
             :total="userList.length">
           </el-pagination>
         </div>
-      </el-col>
-    </el-row>
+      </li>
+    </ul>
+
     <!-- 查看对话框 -->
     <el-dialog title="查看" :visible.sync="opencheck" width="80%" append-to-body>
       <div style="overflow-y: scroll; height: 60vh; ">
@@ -694,7 +698,7 @@ export default {
       startTime:'',
       endTime:'',
       // 当前每页数据的条数
-      pageSize:10,
+      pageSize: 8,
       // 数据的总条数
       pageTotal:0,
       // 翻页功能当前页
@@ -1087,34 +1091,6 @@ export default {
       })
       this.opencheck = true
     },
-    // 表单重置
-    // reset() {
-    //   form: {
-    //       //proid=null;
-    //       evaltime='';
-    //       progress='';
-    //       checkcode=null;
-    //       yhnum=null;
-    //       selfresult='';
-    //       checkuser='';
-    //       checktime='';
-    //       isrectify='';
-    //       rectifytime='';
-    //       situation='';
-    //       selfrecord='';
-    //       selfuser='';
-    //       selftime='';
-    //       affixstamp='';
-    //       affixorg=[];
-    //       jsrecord='';
-    //       jsuser='';
-    //       jstime='';
-    //       jlrecord='';
-    //       jluser='';
-    //       jltime='';
-    //       monthChild=[];
-    //   }
-    // },
     /** 导出按钮操作 */
     handleExport(){
       const queryParams = this.queryParams
@@ -1200,7 +1176,6 @@ export default {
         console.log("时间搜索成功！")
       })
     },
-
   },
 
 }
@@ -1208,14 +1183,20 @@ export default {
 
 <style scoped>
 .safeRecord {
+  width: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
-  margin: 0.5rem .3rem;
 }
-.fixColor >>> .el-form-item__label{
-  color: white;
+
+.safeRecord ul {
+  width: 85%;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  overflow-x: hidden;
 }
+
 .divider{
   border-bottom: dashed 1px #DCDFE6;
   padding-bottom: 5px;
@@ -1225,8 +1206,8 @@ export default {
 }
 /*翻页*/
 .block{
-  float: right;
   margin-top: 20px;
+  text-align: center;
 }
 .block >>> .el-pagination__total{
   color: white;
@@ -1234,20 +1215,35 @@ export default {
 .block >>>.el-pagination__jump{
   color: white;
 }
-/*.safeTable >>>.el-table{*/
-/*  background-color: rgba(1,53,96,0.3);*/
-/*  color: white;*/
-/*  border: 1px solid rgba(1,53,96,0.3);*/
-/*}*/
-/*.safeTable>>>.el-table th{*/
-/*  background-color: rgba(1,53,96,0.3);*/
-/*  border: 0;*/
-/*  color: white;*/
-/*}*/
-/*.safeTable>>> .el-table tr{*/
-/*  background-color: rgba(1,53,96,0.3);*/
-/*  border: 0;*/
-/*  color: white;*/
-/*}*/
+
+.safeTable {
+  width: calc(100% + 20px);
+  height: 56vh;
+  overflow-y: scroll;
+}
+
+.safeTable >>> .el-table,
+.safeTable >>> .el-table__expanded-cell {
+  background-color: transparent !important;
+}
+/*透明化行、单元格*/
+.safeTable >>> .el-table th,
+.safeTable >>> .el-table tr,
+.safeTable >>> .el-table td {
+  background-color: transparent !important;
+}
+/*hover时样式*/
+.safeTable >>> .el-table tbody tr:hover>td {
+  background-color: #367f7f78 !important
+}
+
+/*偶数行样式*/
+.safeTable >>> .el-table__row--striped td {
+  background-color: #45797b33 !important
+}
+/*奇数行样式*/
+.safeTable >>> .el-table__row:not(.el-table__row--striped) {
+  background: #1439391c !important;
+}
 </style>
 
