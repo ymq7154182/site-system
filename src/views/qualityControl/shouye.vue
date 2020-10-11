@@ -19,7 +19,7 @@
                   <div class="box-txt">
                     <span>整改情况</span>
                   </div>
-                  <div id="mychart12"></div>
+                  <div id="mychart12" style="top: 40px"></div>
                 </div>
               </el-col>
               <!--<el-col :span="8">-->
@@ -1819,7 +1819,7 @@
             },
               {
                 name:'整改率',
-                nameLocation:'start',
+                nameLocation:'end',
                 splitLine: {show: false},
                 axisLine: {
                   lineStyle: {
@@ -2181,8 +2181,8 @@
               type: "scroll",
               orient: "vartical",
               // x: "right",
-              top: "25",
-              left: "15",
+              top: "40",
+              left: "10",
               // bottom: "0%",
               itemWidth: 16,
               itemHeight: 8,
