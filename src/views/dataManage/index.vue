@@ -213,9 +213,9 @@ export default {
   },
   mounted() {
     this.$store.dispatch('changeMsg', '资料管理');
-    this.refreshTable();
-    this.constructionSiteId = window.localStorage.getItem('siteId')
+    this.constructionSiteId = parseInt(window.localStorage.getItem('siteId'));
     this.getConstructionSiteName(this.constructionSiteId);
+    this.refreshTable();
     docType().then(response => {
       for(var i=0;i<response.data.rows.length;i++) {
         this.docTypeList.push(response.data.rows[i].name)
@@ -256,8 +256,8 @@ export default {
       this.$refs[formName].resetFields();
     },
     editInfo(index, row) {
-      this.currentInfo.constructionSiteId = row.constructionSiteId;
-      this.currentInfo.constructionSiteName = row.constructionSiteName;
+      this.currentInfo.constructionSiteId = this.constructionSiteId;
+      this.currentInfo.constructionSiteName = this.constructionSiteName;
       if (row.doc_type) {
         this.currentInfo.doc_type = row.doc_type;
       } else {
