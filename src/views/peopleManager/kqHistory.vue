@@ -387,6 +387,16 @@ export default {
     },
     /** 搜索按钮操作 */
     handleQuery() {
+      var sousuo = this.queryParams.userSignStatus
+      if(this.queryParams.userSignStatus === "已打卡"){
+        sousuo = 0
+      }else if(this.queryParams.userSignStatus === "未打卡"){
+        sousuo = 1
+      }else if(this.queryParams.userSignStatus === "迟到"){
+        sousuo = 2
+      }else if(this.queryParams.userSignStatus === "补打卡"){
+        sousuo = 3
+      }
       this.loading = true;
       list({
         constructionSiteName:this.queryParams.proName,
@@ -394,7 +404,7 @@ export default {
         //id:100,
         //userSignCode:'',
         //userSignName:'',
-        userSignStatus:this.queryParams.userSignStatus,
+        userSignStatus:sousuo,
         userSignTime: this.queryParams.userSignTime,
       }).then(response => {
         if(response.data.rows.length>0){
@@ -604,7 +614,7 @@ export default {
   align-items: center;
   margin: 0.5rem .3rem;
 }
- .fixColor .el-form-item__label{
+ .fixColor >>> .el-form-item__label{
   color: white;
 }
 /*翻页*/
