@@ -106,7 +106,7 @@
       </table>
       <div style="text-align: center; ">
         <el-button type="primary" @click="confirmEdit">确认修改</el-button>
-        <el-button>取消</el-button>
+        <el-button @click="showUpdate = false">取消</el-button>
       </div>
     </el-dialog>
   </div>
