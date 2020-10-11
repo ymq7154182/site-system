@@ -215,6 +215,10 @@ export default {
   overflow-x: hidden;
 }
 
+/deep/ .el-form-item__label{
+  color: white;
+}
+
 .dataTable {
   width: calc(100% + 20px);
   height: 62vh;

@@ -1197,10 +1197,6 @@ export default {
   overflow-x: hidden;
 }
 
-.fixColor >>> .el-form-item__label{
-  color: white;
-}
-
 .divider{
   border-bottom: dashed 1px #DCDFE6;
   padding-bottom: 5px;
