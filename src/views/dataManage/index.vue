@@ -14,7 +14,7 @@
           </div>
         </div>
       </el-col>
-      <el-col :span="20">
+      <el-col :span="20" style="overflow-x: hidden; ">
         <div class="dm-main">
           <div class="border-top-right"></div>
           <div style="padding: 0.13rem">
