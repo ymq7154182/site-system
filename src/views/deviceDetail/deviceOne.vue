@@ -882,7 +882,7 @@
       }
     },
     mounted() {
-      this.getZiJian()
+      // this.getZiJian()
       this.getAllData()
     },
     methods: {
@@ -898,10 +898,12 @@
           this.uploadInfo4.proid = res.data.guid
           this.uploadInfo5.proid = res.data.guid
           this.uploadInfo6.proid = res.data.guid
+          this.getZiJian()
+
         })
       },
       getZiJian() {
-        zijian().then((res) => {
+        zijian(this.uploadInfo.proid).then((res) => {
           this.fileTable = res.data.data
         })
       },
@@ -972,7 +974,7 @@
         })
       },
       getyanshou() {
-        yanshou().then((res) => {
+        yanshou(this.uploadInfo2.proid).then((res) => {
           this.fileTable = res.data.data
         })
       },
@@ -989,7 +991,7 @@
         })
       },
       getweihu() {
-        weihu().then((res) => {
+        weihu(this.uploadInfo6.proid).then((res) => {
           this.fileTable = res.data.rows
         })
       },
@@ -1016,7 +1018,7 @@
         })
       },
       getdingqi() {
-        dingqi().then((res) => {
+        dingqi(this.uploadInfo5.proid).then((res) => {
           this.fileTable = res.data.rows
         })
       },
@@ -1033,13 +1035,13 @@
         })
       },
       getdingsheng() {
-        dingsheng().then((res) => {
+        dingsheng(this.uploadInfo3.proid).then((res) => {
           this.fileTable = res.data.rows
         })
       },
       getadddingsheng() {
-        var data = this.uploadInfo3
-        adddingsheng(data).then((res) => {
+
+        adddingsheng(this.uploadInfo3).then((res) => {
           if(res.data.code === 200) {
             this.$message.success(res.data.msg)
             this.getdingsheng()
@@ -1050,7 +1052,7 @@
         })
       },
       getfuzhuo() {
-        fuzhuo().then((res) => {
+        fuzhuo(this.uploadInfo4.proid).then((res) => {
           this.fileTable = res.data.rows
         })
       },

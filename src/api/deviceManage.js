@@ -9,9 +9,9 @@ export function getSysProData(data) {
   })
 }
 //获取安装自检表
-export function zijian() {
+export function zijian(data) {
   return request({
-    url: 'device/CraneDevice/getDevInstallRecord',
+    url: 'device/CraneDevice/getDevInstallRecord?proId=' + data,
     method: 'get'
   })
 }
@@ -26,9 +26,9 @@ export function addZijian(data) {
 }
 
 // 获取安装验收新增表
-export function yanshou() {
+export function yanshou(data) {
   return request({
-    url: 'device/CraneDevice/getInstalAcceptRecord',
+    url: 'device/CraneDevice/getInstalAcceptRecord?proId=' + data,
     method: 'get'
   })
 }
@@ -43,9 +43,9 @@ export function addyanshou(data) {
 }
 
 // 获取维护维养列表
-export function weihu() {
+export function weihu(data) {
   return request({
-    url: 'device/maintenance/list',
+    url: 'device/maintenance/list?proid=' + data,
     method: 'get'
   })
 }
@@ -60,9 +60,9 @@ export function addweihu(data) {
 }
 
 // 获取定期检查列表
-export function dingqi() {
+export function dingqi(data) {
   return request({
-    url: 'device/check/list',
+    url: 'device/check/list?proid='+data,
     method: 'get'
   })
 }
@@ -77,10 +77,10 @@ export function adddingqi(data) {
 }
 
 // 获取顶升加节新增列表
-export function dingsheng() {
+export function dingsheng(data) {
   return request({
-    url: 'device/jackingPlusRecord/list',
-    method: 'get'
+    url: 'device/jackingPlusRecord/list?proid='+data,
+    method: 'get',
   })
 }
 
@@ -94,9 +94,9 @@ export function adddingsheng(data) {
 }
 
 // 获取附着新增列表
-export function fuzhuo() {
+export function fuzhuo(data) {
   return request({
-    url: 'device/attachRecord/list',
+    url: 'device/attachRecord/list?proid=' +data,
     method: 'get'
   })
 }
