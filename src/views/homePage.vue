@@ -5,13 +5,13 @@
         <img src="../assets/homepage/laba.png">
         <span style="margin-left: 0.5rem">北京智慧工地新增一个项目引进了最新型建造方式......</span>
       </div>
-      <div class="notice_right">
-        <span>用户身份:</span>
-        <span style="color:#13cafd ">管理员</span>
-        <span style="margin-left: 0.1rem">在线人数:</span>
-        <span style="color:#13cafd ">5</span>
-        <span>人</span>
-      </div>
+      <!--<div class="notice_right">-->
+        <!--<span>用户身份:</span>-->
+        <!--<span style="color:#13cafd ">管理员</span>-->
+        <!--<span style="margin-left: 0.1rem">在线人数:</span>-->
+        <!--<span style="color:#13cafd ">5</span>-->
+        <!--<span>人</span>-->
+      <!--</div>-->
     </div>
     <div class="content_container">
       <el-row>
@@ -1350,8 +1350,13 @@
           // var url = ''
           // url = window.location.href
           var str = window.location.search
-          var siteId = str.split('=')[1]
-          localStorage.setItem('siteId', siteId)
+          if(str === '') {
+            console.log('str为空')
+          }else {
+            var siteId = str.split('=')[1]
+            localStorage.setItem('siteId', siteId)
+          }
+
           // console.log(url)
           // console.log(siteId)
         },
