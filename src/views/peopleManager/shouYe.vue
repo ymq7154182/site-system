@@ -499,12 +499,13 @@ export default {
           {value: 1, name: '51-55'}
         ]
       }else if(val === "学历") {
-        this.legendData = ['博士', '研究生', '本科', '专科'],
+        this.legendData = ['博士', '研究生', '本科', '专科','其他'],
         this.gongzhongData = [
           {value: 3, name: '博士'},
           {value: 12, name: '研究生'},
-          {value: 40, name: '本科'},
+          {value: 30, name: '本科'},
           {value: 5, name: '专科'},
+          {value: 60, name: '其他'}
         ]
       }else if(val === "民族") {
         this.legendData = [ '回族', '满族', '土家族','壮族','苗族','汉族'],
