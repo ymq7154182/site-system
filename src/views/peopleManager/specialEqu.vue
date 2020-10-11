@@ -1,63 +1,112 @@
 <template>
-  <div class="lskq">
-    <el-row style="margin-top:0.3rem; " >
-      <!--用户数据-->
-      <el-col :span="24" :xs="24">
-        <el-row :gutter="10" style="margin-bottom: 0.3rem;">
-          <el-col :span="2">
-            <el-button type="warning" icon="el-icon-download" size="mini" @click="handleExport" >下载</el-button>
-          </el-col>
-        </el-row>
-        <el-table v-loading="loading" :data="userList" @selection-change="handleSelectionChange"  border>
-          <el-table-column type="selection"  align="center" width="100"/>
-          <el-table-column label="名字" align="center" prop="userName" :show-overflow-tooltip="true" width="200"/>
-          <el-table-column label="类型" align="center" prop="kind" width="200"/>
-          <el-table-column label="备注" align="center" prop="remark" :show-overflow-tooltip="true" width="200"/>
-          <el-table-column label="上传时间" align="center" prop="createTime" width="200" />
-          <el-table-column label="操作" align="center" width="180" class-name="small-padding fixed-width">
-            <template slot-scope="scope">
-              <el-button size="mini" type="text" icon="el-icon-view" @click="handleView(scope.row)"
-              >查看</el-button>
-            </template>
-          </el-table-column>
-        </el-table>
-        <pagination v-show="total>0" :total="total" :page.sync="queryParams.pageNum" :limit.sync="queryParams.pageSize" @pagination="getList" />
-      </el-col>
-    </el-row>
-
-    <!-- 添加或修改参数配置对话框 -->
-    <el-dialog :title="title" :visible.sync="open" width="960px" append-to-body>
-      <el-form ref="form" :model="form" :rules="rules" label-width="80px">
+  <div class="special-edu">
+    <ul>
+      <li>
         <el-row>
-          <el-col :span="12">
-            <el-form-item label="用户昵称" prop="nickName">
-              <el-input v-model="form.userName" placeholder="请输入用户昵称" readonly="true"/>
-            </el-form-item>
-          </el-col>
-          <el-col :span="12">
-            <el-form-item label="类型" prop="kind">
-              <el-input v-model="form.kind" placeholder="请输入归属部门" readonly="true"/>
-            </el-form-item>
+          <el-col>
+            <el-form :model="queryParams" ref="queryForm" :inline="true" label-width="68px" style="float: left; ">
+              <el-form-item label="ID" prop="id" class="fixColor">
+                <el-input v-model="queryParams.id" placeholder="请输入用户ID" type="number" min="1" size="small" class="searchBar" @keyup.enter.native="handleQuery" />
+              </el-form-item>
+              <el-form-item label="姓名" prop="userName" class="fixColor">
+                <el-input v-model="queryParams.userName" placeholder="请输入姓名" size="small" class="searchBar" @keyup.enter.native="handleQuery" />
+              </el-form-item>
+              <el-form-item label="工种" prop="userType" class="fixColor">
+                <el-input v-model="queryParams.userType" placeholder="请输入工种" size="small" class="searchBar" @keyup.enter.native="handleQuery" />
+              </el-form-item>
+              <el-form-item label="年龄" prop="userAge" class="fixColor">
+                <el-input v-model="queryParams.userAge" placeholder="请输入年龄" type="number" min="1" size="small" class="searchBar" @keyup.enter.native="handleQuery" />
+              </el-form-item>
+              <el-form-item label="联系方式" prop="phone" class="fixColor">
+                <el-input v-model="queryParams.phone" placeholder="请输入联系方式" size="small" class="searchBar" @keyup.enter.native="handleQuery" />
+              </el-form-item>
+            </el-form>
+            <div style="float: right; ">
+              <el-button type="success" icon="el-icon-search" @click="handleQuery">搜索</el-button>
+              <el-button type="warning" icon="el-icon-refresh" @click="resetSearch('queryForm')">重置</el-button>
+            </div>
           </el-col>
         </el-row>
-        <el-row>
-          <el-col :span="12">
-            <el-form-item label="上传时间" prop="nickName">
-              <el-input v-model="form.createTime" placeholder="请输入上传时间" readonly="true"/>
-            </el-form-item>
-          </el-col>
-        </el-row>
-        <el-row>
-          <el-col :span="24">
-            <el-form-item label="备注">
-              <el-input v-model="form.remark" type="textarea" placeholder="请输入内容" readonly="true"></el-input>
-            </el-form-item>
-          </el-col>
-        </el-row>
-      </el-form>
-      <div slot="footer" class="dialog-footer">
-<!--        <el-button type="primary" @click="submitForm">确 定</el-button>-->
-        <el-button @click="cancel">取 消</el-button>
+      </li>
+      <li>
+        <div class="dataTable">
+          <el-table
+            :data="userList.slice((currentPage - 1) * pageSize, currentPage * pageSize)"
+            style="font-size: 0.22rem;"
+            stripe
+            :header-row-style="{ color: '#409eff' }"
+            :row-style="{ color: 'white' }"
+          >
+            <el-table-column label="ID" align="center" prop="id" width="50" />
+            <el-table-column label="姓名" align="center" prop="userName" />
+            <el-table-column label="工种" align="center" prop="userType" />
+            <el-table-column label="年龄" align="center" prop="userAge" />
+            <el-table-column label="联系方式" align="center" prop="phone" />
+            <el-table-column width="150" align="center" fixed="right">
+              <template slot-scope="scope">
+                <el-button type="text" icon="el-icon-plus" @click="updateImg(scope.row)" style="font-size: 0.22rem; ">补充信息</el-button>
+              </template>
+            </el-table-column>
+          </el-table>
+        </div>
+      </li>
+      <li>
+        <div class="block">
+          <el-pagination
+            :current-page="currentPage"
+            :page-size="pageSize"
+            :total="userList.length"
+            @current-change="handleCurrentChange"
+            layout="total, prev, pager, next"
+            background
+          />
+        </div>
+      </li>
+    </ul>
+    <el-dialog :visible.sync="showUpdate" title="补充信息" width="35%" @close="editClose">
+      <table cellspacing="0" class="lesson-table">
+        <tr>
+          <td class="table-head">ID</td>
+          <td>{{ currentInfo.id }}</td>
+        </tr>
+        <tr>
+          <td class="table-head">姓名</td>
+          <td>{{ currentInfo.userName }}</td>
+        </tr>
+        <tr>
+          <td class="table-head">工种</td>
+          <td>{{ currentInfo.userType }}</td>
+        </tr>
+        <tr>
+          <td class="table-head">年龄</td>
+          <td>{{ currentInfo.userAge }}</td>
+        </tr>
+        <tr>
+          <td class="table-head">联系方式</td>
+          <td>{{ currentInfo.phone }}</td>
+        </tr>
+        <tr v-if="currentInfo.checkImg !== null">
+          <td class="table-head">资质证书</td>
+          <td><a :href="currentInfo.checkImg" target="_blank">查看图片</a></td>
+        </tr>
+        <tr>
+          <td class="table-head">上传图片</td>
+          <td>
+            <el-upload
+              class="upload-demo"
+              action="http://121.36.106.18:38080/system/safe/uploadFile"
+              :limit="1"
+              :on-success="handleSuccess"
+              :file-list="fileList"
+            >
+              <el-button slot="trigger" type="text" icon="el-icon-upload" style="text-align: center; font-size: 14px; ">选取文件</el-button>
+            </el-upload>
+          </td>
+        </tr>
+      </table>
+      <div style="text-align: center; ">
+        <el-button type="primary" @click="confirmEdit">确认修改</el-button>
+        <el-button @click="showUpdate = false">取消</el-button>
       </div>
     </el-dialog>
   </div>
@@ -65,406 +114,167 @@
 
 <script>
 
-// import {
-//   listUser,
-//   getUser,
-//   delUser,
-//   addUser,
-//   updateUser,
-//   exportUser,
-//   resetUserPwd,
-//   changeUserStatus,
-//   importTemplate,
-// } from "@/api/system/user";
-// import { getToken } from "@/utils/auth";
-// import { treeselect } from "@/api/system/dept";
-// import Treeselect from "@riophae/vue-treeselect";
-// import "@riophae/vue-treeselect/dist/vue-treeselect.css";
+import {retrieveMember, updateMember} from "../../api/specialEqu";
 
 export default {
   name: "kqHistory",
-
   data() {
     return {
-      // 遮罩层
-      loading: true,
-      // 选中数组
-      ids: [],
-      // 非单个禁用
-      single: true,
-      // 非多个禁用
-      multiple: true,
-      // 显示搜索条件
-      showSearch: true,
-      // 总条数
-      total: 0,
       // 用户表格数据
-      userList: null,
-      // 弹出层标题
-      title: "",
-      // 部门树选项
-      deptOptions: undefined,
-      // 是否显示弹出层
-      open: false,
-      // 部门名称
-      deptName: undefined,
-      // 默认密码
-      initPassword: undefined,
-      // 日期范围
-      dateRange: [],
-      // 状态数据字典
-      statusOptions: [],
-      // 性别状态字典
-      sexOptions: ["女","男"],
-      // 岗位选项
-      postOptions: [],
-      // 角色选项
-      roleOptions: [],
-      // 表单参数
-      form: {},
-      defaultProps: {
-        children: "children",
-        label: "label",
+      userList: [],
+      pageSize: 8,
+      currentPage: 1,
+      showUpdate: false,
+      currentInfo: {
+        id: 0,
+        userName: '',
+        userType: '',
+        userAge: 0,
+        phone: '',
       },
-      // 用户导入参数
-      upload: {
-        // 是否显示弹出层（用户导入）
-        open: false,
-        // 弹出层标题（用户导入）
-        title: "",
-        // 是否禁用上传
-        isUploading: false,
-        // 是否更新已经存在的用户数据
-        updateSupport: 0,
-        // 设置上传的请求头部
-        // headers: { Authorization: "Bearer " + getToken() },
-        // 上传的地址
-        url: process.env.VUE_APP_BASE_API + "/system/user/importData",
+      uploadInfo: {
+        id: 0,
+        checkImg: ''
       },
-      // 查询参数
+      fileList: [],
       queryParams: {
-        pageNum: 1,
-        pageSize: 10,
-        userName: undefined,
-        phonenumber: undefined,
-        status: undefined,
-        deptId: undefined,
-      },
-      // 表单校验
-      // rules: {
-      //   userName: [
-      //     { required: true, message: "用户名称不能为空", trigger: "blur" },
-      //   ],
-      //   nickName: [
-      //     { required: true, message: "用户昵称不能为空", trigger: "blur" },
-      //   ],
-      //   deptId: [
-      //     { required: true, message: "归属部门不能为空", trigger: "blur" },
-      //   ],
-      //   password: [
-      //     { required: true, message: "用户密码不能为空", trigger: "blur" },
-      //   ],
-      //   email: [
-      //     { required: true, message: "邮箱地址不能为空", trigger: "blur" },
-      //     {
-      //       type: "email",
-      //       message: "'请输入正确的邮箱地址",
-      //       trigger: ["blur", "change"],
-      //     },
-      //   ],
-      //   phonenumber: [
-      //     { required: true, message: "手机号码不能为空", trigger: "blur" },
-      //     {
-      //       pattern: /^1[3|4|5|6|7|8|9][0-9]\d{8}$/,
-      //       message: "请输入正确的手机号码",
-      //       trigger: "blur",
-      //     },
-      //   ],
-      // },
+        id: null,
+        userName: null,
+        userType: null,
+        userAge: null,
+        phone: null
+      }
     };
   },
-  watch: {
-    // 根据名称筛选部门树
-    deptName(val) {
-      this.$refs.tree.filter(val);
-    },
-  },
-  created() {
-    this.getList();
+  mounted() {
+    this.refreshTable();
   },
   methods: {
-    /** 查询用户列表 */
-    getList() {
-      this.loading = true;
-      var tmplist = [
-        {
-          id: 1,
-          userName: "admin1",
-          kind: "电工",
-          remark:'无',
-          createTime: "2018-06-17 01:33:00",
-        },
-        {
-          id: 2,
-          userName: "admin2",
-          kind: "电工",
-          remark:'无',
-          createTime: "2020-03-17 00:33:00",
-        },
-        {
-          id: 3,
-          userName: "admin3",
-          kind: "电工",
-          remark:'无',
-          createTime: "2018-03-15 00:30:32",
-        },
-        {
-          id: 4,
-          userName: "admin4",
-          kind: "电工",
-          remark:'无',
-          createTime: "2019-03-17 00:39:30",
-        },
-        {
-          id: 5,
-          userName: "admin5",
-          kind: "电工",
-          remark:'无',
-          createTime: "2020-03-17 10:33:30",
-        }
-      ];
-      // listUser(){
-      //
-      // },
-      this.userList = tmplist;
-      this.total = tmplist.length;
-      this.loading = false;
-
-    },
-
-
-
-    // 筛选节点
-    filterNode(value, data) {
-      if (!value) return true;
-      return data.label.indexOf(value) !== -1;
-    },
-    // 节点单击事件
-    handleNodeClick(data) {
-      this.queryParams.deptId = data.id;
-      this.getList();
-    },
-    // 用户状态修改
-    handleStatusChange(row) {
-      let text = row.status === "0" ? "启用" : "停用";
-      this.$confirm(
-        '确认要"' + text + '""' + row.userName + '"用户吗?',
-        "警告",
-        {
-          confirmButtonText: "确定",
-          cancelButtonText: "取消",
-          type: "warning",
-        }
-      )
-        .then(function () {
-          return changeUserStatus(row.userId, row.status);
-        })
-        .then(() => {
-          this.msgSuccess(text + "成功");
-        })
-        .catch(function () {
-          row.status = row.status === "0" ? "1" : "0";
-        });
-    },
-    // 取消按钮
-    cancel() {
-      this.open = false;
-      this.reset();
-    },
-    // 表单重置
-    reset() {
-      this.form = {
-        userId: undefined,
-        deptId: undefined,
-        userName: undefined,
-        nickName: undefined,
-        password: undefined,
-        phonenumber: undefined,
-        email: undefined,
-        sex: undefined,
-        status: "0",
-        remark: undefined,
-        postIds: [],
-        roleIds: [],
-      };
-      this.resetForm("form");
-    },
-    /** 搜索按钮操作 */
-    handleQuery() {
-      this.queryParams.page = 1;
-      this.getList();
-    },
-    /** 重置按钮操作 */
-    resetQuery() {
-      this.dateRange = [];
-      this.resetForm("queryForm");
-      this.handleQuery();
-    },
-    // 多选框选中数据
-    handleSelectionChange(selection) {
-      this.ids = selection.map((item) => item.userId);
-      this.single = selection.length != 1;
-      this.multiple = !selection.length;
-    },
-    /** 新增按钮操作 */
-    handleAdd() {
-      this.reset();
-
-      getUser().then((response) => {
-        this.postOptions = response.posts;
-        this.roleOptions = response.roles;
-        this.open = true;
-        this.title = "添加用户";
-        this.form.password = this.initPassword;
-      });
-    },
-    /** 修改按钮操作 */
-    handleUpdate(row) {
-      this.reset();
-      const userId = row.userId || this.ids;
-      getUser(userId).then((response) => {
-        this.form = response.data;
-        this.postOptions = response.posts;
-        this.roleOptions = response.roles;
-        this.form.postIds = response.postIds;
-        this.form.roleIds = response.roleIds;
-        this.open = true;
-        this.title = "修改用户";
-        this.form.password = "";
-      });
-    },
-    handleView(row){
-      this.form.userName = row.userName
-      this.form.kind = row.kind
-      this.form.remark = row.remark
-      this.form.createTime = row.createTime
-      this.open = true
-    },
-    /** 重置密码按钮操作 */
-    handleResetPwd(row) {
-      this.$prompt('请输入"' + row.userName + '"的新密码', "提示", {
-        confirmButtonText: "确定",
-        cancelButtonText: "取消",
+    refreshTable() {
+      retrieveMember().then(response => {
+        if (response.data.code === 200) {
+          this.userList = response.data.rows;
+        } else return false;
       })
-        .then(({ value }) => {
-          resetUserPwd(row.userId, value).then((response) => {
-            if (response.code === 200) {
-              this.msgSuccess("修改成功，新密码是：" + value);
-            }
+    },
+    handleCurrentChange(val) {
+      this.currentPage = val;
+    },
+    updateImg(row) {
+      this.showUpdate = true;
+      this.currentInfo = row;
+    },
+    editClose() {
+      this.fileList = [];
+    },
+    handleSuccess(response, file, fileList) {
+      this.uploadInfo.checkImg = response.data
+    },
+    confirmEdit() {
+      this.uploadInfo.id = this.currentInfo.id;
+      updateMember(this.uploadInfo).then(response => {
+        if (response.data.code === 200) {
+          this.$message({
+            type: 'success',
+            message: '修改成功'
           });
-        })
-        .catch(() => {});
-    },
-    /** 提交按钮 */
-    submitForm: function () {
-      this.$refs["form"].validate((valid) => {
-        if (valid) {
-          if (this.form.userId != undefined) {
-            updateUser(this.form).then((response) => {
-              if (response.code === 200) {
-                this.msgSuccess("修改成功");
-                this.open = false;
-                this.getList();
-              }
-            });
-          } else {
-            addUser(this.form).then((response) => {
-              if (response.code === 200) {
-                this.msgSuccess("新增成功");
-                this.open = false;
-                this.getList();
-              }
-            });
-          }
+          this.showUpdate = false;
+        } else {
+          this.$message.error('修改失败')
         }
-      });
-    },
-    /** 删除按钮操作 */
-    handleDelete(row) {
-      const userIds = row.userId || this.ids;
-      this.$confirm(
-        '是否确认删除用户编号为"' + userIds + '"的数据项?',
-        "警告",
-        {
-          confirmButtonText: "确定",
-          cancelButtonText: "取消",
-          type: "warning",
-        }
-      )
-        .then(function () {
-          return delUser(userIds);
-        })
-        .then(() => {
-          this.getList();
-          this.msgSuccess("删除成功");
-        })
-        .catch(function () {});
-    },
-    /** 导出按钮操作 */
-    handleExport() {
-      const queryParams = this.queryParams;
-      this.$confirm("是否确认导出所有用户数据项?", "警告", {
-        confirmButtonText: "确定",
-        cancelButtonText: "取消",
-        type: "warning",
       })
-        .then(function () {
-          return exportUser(queryParams);
-        })
-        .then((response) => {
-          this.download(response.msg);
-        })
-        .catch(function () {});
     },
-    /** 导入按钮操作 */
-    handleImport() {
-      this.upload.title = "用户导入";
-      this.upload.open = true;
-    },
-    /** 下载模板操作 */
-    importTemplate() {
-      importTemplate().then((response) => {
-        this.download(response.msg);
+    handleQuery() {
+      retrieveMember(this.queryParams).then(response => {
+        if (response.data.code === 200) {
+          this.userList = response.data.rows;
+        } else return false;
       });
     },
-    // 文件上传中处理
-    handleFileUploadProgress(event, file, fileList) {
-      this.upload.isUploading = true;
-    },
-    // 文件上传成功处理
-    handleFileSuccess(response, file, fileList) {
-      this.upload.open = false;
-      this.upload.isUploading = false;
-      this.$refs.upload.clearFiles();
-      this.$alert(response.msg, "导入结果", { dangerouslyUseHTMLString: true });
-      this.getList();
-    },
-    // 提交上传文件
-    submitFileForm() {
-      this.$refs.upload.submit();
-    },
+    resetSearch(formName) {
+      this.$refs[formName].resetFields();
+      this.refreshTable();
+    }
   },
 };
 </script>
 
-<style >
-.lskq {
+<style scoped>
+.special-edu {
+  width: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
-  margin: 0.5rem o.3rem;
 }
-.fixColor .el-form-item__label{
+
+.special-edu ul {
+  width: 85%;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  overflow-x: hidden;
+}
+
+/deep/ .el-form-item__label{
   color: white;
+}
+
+.dataTable {
+  width: calc(100% + 20px);
+  height: 62vh;
+  overflow-y: scroll;
+}
+
+.dataTable >>> .el-table,
+.dataTable >>> .el-table__expanded-cell {
+  background-color: transparent !important;
+}
+/*透明化行、单元格*/
+.dataTable >>> .el-table th,
+.dataTable >>> .el-table tr,
+.dataTable >>> .el-table td {
+  background-color: transparent !important;
+}
+/*hover时样式*/
+.dataTable >>> .el-table tbody tr:hover>td {
+  background-color: #367f7f78 !important
+}
+
+/*偶数行样式*/
+.dataTable >>> .el-table__row--striped td {
+  background-color: #45797b33 !important
+}
+/*奇数行样式*/
+.dataTable >>> .el-table__row:not(.el-table__row--striped) {
+  background: #1439391c !important;
+}
+
+.block {
+  margin: 10px 0;
+  text-align: center;
+}
+
+.block >>> .el-pagination__total {
+  color: #409eff;
+}
+
+.lesson-table {
+  width: 100%;
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+.lesson-table td {
+  height: 40px;
+}
+
+.table-head {
+  color: #409EFF;
+  width: 40%;
+  font-weight: bold;
+}
+
+.searchBar {
+  width: 140px;
 }
 </style>

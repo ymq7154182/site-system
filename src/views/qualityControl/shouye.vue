@@ -123,11 +123,12 @@
 
 <script>
   import echarts from 'echarts';
-  import {getSafetyRecord,getDanger,getRectification,getSafetyCheck,getProblem,getSafetyTrouble} from '@/api/qualityControl';
+  import {getSysProData,getSafetyRecord,getDanger,getRectification,getSafetyCheck,getProblem,getSafetyTrouble} from '@/api/qualityControl';
     export default {
         name: "index",
       data() {
         return {
+          proName:'',
           // 安全检查的总数目
           sumNum:0,
           // 新增问题数目
@@ -211,15 +212,16 @@
           },
         }
       },
+      created() {
+
+        // console.log("siteId",localStorage.getItem('siteId'))
+      },
       mounted() {
-        this.getProblem()
-        this.getSafetyTrouble()
-        this.getSafetyRecord()
-        this.getDanger()
-        this.getRectification()
-        this.getSafetyCheck()
-          var _this = this
         this.$store.dispatch('changeMsg', '安全管理')
+        this.getConstructionSiteName(localStorage.getItem('siteId'))
+
+          var _this = this
+
         setTimeout(() => {
           this.loading = false
         }, 600)
@@ -4208,6 +4210,7 @@
         // 获取安全检查记录
         getSafetyRecord(){
           const prames = {
+            sitename:this.proName
           }
           getSafetyRecord(prames).then((res) => {
             //console.log("后端传回监督记录",res.data.data)
@@ -4259,6 +4262,7 @@
         // 重大危险源信息
         getDanger (){
           const prames = {
+            sitename:this.proName
           }
           getDanger(prames).then((res) => {
             let dangerArr = res.data.data.map(item => {
@@ -4283,7 +4287,9 @@
         },
         // 获取整改信息
         getRectification (){
-          getRectification ().then((res) => {
+          getRectification ({
+            sitename:this.proName
+          }).then((res) => {
             for(var key in res.data.data.data){
               // console.log("key",key)
               this.changeYear.push(key)
@@ -4304,7 +4310,9 @@
         },
         // 获取安全检查记录信息
         getSafetyCheck (){
-          getSafetyCheck ().then((res) => {
+          getSafetyCheck ({
+            sitename:this.proName
+          }).then((res) => {
             //console.log(res.data.data[0].key)
             // this.sumNum = res.data.data.length
             for(var i=0;i<res.data.data.length;i++) {
@@ -4326,8 +4334,11 @@
         },
         // 获取问题趋势接口
         getProblem (){
-
-          getProblem ().then((res) => {
+          console.log('获取问题趋势接口')
+          console.log(this.proName)
+          getProblem ({
+            sitename:this.proName
+          }).then((res) => {
             //console.log("趋势分析",res.data.data)
             if(res.data.data.data) {
               for(var key in res.data.data.data){
@@ -4351,7 +4362,9 @@
         },
         // 获取安全隐患各个类型的数目
         getSafetyTrouble (){
-          getSafetyTrouble ().then((res) => {
+          getSafetyTrouble ({
+            sitename:this.proName
+          }).then((res) => {
             //console.log("安全隐患统计")
             // {value:335,unit:'次', name:'易燃物乱摆放',},
              var Arr= res.data.data.map(item =>{
@@ -4372,6 +4385,25 @@
             // console.log(this.innerData)
             // console.log(this.outerData)
             this.inchart13()
+          })
+        },
+        // 根据工地id获取
+        getConstructionSiteName(id) {
+          getSysProData({
+            deptId: id
+            // deptId: 1031
+          }).then(response => {
+            console.log("2222222",response.data)
+            console.log("2取到的proid",response.data.proName)
+            this.proName = response.data.proName
+            // console.log("2拿到的proname",this.proName)
+            this.getProblem()
+            this.getSafetyTrouble()
+            this.getSafetyRecord()
+            this.getDanger()
+            this.getRectification()
+            this.getSafetyCheck()
+
           })
         },
       },

@@ -5,13 +5,13 @@
         <img src="../assets/homepage/laba.png">
         <span style="margin-left: 0.5rem">北京智慧工地新增一个项目引进了最新型建造方式......</span>
       </div>
-      <div class="notice_right">
-        <span>用户身份:</span>
-        <span style="color:#13cafd ">管理员</span>
-        <span style="margin-left: 0.1rem">在线人数:</span>
-        <span style="color:#13cafd ">5</span>
-        <span>人</span>
-      </div>
+      <!--<div class="notice_right">-->
+        <!--<span>用户身份:</span>-->
+        <!--<span style="color:#13cafd ">管理员</span>-->
+        <!--<span style="margin-left: 0.1rem">在线人数:</span>-->
+        <!--<span style="color:#13cafd ">5</span>-->
+        <!--<span>人</span>-->
+      <!--</div>-->
     </div>
     <div class="content_container">
       <el-row>
@@ -388,6 +388,7 @@
       },
       mounted() {
         this.$store.dispatch('changeMsg', '项目概览')
+        this.getUrl()
         this.getDeferReasons() // 获取滞缓原因
         this.getOneSchedules() // 获取所有一级进度
         // this.getTwoSchedules() // 获取所有二级进度
@@ -400,7 +401,7 @@
         this.inchart21()
         this.chart21Res()
         this.getWeatherData()
-        this.getUrl()
+
         this.getProDetails()
         this.getsiteName()
         this.getProjectName()
@@ -1354,8 +1355,13 @@
           // var url = ''
           // url = window.location.href
           var str = window.location.search
-          var siteId = str.split('=')[1]
-          localStorage.setItem('siteId', siteId)
+          if(str === '') {
+            console.log('str为空')
+          }else {
+            var siteId = str.split('=')[1]
+            localStorage.setItem('siteId', siteId)
+          }
+
           // console.log(url)
           // console.log(siteId)
         },

@@ -66,28 +66,28 @@
                   <div class="p_chart">
                     <el-row>
                       <el-col :span="20">
-                         <div id="chart3" style="width: 30vw;height:34vh;"></div>
+                         <div id="chart3" style="width: 100%;height:34vh;"></div>
                       </el-col>
-                      <el-col :span="4">
+                      <el-col :span="4" >
                         <div class="gongzhong_fenlei">
                           <ul class="feilei_ul">
-                            <li class="fenlei_li">
-                              <el-tag type="success" @click="selectType">类型</el-tag>
+                            <li class="fenlei_li" >
+                              <el-tag type="success" @click.native="selectType('类型')">类型</el-tag>
                             </li>
                             <li>
-                              <el-tag type="info" @click="selectAge">年龄</el-tag>
+                              <el-tag type="info" @click.native="selectType('年龄')">年龄</el-tag>
                             </li>
                             <li>
-                              <el-tag  @click="selectXueli">学历</el-tag>
+                              <el-tag  @click.native="selectType('学历')">学历</el-tag>
                             </li>
                             <li>
-                              <el-tag type="danger" @click="selectMinzu">民族</el-tag>
+                              <el-tag type="danger" @click.native="selectType('民族')">民族</el-tag>
                             </li>
                           </ul>
                         </div>
                       </el-col>
                     </el-row>
-                   
+
                   </div>
                 </div>
               </el-col>
@@ -326,8 +326,8 @@
                           </div>
                         </div>
                       </li>
-                     
-                      
+
+
                     </ul>
                     <!-- <el-row>
                       <el-col :span="8">
@@ -391,15 +391,18 @@
 </template>
 
 <script>
-import kqHistory from './kqHistory'
+//import kqHistory from './kqHistory'
 export default {
   name: "shouYe",
   components: {
-    kqHistory
+    // kqHistory
   },
   data(){
     return{
-      
+      // 现场工种的legend
+      legendData:[],
+      // 现场工种的数据
+      gongzhongData:[],
       normalNum:0,
       attentionNum:0,
       items:[
@@ -466,14 +469,57 @@ export default {
     }
   },
   mounted() {
+    this.selectType("类型")
     this.$store.dispatch('changeMsg', '人员管理')
     this.drawLine();
     this.changeType();
   },
   methods:{
-    
-    selectType() {
-      console.log("Type")
+    selectType(val) {
+      console.log("123")
+      console.log("类型改变",val)
+      if(val === "类型"){
+        this.legendData = ['施工员', '质量员', '安全员', '标准员', '材料员','机械员'],
+        this.gongzhongData = [
+          {value: 35, name: '施工员'},
+          {value: 18, name: '质量员'},
+          {value: 19, name: '安全员'},
+          {value: 7, name: '标准员'},
+          {value: 48, name: '材料员'},
+          {value: 52, name: '机械员'}
+        ]
+      } else if(val === "年龄") {
+        this.legendData = ['25-30', '30-35', '36-40', '41-45', '41-45','46-50','51-55'],
+        this.gongzhongData = [
+          {value: 3, name: '25-30'},
+          {value: 36, name: '30-35'},
+          {value: 46, name: '36-40'},
+          {value: 16, name: '41-45'},
+          {value: 8, name: '46-50'},
+          {value: 1, name: '51-55'}
+        ]
+      }else if(val === "学历") {
+        this.legendData = ['博士', '研究生', '本科', '专科','其他'],
+        this.gongzhongData = [
+          {value: 3, name: '博士'},
+          {value: 12, name: '研究生'},
+          {value: 30, name: '本科'},
+          {value: 5, name: '专科'},
+          {value: 60, name: '其他'}
+        ]
+      }else if(val === "民族") {
+        this.legendData = [ '回族', '满族', '土家族','壮族','苗族','汉族'],
+        this.gongzhongData = [
+
+          {value: 2, name: '回族'},
+          {value: 4, name: '满族'},
+          {value: 5, name: '土家族'},
+          {value: 1, name: '壮族'},
+          {value: 4, name: '苗族'},
+          {value: 56, name: '汉族'},
+        ]
+      }
+      this.drawLine()
     },
     selectAge() {
       console.log("Type")
@@ -965,10 +1011,10 @@ export default {
           top:10,
           left:10,
 
-          data: ['施工员', '质量员', '安全员', '标准员', '材料员','机械员'],
+          data: this.legendData,
           textStyle: {
             color: '#6ac0f0' ,
-            fontSize: 10,
+            fontSize: 14,
           },
         },
         series: [
@@ -992,14 +1038,7 @@ export default {
               length: 10,
               length2: 20
             },
-            data: [
-              {value: 150, name: '施工员'},
-              {value: 10, name: '质量员'},
-              {value: 4, name: '安全员'},
-              {value: 5, name: '标准员'},
-              {value: 58, name: '材料员'},
-              {value: 48, name: '机械员'}
-            ]
+            data: this.gongzhongData
           }
         ]
       });
@@ -1314,7 +1353,7 @@ export default {
   padding: 0;
   text-align: center;
   line-height: 0.8rem;
-  
+
 }
 
 .tabs >>> .el-tabs__nav-wrap::after {

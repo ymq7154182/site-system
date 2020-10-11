@@ -5,70 +5,86 @@
 
       <!--用户数据-->
       <el-col :span="24" :xs="24">
-        <el-form :model="queryParams" ref="queryForm" :inline="true" v-show="showSearch" label-width="68px">
-          <el-form-item label="公司" prop="userName" class="fixColor">
-            <el-input v-model="queryParams.userName" placeholder="请输入公司名称" clearable size="small" style="width: 240px" @keyup.enter.native="handleQuery" />
-          </el-form-item>
-          <el-form-item label="工种" prop="phonenumber" class="fixColor">
-            <el-input v-model="queryParams.phonenumber" placeholder="请输入工种" clearable size="small" style="width: 240px" @keyup.enter.native="handleQuery" />
-          </el-form-item>
-          <el-form-item label="时间" prop="time" class="fixColor">
-            <el-input v-model="queryParams.time" placeholder="请输入时间" clearable size="small" style="width: 240px" @keyup.enter.native="handleQuery" />
-<!--            <el-time-select-->
-<!--              v-model="queryParams.status"-->
-<!--              :picker-options="{-->
-<!--              start: '08:30',-->
-<!--              step: '00:15',-->
-<!--              end: '18:30'-->
-<!--               }"-->
-<!--              placeholder="选择时间">-->
-<!--            </el-time-select>-->
-          </el-form-item>
-          <el-form-item>
-            <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
-            <el-button type="primary" icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>
-          </el-form-item>
-        </el-form>
-
-        <el-row :gutter="10" style="margin-bottom: 0.3rem;">
-
-          <el-col :span="2">
-            <el-button type="success" icon="el-icon-edit" size="mini" :disabled="single" @click="handleUpdate()" >修改</el-button>
+        <el-row>
+<!--          <el-col :span="6">-->
+<!--            <el-button type="success" icon="el-icon-edit" size="mini"  @click="handleUpdate()" >修改</el-button>-->
+<!--            <el-button type="success" icon="el-icon-edit" size="mini" :disabled="single" @click="handleUpdate()" >修改</el-button>-->
+<!--                <el-button type="warning" icon="el-icon-download" size="mini" @click="handleExport" >下载</el-button>-->
+<!--          </el-col>-->
+          <el-col :span="18">
+            <el-form :model="queryParams" ref="queryForm" :inline="true" v-show="showSearch" label-width="68px">
+              <el-form-item label="工地名称" prop="constructionSiteName" class="fixColor">
+                <el-input v-model="queryParams.constructionSiteName" placeholder="请输入工地名称" clearable size="small" style="width: 240px" @keyup.enter.native="handleQuery" />
+              </el-form-item>
+              <el-form-item label="打卡状态" prop="userSignStatus" class="fixColor">
+                <el-input v-model="queryParams.userSignStatus" placeholder="请输入打卡状态" clearable size="small" style="width: 240px" @keyup.enter.native="handleQuery" />
+              </el-form-item>
+              <el-form-item label="更新时间" prop="userSignTime" class="fixColor">
+                <el-input v-model="queryParams.userSignTime" placeholder="请输入更新时间" clearable size="small" style="width: 240px" @keyup.enter.native="handleQuery" />
+                <!--            <el-time-select-->
+                <!--              v-model="queryParams.status"-->
+                <!--              :picker-options="{-->
+                <!--              start: '08:30',-->
+                <!--              step: '00:15',-->
+                <!--              end: '18:30'-->
+                <!--               }"-->
+                <!--              placeholder="选择时间">-->
+                <!--            </el-time-select>-->
+              </el-form-item>
+              <el-form-item>
+                <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
+                <el-button type="primary" icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>
+              </el-form-item>
+            </el-form>
           </el-col>
-
-          <el-col :span="2">
-            <el-button type="warning" icon="el-icon-download" size="mini" @click="handleExport" >下载</el-button>
-          </el-col>
-
         </el-row>
-
-        <el-table v-loading="loading" :data="userList" @selection-change="handleSelectionChange"  border>
-          <el-table-column type="selection" width="50" align="center" />
-          <el-table-column label="用户编号" align="center" prop="id" />
-          <el-table-column label="用户名称" align="center" prop="userName" :show-overflow-tooltip="true" />
-          <el-table-column label="用户昵称" align="center" prop="nickName" :show-overflow-tooltip="true" />
-          <el-table-column label="工种" align="center" prop="kind" :show-overflow-tooltip="true" />
-          <el-table-column label="手机号码" align="center" prop="phonenumber" width="120" />
-          <el-table-column label="状态" align="center">
-            <template slot-scope="scope">
-              <el-switch v-model="scope.row.status" active-value="0" inactive-value="1" @change="handleStatusChange(scope.row)"></el-switch>
-            </template>
-          </el-table-column>
-          <el-table-column label="创建时间" align="center" prop="createTime" width="160">
-            <template slot-scope="scope">
-              <span>{{ parseTime(scope.row.createTime) }}</span>
-            </template>
-          </el-table-column>
-          <el-table-column label="操作" align="center" width="180" class-name="small-padding fixed-width">
-            <template slot-scope="scope">
-              <el-button size="mini" type="text" icon="el-icon-edit" @click="handleUpdate(scope.row)"
-              >补打卡</el-button>
-              <el-button size="mini" type="text" icon="el-icon-view" @click="handleView(scope.row)"
-              >查看</el-button>
-            </template>
-          </el-table-column>
-        </el-table>
-        <pagination v-show="total>0" :total="total" :page.sync="queryParams.pageNum" :limit.sync="queryParams.pageSize" @pagination="getList" />
+        <div class="dataTable">
+          <el-table v-loading="loading" :data="userList.slice((currentPage - 1) * pageSize, currentPage * pageSize)" @selection-change="handleSelectionChange" style="font-size: 0.20rem;"
+                    stripe
+                    :cell-style="cellStyle"
+                    :header-row-style="{ color: '#409eff' }"
+                    :row-style="{ color: 'white' }">
+            <!--          <el-table-column type="selection" width="50" align="center" />-->
+            <!--          <el-table-column label="项目序号" align="center" prop="id" width="200"/>-->
+            <el-table-column label="工地编号" align="center" prop="id" width="160"/>
+            <el-table-column label="工地名称" align="center" prop="constructionSiteName" :show-overflow-tooltip="true" width="220"/>
+            <!--          <el-table-column label="用户昵称" align="center" prop="nickName" :show-overflow-tooltip="true" />-->
+            <el-table-column label="工种" align="center" prop="userType" :show-overflow-tooltip="true" width="200"/>
+            <el-table-column label="年龄" align="center" prop="userAge" :show-overflow-tooltip="true" width="160"/>
+            <el-table-column label="手机号码" align="center" prop="phone" width="240" />
+            <el-table-column label="打卡状态" align="center" prop="userSignStatus" width="200">
+              <!--            <template slot-scope="scope">-->
+              <!--              <el-switch v-model="scope.row.status" active-value="0" inactive-value="1" @change="handleStatusChange(scope.row)"></el-switch>-->
+              <!--            </template>-->
+            </el-table-column>
+            <el-table-column label="更新时间" align="center" prop="userSignTime" width="240">
+              <!--            <template slot-scope="scope">-->
+              <!--              <span>{{ parseTime(scope.row.createTime) }}</span>-->
+              <!--            </template>-->
+            </el-table-column>
+            <el-table-column label="操作" align="center" width="200" class-name="small-padding fixed-width">
+              <template slot-scope="scope">
+                <el-button v-if="scope.row.userSignStatus=='未打卡'" type="text" icon="el-icon-edit" style="font-size: 0.22rem; " @click="handleUpdate(scope.row)"
+                >补打卡</el-button>
+                <el-button v-else type="text" icon="el-icon-edit" style="color: #7c7c7c; font-size: 0.22rem; "
+                >补打卡</el-button>
+                <!--              <el-button size="mini" type="text" icon="el-icon-view" @click="handleView(scope.row)"-->
+                <!--              >查看</el-button>-->
+              </template>
+            </el-table-column>
+          </el-table>
+        </div>
+<!--        <pagination v-show="total>0" :total="total" :page.sync="queryParams.pageNum" :limit.sync="queryParams.pageSize" @pagination="getList" />-->
+        <div class="block">
+          <el-pagination
+            background
+            @current-change="handleCurrentChange"
+            :current-page="currentPage"
+            :page-size="pageSize"
+            layout="total, prev, pager, next, jumper"
+            :total="userListTotal">
+          </el-pagination>
+        </div>
       </el-col>
     </el-row>
     <!-- 添加或修改参数配置对话框 -->
@@ -76,76 +92,46 @@
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
         <el-row>
           <el-col :span="12">
-            <el-form-item label="用户昵称" prop="nickName">
-              <el-input v-model="form.nickName" placeholder="请输入用户昵称" />
+            <el-form-item label="工地编号" prop="id">
+              <el-input v-model="form.id" placeholder="请输入工地编号" readonly='true'/>
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="归属部门" prop="deptId">
-              <el-input v-model="form.deptId" placeholder="请输入归属部门" />
-            </el-form-item>
-          </el-col>
-        </el-row>
-        <el-row>
-          <el-col :span="12">
-            <el-form-item label="手机号码" prop="phonenumber">
-              <el-input v-model="form.phonenumber" placeholder="请输入手机号码" maxlength="11" />
-            </el-form-item>
-          </el-col>
-          <el-col :span="12">
-            <el-form-item label="邮箱" prop="email">
-              <el-input v-model="form.email" placeholder="请输入邮箱" maxlength="50" />
+            <el-form-item label="工地名称" prop="constructionSiteName">
+              <el-input v-model="form.constructionSiteName" placeholder="请输入工地名称" />
             </el-form-item>
           </el-col>
         </el-row>
         <el-row>
           <el-col :span="12">
-            <el-form-item v-if="form.userId == undefined" label="用户名称" prop="userName">
-              <el-input v-model="form.userName" placeholder="请输入用户名称" />
+            <el-form-item label="工种" prop="userType">
+              <el-input v-model="form.userType" placeholder="请输入工种" maxlength="11" />
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item v-if="form.userId == undefined" label="用户密码" prop="password">
-              <el-input v-model="form.password" placeholder="请输入用户密码" type="password" />
-            </el-form-item>
-          </el-col>
-        </el-row>
-        <el-row>
-          <el-col :span="12">
-            <el-form-item label="用户性别">
-              <el-select v-model="form.sex" placeholder="请选择">
-                <el-option v-for="dict in sexOptions" :key="dict.dictValue" :label="dict.dictLabel" :value="dict.dictValue"></el-option>
-              </el-select>
-            </el-form-item>
-          </el-col>
-          <el-col :span="12">
-            <el-form-item label="状态">
-              <el-radio-group v-model="form.status">
-                <el-radio v-for="dict in statusOptions" :key="dict.dictValue" :label="dict.dictValue">{{dict.dictLabel}}</el-radio>
-              </el-radio-group>
+            <el-form-item label="年龄" prop="userAge">
+              <el-input v-model="form.userAge" placeholder="请输入年龄" maxlength="50" />
             </el-form-item>
           </el-col>
         </el-row>
         <el-row>
           <el-col :span="12">
-            <el-form-item label="岗位">
-              <el-select v-model="form.postIds" multiple placeholder="请选择">
-                <el-option v-for="item in postOptions" :key="item.postId" :label="item.postName" :value="item.postId" :disabled="item.status == 1"></el-option>
-              </el-select>
+            <el-form-item label="手机号码" prop="phone">
+              <el-input v-model="form.phone" placeholder="请输入手机号码" maxlength="11" />
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="角色">
-              <el-select v-model="form.roleIds" multiple placeholder="请选择">
-                <el-option v-for="item in roleOptions" :key="item.roleId" :label="item.roleName" :value="item.roleId" :disabled="item.status == 1"></el-option>
+            <el-form-item label="打卡状态" prop="userSignStatus">
+              <el-select v-model="form.userSignStatus" placeholder="请选择打卡状态">
+                <el-option v-for="(statu,index) in status" :key="index" :label="statu.value" :value="statu.key"></el-option>
               </el-select>
             </el-form-item>
           </el-col>
         </el-row>
         <el-row>
-          <el-col :span="24">
-            <el-form-item label="备注">
-              <el-input v-model="form.remark" type="textarea" placeholder="请输入内容"></el-input>
+          <el-col :span="12">
+            <el-form-item label="更新时间" prop="userSignTime">
+              <el-input v-model="form.userSignTime" placeholder="请输入更新时间" maxlength="11" />
             </el-form-item>
           </el-col>
         </el-row>
@@ -175,12 +161,22 @@
 // import { treeselect } from "@/api/system/dept";
 // import Treeselect from "@riophae/vue-treeselect";
 // import "@riophae/vue-treeselect/dist/vue-treeselect.css";
-
+import {list,getById,manage} from '@/api/peopleManager';
+import {getSysProData} from  '@/api/qualityControl';
 export default {
   name: "kqHistory",
 
   data() {
     return {
+      status:[{key:0, value:'已打卡'},{key:2,value:'迟到'},{key:3,value:'补打卡'}],
+      // 当前每页数据的条数
+      pageSize:10,
+      // 数据的总条数
+      pageTotal:0,
+      // 翻页功能当前页
+      currentPage: 1,
+      // 根据工地id获取的工地名称
+      proName:'',
       // 遮罩层
       loading: true,
       // 选中数组
@@ -192,9 +188,9 @@ export default {
       // 显示搜索条件
       showSearch: true,
       // 总条数
-      total: 0,
+      userListTotal: 0,
       // 用户表格数据
-      userList: null,
+      userList: [],
       // 弹出层标题
       title: "",
       // 部门树选项
@@ -238,44 +234,42 @@ export default {
       },
       // 查询参数
       queryParams: {
-        pageNum: 1,
-        pageSize: 10,
-        userName: undefined,
-        phonenumber: undefined,
-        time: undefined,
-        deptId: undefined,
+        constructionSiteName:'',
+        userSignStatus:'',
+        userSignTime:'',
       },
       // 表单校验
-      rules: {
-        userName: [
-          { required: true, message: "用户名称不能为空", trigger: "blur" },
-        ],
-        nickName: [
-          { required: true, message: "用户昵称不能为空", trigger: "blur" },
-        ],
-        deptId: [
-          { required: true, message: "归属部门不能为空", trigger: "blur" },
-        ],
-        password: [
-          { required: true, message: "用户密码不能为空", trigger: "blur" },
-        ],
-        email: [
-          { required: true, message: "邮箱地址不能为空", trigger: "blur" },
-          {
-            type: "email",
-            message: "'请输入正确的邮箱地址",
-            trigger: ["blur", "change"],
-          },
-        ],
-        phonenumber: [
-          { required: true, message: "手机号码不能为空", trigger: "blur" },
-          {
-            pattern: /^1[3|4|5|6|7|8|9][0-9]\d{8}$/,
-            message: "请输入正确的手机号码",
-            trigger: "blur",
-          },
-        ],
-      },
+      rules:{},
+      // rules: {
+      //   userName: [
+      //     { required: true, message: "用户名称不能为空", trigger: "blur" },
+      //   ],
+      //   nickName: [
+      //     { required: true, message: "用户昵称不能为空", trigger: "blur" },
+      //   ],
+      //   deptId: [
+      //     { required: true, message: "归属部门不能为空", trigger: "blur" },
+      //   ],
+      //   password: [
+      //     { required: true, message: "用户密码不能为空", trigger: "blur" },
+      //   ],
+      //   email: [
+      //     { required: true, message: "邮箱地址不能为空", trigger: "blur" },
+      //     {
+      //       type: "email",
+      //       message: "'请输入正确的邮箱地址",
+      //       trigger: ["blur", "change"],
+      //     },
+      //   ],
+      //   phonenumber: [
+      //     { required: true, message: "手机号码不能为空", trigger: "blur" },
+      //     {
+      //       pattern: /^1[3|4|5|6|7|8|9][0-9]\d{8}$/,
+      //       message: "请输入正确的手机号码",
+      //       trigger: "blur",
+      //     },
+      //   ],
+      // },
     };
   },
   watch: {
@@ -285,97 +279,81 @@ export default {
     },
   },
   created() {
+    this.getConstructionSiteName(localStorage.getItem('siteId'))
+    console.log("siteId",localStorage.getItem('siteId'))
     this.getList();
+
   },
   methods: {
+    // 根据工地id获取
+    getConstructionSiteName(id) {
+      getSysProData({
+        deptId: id
+        // deptId: 1031
+      }).then(response => {
+        console.log(response.data)
+        console.log("根据工地id获取工地名")
+        this.proName = response.data.proName
+        console.log("拿到的proname",this.proName)
+      })
+    },
+    // 更改当前页
+    handleCurrentChange(val) {
+      console.log(`当前页: ${val}`);
+      this.currentPage = val
+    },
     /** 查询用户列表 */
     getList() {
       this.loading = true;
-      var tmplist = [
-        {
-          id: 1,
-          admin: true,
-          kind: "电工",
-          createBy: "admin",
-          createTime: "2018-03-17 00:33:00",
-          delFlag: "0",
-          email: "zkrt@163.com",
-          nickName: "超级管理员",
-          phonenumber: "15888888888",
-          userName: "admin",
-          status: "0"
-        },
-        {
-          id: 2,
-          admin: true,
-          kind: "电工2",
-          createBy: "admin2",
-          createTime: "2018-03-17 00:33:00",
-          delFlag: "0",
-          email: "zkrt@163.com",
-          nickName: "超级管理员2",
-          phonenumber: "15888888888",
-          userName: "admin2",
-          status: "0"
-        },
-        {
-          id: 3,
-          admin: true,
-          kind: "电工3",
-          createBy: "admin3",
-          createTime: "2018-03-17 00:33:00",
-          delFlag: "0",
-          email: "zkrt@163.com",
-          nickName: "超级管理员3",
-          phonenumber: "15888888888",
-          userName: "admin3",
-          status: "0"
-        },
-        {
-          id: 4,
-          admin: true,
-          kind: "电工4",
-          createBy: "admin4",
-          createTime: "2018-03-17 00:33:00",
-          delFlag: "0",
-          email: "zkrt@163.com",
-          nickName: "超级管理员4",
-          phonenumber: "15888888888",
-          userName: "admin4",
-          status: "0"
-        },
-        {
-          id: 5,
-          admin: true,
-          kind: "电工5",
-          createBy: "admin5",
-          createTime: "2018-03-17 00:33:00",
-          delFlag: "0",
-          email: "zkrt@163.com",
-          nickName: "超级管理员5",
-          phonenumber: "15888888888",
-          userName: "admin5",
-          status: "0"
+      list({
+        constructionSiteName:this.proName,
+        //constructionSiteName: '石家庄宝能中心项目二标段',
+        //id:100,
+        //userSignCode:'',
+        //userSignName:'',
+        //userSignStatus:'',
+        //userSignTime:'',
+      }).then(response => {
+        console.log("1数据获取成功",response.data.rows[1].constructionSiteName)
+        if(response.data.rows.length>0){
+          this.userList = response.data.rows.map(item =>{
+            return{
+              id:item.id,
+              constructionSiteName:item.constructionSiteName,
+              userType:item.userType,
+              userAge:item.userAge,
+              phone:item.phone,
+              userSignStatus:item.userSignStatus,
+              userSignTime:item.userSignTime,
+            }
+          })
         }
-      ];
-      this.userList = tmplist;
-      this.total = tmplist.length;
+        this.userList.reverse()
+        this.userListTotal = response.data.total
+        for(var i = 0;i<this.userListTotal;i++){
+          if(this.userList[i].userSignStatus === 0){
+            this.userList[i].userSignStatus = "已打卡"
+          } else if (this.userList[i].userSignStatus === 1){
+            this.userList[i].userSignStatus = "未打卡"
+          }else if (this.userList[i].userSignStatus === 2){
+            this.userList[i].userSignStatus = "迟到"
+          }else if (this.userList[i].userSignStatus === 3){
+            this.userList[i].userSignStatus = "补打卡"
+          }
+        }
+      })
       this.loading = false;
-
     },
-
-
-
     // 筛选节点
     filterNode(value, data) {
       if (!value) return true;
       return data.label.indexOf(value) !== -1;
     },
     // 节点单击事件
-    handleNodeClick(data) {
-      this.queryParams.deptId = data.id;
-      this.getList();
-    },
+    // handleNodeClick(data) {
+    //   this.queryParams.deptId = data.id;
+    //   this.getList();
+    // },
     // 用户状态修改
     handleStatusChange(row) {
       let text = row.status === "0" ? "启用" : "停用";
@@ -405,26 +383,58 @@ export default {
     },
     // 表单重置
     reset() {
-      this.form = {
-        userId: undefined,
-        deptId: undefined,
-        userName: undefined,
-        nickName: undefined,
-        password: undefined,
-        phonenumber: undefined,
-        email: undefined,
-        sex: undefined,
-        status: "0",
-        remark: undefined,
-        postIds: [],
-        roleIds: [],
-      };
-      this.resetForm("form");
+      this.getList()
     },
     /** 搜索按钮操作 */
     handleQuery() {
-      this.queryParams.page = 1;
-      this.getList();
+      var sousuo = this.queryParams.userSignStatus
+      if(this.queryParams.userSignStatus === "已打卡"){
+        sousuo = 0
+      }else if(this.queryParams.userSignStatus === "未打卡"){
+        sousuo = 1
+      }else if(this.queryParams.userSignStatus === "迟到"){
+        sousuo = 2
+      }else if(this.queryParams.userSignStatus === "补打卡"){
+        sousuo = 3
+      }
+      this.loading = true;
+      list({
+        constructionSiteName:this.queryParams.proName,
+        //constructionSiteName: '石家庄宝能中心项目二标段',
+        //id:100,
+        //userSignCode:'',
+        //userSignName:'',
+        userSignStatus:sousuo,
+        userSignTime: this.queryParams.userSignTime,
+      }).then(response => {
+        if(response.data.rows.length>0){
+          this.userList = response.data.rows.map(item =>{
+            return{
+              id:item.id,
+              constructionSiteName:item.constructionSiteName,
+              userType:item.userType,
+              userAge:item.userAge,
+              phone:item.phone,
+              userSignStatus:item.userSignStatus,
+              userSignTime:item.userSignTime,
+            }
+          })
+        }
+        this.userList.reverse()
+        this.userListTotal = response.data.total
+        for(var i = 0;i<this.userListTotal;i++){
+          if(this.userList[i].userSignStatus === 0){
+            this.userList[i].userSignStatus = "已打卡"
+          } else if (this.userList[i].userSignStatus === 1){
+            this.userList[i].userSignStatus = "未打卡"
+          }else if (this.userList[i].userSignStatus === 2){
+            this.userList[i].userSignStatus = "迟到"
+          }else if (this.userList[i].userSignStatus === 3){
+            this.userList[i].userSignStatus = "补打卡"
+          }
+        }
+      })
+      this.loading = false;
     },
     /** 重置按钮操作 */
     resetQuery() {
@@ -433,47 +443,42 @@ export default {
       this.handleQuery();
     },
     // 多选框选中数据
-    handleSelectionChange(selection) {
-      this.ids = selection.map((item) => item.userId);
-      this.single = selection.length != 1;
-      this.multiple = !selection.length;
-    },
+     handleSelectionChange(selection) {
+    //   this.ids = selection.map((item) => item.userId);
+    //   this.single = selection.length != 1;
+    //   this.multiple = !selection.length;
+     },
     /** 新增按钮操作 */
     handleAdd() {
       this.reset();
-
-      getUser().then((response) => {
-        this.postOptions = response.posts;
-        this.roleOptions = response.roles;
-        this.open = true;
-        this.title = "添加用户";
-        this.form.password = this.initPassword;
-      });
     },
     /** 修改按钮操作 */
     handleUpdate(row) {
-      console.log("修改按钮生效")
-      this.open = true;
-      this.form.id = row.id
-      this.form.userName = row.userName
-      this.form.nickName = row.nickName
-      this.form.kind = row.kind
-      this.form.phonenumber = row.phonenumber
-      this.form.status = row.status
-      this.form.createTime = row.createTime
-      // this.reset();
-
-      const userId = row.userId || this.ids;
-      getUser(userId).then((response) => {
-        this.form = response.data;
-        this.postOptions = response.posts;
-        this.roleOptions = response.roles;
-        this.form.postIds = response.postIds;
-        this.form.roleIds = response.roleIds;
-        this.open = true;
-        this.title = "修改用户";
-        this.form.password = "";
-      });
+      console.log("补打卡按钮生效")
+      console.log(typeof(row.id))
+      this.form = row
+      this.form.userSignStatus = ''
+      // getById({
+      //   id:row.id
+      // }).then(response => {
+      //   if(response.data.code === 200){
+      //     console.log("补打卡",response.data.msg)
+      //     if(response.data.rows.length>0){
+      //       this.form = response.data.rows.map(item => {
+      //         return{
+      //           id:item.id,
+      //           constructionSiteName:item.constructionSiteName,
+      //           userSignCode:item.userSignCode,
+      //           userSignName:item.userSignName,
+      //           userSignStatus:item.userSignStatus,
+      //           userSignTime:item.userSignTime,
+      //         }
+      //       })
+      //     }
+      //   }
+      // })
+       this.open = true;
+      //const userId = row.userId || this.ids;
     },
     // 查看按钮操作
     handleView(row){
@@ -496,65 +501,69 @@ export default {
     },
     /** 提交按钮 */
     submitForm: function () {
-      this.$refs["form"].validate((valid) => {
-        if (valid) {
-          if (this.form.userId != undefined) {
-            updateUser(this.form).then((response) => {
-              if (response.code === 200) {
-                this.msgSuccess("修改成功");
-                this.open = false;
-                this.getList();
-              }
-            });
-          } else {
-            addUser(this.form).then((response) => {
-              if (response.code === 200) {
-                this.msgSuccess("新增成功");
-                this.open = false;
-                this.getList();
-              }
-            });
-          }
+      this.form.id = 2
+      //let Statu = null
+      console.log("status",this.form.userSignStatus)
+      // if(this.form.userSignStatus == "已打卡" ){
+      //   Statu = 0
+      // }else if (this.form.userSignStatus == "迟到"){
+      //   Statu = 2
+      // }else if (this.form.userSignStatus == "补打卡"){
+      //   Statu = 3
+      // }
+      let Arr = {
+        constructionSiteName:this.form.constructionSiteName,
+        id:this.form.id,
+        userSignStatus:this.form.userSignStatus
+      }
+      manage(Arr).then(response => {
+        if(response.data.code === 200){
+          this.$message.success(response.data.msg)
+        }else {
+          this.$message.error("修改失败！")
         }
-      });
+        console.log(response.data.msg)
+        this.open = false;
+      })
+
     },
     /** 删除按钮操作 */
-    handleDelete(row) {
-      const userIds = row.userId || this.ids;
-      this.$confirm(
-        '是否确认删除用户编号为"' + userIds + '"的数据项?',
-        "警告",
-        {
-          confirmButtonText: "确定",
-          cancelButtonText: "取消",
-          type: "warning",
-        }
-      )
-        .then(function () {
-          return delUser(userIds);
-        })
-        .then(() => {
-          this.getList();
-          this.msgSuccess("删除成功");
-        })
-        .catch(function () {});
-    },
+    // handleDelete(row) {
+    //   const userIds = row.userId || this.ids;
+    //   this.$confirm(
+    //     '是否确认删除用户编号为"' + userIds + '"的数据项?',
+    //     "警告",
+    //     {
+    //       confirmButtonText: "确定",
+    //       cancelButtonText: "取消",
+    //       type: "warning",
+    //     }
+    //   )
+    //     .then(function () {
+    //       return delUser(userIds);
+    //     })
+    //     .then(() => {
+    //       this.getList();
+    //       this.msgSuccess("删除成功");
+    //     })
+    //     .catch(function () {});
+    // },
     /** 导出按钮操作 */
-    handleExport() {
-      const queryParams = this.queryParams;
-      this.$confirm("是否确认导出所有用户数据项?", "警告", {
-        confirmButtonText: "确定",
-        cancelButtonText: "取消",
-        type: "warning",
-      })
-        .then(function () {
-          return exportUser(queryParams);
-        })
-        .then((response) => {
-          this.download(response.msg);
-        })
-        .catch(function () {});
-    },
+    // handleExport() {
+    //   const queryParams = this.queryParams;
+    //   this.$confirm("是否确认导出所有用户数据项?", "警告", {
+    //     confirmButtonText: "确定",
+    //     cancelButtonText: "取消",
+    //     type: "warning",
+    //   })
+    //     .then(function () {
+    //       return exportUser(queryParams);
+    //     })
+    //     .then((response) => {
+    //       this.download(response.msg);
+    //     })
+    //     .catch(function () {});
+    // },
     /** 导入按钮操作 */
     handleImport() {
       this.upload.title = "用户导入";
@@ -582,18 +591,66 @@ export default {
     submitFileForm() {
       this.$refs.upload.submit();
     },
+    cellStyle({row, column, rowIndex, columnIndex}) {
+      // console.log(row)
+      if (row.userSignStatus === "已打卡" && columnIndex === 5) {
+        return 'color:rgb(1,179,251)'
+      } else if (row.userSignStatus === "未打卡" && columnIndex === 5) {
+        return 'color: rgb(255,198,108)'
+      } else if (row.userSignStatus === "补打卡" && columnIndex === 5) {
+        return 'color:rgb(0,210,219)'
+      } else if (row.userSignStatus === "迟到" && columnIndex === 5) {
+        return 'color: rgb(227,79,66)'
+      }
+    }
   },
 };
 </script>
 
-<style >
+<style scoped>
 .lskq {
   display: flex;
   justify-content: center;
   align-items: center;
   margin: 0.5rem .3rem;
 }
- .fixColor .el-form-item__label{
+
+ .fixColor >>> .el-form-item__label{
   color: white;
+}
+
+/*翻页*/
+.block{
+  float: right;
+  margin-top: 20px;
+}
+.block >>> .el-pagination__total{
+  color: white;
+}
+.block >>>.el-pagination__jump{
+  color: white;
+}
+.dataTable >>> .el-table,
+.dataTable >>> .el-table__expanded-cell {
+  background-color: transparent !important;
+}
+/*透明化行、单元格*/
+.dataTable >>> .el-table th,
+.dataTable >>> .el-table tr,
+.dataTable >>> .el-table td {
+  background-color: transparent !important;
+}
+/*hover时样式*/
+.dataTable >>> .el-table tbody tr:hover>td {
+  background-color: #367f7f78 !important
+}
+
+/*偶数行样式*/
+.dataTable >>> .el-table__row--striped td {
+  background-color: #45797b33 !important
+}
+/*奇数行样式*/
+.dataTable >>> .el-table__row:not(.el-table__row--striped) {
+  background: #1439391c !important;
 }
 </style>

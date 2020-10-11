@@ -37,11 +37,11 @@
               </el-table-column>
               <el-table-column prop="format" label="文件类型" width="100" align="center" />
               <el-table-column v-if="isActive1 === true" prop="doc_type" label="具体类型" width="150" align="center" />
-              <el-table-column prop="info" label="文件描述" align="center" />
+              <el-table-column prop="info" label="文件描述" align="center" :show-overflow-tooltip="true" />
               <el-table-column prop="update_time" label="创建时间" align="center" />
               <el-table-column label="操作" align="center" width="100" fixed="right">
                 <template slot-scope="scope">
-                  <el-button type="primary" size="mini" @click="editInfo(scope.$index, scope.row)"><i class="el-icon-edit" />修改</el-button>
+                  <el-button type="text" style="font-size: 0.22rem; " @click="editInfo(scope.$index, scope.row)"><i class="el-icon-edit" />修改</el-button>
                 </template>
               </el-table-column>
             </el-table>
@@ -96,7 +96,7 @@
         </el-form>
       </div>
     </el-dialog>
-    <el-dialog :visible.sync="showEdit" title="修改文件" width="40%">
+    <el-dialog :visible.sync="showEdit" title="修改文件" width="40%" @close="editClose">
       <div>
         <el-form :model="currentInfo" :rules="rules" ref="currentInfo" label-width="1.5rem">
           <el-form-item label="文件名称" prop="name">
@@ -274,6 +274,9 @@ export default {
       }]
       // this.currentIndex = index;
       this.showEdit = true;
+    },
+    editClose() {
+      this.fileList = [];
     },
     submitEdit(formName) {
       this.$refs[formName].validate((valid) => {
