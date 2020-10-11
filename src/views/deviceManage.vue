@@ -1488,6 +1488,8 @@ export default {
   },
   data() {
     return {
+      myChart100: '',
+      myChart10: '',
       alarmTypeChart: null,
       alarmTypeChart2: null,
       alarmTrendChart: null,
@@ -1588,6 +1590,66 @@ export default {
     }
   },
   methods: {
+    inchart100() {
+      this.myChart100 = this.$echarts.init(document.getElementById('mychart100'),'macarons')
+      var option = {
+        // tooltip: {
+        //   trigger: 'item',
+        //   formatter: '{a} <br/>{b}: {c}'
+        // },
+        angleAxis: {
+          type: 'category',
+          data: ['塔式起重机', '物料提升机', '施工升降机', '特种设备', '视频设备'],
+          textStyle:{
+            fontSize:16,
+            color:'#544bfc'
+          }
+        },
+        radiusAxis: {
+        },
+        polar: {
+          radius: ['10%', '50%'],
+          center: ["50%", "50%"],
+        },
+        label:{
+          normal:{
+            show:true,
+            position:'top',
+            textStyle:{
+              fontSize:16,
+              color:'#B0CEFC'
+            }
+          }
+        },
+        series: [{
+          radius: ['20%', '70%'],
+          center: ["20%", "20%"],
+          type: 'bar',
+          data: [1, 2, 3, 4, 3, 5, 1],
+          coordinateSystem: 'polar',
+          name: '异常',
+          stack: 'a',
+        }, {
+          radius: ['20%', '70%'],
+          center: ["90%", "90%"],
+          type: 'bar',
+          data: [15, 24, 16, 33, 23, 22, 21],
+          coordinateSystem: 'polar',
+          name: '总数',
+          stack: 'a'
+        }],
+        legend: {
+          show: true,
+          data: ['异常', '总数'],
+          left: 'right',
+          textStyle: {
+            color: '#2CABE3',
+            fontSize: 12,
+          },
+        }
+      }
+      this.myChart100.setOption(option)
+    },
     initAlarmType() {
       this.alarmTypeChart = echarts.init(document.getElementById('alarmType'), 'macarons');
       var option = {

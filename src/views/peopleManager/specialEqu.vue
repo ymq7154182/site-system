@@ -5,9 +5,6 @@
         <el-row>
           <el-col>
             <el-form :model="queryParams" ref="queryForm" :inline="true" label-width="68px" style="float: left; ">
-              <el-form-item label="ID" prop="id" class="fixColor">
-                <el-input v-model="queryParams.id" placeholder="请输入用户ID" type="number" min="1" size="small" class="searchBar" @keyup.enter.native="handleQuery" />
-              </el-form-item>
               <el-form-item label="姓名" prop="userName" class="fixColor">
                 <el-input v-model="queryParams.userName" placeholder="请输入姓名" size="small" class="searchBar" @keyup.enter.native="handleQuery" />
               </el-form-item>
@@ -179,6 +176,7 @@ export default {
             message: '修改成功'
           });
           this.showUpdate = false;
+          this.refreshTable();
         } else {
           this.$message.error('修改失败')
         }
@@ -275,6 +273,6 @@ export default {
 }
 
 .searchBar {
-  width: 140px;
+  /*width: 100%;*/
 }
 </style>

@@ -14,7 +14,7 @@
           </div>
         </div>
       </el-col>
-      <el-col :span="20">
+      <el-col :span="20" style="overflow-x: hidden; ">
         <div class="dm-main">
           <div class="border-top-right"></div>
           <div style="padding: 0.13rem">
@@ -71,7 +71,7 @@
               <el-option label="图片" value="图片" />
               <el-option label="视频" value="视频" />
             </el-select>
-            <el-select v-if="uploadInfo.format === '文字'" v-model="uploadInfo.doc_type" placeholder="请选择文档类型" style="width: 30%; ">
+            <el-select v-if="uploadInfo.format === '文档'" v-model="uploadInfo.doc_type" placeholder="请选择文档类型" style="width: 30%; ">
               <el-option v-for="(item, i) in docTypeList" :key="i" :label="item" :value="item" />
             </el-select>
           </el-form-item>
@@ -104,11 +104,11 @@
           </el-form-item>
           <el-form-item label="文件类型" prop="format">
             <el-select v-model="currentInfo.format" placeholder="请选择文件类型" style="width: 30%; ">
-              <el-option label="文字" value="文字" />
+              <el-option label="文档" value="文档" />
               <el-option label="图片" value="图片" />
               <el-option label="视频" value="视频" />
             </el-select>
-            <el-select v-if="currentInfo.format === '文字'" v-model="currentInfo.doc_type" placeholder="请选择文字文件类型" style="width: 30%; ">
+            <el-select v-if="currentInfo.format === '文档'" v-model="currentInfo.doc_type" placeholder="请选择文档类型" style="width: 30%; ">
               <el-option v-for="(item, i) in docTypeList" :key="i" :label="item" :value="item" />
             </el-select>
           </el-form-item>
