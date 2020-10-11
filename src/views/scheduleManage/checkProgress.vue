@@ -168,7 +168,8 @@
     },
     computed: {
       deptId () {
-        return this.$store.state.deptId
+        return localStorage.getItem('siteId')
+        // return this.$store.state.deptId
       }
     },
     methods: {
