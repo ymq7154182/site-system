@@ -4,22 +4,27 @@
       <li>
         <div>
           <div style="float: left; ">
-            <el-button type="success" icon="el-icon-edit" size="mini" style="font-size: 0.22rem; " @click="addRecord" >新增</el-button>
+            <el-button type="primary" icon="el-icon-edit" size="mini" style="font-size: 0.22rem; " @click="addRecord" >新增</el-button>
           </div>
           <div style="float: right; ">
-            <el-date-picker
-              v-model="startTime"
-              type="date"
-              value-format="yyyy-MM-dd"
-              placeholder="选择开始日期">
-            </el-date-picker>
-            <el-date-picker
-              v-model="endTime"
-              type="date"
-              value-format="yyyy-MM-dd"
-              placeholder="选择结束日期">
-            </el-date-picker>
-            <el-button type="primary" @click="getDataByTime">点击搜索</el-button>
+            <div style="float: left; ">
+              <el-date-picker
+                v-model="startTime"
+                type="date"
+                value-format="yyyy-MM-dd"
+                placeholder="选择开始日期">
+              </el-date-picker>
+              <el-date-picker
+                v-model="endTime"
+                type="date"
+                value-format="yyyy-MM-dd"
+                placeholder="选择结束日期">
+              </el-date-picker>
+            </div>
+            <div style="float: right; ">
+              <el-button type="success" @click="getDataByTime" style="font-size: 0.22rem; margin-left: 5px; ">点击搜索</el-button>
+              <el-button type="warning" @click="resetTime" style="font-size: 0.22rem; margin-left: 1px; ">重置</el-button>
+            </div>
           </div>
         </div>
       </li>
@@ -876,7 +881,6 @@ export default {
     this.getConstructionSiteName(localStorage.getItem('siteId'))
     console.log("siteId",localStorage.getItem('siteId'))
     this.getList()
-
   },
   mounted() {
 
@@ -1176,8 +1180,12 @@ export default {
         console.log("时间搜索成功！")
       })
     },
+    resetTime() {
+      this.startTime = null;
+      this.endTime = null;
+      this.getList();
+    }
   },
-
 }
 </script>
 

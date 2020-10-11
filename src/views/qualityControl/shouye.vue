@@ -1819,7 +1819,7 @@
             },
               {
                 name:'整改率',
-                nameLocation:'start',
+                nameLocation:'end',
                 splitLine: {show: false},
                 axisLine: {
                   lineStyle: {

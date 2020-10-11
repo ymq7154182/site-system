@@ -50,7 +50,6 @@
               </template>
             </el-table-column>
           </el-table>
-          <pagination v-show="pageTotal>0" :total="pageTotal" :page.sync="queryParams.pageNum" :limit.sync="queryParams.pageSize" @pagination="getList" />
         </div>
       </li>
       <li>
