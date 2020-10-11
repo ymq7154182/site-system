@@ -19,18 +19,9 @@
               <el-form-item label="打卡状态" prop="userSignStatus" class="fixColor">
                 <el-input v-model="queryParams.userSignStatus" placeholder="请输入打卡状态" clearable size="small" style="width: 240px" @keyup.enter.native="handleQuery" />
               </el-form-item>
-              <el-form-item label="更新时间" prop="userSignTime" class="fixColor">
-                <el-input v-model="queryParams.userSignTime" placeholder="请输入更新时间" clearable size="small" style="width: 240px" @keyup.enter.native="handleQuery" />
-                <!--            <el-time-select-->
-                <!--              v-model="queryParams.status"-->
-                <!--              :picker-options="{-->
-                <!--              start: '08:30',-->
-                <!--              step: '00:15',-->
-                <!--              end: '18:30'-->
-                <!--               }"-->
-                <!--              placeholder="选择时间">-->
-                <!--            </el-time-select>-->
-              </el-form-item>
+<!--              <el-form-item label="更新时间" prop="userSignTime" class="fixColor">-->
+<!--                <el-input v-model="queryParams.userSignTime" placeholder="请输入更新时间" clearable size="small" style="width: 240px" @keyup.enter.native="handleQuery" />-->
+<!--              </el-form-item>-->
               <el-form-item>
                 <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
                 <el-button type="primary" icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>
@@ -47,7 +38,7 @@
             <!--          <el-table-column type="selection" width="50" align="center" />-->
             <!--          <el-table-column label="项目序号" align="center" prop="id" width="200"/>-->
             <el-table-column label="工地编号" align="center" prop="id" width="120"/>
-            <el-table-column label="用户名称" align="center" prop="userSignName" :show-overflow-tooltip="true" width="180"/>
+            <el-table-column label="用户名" align="center" prop="userSignName" :show-overflow-tooltip="true" width="180"/>
             <!--          <el-table-column label="用户昵称" align="center" prop="nickName" :show-overflow-tooltip="true" />-->
             <el-table-column label="工种" align="center" prop="userType" :show-overflow-tooltip="true" width="120"/>
             <el-table-column label="年龄" align="center" prop="userAge" :show-overflow-tooltip="true" width="120"/>
@@ -64,7 +55,7 @@
             </el-table-column>
             <el-table-column label="操作" align="center" width="200" class-name="small-padding fixed-width">
               <template slot-scope="scope">
-                <el-button v-if="scope.row.userSignStatus=='未打卡'" type="text" icon="el-icon-edit" style="font-size: 0.22rem; " @click="handleUpdate(scope.row)"
+                <el-button v-if="scope.row.userSignStatus=='未打卡'||scope.row.userSignStatus==''" type="text" icon="el-icon-edit" style="font-size: 0.22rem; " @click="handleUpdate(scope.row)"
                 >补打卡</el-button>
                 <el-button v-else type="text" icon="el-icon-edit" style="color: #7c7c7c; font-size: 0.22rem; "
                 >补打卡</el-button>
@@ -97,10 +88,15 @@
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="工地名称" prop="constructionSiteName">
-              <el-input v-model="form.constructionSiteName" placeholder="请输入工地名称" />
+            <el-form-item label="用户名" prop="userSignName">
+              <el-input v-model="form.userSignName" placeholder="请输入工地名称" />
             </el-form-item>
           </el-col>
+<!--          <el-col :span="12">-->
+<!--            <el-form-item label="工地名称" prop="constructionSiteName">-->
+<!--              <el-input v-model="form.constructionSiteName" placeholder="请输入工地名称" />-->
+<!--            </el-form-item>-->
+<!--          </el-col>-->
         </el-row>
         <el-row>
           <el-col :span="12">
@@ -137,7 +133,7 @@
         </el-row>
       </el-form>
       <div slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="submitForm">确 定</el-button>
+        <el-button type="primary" @click="submitForm('form')">确 定</el-button>
         <el-button @click="cancel">取 消</el-button>
       </div>
     </el-dialog>
@@ -240,7 +236,26 @@ export default {
         userSignTime:'',
       },
       // 表单校验
-      rules:{},
+      rules:{
+        userSignName:[
+          { required: true, message: "用户名不能为空", trigger: "blur" },
+        ],
+        userSignStatus:[
+          { required: true, message: "用户状态不能为空", trigger: "change" },
+        ],
+        userType:[
+             { required: true, message: "工种不能为空", trigger: "blur" },
+           ],
+        userAge:[
+          { required: true, message: "年龄不能为空", trigger: "blur" },
+        ],
+        phone:[
+          { required: true, message: "手机号不能为空", trigger: "blur" },
+        ],
+        userSignTime:[
+          { required: true, message: "更新时间不能为空", trigger: "blur" },
+        ],
+      },
       // rules: {
       //   userName: [
       //     { required: true, message: "用户名称不能为空", trigger: "blur" },
@@ -344,6 +359,7 @@ export default {
             this.userList[i].userSignStatus = "补打卡"
           }
         }
+
       })
       this.loading = false;
     },
@@ -464,6 +480,7 @@ export default {
     handleUpdate(row) {
       console.log("补打卡按钮生效")
       console.log(typeof(row.id))
+      this.open = true;
       this.form = row
       this.form.userSignStatus = ''
       // getById({
@@ -485,7 +502,7 @@ export default {
       //     }
       //   }
       // })
-       this.open = true;
+
       //const userId = row.userId || this.ids;
     },
     // 查看按钮操作
@@ -508,31 +525,39 @@ export default {
         .catch(() => {});
     },
     /** 提交按钮 */
-    submitForm: function () {
-      this.form.id = 2
-      //let Statu = null
-      console.log("status",this.form.userSignStatus)
-      // if(this.form.userSignStatus == "已打卡" ){
-      //   Statu = 0
-      // }else if (this.form.userSignStatus == "迟到"){
-      //   Statu = 2
-      // }else if (this.form.userSignStatus == "补打卡"){
-      //   Statu = 3
-      // }
-      let Arr = {
-        constructionSiteName:this.form.constructionSiteName,
-        id:this.form.id,
-        userSignStatus:this.form.userSignStatus
-      }
-      manage(Arr).then(response => {
-        if(response.data.code === 200){
-          this.$message.success(response.data.msg)
-        }else {
-          this.$message.error("修改失败！")
+    submitForm: function (form) {
+      this.$refs[form].validate((valid) => {
+        if (valid) {
+         // this.form.id = 2
+          //let Statu = null
+          console.log("status",this.form.userSignStatus)
+          // if(this.form.userSignStatus == "已打卡" ){
+          //   Statu = 0
+          // }else if (this.form.userSignStatus == "迟到"){
+          //   Statu = 2
+          // }else if (this.form.userSignStatus == "补打卡"){
+          //   Statu = 3
+          // }
+          let Arr = {
+            constructionSiteName:this.form.constructionSiteName,
+            id:this.form.id,
+            userSignStatus:this.form.userSignStatus
+          }
+          manage(Arr).then(response => {
+            if(response.data.code === 200){
+              this.$message.success(response.data.msg)
+            }else {
+              this.$message.error("修改失败！")
+            }
+            console.log(response.data.msg)
+            this.open = false;
+          })
+
+        } else {
+          console.log('error submit!!');
+          return false;
         }
-        console.log(response.data.msg)
-        this.open = false;
-      })
+      });
 
     },
     /** 删除按钮操作 */
