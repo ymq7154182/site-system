@@ -7,7 +7,7 @@
           <div class="dm-title">文件类型</div>
           <div class="type-list">
             <ul>
-              <li :class="{active: isActive1}" @click="nowActiveOne()"><i class="el-icon-document type-icon" />文字</li>
+              <li :class="{active: isActive1}" @click="nowActiveOne()"><i class="el-icon-document type-icon" />文档</li>
               <li :class="{active: isActive2}" @click="nowActiveTwo()"><i class="el-icon-picture-outline type-icon" />图片</li>
               <li :class="{active: isActive3}" @click="nowActiveThree()"><i class="el-icon-video-camera-solid type-icon" />视频</li>
             </ul>
@@ -67,11 +67,11 @@
           </el-form-item>
           <el-form-item label="文件类型" prop="format">
             <el-select v-model="uploadInfo.format" placeholder="请选择文件类型" style="width: 30%; ">
-              <el-option label="文字" value="文字" />
+              <el-option label="文档" value="文档" />
               <el-option label="图片" value="图片" />
               <el-option label="视频" value="视频" />
             </el-select>
-            <el-select v-if="uploadInfo.format === '文字'" v-model="uploadInfo.doc_type" placeholder="请选择文字文件类型" style="width: 30%; ">
+            <el-select v-if="uploadInfo.format === '文字'" v-model="uploadInfo.doc_type" placeholder="请选择文档类型" style="width: 30%; ">
               <el-option v-for="(item, i) in docTypeList" :key="i" :label="item" :value="item" />
             </el-select>
           </el-form-item>
