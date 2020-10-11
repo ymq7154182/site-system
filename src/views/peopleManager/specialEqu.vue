@@ -99,14 +99,14 @@
               :on-success="handleSuccess"
               :file-list="fileList"
             >
-              <el-button slot="trigger" type="text" icon="el-icon-plus" style="text-align: center; font-size: 14px; ">选取文件</el-button>
+              <el-button slot="trigger" type="text" icon="el-icon-upload" style="text-align: center; font-size: 14px; ">选取文件</el-button>
             </el-upload>
           </td>
         </tr>
       </table>
       <div style="text-align: center; ">
         <el-button type="primary" @click="confirmEdit">确认修改</el-button>
-        <el-button>取消</el-button>
+        <el-button @click="showUpdate = false">取消</el-button>
       </div>
     </el-dialog>
   </div>
@@ -213,6 +213,10 @@ export default {
   padding: 0;
   margin: 0;
   overflow-x: hidden;
+}
+
+/deep/ .el-form-item__label{
+  color: white;
 }
 
 .dataTable {
