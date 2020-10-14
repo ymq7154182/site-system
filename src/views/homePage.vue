@@ -122,6 +122,8 @@
                               <div style="float:left;width: 2px;height: 20px; background:#C7D4E9;margin-left:10px;margin-right:10px"></div>
                               <span style="color:#919FB8" class="status-label" @click="submitOption('延缓', item)">延缓</span>
                               <span style="color:#919FB8" class="status-label" @click="submitOption('完成', item)">完成</span>
+                              <span style="color:#919FB8" class="status-label" @click="submitOption('错误信息报告', item)">错误信息报告</span>
+
                             </div>
                           </td>
                         </tr>
@@ -131,6 +133,8 @@
                               <div style="float:left;width: 2px;height: 20px; background:#C7D4E9;margin-left:10px;margin-right:10px"></div>
                               <span v-if="item.status === 3" style="color:#919FB8" class="status-label-status" @click="checkStatus(item)">延缓</span>
                               <span v-if="item.status === 2" style="color:#919FB8" class="status-label-status" @click="checkStatus(item)">完成</span>
+                              <span style="color:#919FB8" class="status-label" @click="submitOption('错误信息报告', item)">错误信息报告</span>
+
                             </div>
                             <div class="processing_content_detail" style="float:right;color: #7c7c7c" v-if="item.endTime !== null"><span ><i class="el-icon-time"></i>&nbsp;&nbsp;{{item.endTime}}</span> </div>
 
@@ -230,7 +234,21 @@
               <el-button type="primary" @click="defineReason()" :disabled="disabledStr">确 定</el-button>
             </div>
           </el-dialog>
-
+          <el-dialog
+            title="完成时间"
+            :visible.sync="showComplete"
+            width="30%"
+            :before-close="handleClose">
+            <el-form ref="form" :model="formComplete" label-width="80px">
+              <el-form-item label="完成时间">
+                <el-date-picker type="date" placeholder="选择日期" v-model="formComplete.date" style="width: 100%;"></el-date-picker>
+              </el-form-item>
+            </el-form>
+            <span slot="footer" class="dialog-footer">
+      <el-button @click="showComplete = false">取 消</el-button>
+      <el-button type="primary" @click="completeTime">确 定</el-button>
+      </span>
+          </el-dialog>
         </el-col>
         <el-col :span="8">
           <el-row>
@@ -375,7 +393,7 @@
 </template>
 
 <script>
-  import {getDeferReasons, getDeferInfo, submitDeferInfo, getOneSchedules, getTwoSchedules, finishSmallSchedule} from '@/api/scheduleManage'
+  import {getDeferReasons, getDeferInfo, submitDeferInfo, getOneSchedules, getTwoSchedules, finishSmallSchedule, getErrorInfo} from '@/api/scheduleManage'
   import { getSite } from '@/api/dataManage'
   import { getGongDiNameById,screenName } from '@/api/projectOverview'
   import { getSafeOrQualityChartData,getProjectDetails,getProjectTimeInformation } from '@/api/projectOverview.js'
@@ -389,8 +407,9 @@
       mounted() {
         this.$store.dispatch('changeMsg', '项目概览')
         this.getUrl()
-        this.getDeferReasons() // 获取滞缓原因
         this.getOneSchedules() // 获取所有一级进度
+        this.getDeferReasons() // 获取滞缓原因
+
         // this.getTwoSchedules() // 获取所有二级进度
         // this.inchart13()
         this.chart13Res()
@@ -415,9 +434,17 @@
         setTimeout(()=>{
           this.inchart22()
         },100)
+        // window.onload = function () {
+        //
+        // }
       },
       data(){
           return{
+            showComplete: false, // 选择完成时间框
+            currentSche: {},
+            formComplete: {
+              date: ''
+            },
             todayweather:[],
             firstweather:[],
             secondweather:[],
@@ -459,7 +486,7 @@
       },
       computed: {
           deptId () {
-            return this.$store.state.deptId
+            return localStorage.getItem('siteId')
           },
           schedulePlanId () {
             return this.$store.state.schedulePlanId
@@ -581,43 +608,81 @@
         //   })
         // },
         getOneSchedules () { // 获取所有一级进度
-            console.log('进度测试id')
-          console.log(localStorage.getItem('siteId'))
+            // console.log('进度测试id')
+          // console.log(localStorage.getItem('siteId'))
           getOneSchedules({
-            siteId: localStorage.getItem('siteId')
+            siteId: this.deptId
           }).then(res => {
-            console.log('获取进度数据')
-            console.log(res.data.data)
+            // console.log('获取进度数据')
+            // console.log(res.data.data)
             this.titleList = res.data.data
             // this.id = res.data.data[0].id
             // this.title = res.data.data[0].durationDictName
-
             for (let i in this.titleList) {
-              if (this.titleList[i].endTime !== null) { // 如果有完成时间，则当前转态变为完成，下一个变成正在进行
-                this.id = this.titleList[parseInt(i)+1].id
-                this.title = this.titleList[parseInt(i)+1].durationDictName
-                // this.getTwoSchedules()
+              // console.log('i', i)
+              if (this.titleList[i].endTime === null) { // 如果有完成时间，则当前转态变为完成，下一个变成正在进行
+                this.id = this.titleList[parseInt(i)].id
+                this.title = this.titleList[parseInt(i)].durationDictName
+                // console.log(this.id, this.title)
                 this.$nextTick(() => {
-                  // let currentNode = document.querySelector('.el-tabs__content .el-tab-pane')
-                  // console.log('currentNode:', currentNode)
-                  let steps = document.querySelector('.el-steps')
-                  console.log('steps', steps)
-                  // console.log(steps[i + 1].querySelector('.el-step__head.is-process'))
-                  let process = steps.querySelector('.el-step .el-step__head.is-process')
-                  let processTitle = steps.querySelector('.el-step .el-step__main .el-step__title.is-process')
-                  process.className = 'el-step__head is-finish'
-                  processTitle.className = 'el-step__title is-finish'
-                  let waitings = steps.querySelectorAll('.el-step .el-step__head.is-wait')
-                  let waitingTitles = steps.querySelectorAll('.el-step .el-step__main .el-step__title.is-wait')
-                  waitings[0].className = 'el-step__head is-process'
-                  waitingTitles[0].className = 'el-step__title is-process'
-                  // that.id = that.titleList[i+1].id
-                  // that.title = that.titleList[i+1].durationDictName
-                  // console.log(that.id, that.title)
+                  setTimeout(() => {
+                    // let currentNode = document.querySelector('.el-tabs__content .el-tab-pane')
+                    // console.log('currentNode:', currentNode)
+                    let steps = document.querySelectorAll('.el-steps .el-step')
+                    // console.log('step', steps, steps[parseInt(i)])
+                    for (let j = 0; j < i;j++) {
+                      steps[parseInt(j)].querySelector('.el-step__head').className = 'el-step__head is-finish'
+                      steps[parseInt(j)].querySelector('.el-step__main .el-step__title').className = 'el-step__title is-finish'
+                    }
+                    let waiting = steps[parseInt(i)].querySelector('.el-step__head.is-wait')
+                    let waitingTitles = steps[parseInt(i)].querySelector('.el-step__main .el-step__title.is-wait')
+                    waiting.className= 'el-step__head is-process'
+                    waitingTitles.className = 'el-step__title is-process'
+                  }, 0)
                 })
+                break
               }
-              // break
+
             }
+            // for (let i in this.titleList) {
+            //   if (this.titleList[i].endTime !== null) { // 如果有完成时间，则当前转态变为完成，下一个变成正在进行
+            //     this.id = this.titleList[parseInt(i)+1].id
+            //     this.title = this.titleList[parseInt(i)+1].durationDictName
+            //     // this.getTwoSchedules()
+            //     this.$nextTick(() => {
+            //       setTimeout(() => {
+            //         let steps = document.querySelector('.el-steps')
+            //         console.log('steps', steps)
+            //         // console.log(steps[i + 1].querySelector('.el-step__head.is-process'))
+            //         let process = steps.querySelector('.el-step .el-step__head.is-process')
+            //         let processTitle = steps.querySelector('.el-step .el-step__main .el-step__title.is-process')
+            //         process.className = 'el-step__head is-finish'
+            //         processTitle.className = 'el-step__title is-finish'
+            //         let waitings = steps.querySelectorAll('.el-step .el-step__head.is-wait')
+            //         let waitingTitles = steps.querySelectorAll('.el-step .el-step__main .el-step__title.is-wait')
+            //         waitings[0].className = 'el-step__head is-process'
+            //         waitingTitles[0].className = 'el-step__title is-process'
+            //       }, 0)
+            //       // // let currentNode = document.querySelector('.el-tabs__content .el-tab-pane')
+            //       // // console.log('currentNode:', currentNode)
+            //       // let steps = document.querySelector('.el-steps')
+            //       // console.log('steps', steps)
+            //       // // console.log(steps[i + 1].querySelector('.el-step__head.is-process'))
+            //       // let process = steps.querySelector('.el-step .el-step__head.is-process')
+            //       // let processTitle = steps.querySelector('.el-step .el-step__main .el-step__title.is-process')
+            //       // process.className = 'el-step__head is-finish'
+            //       // processTitle.className = 'el-step__title is-finish'
+            //       // let waitings = steps.querySelectorAll('.el-step .el-step__head.is-wait')
+            //       // let waitingTitles = steps.querySelectorAll('.el-step .el-step__main .el-step__title.is-wait')
+            //       // waitings[0].className = 'el-step__head is-process'
+            //       // waitingTitles[0].className = 'el-step__title is-process'
+            //       // // that.id = that.titleList[i+1].id
+            //       // // that.title = that.titleList[i+1].durationDictName
+            //       // // console.log(that.id, that.title)
+            //     })
+            //   }
+            //   // break
+            // }
 
           })
         },
@@ -626,6 +691,21 @@
             planId: this.id
           }).then(res => {
             this.dataList = res.data.data
+          })
+        },
+        completeTime () { // 完成时间
+          finishSmallSchedule({
+            dataTime: this.formComplete.date.getFullYear() + '-' + (this.formComplete.date.getMonth() + 1) + '-' + this.formComplete.date.getDate() + ' ',
+            scheduleDurationSectionPlanId: this.currentSche.id
+          }).then(res => {
+            if (res.data.code === 200) {
+              console.log('完成按钮', this.currentSche)
+              this.getTwoSchedules()
+              this.showComplete = false
+              if (this.currentSche.scheduleEnd === 1) { // 表示是最后一个小进度
+                this.getOneSchedules()
+              }
+            }
           })
         },
         defineReason () { // 提交滞缓原因
@@ -645,18 +725,22 @@
         },
         submitOption (option, item) {
           if (option === '完成') {
-            finishSmallSchedule({
-              scheduleDurationSectionPlanId: item.id
-            }).then(res => {
-              if (res.data.code === 200) {
-                // console.log('状态为完成')
-                this.getTwoSchedules()
-              }
-            })
-          } else {
+            this.showComplete = true
+            this.currentSche = item
+          } else if (option === '延缓') {
             this.disabledStr = false
             this.form = item
             this.showSlow = true
+          } else if (option === '错误信息报告') {
+            this.$router.push({
+              path: '/infoRecord',
+              // name: 'infoRecord',
+              query: {
+                planId: item.id,
+                sectionId: this.id,
+                sitename: localStorage.siteName
+              }
+            })
           }
           // this.form = item
           // this.showSlow = true
