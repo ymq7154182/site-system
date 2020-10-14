@@ -89,7 +89,7 @@
           </el-col>
           <el-col :span="11">
             <el-form-item label="用户名" prop="userSignName" >
-              <el-input v-model="form.userSignName" placeholder="请输入工地名称" />
+              <el-input v-model="form.userSignName" placeholder="请输入工地名称" readonly='true'/>
             </el-form-item>
           </el-col>
 <!--          <el-col :span="12">-->
@@ -101,19 +101,19 @@
         <el-row>
           <el-col :span="12">
             <el-form-item label="工种" prop="userType" label-width="100px">
-              <el-input v-model="form.userType" placeholder="请输入工种" maxlength="11" />
+              <el-input v-model="form.userType" placeholder="请输入工种" maxlength="11" readonly='true'/>
             </el-form-item>
           </el-col>
           <el-col :span="11">
             <el-form-item label="年龄" prop="userAge">
-              <el-input v-model="form.userAge" placeholder="请输入年龄" maxlength="50" />
+              <el-input v-model="form.userAge" placeholder="请输入年龄" maxlength="50" readonly='true'/>
             </el-form-item>
           </el-col>
         </el-row>
         <el-row>
           <el-col :span="12">
             <el-form-item label="手机号码" prop="phone" label-width="100px">
-              <el-input v-model="form.phone" placeholder="请输入手机号码" maxlength="11" />
+              <el-input v-model="form.phone" placeholder="请输入手机号码" maxlength="11" readonly='true'/>
             </el-form-item>
           </el-col>
           <el-col :span="12">
@@ -126,8 +126,8 @@
         </el-row>
         <el-row>
           <el-col :span="12" >
-            <el-form-item label="更新时间" prop="userSignTime" label-width="100px">
-              <el-input v-model="form.userSignTime" placeholder="请输入更新时间" maxlength="11" />
+            <el-form-item label="更新时间" prop="userSignTime" label-width="100px" >
+              <el-input v-model="form.userSignTime" placeholder="请输入更新时间" maxlength="11" readonly='true'/>
             </el-form-item>
           </el-col>
         </el-row>
@@ -577,6 +577,7 @@ export default {
               this.$message.error("修改失败！")
             }
             console.log(response.data.msg)
+            this.getList()
             this.open = false;
           })
 
