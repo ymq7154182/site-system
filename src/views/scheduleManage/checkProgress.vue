@@ -328,7 +328,7 @@
         }).then(res => {
           this.titleList = res.data.data
             for (let i in this.titleList) {
-              console.log('i', i)
+              // console.log('i', i, this.titleList[i].endTime === null)
                 if (this.titleList[i].endTime === null) { // 如果有完成时间，则当前转态变为完成，下一个变成正在进行
                   this.id = this.titleList[parseInt(i)].id
                   this.title = this.titleList[parseInt(i)].durationDictName
@@ -351,6 +351,7 @@
                     let waitingTitles = steps[parseInt(i)].querySelector('.el-step__main .el-step__title.is-wait')
                     waiting.className= 'el-step__head is-process'
                     waitingTitles.className = 'el-step__title is-process'
+
                   })
                   // this.getTwoSchedules()
               //     this.$nextTick(() => {
@@ -372,7 +373,34 @@
               //       // console.log(that.id, that.title)
               // })
                   break
-            }
+            } else {
+                  // console.log(i, this.titleList.length, i == this.titleList.length)
+                  if(i == this.titleList.length - 1) {
+                    console.log('chenglima')
+                    this.id = this.titleList[parseInt(i)].id
+                    this.title = this.titleList[parseInt(i)].durationDictName
+                    getTwoSchedules({
+                      planId: this.id
+                    }).then(res => {
+                      this.dataList = res.data.data
+                    })
+                    this.$nextTick(() => {
+                      let currentNode = document.querySelector('.el-tabs__content .el-tab-pane')
+                      console.log('currentNode:', currentNode)
+                      let steps = currentNode.querySelectorAll('.el-steps .el-step')
+                      console.log('step', steps, steps[parseInt(i)])
+                      for (let j = 0; j <= i;j++) {
+                        steps[parseInt(j)].querySelector('.el-step__head').className = 'el-step__head is-finish'
+                        steps[parseInt(j)].querySelector('.el-step__main .el-step__title').className = 'el-step__title is-finish'
+                      }
+                      // let waiting = steps[parseInt(i)].querySelector('.el-step__head.is-wait')
+                      // let waitingTitles = steps[parseInt(i)].querySelector('.el-step__main .el-step__title.is-wait')
+                      // waiting.className= 'el-step__head is-process'
+                      // waitingTitles.className = 'el-step__title is-process'
+
+                    })
+                  }
+                }
 
           }
 

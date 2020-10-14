@@ -641,6 +641,25 @@
                   }, 0)
                 })
                 break
+              } else {
+                if(i == this.titleList.length - 1) {
+                  console.log('chenglima')
+                  this.id = this.titleList[parseInt(i)].id
+                  this.title = this.titleList[parseInt(i)].durationDictName
+                  getTwoSchedules({
+                    planId: this.id
+                  }).then(res => {
+                    this.dataList = res.data.data
+                  })
+                  this.$nextTick(() => {
+                    let steps = document.querySelectorAll('.el-steps .el-step')
+                    console.log('step', steps, steps[parseInt(i)])
+                    for (let j = 0; j <= i;j++) {
+                      steps[parseInt(j)].querySelector('.el-step__head').className = 'el-step__head is-finish'
+                      steps[parseInt(j)].querySelector('.el-step__main .el-step__title').className = 'el-step__title is-finish'
+                    }
+                  })
+                }
               }
 
             }
