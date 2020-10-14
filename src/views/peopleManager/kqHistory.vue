@@ -83,12 +83,12 @@
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
         <el-row>
           <el-col :span="12">
-            <el-form-item label="工地编号" prop="id">
+            <el-form-item label="工地编号" prop="id" label-width="100px">
               <el-input v-model="form.id" placeholder="请输入工地编号" readonly='true'/>
             </el-form-item>
           </el-col>
-          <el-col :span="12">
-            <el-form-item label="用户名" prop="userSignName">
+          <el-col :span="11">
+            <el-form-item label="用户名" prop="userSignName" >
               <el-input v-model="form.userSignName" placeholder="请输入工地名称" />
             </el-form-item>
           </el-col>
@@ -100,11 +100,11 @@
         </el-row>
         <el-row>
           <el-col :span="12">
-            <el-form-item label="工种" prop="userType">
+            <el-form-item label="工种" prop="userType" label-width="100px">
               <el-input v-model="form.userType" placeholder="请输入工种" maxlength="11" />
             </el-form-item>
           </el-col>
-          <el-col :span="12">
+          <el-col :span="11">
             <el-form-item label="年龄" prop="userAge">
               <el-input v-model="form.userAge" placeholder="请输入年龄" maxlength="50" />
             </el-form-item>
@@ -112,7 +112,7 @@
         </el-row>
         <el-row>
           <el-col :span="12">
-            <el-form-item label="手机号码" prop="phone">
+            <el-form-item label="手机号码" prop="phone" label-width="100px">
               <el-input v-model="form.phone" placeholder="请输入手机号码" maxlength="11" />
             </el-form-item>
           </el-col>
@@ -125,9 +125,16 @@
           </el-col>
         </el-row>
         <el-row>
-          <el-col :span="12">
-            <el-form-item label="更新时间" prop="userSignTime">
+          <el-col :span="12" >
+            <el-form-item label="更新时间" prop="userSignTime" label-width="100px">
               <el-input v-model="form.userSignTime" placeholder="请输入更新时间" maxlength="11" />
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <el-row>
+          <el-col :span="12" >
+            <el-form-item label="补打卡原因" prop="reClockingInfo" label-width="100px">
+              <el-input type="textarea" v-model="form.reClockingInfo" placeholder="请输入补打卡原因" maxlength="11" />
             </el-form-item>
           </el-col>
         </el-row>
@@ -166,7 +173,7 @@ export default {
     return {
       status:[{key:0, value:'已打卡'},{key:2,value:'迟到'},{key:3,value:'补打卡'}],
       // 当前每页数据的条数
-      pageSize:10,
+      pageSize:5,
       // 数据的总条数
       pageTotal:0,
       // 翻页功能当前页
@@ -208,7 +215,16 @@ export default {
       // 角色选项
       roleOptions: [],
       // 表单参数
-      form: {},
+      form: {
+        id:null,
+        userSignName:'',
+        userType:'',
+        userAge:'',
+        phone:'',
+        userSignStatus:null,
+        userSignTime:'',
+        reClockingInfo:'',
+      },
       defaultProps: {
         children: "children",
         label: "label",
@@ -254,6 +270,9 @@ export default {
         ],
         userSignTime:[
           { required: true, message: "更新时间不能为空", trigger: "blur" },
+        ],
+        reClockingInfo:[
+          { required: true, message: "补打卡原因不能为空", trigger: "blur" },
         ],
       },
       // rules: {
@@ -476,13 +495,20 @@ export default {
     handleAdd() {
       this.reset();
     },
-    /** 修改按钮操作 */
+    /** 补打卡按钮操作 */
     handleUpdate(row) {
       console.log("补打卡按钮生效")
       console.log(typeof(row.id))
       this.open = true;
-      this.form = row
+      this.form.id = row.id
+      this.form.userSignName = row.userSignName
+      this.form.userType = row.userType
+      this.form.userAge = row.userAge
+      this.form.phone = row.phone
+      this.form.userSignTime = row.userSignTime
+
       this.form.userSignStatus = ''
+      this.form.reClockingInfo = ''
       // getById({
       //   id:row.id
       // }).then(response => {
@@ -541,7 +567,8 @@ export default {
           let Arr = {
             constructionSiteName:this.form.constructionSiteName,
             id:this.form.id,
-            userSignStatus:this.form.userSignStatus
+            userSignStatus:this.form.userSignStatus,
+            reClockingInfo:this.form.reClockingInfo
           }
           manage(Arr).then(response => {
             if(response.data.code === 200){
