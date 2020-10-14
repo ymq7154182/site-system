@@ -1169,6 +1169,7 @@
             sitename: localStorage.getItem('siteName')
           }
           var data = []
+          var detail = []
           getSafeOrQualityChartData(prams).then(response=>{
             console.log('测试安全管理获取数据')
             console.log(response.data.data)
@@ -1177,9 +1178,12 @@
               obj.value = response.data.data[i].counts
               obj.name  = response.data.data[i].check_type_offspring
               data.push(obj)
+              detail.push(response.data.data[i].check_type_offspring)
             }
             console.log('测试safeData')
             console.log(data)
+            console.log('测试detail')
+            console.log(detail)
           })
           this.myChart22 = this.$echarts.init(document.getElementById('mychart22'));
           // var data = [
@@ -1295,6 +1299,7 @@
               }
             ]
           };
+          option.legend.data = detail
           setTimeout(()=>{
             this.myChart22.setOption(option)
           },600)
