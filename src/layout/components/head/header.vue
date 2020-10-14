@@ -125,6 +125,7 @@
 </template>
 
 <script>
+  import { getSite } from '@/api/dataManage'
     export default {
         name: "header",
       data() {
@@ -139,7 +140,9 @@
       },
       mounted() {
         // this.textStyle = this.$store.state.textStyle
-        this.siteName = localStorage.getItem('siteName')
+        // this.siteName = localStorage.getItem('siteName')
+        this.getUrl()
+        this.getsiteName()
       },
       methods: {
         gotoPage() {
@@ -179,6 +182,30 @@
         },
         gotoDataManage() {
           this.$router.push('/dataManage')
+        },
+        getUrl() {
+          // var url = ''
+          // url = window.location.href
+          var str = window.location.search
+          if(str === '') {
+            console.log('str为空')
+          }else {
+            var siteId = str.split('=')[1]
+            localStorage.setItem('siteId', siteId)
+          }
+
+          // console.log(url)
+          // console.log(siteId)
+        },
+        getsiteName() {
+          var siteId = localStorage.getItem('siteId')
+          var data = {
+            siteId: siteId
+          }
+          getSite(data).then((res) => {
+            localStorage.setItem('siteName', res.data.data.deptName)
+            this.siteName = res.data.data.deptName
+          })
         }
       }
     }

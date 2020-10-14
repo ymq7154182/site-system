@@ -406,7 +406,7 @@
       },
       mounted() {
         this.$store.dispatch('changeMsg', '项目概览')
-        this.getUrl()
+        // this.getUrl()
         this.getOneSchedules() // 获取所有一级进度
         this.getDeferReasons() // 获取滞缓原因
 
@@ -422,7 +422,7 @@
         this.getWeatherData()
 
         this.getProDetails()
-        this.getsiteName()
+        // this.getsiteName()
         this.getProjectName()
         this.getProjectTime()
         // setTimeout(()=>{
@@ -871,7 +871,7 @@
             // },
             series: [
               {
-                name:'人员统计',
+                name:'质量管理',
                 type:'pie',
                 selectedMode: 'single',
                 radius: [0, '40%'],
@@ -889,7 +889,7 @@
                 data:echartData.inner
               },
               {
-                name:'人员统计',
+                name:'质量管理',
                 type:'pie',
                 radius: ['60%', '80%'],
                 data:echartData.outer,
@@ -1459,29 +1459,29 @@
             },100)
           })
         },
-        getUrl() {
-          // var url = ''
-          // url = window.location.href
-          var str = window.location.search
-          if(str === '') {
-            console.log('str为空')
-          }else {
-            var siteId = str.split('=')[1]
-            localStorage.setItem('siteId', siteId)
-          }
-
-          // console.log(url)
-          // console.log(siteId)
-        },
-        getsiteName() {
-          var siteId = localStorage.getItem('siteId')
-          var data = {
-            siteId: siteId
-          }
-          getSite(data).then((res) => {
-            localStorage.setItem('siteName', res.data.data.deptName)
-          })
-        }
+        // getUrl() {
+        //   // var url = ''
+        //   // url = window.location.href
+        //   var str = window.location.search
+        //   if(str === '') {
+        //     console.log('str为空')
+        //   }else {
+        //     var siteId = str.split('=')[1]
+        //     localStorage.setItem('siteId', siteId)
+        //   }
+        //
+        //   // console.log(url)
+        //   // console.log(siteId)
+        // },
+        // getsiteName() {
+        //   var siteId = localStorage.getItem('siteId')
+        //   var data = {
+        //     siteId: siteId
+        //   }
+        //   getSite(data).then((res) => {
+        //     localStorage.setItem('siteName', res.data.data.deptName)
+        //   })
+        // }
 
       }
     }
