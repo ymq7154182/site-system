@@ -95,6 +95,17 @@ const routes = [
       }
     ]
   },
+  { // 信息记录
+    path: '/infoRecord',
+    component: Layout,
+    name: 'infoRecord',
+    children: [
+      {
+        path: '/infoRecord',
+        component: () => import('@/views/scheduleManage/infoRecord'),
+      }
+    ]
+  },
   {
     path: '/dataManage',
     component: Layout,
