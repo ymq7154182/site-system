@@ -70,3 +70,10 @@ export function getDeferInfo(params) { // 展示延期信息
     params: params
   })
 }
+export function getErrorInfo(params) { // 显示
+  return request({
+    url: 'system/safe/getCheckInfoBySchedule',
+    method: 'get',
+    params: params
+  })
+}

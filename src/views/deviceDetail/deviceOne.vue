@@ -37,9 +37,9 @@
               >
                 <!--<el-table-column prop="name" label="设备名称" align="center" />-->
                 <!--<el-table-column prop="type" label="设备编号" width="100" align="center" />-->
-                <el-table-column prop="devId" label="设备id" />
-                <el-table-column prop="setupId" label="安装id" />
-                <el-table-column prop="userid" label="当前登录人id" />
+<!--                <el-table-column prop="devId" label="设备id" />-->
+<!--                <el-table-column prop="setupId" label="安装id" />-->
+<!--                <el-table-column prop="userid" label="当前登录人id" />-->
                 <el-table-column prop="leftHeight" label="起升高度" />
                 <el-table-column prop="towerHeight" label="塔高" width="150" align="center" />
                 <el-table-column prop="installHeigth" label="安装高度" align="center" />
@@ -80,9 +80,9 @@
               >
                 <!--<el-table-column prop="name" label="设备名称" align="center" />-->
                 <!--<el-table-column prop="type" label="设备编号" width="100" align="center" />-->
-                <el-table-column prop="devId" label="设备id" />
-                <el-table-column prop="setupId" label="安装id" />
-                <el-table-column prop="userid" label="当前登录人id" />
+<!--                <el-table-column prop="devId" label="设备id" />-->
+<!--                <el-table-column prop="setupId" label="安装id" />-->
+<!--                <el-table-column prop="userid" label="当前登录人id" />-->
                 <el-table-column prop="leftHeight" label="起升高度" />
                 <el-table-column prop="towerHeight" label="塔高" width="150" align="center" />
                 <el-table-column prop="installHeigth" label="安装高度" align="center" />
@@ -119,15 +119,15 @@
                 :header-row-style="{ color: '#409eff' }"
                 :row-style="{ color: 'white' }"
               >
-                <el-table-column prop="devid" label="设备id" />
-                <el-table-column prop="installid" label="安装单位id" />
-                <el-table-column prop="userid" label="当前登录人id" />
+<!--                <el-table-column prop="devid" label="设备id" />-->
+<!--                <el-table-column prop="installid" label="安装单位id" />-->
+<!--                <el-table-column prop="userid" label="当前登录人id" />-->
                 <el-table-column prop="leftHeight" label="附着道数" />
                 <el-table-column prop="towerHeight" label="当前已安装附着" width="150" align="center" />
                 <el-table-column prop="installHeigth" label="当前标准节" align="center" />
                 <el-table-column prop="maxLoad" label="新安装标准节" align="center" />
-                <el-table-column prop="entid" label="企业id" align="center" />
-                <el-table-column prop="useId" label="设备使用ID" align="center" />
+<!--                <el-table-column prop="entid" label="企业id" align="center" />-->
+<!--                <el-table-column prop="useId" label="设备使用ID" align="center" />-->
                 <el-table-column prop="installtime" label="安装时间" align="center" />
                 <el-table-column prop="checkTime" label="顶升后高度" align="center" />
                 <el-table-column prop="spacing" label="附着间距" align="center" />
@@ -166,15 +166,15 @@
                 :header-row-style="{ color: '#409eff' }"
                 :row-style="{ color: 'white' }"
               >
-                <el-table-column prop="devid" label="设备id" />
-                <el-table-column prop="installid" label="安装单位id" />
-                <el-table-column prop="userid" label="当前登录人id" />
+<!--                <el-table-column prop="devid" label="设备id" />-->
+<!--                <el-table-column prop="installid" label="安装单位id" />-->
+<!--                <el-table-column prop="userid" label="当前登录人id" />-->
                 <el-table-column prop="leftHeight" label="附着道数" />
                 <el-table-column prop="towerHeight" label="当前已安装附着" width="150" align="center" />
                 <el-table-column prop="installHeigth" label="当前标准节" align="center" />
                 <el-table-column prop="maxLoad" label="新安装标准节" align="center" />
-                <el-table-column prop="entid" label="企业id" align="center" />
-                <el-table-column prop="useId" label="设备使用ID" align="center" />
+<!--                <el-table-column prop="entid" label="企业id" align="center" />-->
+<!--                <el-table-column prop="useId" label="设备使用ID" align="center" />-->
                 <el-table-column prop="installtime" label="安装时间" align="center" />
                 <el-table-column prop="checkTime" label="顶升后高度" align="center" />
                 <el-table-column prop="spacing" label="附着间距" align="center" />
@@ -213,15 +213,15 @@
                 :header-row-style="{ color: '#409eff' }"
                 :row-style="{ color: 'white' }"
               >
-                <el-table-column prop="devid" label="设备id" />
-                <el-table-column prop="useId" label="使用id" />
-                <el-table-column prop="userid" label="当前登录人id" />
+<!--                <el-table-column prop="devid" label="设备id" />-->
+<!--                <el-table-column prop="useId" label="使用id" />-->
+<!--                <el-table-column prop="userid" label="当前登录人id" />-->
                 <el-table-column prop="leftHeight" label="附着道数" />
                 <el-table-column prop="towerHeight" label="当前已安装附着" width="150" align="center" />
                 <el-table-column prop="installHeigth" label="当前标准节" align="center" />
                 <el-table-column prop="maxLoad" label="新安装标准节" align="center" />
-                <el-table-column prop="entid" label="企业id" align="center" />
-                <el-table-column prop="useId" label="设备使用ID" align="center" />
+<!--                <el-table-column prop="entid" label="企业id" align="center" />-->
+<!--                <el-table-column prop="useId" label="设备使用ID" align="center" />-->
                 <el-table-column prop="checkTime" label="检查时间" align="center" />
                 <el-table-column prop="maxCapacity" label="最大起重量" align="center" />
                 <el-table-column prop="maxRange" label="幅度" align="center" />
@@ -256,15 +256,15 @@
                 :header-row-style="{ color: '#409eff' }"
                 :row-style="{ color: 'white' }"
               >
-                <el-table-column prop="devid" label="设备id" />
-                <el-table-column prop="useId" label="使用id" />
-                <el-table-column prop="userid" label="当前登录人id" />
+<!--                <el-table-column prop="devid" label="设备id" />-->
+<!--                <el-table-column prop="useId" label="使用id" />-->
+<!--                <el-table-column prop="userid" label="当前登录人id" />-->
                 <el-table-column prop="weibaotime" label="维保时间" />
                 <el-table-column prop="maxcapacity" label="运转台时" />
                 <el-table-column prop="maxrange" label="更换主要零部件" />
-                <el-table-column prop="leftheight" label="维管负责人" />
+                <!-- <el-table-column prop="leftheight" label="维管负责人" />
                 <el-table-column prop="towerheight" label="维保人员" width="150" align="center" />
-                <el-table-column prop="installheigth" label="维修（保养）内容" align="center" />
+                <el-table-column prop="installheigth" label="维修（保养）内容" align="center" /> -->
                 <el-table-column prop="installuseraqjg" label="监理单位审核意见" align="center" />
                 <el-table-column prop="installuserzc" label="监理单位审核日期" align="center" />
                 <el-table-column prop="reporttime" label="上报时间" align="center" />
@@ -287,15 +287,15 @@
     <el-dialog :visible.sync="showUpload" title="新增信息" width="40%">
       <div style="height: 55vh; overflow-y: scroll; ">
         <el-form :model="uploadInfo"   label-width="1.5rem" v-show="tableShow === 'table1'">
-          <el-form-item label="设备id" >
-            <el-input v-model="uploadInfo.devid" style="width: 50%" placeholder="请输入设备id"></el-input>
-          </el-form-item>
-          <el-form-item label="安装id" >
-            <el-input v-model="uploadInfo.setupId" style="width: 50%" placeholder="请输入安装id"></el-input>
-          </el-form-item>
-          <el-form-item label="当前登录人id" >
-            <el-input v-model="uploadInfo.userid" style="width: 50%" placeholder="请输入当前登录人id"></el-input>
-          </el-form-item>
+<!--          <el-form-item label="设备id" >-->
+<!--            <el-input v-model="uploadInfo.devid" style="width: 50%" placeholder="请输入设备id"></el-input>-->
+<!--          </el-form-item>-->
+<!--          <el-form-item label="安装id" >-->
+<!--            <el-input v-model="uploadInfo.setupId" style="width: 50%" placeholder="请输入安装id"></el-input>-->
+<!--          </el-form-item>-->
+<!--          <el-form-item label="当前登录人id" >-->
+<!--            <el-input v-model="uploadInfo.userid" style="width: 50%" placeholder="请输入当前登录人id"></el-input>-->
+<!--          </el-form-item>-->
           <el-form-item label="起升高度" >
             <el-input v-model="uploadInfo.leftHeight" style="width: 50%" placeholder="请输入起升高度"></el-input>
           </el-form-item>
@@ -347,15 +347,15 @@
           </el-form-item>
         </el-form>
         <el-form :model="uploadInfo2"   label-width="1.5rem" v-show="tableShow === 'table2'">
-          <el-form-item label="设备id" >
-            <el-input v-model="uploadInfo2.devid" style="width: 50%" placeholder="请输入设备id"></el-input>
-          </el-form-item>
-          <el-form-item label="安装id" >
-            <el-input v-model="uploadInfo2.setupId" style="width: 50%" placeholder="请输入安装id"></el-input>
-          </el-form-item>
-          <el-form-item label="当前登录人id" >
-            <el-input v-model="uploadInfo2.userid" style="width: 50%" placeholder="请输入当前登录人id"></el-input>
-          </el-form-item>
+<!--          <el-form-item label="设备id" >-->
+<!--            <el-input v-model="uploadInfo2.devid" style="width: 50%" placeholder="请输入设备id"></el-input>-->
+<!--          </el-form-item>-->
+<!--          <el-form-item label="安装id" >-->
+<!--            <el-input v-model="uploadInfo2.setupId" style="width: 50%" placeholder="请输入安装id"></el-input>-->
+<!--          </el-form-item>-->
+<!--          <el-form-item label="当前登录人id" >-->
+<!--            <el-input v-model="uploadInfo2.userid" style="width: 50%" placeholder="请输入当前登录人id"></el-input>-->
+<!--          </el-form-item>-->
           <el-form-item label="起升高度" >
             <el-input v-model="uploadInfo2.leftHeight" style="width: 50%" placeholder="请输入起升高度"></el-input>
           </el-form-item>
@@ -401,15 +401,15 @@
           </el-form-item>
         </el-form>
         <el-form :model="uploadInfo3"   label-width="1.5rem" v-show="tableShow === 'table3'">
-          <el-form-item label="设备id" >
-            <el-input v-model="uploadInfo3.devid" style="width: 50%" placeholder="请输入设备id"></el-input>
-          </el-form-item>
-          <el-form-item label="安装单位id" >
-            <el-input v-model="uploadInfo3.installid" style="width: 50%" placeholder="安装单位id"></el-input>
-          </el-form-item>
-          <el-form-item label="当前登录人id" >
-            <el-input v-model="uploadInfo3.userid" style="width: 50%" placeholder="请输入当前登录人id"></el-input>
-          </el-form-item>
+<!--          <el-form-item label="设备id" >-->
+<!--            <el-input v-model="uploadInfo3.devid" style="width: 50%" placeholder="请输入设备id"></el-input>-->
+<!--          </el-form-item>-->
+<!--          <el-form-item label="安装单位id" >-->
+<!--            <el-input v-model="uploadInfo3.installid" style="width: 50%" placeholder="安装单位id"></el-input>-->
+<!--          </el-form-item>-->
+<!--          <el-form-item label="当前登录人id" >-->
+<!--            <el-input v-model="uploadInfo3.userid" style="width: 50%" placeholder="请输入当前登录人id"></el-input>-->
+<!--          </el-form-item>-->
           <el-form-item label="附着道数" >
             <el-input v-model="uploadInfo3.leftHeight" style="width: 50%" placeholder="请输入起升高度"></el-input>
           </el-form-item>
@@ -476,15 +476,15 @@
           </el-form-item>
         </el-form>
         <el-form :model="uploadInfo4"   label-width="1.5rem" v-show="tableShow === 'table4'">
-          <el-form-item label="设备id" >
-            <el-input v-model="uploadInfo4.devid" style="width: 50%" placeholder="请输入设备id"></el-input>
-          </el-form-item>
-          <el-form-item label="安装单位id" >
-            <el-input v-model="uploadInfo4.installid" style="width: 50%" placeholder="安装单位id"></el-input>
-          </el-form-item>
-          <el-form-item label="当前登录人id" >
-            <el-input v-model="uploadInfo4.userid" style="width: 50%" placeholder="请输入当前登录人id"></el-input>
-          </el-form-item>
+<!--          <el-form-item label="设备id" >-->
+<!--            <el-input v-model="uploadInfo4.devid" style="width: 50%" placeholder="请输入设备id"></el-input>-->
+<!--          </el-form-item>-->
+<!--          <el-form-item label="安装单位id" >-->
+<!--            <el-input v-model="uploadInfo4.installid" style="width: 50%" placeholder="安装单位id"></el-input>-->
+<!--          </el-form-item>-->
+<!--          <el-form-item label="当前登录人id" >-->
+<!--            <el-input v-model="uploadInfo4.userid" style="width: 50%" placeholder="请输入当前登录人id"></el-input>-->
+<!--          </el-form-item>-->
           <el-form-item label="附着道数" >
             <el-input v-model="uploadInfo4.leftHeight" style="width: 50%" placeholder="请输入起升高度"></el-input>
           </el-form-item>
@@ -551,12 +551,12 @@
           </el-form-item>
         </el-form>
         <el-form :model="uploadInfo5"   label-width="1.5rem" v-show="tableShow === 'table5'">
-          <el-form-item label="设备id" >
-            <el-input v-model="uploadInfo5.devid" style="width: 50%" placeholder="请输入设备id"></el-input>
-          </el-form-item>
-          <el-form-item label="当前登录人id" >
-            <el-input v-model="uploadInfo5.userid" style="width: 50%" placeholder="请输入当前登录人id"></el-input>
-          </el-form-item>
+<!--          <el-form-item label="设备id" >-->
+<!--            <el-input v-model="uploadInfo5.devid" style="width: 50%" placeholder="请输入设备id"></el-input>-->
+<!--          </el-form-item>-->
+<!--          <el-form-item label="当前登录人id" >-->
+<!--            <el-input v-model="uploadInfo5.userid" style="width: 50%" placeholder="请输入当前登录人id"></el-input>-->
+<!--          </el-form-item>-->
           <el-form-item label="起升高度" >
             <el-input v-model="uploadInfo5.leftHeight" style="width: 50%" placeholder="请输入起升高度"></el-input>
           </el-form-item>
@@ -566,12 +566,12 @@
           <el-form-item label="新安装标准节" >
             <el-input v-model="uploadInfo5.maxLoad" style="width: 50%" placeholder="请输入新安装标准节"></el-input>
           </el-form-item>
-          <el-form-item label="企业id" >
-            <el-input v-model="uploadInfo5.entid" style="width: 50%" placeholder="请输入企业id" type="textarea"></el-input>
-          </el-form-item>
-          <el-form-item label="设备使用ID" >
-            <el-input v-model="uploadInfo5.useId" style="width: 50%" placeholder="请输入内容设备使用ID"></el-input>
-          </el-form-item>
+<!--          <el-form-item label="企业id" >-->
+<!--            <el-input v-model="uploadInfo5.entid" style="width: 50%" placeholder="请输入企业id" type="textarea"></el-input>-->
+<!--          </el-form-item>-->
+<!--          <el-form-item label="设备使用ID" >-->
+<!--            <el-input v-model="uploadInfo5.useId" style="width: 50%" placeholder="请输入内容设备使用ID"></el-input>-->
+<!--          </el-form-item>-->
           <el-form-item label="检查时间" >
             <el-date-picker v-model="uploadInfo5.checkTime" align="right" type="date" placeholder="选择日期" :picker-options="pickerOptions" value-format="yyyy-MM-dd" style="width: 50%; " />
           </el-form-item>
@@ -611,15 +611,15 @@
           </el-form-item>
         </el-form>
         <el-form :model="uploadInfo6"   label-width="1.5rem" v-show="tableShow === 'table6'">
-          <el-form-item label="设备id" >
-            <el-input v-model="uploadInfo6.devid" style="width: 50%" placeholder="请输入设备id"></el-input>
-          </el-form-item>
-          <el-form-item label="使用id" >
-            <el-input v-model="uploadInfo6.useId" style="width: 50%" placeholder="请输入使用id"></el-input>
-          </el-form-item>
-          <el-form-item label="当前登录人id" >
-            <el-input v-model="uploadInfo6.userid" style="width: 50%" placeholder="请输入当前登录人id"></el-input>
-          </el-form-item>
+<!--          <el-form-item label="设备id" >-->
+<!--            <el-input v-model="uploadInfo6.devid" style="width: 50%" placeholder="请输入设备id"></el-input>-->
+<!--          </el-form-item>-->
+<!--          <el-form-item label="使用id" >-->
+<!--            <el-input v-model="uploadInfo6.useId" style="width: 50%" placeholder="请输入使用id"></el-input>-->
+<!--          </el-form-item>-->
+<!--          <el-form-item label="当前登录人id" >-->
+<!--            <el-input v-model="uploadInfo6.userid" style="width: 50%" placeholder="请输入当前登录人id"></el-input>-->
+<!--          </el-form-item>-->
           <el-form-item label="维保时间" >
             <el-date-picker v-model="uploadInfo6.weibaotime" align="right" type="date" placeholder="选择日期" :picker-options="pickerOptions" value-format="yyyy-MM-dd" style="width: 50%; " />
           </el-form-item>

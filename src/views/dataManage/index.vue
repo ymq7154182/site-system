@@ -14,7 +14,7 @@
           </div>
         </div>
       </el-col>
-      <el-col :span="20" style="overflow-x: hidden; ">
+      <el-col :span="20">
         <div class="dm-main">
           <div class="border-top-right"></div>
           <div style="padding: 0.13rem">
@@ -120,7 +120,7 @@
               class="upload-demo"
               action="http://121.36.106.18:38080/system/safe/uploadFile"
               :limit="1"
-              :on-success="handleSuccess"
+              :on-success="handleSuccessEdit"
               :file-list="fileList"
               style="width: 50%; "
             >
@@ -321,6 +321,9 @@ export default {
     },
     handleSuccess(response, file, fileList) {
       this.uploadInfo.url = response.data
+    },
+    handleSuccessEdit(response, file, fileList) {
+      this.currentInfo.url = response.data
     },
     refreshTable() {
       findDoc({

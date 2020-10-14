@@ -35,6 +35,21 @@
       <el-button type="primary" @click="updateTime">确 定</el-button>
       </span>
     </el-dialog>
+    <el-dialog
+      title="完成时间"
+      :visible.sync="showComplete"
+      width="30%"
+      :before-close="handleClose">
+      <el-form ref="form" :model="formComplete" label-width="80px">
+        <el-form-item label="完成时间">
+          <el-date-picker type="date" placeholder="选择日期" v-model="formComplete.date" style="width: 100%;"></el-date-picker>
+        </el-form-item>
+      </el-form>
+      <span slot="footer" class="dialog-footer">
+      <el-button @click="showComplete = false">取 消</el-button>
+      <el-button type="primary" @click="completeTime">确 定</el-button>
+      </span>
+    </el-dialog>
     <el-dialog title="迟缓操作" :visible.sync="showSlow">
       <el-form :model="formDefer">
         <el-form-item label="名称" :label-width="formLabelWidth">
@@ -95,12 +110,13 @@
 <!--                        <div class="processing_content_detail" style="float:right;" v-if="item.endTime !== null"><span ><i class="el-icon-time"></i>&nbsp;&nbsp;{{item.endTime}}</span> </div>-->
 <!--                      </td>-->
 <!--                    </tr>-->
-                    <tr v-if="item.status === 1">
+                    <tr v-if="item.status === 1"><!--1表示未完成，2已完成，3延期-->
                       <td>
                         <div class="processing_content_detail" style="float:left;width:70%">
                           <div style="float:left;width: 2px;height: 20px; background:#C7D4E9;margin-left:10px;margin-right:10px"></div>
                           <span style="color:#919FB8" class="status-label" @click="submitOption('延缓', item)">延缓</span>
                           <span style="color:#919FB8" class="status-label" @click="submitOption('完成', item)">完成</span>
+                          <button style="color:#919FB8" class="status-label" @click="submitOption('错误信息报告', item)">错误信息报告</button>
                         </div>
                       </td>
                     </tr>
@@ -110,6 +126,7 @@
                           <div style="float:left;width: 2px;height: 20px; background:#C7D4E9;margin-left:10px;margin-right:10px"></div>
                           <span v-if="item.status === 3" style="color:#919FB8" class="status-label-status" @click="checkStatus(item)">延缓</span>
                           <span v-if="item.status === 2" style="color:#919FB8" class="status-label-status" @click="checkStatus(item)">完成</span>
+                          <button style="color:#919FB8" class="status-label" @click="submitOption('错误信息报告', item)">错误信息报告</button>
                         </div>
                         <div class="processing_content_detail" style="float:right;color: #fff" v-if="item.endTime !== null"><span ><i class="el-icon-time"></i>&nbsp;&nbsp;{{item.endTime}}</span> </div>
 
@@ -128,18 +145,21 @@
   </div>
 </template>
 <script>
-  import {getOneSchedules, getTwoSchedules, getDeferInfo, submitDeferInfo, getDeferReasons, updateTimeByPlanId, finishSmallSchedule} from '@/api/scheduleManage'
+  import {getOneSchedules, getTwoSchedules, getErrorInfo, getDeferInfo, submitDeferInfo, getDeferReasons, updateTimeByPlanId, finishSmallSchedule} from '@/api/scheduleManage'
+  import {getSite} from "@/api/dataManage"
   export default {
     name: 'checkProgress',
     mounted() {
-      this.$store.dispatch('changeMsg', '进度管理');
+      // this.$store.dispatch('changeMsg', '进度管理');
       // this.gotoOption(0, 'init')
       this.getOneSchedules()
       this.getDeferReasons()
+      this.getSiteName()
       // this.getDeferReasons()
     },
     data() {
       return {
+        showComplete: false, // 选择完成时间框
         active: 0,
         smallActive: 0,
         dataList: [], // 点击每一个进度，显示的详细进度条数据
@@ -159,10 +179,14 @@
           principal: '', // 负责人
           processData: '' // 处理内容
         },
+        currentSche: {},
+        formComplete: {
+          date: ''
+        },
         form: {
           date: ''
         },
-        id: -1, // 当前步骤id
+        id: -1, // 当前大步骤id
         titleList: [], // 所有的大任务列表
       }
     },
@@ -173,6 +197,15 @@
       }
     },
     methods: {
+      getSiteName() { // 根据siteid获取sitename
+        const siteId = localStorage.getItem('siteId')
+        const data = {
+          siteId: siteId
+        }
+        getSite(data).then((res) => {
+          localStorage.setItem('siteName', res.data.data.deptName)
+        })
+      },
       getDeferReasons () { // 滞缓原因
         getDeferReasons().then(res => {
           this.deferReasons = res.data.data
@@ -231,6 +264,21 @@
           })
           .catch(_ => {});
       },
+      completeTime () { // 完成时间
+        finishSmallSchedule({
+          dataTime: this.formComplete.date.getFullYear() + '-' + (this.formComplete.date.getMonth() + 1) + '-' + this.formComplete.date.getDate() + ' ',
+          scheduleDurationSectionPlanId: this.currentSche.id
+        }).then(res => {
+          if (res.data.code === 200) {
+            console.log('完成按钮', this.currentSche)
+            this.getTwoSchedules()
+            this.showComplete = false
+            if (this.currentSche.scheduleEnd === 1) { // 表示是最后一个小进度
+              this.getOneSchedules()
+            }
+          }
+        })
+      },
       updateTime() { // 修改实际时间
         updateTimeByPlanId({
           constructionSiteId: this.deptId,
@@ -264,7 +312,7 @@
       },
       gotoOption (val, num) {
         if (num !== 'init') {
-          this.id = val.id
+          this.id = val.id // 一级id
           this.title = val.durationDictName
         }
         this.getTwoSchedules()
@@ -279,34 +327,53 @@
           siteId: this.deptId
         }).then(res => {
           this.titleList = res.data.data
-          // this.id = res.data.data[0].id
-          // this.title = res.data.data[0].durationDictName
-
             for (let i in this.titleList) {
-                if (this.titleList[i].endTime !== null) { // 如果有完成时间，则当前转态变为完成，下一个变成正在进行
-                  this.id = this.titleList[parseInt(i)+1].id
-                  this.title = this.titleList[parseInt(i)+1].durationDictName
-                  this.getTwoSchedules()
+              console.log('i', i)
+                if (this.titleList[i].endTime === null) { // 如果有完成时间，则当前转态变为完成，下一个变成正在进行
+                  this.id = this.titleList[parseInt(i)].id
+                  this.title = this.titleList[parseInt(i)].durationDictName
+                  getTwoSchedules({
+                    planId: this.id
+                  }).then(res => {
+                    this.dataList = res.data.data
+                  })
+
                   this.$nextTick(() => {
                     let currentNode = document.querySelector('.el-tabs__content .el-tab-pane')
                     console.log('currentNode:', currentNode)
-                    let steps = currentNode.querySelector('.el-steps')
-                    // console.log('steps', steps)
-                    // console.log(steps[i + 1].querySelector('.el-step__head.is-process'))
-                    let process = steps.querySelector('.el-step .el-step__head.is-process')
-                    let processTitle = steps.querySelector('.el-step .el-step__main .el-step__title.is-process')
-                    process.className = 'el-step__head is-finish'
-                    processTitle.className = 'el-step__title is-finish'
-                    let waitings = steps.querySelectorAll('.el-step .el-step__head.is-wait')
-                    let waitingTitles = steps.querySelectorAll('.el-step .el-step__main .el-step__title.is-wait')
-                    waitings[0].className = 'el-step__head is-process'
-                    waitingTitles[0].className = 'el-step__title is-process'
-                    // that.id = that.titleList[i+1].id
-                    // that.title = that.titleList[i+1].durationDictName
-                    // console.log(that.id, that.title)
-              })
+                    let steps = currentNode.querySelectorAll('.el-steps .el-step')
+                    console.log('step', steps, steps[parseInt(i)])
+                    for (let j = 0; j < i;j++) {
+                      steps[parseInt(j)].querySelector('.el-step__head').className = 'el-step__head is-finish'
+                      steps[parseInt(j)].querySelector('.el-step__main .el-step__title').className = 'el-step__title is-finish'
+                    }
+                    let waiting = steps[parseInt(i)].querySelector('.el-step__head.is-wait')
+                    let waitingTitles = steps[parseInt(i)].querySelector('.el-step__main .el-step__title.is-wait')
+                    waiting.className= 'el-step__head is-process'
+                    waitingTitles.className = 'el-step__title is-process'
+                  })
+                  // this.getTwoSchedules()
+              //     this.$nextTick(() => {
+              //       let currentNode = document.querySelector('.el-tabs__content .el-tab-pane')
+              //       console.log('currentNode:', currentNode)
+              //       let steps = currentNode.querySelector('.el-steps')
+              //       console.log('steps', steps)
+              //       // console.log(steps[i + 1].querySelector('.el-step__head.is-process'))
+              //       let process = steps.querySelector('.el-step .el-step__head.is-process')
+              //       let processTitle = steps.querySelector('.el-step .el-step__main .el-step__title.is-process')
+              //       process.className = 'el-step__head is-finish'
+              //       processTitle.className = 'el-step__title is-finish'
+              //       let waitings = steps.querySelectorAll('.el-step .el-step__head.is-wait')
+              //       let waitingTitles = steps.querySelectorAll('.el-step .el-step__main .el-step__title.is-wait')
+              //       waitings[0].className = 'el-step__head is-process'
+              //       waitingTitles[0].className = 'el-step__title is-process'
+              //       // that.id = that.titleList[i+1].id
+              //       // that.title = that.titleList[i+1].durationDictName
+              //       // console.log(that.id, that.title)
+              // })
+                  break
             }
-              // break
+
           }
 
         })
@@ -321,22 +388,30 @@
       submitOption (option, item) { // 延缓或者完成按钮
         console.log(item)
         if (option === '完成') {
-          finishSmallSchedule({
-            scheduleDurationSectionPlanId: item.id
-          }).then(res => {
-            if (res.data.code === 200) {
-              console.log('完成按钮', item)
-              // console.log('状态为完成')
-              this.getTwoSchedules()
-              if (item.scheduleEnd === 1) { // 表示是最后一个小进度
-                this.getOneSchedules()
-              }
-            }
-          })
-        } else {
+          this.showComplete = true
+          this.currentSche = item
+        } else if (option === '延缓') {
           this.disabledStr = false
           this.formDefer = item
           this.showSlow = true
+        } else if (option === '错误信息报告') {
+          this.$router.push({
+            path: '/infoRecord',
+            // name: 'infoRecord',
+            query: {
+              planId: item.id,
+              sectionId: this.id,
+              sitename: localStorage.siteName
+            }
+          })
+          // getErrorInfo({
+          //   // id: 0,
+          //   planId: item.id,
+          //   sectionId: this.id,
+          //   sitename: localStorage.siteName
+          // }).then(res => {
+          //   console.log(res.data)
+          // })
         }
 
         // this.showSlow = true

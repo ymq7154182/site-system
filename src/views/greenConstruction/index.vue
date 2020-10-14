@@ -63,8 +63,16 @@
         <div style="background-color: rgba(0, 36, 78, 0.5); height: 40vh; width: 100%;">
           <div class="border-top-center"></div>
           <div class="box-title">环境数据趋势图</div>
+          <div class="environmentTag" >
+                <el-tag :type="buttonType(index)" v-for="(type,index) in environmentType" :key="index"  @click.native="selectType(index)">{{type}}</el-tag>
+<!--                <el-tag  @click.native="selectType('PM2.5')">PM2.5</el-tag>-->
+<!--                <el-tag  @click.native="selectType('PM10')">PM10</el-tag>-->
+<!--                <el-tag  @click.native="selectType('噪音')">噪音</el-tag>-->
+<!--                <el-tag  @click.native="selectType('温度')">温度</el-tag>-->
+<!--                <el-tag  @click.native="selectType('湿度')">湿度</el-tag>-->
+          </div>
 <!--          <div class="device-data">-->
-          <div id="environmentChart" style="height: 37vh"></div>
+          <div id="environmentChart" style="height: 31vh"></div>
 <!--          </div>-->
         </div>
       </el-col>
@@ -111,15 +119,18 @@
 
   export default {
     name: 'greenConstruction',
-    mounted() {
-      this.$store.dispatch('changeMsg', '绿色施工');
-      this.initEnvironment()
-      this.initAlarmType();
-      this.initAlarmTrend();
-      // this.initQuality()
-    },
     data() {
       return {
+        yMax:null,
+        yMin:null,
+        // 环境数据的当前类型
+        currentType:'',
+        // 环境数据的当前类型
+        environmentType:[],
+        // 环境数据的当前数据
+        environmentData:[],
+        // 环境数据的当前x轴
+        environmentX:[],
         alarmTypeChart: null,
         alarmTrendChart: null,
         environChart: null,
@@ -216,205 +227,69 @@
         }
       }
     },
+    mounted() {
+      this.getenvironmentData()
+      this.$store.dispatch('changeMsg', '绿色施工');
+      this.initEnvironment()
+      this.initAlarmType();
+      this.initAlarmTrend();
+      // this.initQuality()
+    },
     methods: {
-      // initQuality () {
-      //   this.qualityChart = echarts.init(document.getElementById('qualityChart'))
-      //   this.qualityChart.setOption({
-      //       // backgroundColor:"#0B1837",
-      //       color: ["#EAEA26", "#906BF9", "#FE5656", "#01E17E", "#3DD1F9", "#FFAD05"],
-      //       // title: {
-      //       //     text: '网络/安全设备',
-      //       //     left: '60',
-      //       //     top: 0,
-      //       //     textAlign: 'center',
-      //       //     textStyle: {
-      //       //         color: '#fff',
-      //       //         fontSize: 14,
-      //       //         fontWeight: 0
-      //       //     }
-      //       // },
-      //       grid: {
-      //         left: -100,
-      //         top: 50,
-      //         bottom: 10,
-      //         right: 10,
-      //         containLabel: true
-      //       },
-      //       tooltip: {
-      //         trigger: 'item',
-      //         formatter: "{b} : {c} ({d}%)"
-      //       },
-      //       legend: {
-      //         type: "scroll",
-      //         orient: "vartical",
-      //         // x: "right",
-      //         top: "center",
-      //         right: "15",
-      //         // bottom: "0%",
-      //         itemWidth: 16,
-      //         itemHeight: 8,
-      //         itemGap: 16,
-      //         textStyle: {
-      //           color: '#A3E2F4',
-      //           fontSize: 12,
-      //           fontWeight: 0
-      //         },
-      //         data: ['火灾', '触电', '其他', '设备倾覆', '结构坍塌', '高空坠物']
-      //       },
-      //       polar: {},
-      //       angleAxis: {
-      //         interval: 1,
-      //         type: 'category',
-      //         data: [],
-      //         z: 10,
-      //         axisLine: {
-      //           show: false,
-      //           lineStyle: {
-      //             color: "#0B4A6B",
-      //             width: 1,
-      //             type: "solid"
-      //           },
-      //         },
-      //         axisLabel: {
-      //           interval: 0,
-      //           show: true,
-      //           color: "#0B4A6B",
-      //           margin: 8,
-      //           fontSize: 16
-      //         },
-      //       },
-      //       radiusAxis: {
-      //         min: 40,
-      //         max: 120,
-      //         interval: 20,
-      //         axisLine: {
-      //           show: false,
-      //           lineStyle: {
-      //             color: "#0B3E5E",
-      //             width: 1,
-      //             type: "solid"
-      //           },
-      //         },
-      //         axisLabel: {
-      //           formatter: '{value} %',
-      //           show: false,
-      //           padding: [0, 0, 20, 0],
-      //           color: "#0B3E5E",
-      //           fontSize: 16
-      //         },
-      //         splitLine: {
-      //           lineStyle: {
-      //             color: "#0B3E5E",
-      //             width: 2,
-      //             type: "solid"
-      //           }
-      //         }
-      //       },
-      //       calculable: true,
-      //       series: [{
-      //         type: 'pie',
-      //         radius: ["5%", "10%"],
-      //         hoverAnimation: false,
-      //         labelLine: {
-      //           normal: {
-      //             show: false,
-      //             length: 30,
-      //             length2: 55
-      //           },
-      //           emphasis: {
-      //             show: false
-      //           }
-      //         },
-      //         data: [{
-      //           name: '',
-      //           value: 0,
-      //           itemStyle: {
-      //             normal: {
-      //               color: "#0B4A6B"
-      //             }
-      //           }
-      //         }]
-      //       }, {
-      //         type: 'pie',
-      //         radius: ["90%", "95%"],
-      //         hoverAnimation: false,
-      //         labelLine: {
-      //           normal: {
-      //             show: false,
-      //             length: 30,
-      //             length2: 55
-      //           },
-      //           emphasis: {
-      //             show: false
-      //           }
-      //         },
-      //         name: "",
-      //         data: [{
-      //           name: '',
-      //           value: 0,
-      //           itemStyle: {
-      //             normal: {
-      //               color: "#0B4A6B"
-      //             }
-      //           }
-      //         }]
-      //       },{
-      //         stack: 'a',
-      //         type: 'pie',
-      //         radius: ['20%', '80%'],
-      //         roseType: 'area',
-      //         zlevel:10,
-      //         label: {
-      //           normal: {
-      //             show: true,
-      //             formatter: "{c}",
-      //             textStyle: {
-      //               fontSize: 12,
-      //             },
-      //             position: 'outside'
-      //           },
-      //           emphasis: {
-      //             show: true
-      //           }
-      //         },
-      //         labelLine: {
-      //           normal: {
-      //             show: true,
-      //             length: 20,
-      //             length2: 55
-      //           },
-      //           emphasis: {
-      //             show: false
-      //           }
-      //         },
-      //         data: [{
-      //           value: 10,
-      //           name: '火灾'
-      //         },
-      //           {
-      //             value: 5,
-      //             name: '触电'
-      //           },
-      //           {
-      //             value: 15,
-      //             name: '其他'
-      //           },
-      //           {
-      //             value: 25,
-      //             name: '设备倾覆'
-      //           },
-      //           {
-      //             value: 20,
-      //             name: '结构坍塌'
-      //           },
-      //           {
-      //             value: 35,
-      //             name: '高空坠物'
-      //           }
-      //         ]
-      //       }, ]
-      //     })
-      // },
+      buttonType(index){
+        if(index === this.currentType){
+          return "success"
+        }else{
+          return "info"
+        }
+      },
+      getenvironmentData(){
+        // getEnvironmentData({}).then(req =>{
+        //   console.log(res.data.data)
+        // })
+        this.environmentType = ['风速','PM2.5','PM10','噪音','温度','湿度'],
+        this.environmentData=[],
+        this.environmentX = [],
+        this.currentType = this.environmentType[0]
+        this.selectType(0)
+      },
+      selectType(val){
+        this.currentType = val
+        console.log("shuju",val)
+        if(val === 0){
+          this.yMin = 0.7,
+          this.yMax = 1.5,
+          this.environmentData  = [1.6, 0.7, 0.7, 0.3, 1.1, 1, 1.2, 1.4, 0.5, 1.2, 1, 1.5, 1.3, 0.8, 0.6, 1, 0.4, 0.5, 0.7, 0.6, 0.7, 0.9,1],
+          this.environmentX = ['00:00','1:00', '2:00', '3:00', '4:00', '5:00', '6:00', '7:00', '8:00', '9:00', '10:00', '11:00', '12:00', '13:00', '14:00', '15:00', '16:00', '17:00', '18:00', '19:00', '20:00', '21:00', '22:00']
+        }else if(val === 1){
+          this.yMin = 1.0,
+          this.yMax = 2.0,
+          this.environmentData  = [2, 1.8, 2.7, 1.3, 1.0, 0.8, 1.0, 1.1, 0.7, 1.5, 1.1, 1.6, 1.7, 0.9, 0.7, 0.5, 0.3, 0.7, 0.5, 1.6, 0.5, 1,0.8],
+          this.environmentX = ['00:00','1:00', '2:00', '3:00', '4:00', '5:00', '6:00', '7:00', '8:00', '9:00', '10:00', '11:00', '12:00', '13:00', '14:00', '15:00', '16:00', '17:00', '18:00', '19:00', '20:00', '21:00', '22:00']
+        }else if(val === 2){
+          this.yMin = 0.7,
+          this.yMax = 1.5,
+          this.environmentData  = [1.4, 0.8, 1.7, 2.3, 1.0, 0.8, 1.0, 1.1, 0.7, 1.5, 1.1, 1.6, 1.7, 0.9, 0.7, 0.5, 0.3, 0.7, 0.5, 1.6, 0.5, 1,0.8],
+          this.environmentX = ['00:00','1:00', '2:00', '3:00', '4:00', '5:00', '6:00', '7:00', '8:00', '9:00', '10:00', '11:00', '12:00', '13:00', '14:00', '15:00', '16:00', '17:00', '18:00', '19:00', '20:00', '21:00', '22:00']
+        }else if(val === 3){
+          this.yMin = 1.0,
+          this.yMax = 1.6,
+          this.environmentData  = [1.2, 2.8, 1.5, 1.5, 1.0, 1.1, 0.7, 1.5, 1.1, 1.6, 1.1, 1.6, 1.7, 0.9, 0.7, 0.5, 0.3, 0.7, 0.5, 1.6, 0.5, 1,0.8],
+          this.environmentX = ['00:00','1:00', '2:00', '3:00', '4:00', '5:00', '6:00', '7:00', '8:00', '9:00', '10:00', '11:00', '12:00', '13:00', '14:00', '15:00', '16:00', '17:00', '18:00', '19:00', '20:00', '21:00', '22:00']
+        }else if(val === 4){
+          this.yMin = 0.9,
+          this.yMax = 1.4,
+          this.environmentData  = [0.7, 0.5, 1.8, 2.3, 1.0, 0.8, 1.0, 1.1, 0.7, 1.5, 1.1, 1.6, 2.7, 1.3, 1.0, 0.8, 1.0, 1.1, 0.7, 1.6, 0.5, 1,0.8],
+          this.environmentX = ['00:00','1:00', '2:00', '3:00', '4:00', '5:00', '6:00', '7:00', '8:00', '9:00', '10:00', '11:00', '12:00', '13:00', '14:00', '15:00', '16:00', '17:00', '18:00', '19:00', '20:00', '21:00', '22:00']
+        }else if(val === 5){
+          this.yMin = 0.7,
+          this.yMax = 1.3,
+          this.environmentData  = [0.6, 0.7, 0.9, 2.3, 1.0, 0.8, 1.0, 1.1, 0.7, 1.5, 1.1, 1.6, 1.7, 0.9, 0.7, 0.5, 0.3, 0.7, 0.5, 1.6, 0.5, 1,0.8],
+          this.environmentX = ['00:00','1:00', '2:00', '3:00', '4:00', '5:00', '6:00', '7:00', '8:00', '9:00', '10:00', '11:00', '12:00', '13:00', '14:00', '15:00', '16:00', '17:00', '18:00', '19:00', '20:00', '21:00', '22:00']
+        }
+        this.initEnvironment()
+        this.buttonType(val)
+      },
       initEnvironment() {
         this.environChart = echarts.init(document.getElementById('environmentChart'), 'macarons')
         this.environChart.setOption({
@@ -424,16 +299,14 @@
               type: 'shadow'
             }
           },
-          legend: {
-            data: ['风速', 'PM2.5', 'PM10', '噪音', '温度', '湿度'],
-            textStyle: {
-              color: 'white'
-            }
+          grid:{
+            left:'10%',
+            top:'30',
           },
           xAxis: {
             type: 'category',
             boundaryGap: false,
-            data: ['00:00','1:00', '2:00', '3:00', '4:00', '5:00', '6:00', '7:00', '8:00', '9:00', '10:00', '11:00', '12:00', '13:00', '14:00', '15:00', '16:00', '17:00', '18:00', '19:00', '20:00', '21:00', '22:00'],
+            data: this.environmentX,
             symbol: ['none', 'arrow'],
             /*改变x轴颜色*/
             axisLine: {
@@ -464,40 +337,21 @@
           },
           series: [
             {
-              name: '风速',
-              data: [1.6, 0.7, 0.7, 0.3, 1.1, 1, 1.2, 1.4, 0.5, 1.2, 1, 1.5, 1.3, 0.8, 0.6, 1, 0.4, 0.5, 0.7, 0.6, 0.7, 0.9,1],
+              name: this.currentType,
+              data:this.environmentData,
               type: 'line',
-              smooth: true
-            },
-            {
-              name: 'PM2.5',
-              data: [1.4, 0.8, 1.7, 2.3, 1.0, 0.8, 1.0, 1.1, 0.7, 1.5, 1.1, 1.6, 1.7, 0.9, 0.7, 0.5, 0.3, 0.7, 0.5, 1.6, 0.5, 1,0.8],
-              type: 'line',
-              smooth: true
-            },
-            {
-              name: 'PM10',
-              data: [2, 1.8, 2.7, 1.3, 1.0, 0.8, 1.0, 1.1, 0.7, 1.5, 1.1, 1.6, 1.7, 0.9, 0.7, 0.5, 0.3, 0.7, 0.5, 1.6, 0.5, 1,0.8],
-              type: 'line',
-              smooth: true
-            },
-            {
-              name: '噪音',
-              data: [1.2, 2.8, 1.5, 1.5, 1.0, 1.1, 0.7, 1.5, 1.1, 1.6, 1.1, 1.6, 1.7, 0.9, 0.7, 0.5, 0.3, 0.7, 0.5, 1.6, 0.5, 1,0.8],
-              type: 'line',
-              smooth: true
-            },
-            {
-              name: '温度',
-              data: [0.7, 0.5, 1.8, 2.3, 1.0, 0.8, 1.0, 1.1, 0.7, 1.5, 1.1, 1.6, 2.7, 1.3, 1.0, 0.8, 1.0, 1.1, 0.7, 1.6, 0.5, 1,0.8],
-              type: 'line',
-              smooth: true
-            },
-            {
-              name: '湿度',
-              data: [0.6, 0.7, 0.9, 2.3, 1.0, 0.8, 1.0, 1.1, 0.7, 1.5, 1.1, 1.6, 1.7, 0.9, 0.7, 0.5, 0.3, 0.7, 0.5, 1.6, 0.5, 1,0.8],
-              type: 'line',
-              smooth: true
+              smooth: true,
+              // 标线
+              markLine: {
+                data: [
+                  {yAxis:this.yMax, name: '最大值'},
+                  {yAxis:this.yMin, name: '最小值'},
+                ],
+                // lineStyle:{
+                //   color:red,
+                //   type:'dashed'
+                // },
+              },
             },
           ]
         });
@@ -761,6 +615,12 @@
 </script>
 
 <style scoped>
+  .environmentTag {
+    padding: 0 200px;
+    // background-color: red;
+    display: flex;
+    justify-content: space-between;
+  }
   .border-top-left {
     height: 10px;
     background-image: url("../../../src/assets/border/top-center.png");
@@ -838,5 +698,8 @@
   #alarmTrend {
     width: 100%;
     height: calc(40vh - 10px - 0.5rem);
+  }
+  .addColor{
+    background-color: red;
   }
 </style>

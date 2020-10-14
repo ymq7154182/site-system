@@ -4,7 +4,7 @@
       <li>
         <div>
           <el-button type="success" icon="el-icon-edit" size="mini"  @click="addRecord" >新增</el-button>
-          <el-button type="warning" icon="el-icon-download" size="mini" @click="handleExport" >下载</el-button>
+          <!--<el-button type="warning" icon="el-icon-download" size="mini" @click="handleExport" >下载</el-button>-->
           <div style="float: right; ">
             <el-date-picker
               v-model="startTime"

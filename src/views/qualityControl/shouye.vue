@@ -37,7 +37,7 @@
               <el-col :span="12">
                 <div class="col-div">
                   <div class="box-txt">
-                    <span>安质隐患统计</span>
+                    <span>质量隐患统计</span>
                   </div>
                   <!--<div id="mychart21">-->
                   <!---->
@@ -193,7 +193,7 @@
           timer: '',
           option: '',
           configTable: {
-            header: ['安全事件', '记录时间', '安全类型', '处理情况'],
+            header: ['检查内容', '记录时间', '类型', '处理情况'],
             headerHeight: 45,
             data: [
               // ['设备安全检查', '2019-10-13', '1号塔机检测', '<span style="color: #67c23a; ">通过</span>'],
@@ -1684,7 +1684,7 @@
             },
             series: [
               {
-                name:'安全隐患统计',
+                name:'质量隐患统计',
                 type:'pie',
                 selectedMode: 'single',
                 radius: [0, '40%'],
@@ -1705,7 +1705,7 @@
                 data:echartData.inner
               },
               {
-                name:'安全隐患统计',
+                name:'质量隐患统计',
                 type:'pie',
                 radius: ['60%', '80%'],
                 center:["30%","50%"],
@@ -4239,8 +4239,10 @@
             var data2 = []
             for(var i = 0 ;i < res.data.data.length;i++ ){
               var data1 = []
+              var arr=res.data.data[i].startTime.split(" ")
+              //console.log("123arr",arr)
               data1.push(res.data.data[i].checkTypeOffspring)
-              data1.push(res.data.data[i].startTime)
+              data1.push(arr[0])
               data1.push(res.data.data[i].checkType)
               if(res.data.data[i].processStatus === 1){
                 data1.push("<span style='color: #3ad7fa'>未处理</span>")
@@ -4270,7 +4272,7 @@
             // }
             //console.log("data2",data2)
             this.configTable = {
-              header: ['安全事件', '记录时间', '安全类型', '处理情况'],
+              header: ['检查内容', '记录时间', '类型', '处理情况'],
               headerHeight: 45,
               data: data2,
               rowNum: 7,
