@@ -237,7 +237,7 @@
     },
     methods: {
       buttonType(index){
-        if(index === this.currentType){
+        if(this.environmentType[index] === this.currentType){
           return "success"
         }else{
           return "info"
@@ -254,7 +254,7 @@
         this.selectType(0)
       },
       selectType(val){
-        this.currentType = val
+        this.currentType = this.environmentType[val]
         console.log("shuju",val)
         if(val === 0){
           this.yMin = 0.7,
@@ -617,7 +617,7 @@
 <style scoped>
   .environmentTag {
     padding: 0 200px;
-    // background-color: red;
+    /* background-color: red; */
     display: flex;
     justify-content: space-between;
   }
