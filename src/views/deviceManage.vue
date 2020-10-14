@@ -58,6 +58,10 @@
                                 <td><i class="el-icon-s-custom" /> 责任人:</td>
                                 <td>张伟</td>
                               </tr>
+                              <tr>
+                                <td><i class="el-icon-phone-outline" /> 联系人:</td>
+                                <td>13634532236</td>
+                              </tr>
                             </table>
                           </div>
                           <div style="height: 18%; width: 100%; ">
@@ -94,6 +98,10 @@
                               <tr>
                                 <td><i class="el-icon-s-custom" /> 责任人:</td>
                                 <td>张伟</td>
+                              </tr>
+                              <tr>
+                                <td><i class="el-icon-phone-outline" /> 联系人:</td>
+                                <td>13634532236</td>
                               </tr>
                             </table>
                           </div>
@@ -132,6 +140,10 @@
                                 <td><i class="el-icon-s-custom" /> 责任人:</td>
                                 <td>王刚</td>
                               </tr>
+                              <tr>
+                                <td><i class="el-icon-phone-outline" /> 联系人:</td>
+                                <td>13634532236</td>
+                              </tr>
                             </table>
                           </div>
                           <div style="height: 18%; width: 100%; ">
@@ -168,6 +180,10 @@
                               <tr>
                                 <td><i class="el-icon-s-custom" /> 责任人:</td>
                                 <td>张洲</td>
+                              </tr>
+                              <tr>
+                                <td><i class="el-icon-phone-outline" /> 联系人:</td>
+                                <td>13634532236</td>
                               </tr>
                             </table>
                           </div>
@@ -206,6 +222,10 @@
                                 <td><i class="el-icon-s-custom" /> 责任人:</td>
                                 <td>李华</td>
                               </tr>
+                              <tr>
+                                <td><i class="el-icon-phone-outline" /> 联系人:</td>
+                                <td>13634532236</td>
+                              </tr>
                             </table>
                           </div>
                           <div style="height: 18%; width: 100%; ">
@@ -242,6 +262,10 @@
                               <tr>
                                 <td><i class="el-icon-s-custom" /> 责任人:</td>
                                 <td>张伟</td>
+                              </tr>
+                              <tr>
+                                <td><i class="el-icon-phone-outline" /> 联系人:</td>
+                                <td>13634532236</td>
                               </tr>
                             </table>
                           </div>
@@ -280,6 +304,10 @@
                                 <td><i class="el-icon-s-custom" /> 责任人:</td>
                                 <td>张伟</td>
                               </tr>
+                              <tr>
+                                <td><i class="el-icon-phone-outline" /> 联系人:</td>
+                                <td>13634532236</td>
+                              </tr>
                             </table>
                           </div>
                           <div style="height: 18%; width: 100%; ">
@@ -316,6 +344,10 @@
                               <tr>
                                 <td><i class="el-icon-s-custom" /> 责任人:</td>
                                 <td>王刚</td>
+                              </tr>
+                              <tr>
+                                <td><i class="el-icon-phone-outline" /> 联系人:</td>
+                                <td>13634532236</td>
                               </tr>
                             </table>
                           </div>
@@ -354,6 +386,10 @@
                                 <td><i class="el-icon-s-custom" /> 责任人:</td>
                                 <td>张洲</td>
                               </tr>
+                              <tr>
+                                <td><i class="el-icon-phone-outline" /> 联系人:</td>
+                                <td>13634532236</td>
+                              </tr>
                             </table>
                           </div>
                           <div style="height: 18%; width: 100%; ">
@@ -390,6 +426,10 @@
                               <tr>
                                 <td><i class="el-icon-s-custom" /> 责任人:</td>
                                 <td>李华</td>
+                              </tr>
+                              <tr>
+                                <td><i class="el-icon-phone-outline" /> 联系人:</td>
+                                <td>13634532236</td>
                               </tr>
                             </table>
                           </div>
@@ -975,6 +1015,10 @@
                                 <td><i class="el-icon-s-custom" /> 责任人:</td>
                                 <td>张伟</td>
                               </tr>
+                              <tr>
+                                <td><i class="el-icon-phone-outline" /> 联系人:</td>
+                                <td>13634532236</td>
+                              </tr>
                             </table>
                           </div>
                           <div style="height: 18%; width: 100%; ">
@@ -1011,6 +1055,10 @@
                               <tr>
                                 <td><i class="el-icon-s-custom" /> 责任人:</td>
                                 <td>张伟</td>
+                              </tr>
+                              <tr>
+                                <td><i class="el-icon-phone-outline" /> 联系人:</td>
+                                <td>13634532236</td>
                               </tr>
                             </table>
                           </div>
@@ -1049,6 +1097,10 @@
                                 <td><i class="el-icon-s-custom" /> 责任人:</td>
                                 <td>王刚</td>
                               </tr>
+                              <tr>
+                                <td><i class="el-icon-phone-outline" /> 联系人:</td>
+                                <td>13634532236</td>
+                              </tr>
                             </table>
                           </div>
                           <div style="height: 18%; width: 100%; ">
@@ -1085,6 +1137,10 @@
                               <tr>
                                 <td><i class="el-icon-s-custom" /> 责任人:</td>
                                 <td>张洲</td>
+                              </tr>
+                              <tr>
+                                <td><i class="el-icon-phone-outline" /> 联系人:</td>
+                                <td>13634532236</td>
                               </tr>
                             </table>
                           </div>
@@ -1123,6 +1179,10 @@
                                 <td><i class="el-icon-s-custom" /> 责任人:</td>
                                 <td>李华</td>
                               </tr>
+                              <tr>
+                                <td><i class="el-icon-phone-outline" /> 联系人:</td>
+                                <td>13634532236</td>
+                              </tr>
                             </table>
                           </div>
                           <div style="height: 18%; width: 100%; ">
@@ -1159,6 +1219,10 @@
                               <tr>
                                 <td><i class="el-icon-s-custom" /> 责任人:</td>
                                 <td>张伟</td>
+                              </tr>
+                              <tr>
+                                <td><i class="el-icon-phone-outline" /> 联系人:</td>
+                                <td>13634532236</td>
                               </tr>
                             </table>
                           </div>
@@ -1197,6 +1261,10 @@
                                 <td><i class="el-icon-s-custom" /> 责任人:</td>
                                 <td>张伟</td>
                               </tr>
+                              <tr>
+                                <td><i class="el-icon-phone-outline" /> 联系人:</td>
+                                <td>13634532236</td>
+                              </tr>
                             </table>
                           </div>
                           <div style="height: 18%; width: 100%; ">
@@ -1233,6 +1301,10 @@
                               <tr>
                                 <td><i class="el-icon-s-custom" /> 责任人:</td>
                                 <td>王刚</td>
+                              </tr>
+                              <tr>
+                                <td><i class="el-icon-phone-outline" /> 联系人:</td>
+                                <td>13634532236</td>
                               </tr>
                             </table>
                           </div>
@@ -1271,6 +1343,10 @@
                                 <td><i class="el-icon-s-custom" /> 责任人:</td>
                                 <td>张洲</td>
                               </tr>
+                              <tr>
+                                <td><i class="el-icon-phone-outline" /> 联系人:</td>
+                                <td>13634532236</td>
+                              </tr>
                             </table>
                           </div>
                           <div style="height: 18%; width: 100%; ">
@@ -1307,6 +1383,10 @@
                               <tr>
                                 <td><i class="el-icon-s-custom" /> 责任人:</td>
                                 <td>李华</td>
+                              </tr>
+                              <tr>
+                                <td><i class="el-icon-phone-outline" /> 联系人:</td>
+                                <td>13634532236</td>
                               </tr>
                             </table>
                           </div>
@@ -1408,6 +1488,8 @@ export default {
   },
   data() {
     return {
+      myChart100: '',
+      myChart10: '',
       alarmTypeChart: null,
       alarmTypeChart2: null,
       alarmTrendChart: null,
@@ -1508,6 +1590,66 @@ export default {
     }
   },
   methods: {
+    inchart100() {
+      this.myChart100 = this.$echarts.init(document.getElementById('mychart100'),'macarons')
+      var option = {
+        // tooltip: {
+        //   trigger: 'item',
+        //   formatter: '{a} <br/>{b}: {c}'
+        // },
+        angleAxis: {
+          type: 'category',
+          data: ['塔式起重机', '物料提升机', '施工升降机', '特种设备', '视频设备'],
+          textStyle:{
+            fontSize:16,
+            color:'#544bfc'
+          }
+        },
+        radiusAxis: {
+        },
+        polar: {
+          radius: ['10%', '50%'],
+          center: ["50%", "50%"],
+        },
+        label:{
+          normal:{
+            show:true,
+            position:'top',
+            textStyle:{
+              fontSize:16,
+              color:'#B0CEFC'
+            }
+          }
+        },
+        series: [{
+          radius: ['20%', '70%'],
+          center: ["20%", "20%"],
+          type: 'bar',
+          data: [1, 2, 3, 4, 3, 5, 1],
+          coordinateSystem: 'polar',
+          name: '异常',
+          stack: 'a',
+        }, {
+          radius: ['20%', '70%'],
+          center: ["90%", "90%"],
+          type: 'bar',
+          data: [15, 24, 16, 33, 23, 22, 21],
+          coordinateSystem: 'polar',
+          name: '总数',
+          stack: 'a'
+        }],
+        legend: {
+          show: true,
+          data: ['异常', '总数'],
+          left: 'right',
+          textStyle: {
+            color: '#2CABE3',
+            fontSize: 12,
+          },
+        }
+      }
+      this.myChart100.setOption(option)
+    },
     initAlarmType() {
       this.alarmTypeChart = echarts.init(document.getElementById('alarmType'), 'macarons');
       var option = {
@@ -1706,7 +1848,7 @@ export default {
         },
         yAxis: {
           type: 'category',
-          data: ['一号塔吊', '二号塔吊', '三号塔吊', '四号塔吊'],
+          data: ['一号塔吊', '二号塔吊', '三号塔吊', '四号塔吊', '五号塔吊'],
           splitLine: {
             show: false
           },
@@ -1720,12 +1862,12 @@ export default {
         {
             name: '距离下次维修时间（天）',
             type: 'bar',
-            data: [20, 18, 15, 10]
+            data: [20, 18, 15, 10,12]
         },
         {
             name: '距离租赁到期时间（天）',
             type: 'bar',
-            data: [180, 201, 167, 138]
+            data: [180, 201, 167, 138,154]
         }
         ]
 
@@ -1832,7 +1974,7 @@ export default {
         },
         yAxis: {
           type: 'category',
-          data: ['一号施工升降机', '二号施工升降机', '三号施工升降机', '四号施工升降机'],
+          data: ['一号施工升降机', '二号施工升降机', '三号施工升降机', '四号施工升降机','五号施工升降机'],
           splitLine: {
             show: false
           },
@@ -1846,12 +1988,12 @@ export default {
           {
             name: '距离下次维修时间（天）',
             type: 'bar',
-            data: [20, 18, 15, 10]
+            data: [20, 18, 15, 10,12]
           },
           {
             name: '距离租赁到期时间（天）',
             type: 'bar',
-            data: [180, 201, 167, 138]
+            data: [180, 201, 167, 138,143]
           }
         ]
 

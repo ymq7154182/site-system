@@ -262,9 +262,9 @@
                 <el-table-column prop="weibaotime" label="维保时间" />
                 <el-table-column prop="maxcapacity" label="运转台时" />
                 <el-table-column prop="maxrange" label="更换主要零部件" />
-                <el-table-column prop="leftheight" label="维管负责人" />
+                <!-- <el-table-column prop="leftheight" label="维管负责人" />
                 <el-table-column prop="towerheight" label="维保人员" width="150" align="center" />
-                <el-table-column prop="installheigth" label="维修（保养）内容" align="center" />
+                <el-table-column prop="installheigth" label="维修（保养）内容" align="center" /> -->
                 <el-table-column prop="installuseraqjg" label="监理单位审核意见" align="center" />
                 <el-table-column prop="installuserzc" label="监理单位审核日期" align="center" />
                 <el-table-column prop="reporttime" label="上报时间" align="center" />
@@ -882,7 +882,7 @@
       }
     },
     mounted() {
-      this.getZiJian()
+      // this.getZiJian()
       this.getAllData()
     },
     methods: {
@@ -898,10 +898,12 @@
           this.uploadInfo4.proid = res.data.guid
           this.uploadInfo5.proid = res.data.guid
           this.uploadInfo6.proid = res.data.guid
+          this.getZiJian()
+
         })
       },
       getZiJian() {
-        zijian().then((res) => {
+        zijian(this.uploadInfo.proid).then((res) => {
           this.fileTable = res.data.data
         })
       },
@@ -972,7 +974,7 @@
         })
       },
       getyanshou() {
-        yanshou().then((res) => {
+        yanshou(this.uploadInfo2.proid).then((res) => {
           this.fileTable = res.data.data
         })
       },
@@ -989,7 +991,7 @@
         })
       },
       getweihu() {
-        weihu().then((res) => {
+        weihu(this.uploadInfo6.proid).then((res) => {
           this.fileTable = res.data.rows
         })
       },
@@ -1016,7 +1018,7 @@
         })
       },
       getdingqi() {
-        dingqi().then((res) => {
+        dingqi(this.uploadInfo5.proid).then((res) => {
           this.fileTable = res.data.rows
         })
       },
@@ -1033,13 +1035,13 @@
         })
       },
       getdingsheng() {
-        dingsheng().then((res) => {
+        dingsheng(this.uploadInfo3.proid).then((res) => {
           this.fileTable = res.data.rows
         })
       },
       getadddingsheng() {
-        var data = this.uploadInfo3
-        adddingsheng(data).then((res) => {
+
+        adddingsheng(this.uploadInfo3).then((res) => {
           if(res.data.code === 200) {
             this.$message.success(res.data.msg)
             this.getdingsheng()
@@ -1050,7 +1052,7 @@
         })
       },
       getfuzhuo() {
-        fuzhuo().then((res) => {
+        fuzhuo(this.uploadInfo4.proid).then((res) => {
           this.fileTable = res.data.rows
         })
       },

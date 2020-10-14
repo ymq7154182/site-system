@@ -36,12 +36,12 @@
             <el-table-column prop="realTimeGradientOne" label="倾角1（倾斜度1）" align="center" />
             <el-table-column prop="realTimeGradientTwo" label="倾角2（倾斜度2）" align="center" />
             <el-table-column prop="tiltPercentageOne" label="倾角1（倾斜百分比1）" align="center" />
-            <el-table-column prop="tiltPercentageTne" label="倾角2（倾斜百分比2）" align="center" />
+            <el-table-column prop="tiltPercentageTwo" label="倾角2（倾斜百分比2）" align="center" />
             <el-table-column prop="realTimeNumberOfPeople" label="设备运行轿厢内人数" align="center" />
             <el-table-column prop="windSpeed" label="运行速度" align="center" />
             <el-table-column prop="realTimeSpeedDirection" label="运行方向" align="center" />
             <el-table-column prop="windState" label="设备运行状态" align="center" />
-            <el-table-column prop="heightPercentage" label="实时数据产生时间" align="center" />
+            <el-table-column prop="happenTime" label="实时数据产生时间" align="center" />
             <el-table-column label="操作" align="center" width="150">
               <template slot-scope="scope">
                 <el-button

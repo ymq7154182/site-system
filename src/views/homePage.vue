@@ -1199,7 +1199,7 @@
             legend: {
               orient: 'vertical',
               left: 10,
-              top: '30%',
+              top: '15%',
               itemWidth: 10,
               itemHeight: 10,
               itemGap: 15,
@@ -1207,7 +1207,7 @@
                 color: '#ACCFFF',
                 fontSize: 12,
               },
-              data: ['塔吊', '遵章守纪', '楼梯口、电梯口防护', '安全教育','施工机具']
+              data: ['塔吊', '遵章守纪', '楼梯口防护', '电梯口防护',  '安全教育','施工机具']
             },
             tooltip: {
               trigger: 'item',
