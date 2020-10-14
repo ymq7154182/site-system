@@ -193,7 +193,7 @@
           timer: '',
           option: '',
           configTable: {
-            header: ['检查内容', '记录时间', '类型', '处理情况'],
+            header: ['检查内容', '检查时间', '类型', '处理情况'],
             headerHeight: 45,
             data: [
               // ['设备安全检查', '2019-10-13', '1号塔机检测', '<span style="color: #67c23a; ">通过</span>'],
@@ -4272,7 +4272,7 @@
             // }
             //console.log("data2",data2)
             this.configTable = {
-              header: ['检查内容', '记录时间', '类型', '处理情况'],
+              header: ['检查内容', '检查时间', '类型', '处理情况'],
               headerHeight: 45,
               data: data2,
               rowNum: 7,
