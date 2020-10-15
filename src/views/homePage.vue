@@ -1351,7 +1351,7 @@
               },
                 {
                   value: 5,
-                  name: '项目经理',
+                  name: '项目负责人',
                   itemStyle: {
                     color: "#01FFFF",
                     borderColor: "#01FFFF",
