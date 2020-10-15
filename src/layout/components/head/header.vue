@@ -54,7 +54,7 @@
             <li>
               <div class="li-text2 pos-style2 " :class="{'bg-img1': textStyle=== '安全管理', 'bg-img2': textStyle!== '安全管理'}" @click="securityControl">
                   <span>
-                   安质管理
+                   质安管理
                 </span>
               </div>
             </li>

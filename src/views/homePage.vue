@@ -1754,8 +1754,16 @@
   .schedule-content .el-step__title {
     font-size: 18px;
     font-weight: bold;
+    
   }
   .homePage_dialog .home_second .el-dialog__body {
     margin-left: 10%;
   }
+  .homePage_dialog .home_second .el-dialog{
+    background: rgb(32,63,112);
+  }
+  .homePage_dialog .home_second .el-dialog__title{
+    color: white;
+  }
+ 
 </style>

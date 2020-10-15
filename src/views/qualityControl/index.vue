@@ -2,7 +2,7 @@
   <div>
     <div style="padding: 0.11rem">
       <el-tabs v-model="activeName" class="tabs" @click="handleTabs">
-        <el-tab-pane label="安质管理" name="first"  >
+        <el-tab-pane label="质安管理" name="first"  >
           <shou-ye></shou-ye>
         </el-tab-pane>
         <el-tab-pane label="考评月报" name="second" >

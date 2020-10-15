@@ -8,7 +8,7 @@
               <el-col :span="12">
                 <div class="col-div">
                   <div class="box-txt">
-                    <span>安质检查</span>
+                    <span>质安检查</span>
                   </div>
                   <div id="mychart1"></div>
                   <div class="saftNum">总数：{{sumNum}}件</div>
@@ -37,7 +37,7 @@
               <el-col :span="12">
                 <div class="col-div">
                   <div class="box-txt">
-                    <span>质量隐患统计</span>
+                    <span>质安问题分布情况</span>
                   </div>
                   <!--<div id="mychart21">-->
                   <!---->
@@ -88,7 +88,7 @@
           <el-col :span="12">
             <div class="col-div2">
               <div class="box-txt">
-                安质教育培训
+                质安教育培训
               </div>
               <div>
                 <el-row>
@@ -1705,7 +1705,7 @@
                 data:echartData.inner
               },
               {
-                name:'质量隐患统计',
+                name:'安全隐患统计',
                 type:'pie',
                 radius: ['60%', '80%'],
                 center:["30%","50%"],
