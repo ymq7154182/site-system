@@ -11,7 +11,7 @@
                   <div class="box-title">塔吊数据</div>
                   <el-row>
                     <el-col :span="12">
-                      <el-button class="style-btn" size="mini" @click="gotoTD">七张表</el-button>
+                      <el-button class="style-btn" size="mini" @click="gotoTD">设备使用过程</el-button>
                       <dv-decoration-9 class="tower-data">
                         <ul style="list-style: none; padding: 0; text-align: center; ">
                           <li>4</li>
@@ -510,7 +510,7 @@
                   <!--<div class="box-title">物料提升机数据</div>-->
                   <!--<el-row>-->
                     <!--<el-col :span="12">-->
-                      <!--<el-button class="style-btn" size="mini" @click="gotoTD">七张表</el-button>-->
+                      <!--<el-button class="style-btn" size="mini" @click="gotoTD">设备使用过程管理</el-button>-->
                       <!--<dv-decoration-9 class="tower-data">-->
                         <!--<ul style="list-style: none; padding: 0; text-align: center; ">-->
                           <!--<li>4</li>-->
@@ -968,7 +968,7 @@
                   <div class="box-title">施工升降机数据</div>
                   <el-row>
                     <el-col :span="12">
-                      <el-button class="style-btn" size="mini" @click="gotoTD">七张表</el-button>
+                      <el-button class="style-btn" size="mini" @click="gotoTD">设备使用过程</el-button>
                       <dv-decoration-9 class="tower-data">
                         <ul style="list-style: none; padding: 0; text-align: center; ">
                           <li>4</li>

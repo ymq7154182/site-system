@@ -10,7 +10,7 @@
                     <!-- <dv-border-box-8> -->
                         <div class="oneArea" id="one" >
 
-                            <img src="../../assets/videoManager/1.png" />
+                            <img src="../../assets/videoManager/v_3.png" />
 
                         </div>
                     <!-- </dv-border-box-8>  -->
@@ -21,12 +21,12 @@
                 <div class="twoVideoArea" v-if="videoTwo">
                     <!-- <dv-border-box-8> -->
                         <div class="twoArea" id="two1" >
-                            <img src="../../assets/videoManager/1.png" />
+                            <img src="../../assets/videoManager/v_2.png" />
                         </div>
                     <!-- </dv-border-box-8>
                      <dv-border-box-8> -->
                         <div class="twoArea" id="two2" >
-                            <img src="../../assets/videoManager/2.png" />
+                            <img src="../../assets/videoManager/v_3.png" />
                         </div>
                     <!-- </dv-border-box-8>  -->
 
@@ -37,24 +37,24 @@
                     <div class="fourVideoArea_1">
                         <!-- <dv-border-box-8> -->
                             <div class="fourArea" id="four1" >
-                                <img src="../../assets/videoManager/1.png" />
+                                <img src="../../assets/videoManager/v_1.png" />
                             </div>
                         <!-- </dv-border-box-8>
                         <dv-border-box-8> -->
                             <div class="fourArea" id="four2" >
-                                <img src="../../assets/videoManager/2.png" />
+                                <img src="../../assets/videoManager/v_2.png" />
                             </div>
                         <!-- </dv-border-box-8>  -->
                     </div>
                     <div class="fourVideoArea_1">
                         <!-- <dv-border-box-8> -->
                             <div class="fourArea" id="four3" >
-                                <img src="../../assets/videoManager/3.png" />
+                                <img src="../../assets/videoManager/v_3.png" />
                             </div>
                         <!-- </dv-border-box-8>
                         <dv-border-box-8> -->
                             <div class="fourArea" id="four4" >
-                                <img src="../../assets/videoManager/4.png" />
+                                <img src="../../assets/videoManager/v_4.png" />
                             </div>
                         <!-- </dv-border-box-8>  -->
                     </div>
@@ -120,7 +120,7 @@ export default {
             videoTwo: false,
             videoFour: true,
             treeData: [{
-                label: '石家庄智慧工地项目一期',
+                label: '石家庄宝能中心项目二标段',
                 children: [
                     {
                         id: 1,
@@ -217,7 +217,7 @@ export default {
 }
 </script>
 
-<style >
+<style scoped>
 .videoManager {
     margin: 0.1667rem;
 
@@ -244,8 +244,8 @@ export default {
 	}
 }
 .oneArea {
-    width:100%;
-    height: 100%;
+    width:80%;
+    height: 80%;
     /* background-image: url("../../assets/videoManager/bg_chang.png");
     background-size: 100% 100%;
     background-repeat: no-repeat; */
@@ -255,7 +255,7 @@ export default {
    margin: 0 auto;
    margin-right: 0.6rem;
     margin-left: 0.5rem;
-   border:1px solid rgb(223, 187, 187);
+   /* border:1px solid rgb(223, 187, 187); */
    animation: daxiao_1 1s linear;
 
 }
@@ -272,12 +272,12 @@ export default {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100%;
-    width: 100%;
+    height: 80%;
+    width: 80%;
     margin: 0 auto;
     margin-right: 0.6rem;
     margin-left: 0.5rem;
-   border:1px solid rgb(223, 187, 187);
+   /* border:1px solid rgb(223, 187, 187); */
 
 }
 .fourVideoArea {
@@ -303,12 +303,12 @@ export default {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 85%;
+    height: 80%;
     width: 80%;
     margin: 0 auto;
     margin-right: 0.6rem;
     margin-left: 0.5rem;
-    border:1px solid rgb(223, 187, 187);
+    /* border:1px solid rgb(223, 187, 187); */
 }
 .fenge {
     background: transparent;
@@ -390,18 +390,24 @@ export default {
     background: transparent;
     color: #a1bbee;
 }
-.el-tree-node:focus > .el-tree-node__content {
+.el-tree >>> .el-tree-node:focus >>> .el-tree-node__content {
     background-color: #66b1ff87 !important;
   }
-  .el-tree-node__content:hover {    background-color: #66b1ff87;
+  .el-tree >>> .el-tree-node__content:hover {    background-color: #66b1ff87;
   }
-  .el-tree--highlight-current .el-tree-node.is-current>.el-tree-node__content {
+  .el-tree >>> .el-tree--highlight-current .el-tree-node.is-current>.el-tree-node__content {
     background-color: #66b1ff87;
   }
   .el-icon-video-camera {
       color: rgb(230, 92, 92);
       font-size: 13px;
       padding-right:8px;
+  }
+  img {
+      width: auto;  
+    height: auto;  
+    max-width: 100%;  
+    max-height: 100%;   
   }
 </style>
 
