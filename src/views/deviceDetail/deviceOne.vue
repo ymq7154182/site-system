@@ -22,12 +22,20 @@
       <el-col :span="20">
         <div class="dm-main">
           <div class="border-top-right"></div>
-          <div style="padding: 0.13rem">
+          <div style="padding: 0.13rem;position: relative">
             <el-button type="success" @click="gotoback"><i class="el-icon-d-arrow-left" />返回</el-button>
             <el-button type="primary" @click="showUpload = true"><i class="el-icon-plus" /> 新增</el-button>
-            
+            <span style="font-size: 0.2rem;margin-left: 0.1rem;color: white">
+               设备编号：
+            </span>
+           <el-input style="width: 2rem" placeholder="请输入设备编号"></el-input>
+            <el-button type="primary" icon="el-icon-search">查询</el-button>
+            <div class="titles-style">
+              <span>{{titles}}</span>
+            </div>
           </div>
-          
+
+
           <div v-show="tableShow === 'table1'">
             <div class="data_table">
               <el-table
@@ -87,7 +95,7 @@
 <!--                <el-table-column prop="setupId" label="安装id" />-->
 <!--                <el-table-column prop="userid" label="当前登录人id" />-->
                 <el-table-column type="index" label="序号"  align="center"/>
-                
+
                 <el-table-column prop="opinionSg" label="施工单位意见" align="center" />
                 <el-table-column prop="userSg" label="施工单位项目经理签字" align="center" />
                 <el-table-column prop="timeSg" label="时间" align="center" width="100"/>
@@ -703,6 +711,7 @@
     data() {
       return {
         fileTable: [],
+        titles: '建筑起重机械安装自检记录表',
         tableShow: 'table1',
         currentPage: 1,
         pageSize: 10,
@@ -918,26 +927,32 @@
       },
       getShow1() {
         this.tableShow = 'table1'
+        this.titles = '建筑起重机械安装自检记录表'
         this.getZiJian()
       },
       getShow2() {
         this.tableShow = 'table2'
+        this.titles = '建筑起重机械安装验收记录表'
         this.getyanshou()
       },
       getShow3() {
         this.tableShow = 'table3'
+        this.titles = '建筑起重机械顶升、加节情况表'
         this.getdingsheng()
       },
       getShow4() {
         this.tableShow = 'table4'
+        this.titles = '建筑起重机械附着情况表'
         this.getfuzhuo()
       },
       getShow5() {
         this.tableShow = 'table5'
+        this.titles = '建筑起重机械定期检查记录表'
         this.getdingqi()
       },
       getShow6() {
         this.tableShow = 'table6'
+        this.titles = '建筑起重机械维护保养记录表'
         this.getweihu()
       },
       handleCurrentChange(val) {
@@ -1230,5 +1245,14 @@
   /*奇数行样式*/
   .data_table >>> .el-table__row:not(.el-table__row--striped) {
     background: #1439391c !important;
+  }
+  .titles-style {
+    color: white;
+    font-size: 0.3rem;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+
   }
 </style>
