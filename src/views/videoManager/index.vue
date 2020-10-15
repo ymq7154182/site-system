@@ -124,7 +124,7 @@ export default {
                 children: [
                     {
                         id: 1,
-                        label: '大门',
+                        label: '石家庄宝能中心项目二标段-大门-枪机',
                         icon: 'el-icon-video-camera'
                     },
                     {
