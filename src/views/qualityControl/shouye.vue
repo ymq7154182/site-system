@@ -2189,7 +2189,7 @@
             },
             tooltip: {
               trigger: 'item',
-              formatter: "{b} : {c} ({d}%)"
+              formatter: "重大危险源 <br/>{b}: {c} ({d}%)"
             },
             legend: {
               type: "scroll",
@@ -2260,6 +2260,7 @@
             },
             calculable: true,
             series: [{
+              name:'重大危险源',
               type: 'pie',
               radius: ["5%", "10%"],
               hoverAnimation: false,

@@ -122,7 +122,7 @@
                               <div style="float:left;width: 2px;height: 20px; background:#C7D4E9;margin-left:10px;margin-right:10px"></div>
                               <span style="color:#919FB8" class="status-label" @click="submitOption('延缓', item)">延缓</span>
                               <span style="color:#919FB8" class="status-label" @click="submitOption('完成', item)">完成</span>
-                              <span style="color:#919FB8" class="status-label" @click="submitOption('错误信息报告', item)">错误信息报告</span>
+                              <span style="color:#919FB8" class="status-label" @click="submitOption('随手拍记录', item)">随手拍记录</span>
 
                             </div>
                           </td>
@@ -133,7 +133,7 @@
                               <div style="float:left;width: 2px;height: 20px; background:#C7D4E9;margin-left:10px;margin-right:10px"></div>
                               <span v-if="item.status === 3" style="color:#919FB8" class="status-label-status" @click="checkStatus(item)">延缓</span>
                               <span v-if="item.status === 2" style="color:#919FB8" class="status-label-status" @click="checkStatus(item)">完成</span>
-                              <span style="color:#919FB8" class="status-label" @click="submitOption('错误信息报告', item)">错误信息报告</span>
+                              <span style="color:#919FB8" class="status-label" @click="submitOption('随手拍记录', item)">随手拍记录</span>
 
                             </div>
                             <div class="processing_content_detail" style="float:right;color: #7c7c7c" v-if="item.endTime !== null"><span ><i class="el-icon-time"></i>&nbsp;&nbsp;{{item.endTime}}</span> </div>
@@ -750,7 +750,7 @@
             this.disabledStr = false
             this.form = item
             this.showSlow = true
-          } else if (option === '错误信息报告') {
+          } else if (option === '随手拍记录') {
             this.$router.push({
               path: '/infoRecord',
               // name: 'infoRecord',
@@ -1234,8 +1234,11 @@
             },
             tooltip: {
               trigger: 'item',
-              formatter: '{b} : {c} ({d}%)'
+              formatter: "安全管理 <br/>{b}: {c} ({d}%)"
             },
+            
+            
+            
             series: [{
               // name: '访问来源',
               type: 'pie',
@@ -1248,6 +1251,8 @@
                   position: 'inner'
                 }
               },
+              
+              
               labelLine: {
                 normal: {
                   show: false
@@ -1328,6 +1333,10 @@
               radius: ['30%', '60%'],
               center: ['50%', '50%'],
               roseType: 'radius',
+              tooltip: {
+                trigger: 'item',
+                formatter: "{a} <br/>{b}: {c} ({d}%)"
+              },
               label: {
                 // show: true,
                 normal: {

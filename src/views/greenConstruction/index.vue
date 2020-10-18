@@ -414,10 +414,14 @@
             right: 10,
             containLabel: true
           },
+          // tooltip: {
+          //   trigger: 'item',
+          //   formatter: "{b} : {c} ({d}%)"
+          // },
           tooltip: {
-            trigger: 'item',
-            formatter: "{b} : {c} ({d}%)"
-          },
+              trigger: 'item',
+              formatter: "空气质量统计 <br/>{b}: {c} ({d}%)"
+            },
           legend: {
             type: "scroll",
             orient: "vartical",

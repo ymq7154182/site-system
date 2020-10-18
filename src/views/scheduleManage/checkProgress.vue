@@ -116,7 +116,7 @@
                           <div style="float:left;width: 2px;height: 20px; background:#C7D4E9;margin-left:10px;margin-right:10px"></div>
                           <span style="color:#919FB8" class="status-label" @click="submitOption('延缓', item)">延缓</span>
                           <span style="color:#919FB8" class="status-label" @click="submitOption('完成', item)">完成</span>
-                          <button style="color:#919FB8" class="status-label" @click="submitOption('错误信息报告', item)">错误信息报告</button>
+                          <button style="color:#919FB8" class="status-label" @click="submitOption('随手拍记录', item)">随手拍记录</button>
                         </div>
                       </td>
                     </tr>
@@ -126,7 +126,7 @@
                           <div style="float:left;width: 2px;height: 20px; background:#C7D4E9;margin-left:10px;margin-right:10px"></div>
                           <span v-if="item.status === 3" style="color:#919FB8" class="status-label-status" @click="checkStatus(item)">延缓</span>
                           <span v-if="item.status === 2" style="color:#919FB8" class="status-label-status" @click="checkStatus(item)">完成</span>
-                          <button style="color:#919FB8" class="status-label" @click="submitOption('错误信息报告', item)">错误信息报告</button>
+                          <button style="color:#919FB8" class="status-label" @click="submitOption('随手拍记录', item)">随手拍记录</button>
                         </div>
                         <div class="processing_content_detail" style="float:right;color: #fff" v-if="item.endTime !== null"><span ><i class="el-icon-time"></i>&nbsp;&nbsp;{{item.endTime}}</span> </div>
 
@@ -422,7 +422,7 @@
           this.disabledStr = false
           this.formDefer = item
           this.showSlow = true
-        } else if (option === '错误信息报告') {
+        } else if (option === '随手拍记录') {
           this.$router.push({
             path: '/infoRecord',
             // name: 'infoRecord',
