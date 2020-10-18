@@ -4402,23 +4402,37 @@
           getSafetyTrouble ({
             sitename:this.proName
           }).then((res) => {
+            console.log("内外层数据",res.data.data)
             //console.log("安全隐患统计")
             // {value:335,unit:'次', name:'易燃物乱摆放',},
-             var Arr= res.data.data.map(item =>{
-              return{
-                value:item.value,
-                unit:'次',
-                name:item.key
-              }
-            })
+             if(res.data.code === 200){
+               console.log("有数据",res.data.data.qualityData)
+               console.log("有数据",res.data.data.safetyData)
+               this.innerData = res.data.data.safetyData.map(item =>{
+                 return{
+                   value:item.value,
+                   unit:'次',
+                   name:item.key
+                 }
+               })
+               console.log("内层数据",this.innerData )
+               this.outerData = res.data.data.qualityData.map(item =>{
+                 return{
+                   value:item.value,
+                   unit:'次',
+                   name:item.key
+                 }
+               })
+               console.log("外层数据",this.outerData )
+             }
             //console.log("Arr",Arr)
-            for(var i=0;i<Arr.length;i++){
-              if(i<Arr.length/2-1){
-                this.innerData.push(Arr[i])
-              }else{
-                this.outerData.push(Arr[i])
-              }
-            }
+            // for(var i=0;i<Arr.length;i++){
+            //   if(i<Arr.length/2-1){
+            //     this.innerData.push(Arr[i])
+            //   }else{
+            //     this.outerData.push(Arr[i])
+            //   }
+            // }
             // console.log(this.innerData)
             // console.log(this.outerData)
             this.inchart13()
