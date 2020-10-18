@@ -119,3 +119,11 @@ export function screenName (parems) {
     params: parems
   })
 }
+
+export function getCheckInfoBySchedule(data) {
+  return request({
+    url: '/system/safe/getCheckInfoBySchedule',
+    method: 'get',
+    params: data
+  })
+}
