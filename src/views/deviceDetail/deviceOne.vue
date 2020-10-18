@@ -4,15 +4,15 @@
       <el-col :span="4">
         <div class="dm-aside">
           <div class="border-top-left"></div>
-          <div class="dm-title">七张表</div>
+          <div class="dm-title">设备使用过程管理</div>
           <div class="type-list">
             <ul>
-              <li @click="getShow1"><i class="el-icon-document type-icon" />安装自检</li>
-              <li @click="getShow2"><i class="el-icon-document type-icon" />安装验收</li>
-              <li @click="getShow3"><i class="el-icon-document type-icon" />顶升加节</li>
-              <li @click="getShow4"><i class="el-icon-document type-icon" />附着列表</li>
-              <li @click="getShow5"><i class="el-icon-document type-icon" />定期检查</li>
-              <li @click="getShow6"><i class="el-icon-document type-icon" />维护保养</li>
+              <li @click="getShow1"><i class="el-icon-document type-icon" />建筑起重机械安装自检记录表</li>
+              <li @click="getShow2"><i class="el-icon-document type-icon" />建筑起重机械安装验收记录表</li>
+              <li @click="getShow3"><i class="el-icon-document type-icon" />建筑起重机械顶升、加节情况表</li>
+              <li @click="getShow4"><i class="el-icon-document type-icon" />建筑起重机械附着情况表</li>
+              <li @click="getShow5"><i class="el-icon-document type-icon" />建筑起重机械定期检查记录表</li>
+              <li @click="getShow6"><i class="el-icon-document type-icon" />建筑起重机械维护保养记录表</li>
               <!--<li><i class="el-icon-picture-outline type-icon" />图片</li>-->
               <!--<li><i class="el-icon-video-camera-solid type-icon" />视频</li>-->
             </ul>
@@ -22,10 +22,20 @@
       <el-col :span="20">
         <div class="dm-main">
           <div class="border-top-right"></div>
-          <div style="padding: 0.13rem">
+          <div style="padding: 0.13rem;position: relative">
             <el-button type="success" @click="gotoback"><i class="el-icon-d-arrow-left" />返回</el-button>
             <el-button type="primary" @click="showUpload = true"><i class="el-icon-plus" /> 新增</el-button>
+            <span style="font-size: 0.2rem;margin-left: 0.1rem;color: white">
+               设备编号：
+            </span>
+           <el-input style="width: 2rem" placeholder="请输入设备编号"></el-input>
+            <el-button type="primary" icon="el-icon-search">查询</el-button>
+            <div class="titles-style">
+              <span>{{titles}}</span>
+            </div>
           </div>
+
+
           <div v-show="tableShow === 'table1'">
             <div class="data_table">
               <el-table
@@ -40,19 +50,20 @@
 <!--                <el-table-column prop="devId" label="设备id" />-->
 <!--                <el-table-column prop="setupId" label="安装id" />-->
 <!--                <el-table-column prop="userid" label="当前登录人id" />-->
-                <el-table-column prop="leftHeight" label="起升高度" />
-                <el-table-column prop="towerHeight" label="塔高" width="150" align="center" />
-                <el-table-column prop="installHeigth" label="安装高度" align="center" />
-                <el-table-column prop="maxLoad" label="最大载重量" align="center" />
-                <el-table-column prop="checkTime" label="检查时间" align="center" />
+                <el-table-column type="index" label="序号"  align="center"/>
                 <el-table-column prop="checkUser" label="安装单位负责人" align="center" />
                 <el-table-column prop="checkContent" label="安装单位自检意见" align="center" />
-                <el-table-column prop="checkWriteTime" label="检查填写时间" align="center" />
+                <el-table-column prop="checkTime" label="检查时间" align="center" width="100"/>
+                <el-table-column prop="checkWriteTime" label="检查填写时间" align="center" width="100"/>
                 <el-table-column prop="installUser" label="安装单位技术负责人" align="center" />
                 <el-table-column prop="installUserAqjg" label="安装单位安全员、机管" align="center" />
                 <el-table-column prop="installUserZc" label="安装班组长" align="center" />
                 <el-table-column prop="installUserJzry" label="机组人员" align="center" />
-                <el-table-column prop="writeTime" label="填写时间" align="center" />
+                <el-table-column prop="writeTime" label="填写时间" align="center" width="100"/>
+                <el-table-column prop="leftHeight" label="起升高度" align="center"/>
+                <el-table-column prop="towerHeight" label="塔高"  align="center" />
+                <el-table-column prop="installHeigth" label="安装高度" align="center" />
+                <el-table-column prop="maxLoad" label="最大载重量" align="center" />
                 <el-table-column prop="maxCapacity" label="最大起重量" align="center" />
                 <el-table-column prop="maxRange" label="幅度" align="center" />
               </el-table>
@@ -83,17 +94,19 @@
 <!--                <el-table-column prop="devId" label="设备id" />-->
 <!--                <el-table-column prop="setupId" label="安装id" />-->
 <!--                <el-table-column prop="userid" label="当前登录人id" />-->
-                <el-table-column prop="leftHeight" label="起升高度" />
-                <el-table-column prop="towerHeight" label="塔高" width="150" align="center" />
-                <el-table-column prop="installHeigth" label="安装高度" align="center" />
-                <el-table-column prop="maxLoad" label="最大载重量" align="center" />
+                <el-table-column type="index" label="序号"  align="center"/>
+
                 <el-table-column prop="opinionSg" label="施工单位意见" align="center" />
                 <el-table-column prop="userSg" label="施工单位项目经理签字" align="center" />
-                <el-table-column prop="timeSg" label="时间" align="center" />
+                <el-table-column prop="timeSg" label="时间" align="center" width="100"/>
                 <el-table-column prop="opinionJl" label="监理单位意见" align="center" />
                 <el-table-column prop="userJl" label="监理单位项目经理签字" align="center" />
-                <el-table-column prop="timeJl" label="时间" align="center" />
+                <el-table-column prop="timeJl" label="时间" align="center" width="100"/>
                 <el-table-column prop="reporttime" label="上报时间时间" align="center" />
+                <el-table-column prop="leftHeight" label="起升高度"  align="center"/>
+                <el-table-column prop="towerHeight" label="塔高"  align="center" />
+                <el-table-column prop="installHeigth" label="安装高度" align="center" />
+                <el-table-column prop="maxLoad" label="最大载重量" align="center" />
                 <el-table-column prop="maxCapacity" label="最大起重量" align="center" />
                 <el-table-column prop="maxRange" label="幅度" align="center" />
               </el-table>
@@ -122,7 +135,8 @@
 <!--                <el-table-column prop="devid" label="设备id" />-->
 <!--                <el-table-column prop="installid" label="安装单位id" />-->
 <!--                <el-table-column prop="userid" label="当前登录人id" />-->
-                <el-table-column prop="leftHeight" label="附着道数" />
+                <el-table-column type="index" label="序号"  align="center"/>
+                <el-table-column prop="leftHeight" label="附着道数" align="center"/>
                 <el-table-column prop="towerHeight" label="当前已安装附着" width="150" align="center" />
                 <el-table-column prop="installHeigth" label="当前标准节" align="center" />
                 <el-table-column prop="maxLoad" label="新安装标准节" align="center" />
@@ -169,6 +183,7 @@
 <!--                <el-table-column prop="devid" label="设备id" />-->
 <!--                <el-table-column prop="installid" label="安装单位id" />-->
 <!--                <el-table-column prop="userid" label="当前登录人id" />-->
+                <el-table-column type="index" label="序号"  align="center"/>
                 <el-table-column prop="leftHeight" label="附着道数" />
                 <el-table-column prop="towerHeight" label="当前已安装附着" width="150" align="center" />
                 <el-table-column prop="installHeigth" label="当前标准节" align="center" />
@@ -216,6 +231,7 @@
 <!--                <el-table-column prop="devid" label="设备id" />-->
 <!--                <el-table-column prop="useId" label="使用id" />-->
 <!--                <el-table-column prop="userid" label="当前登录人id" />-->
+                <el-table-column type="index" label="序号"  align="center"/>
                 <el-table-column prop="leftHeight" label="附着道数" />
                 <el-table-column prop="towerHeight" label="当前已安装附着" width="150" align="center" />
                 <el-table-column prop="installHeigth" label="当前标准节" align="center" />
@@ -259,6 +275,7 @@
 <!--                <el-table-column prop="devid" label="设备id" />-->
 <!--                <el-table-column prop="useId" label="使用id" />-->
 <!--                <el-table-column prop="userid" label="当前登录人id" />-->
+                <el-table-column type="index" label="序号"  align="center"/>
                 <el-table-column prop="weibaotime" label="维保时间" />
                 <el-table-column prop="maxcapacity" label="运转台时" />
                 <el-table-column prop="maxrange" label="更换主要零部件" />
@@ -694,6 +711,7 @@
     data() {
       return {
         fileTable: [],
+        titles: '建筑起重机械安装自检记录表',
         tableShow: 'table1',
         currentPage: 1,
         pageSize: 10,
@@ -909,26 +927,32 @@
       },
       getShow1() {
         this.tableShow = 'table1'
+        this.titles = '建筑起重机械安装自检记录表'
         this.getZiJian()
       },
       getShow2() {
         this.tableShow = 'table2'
+        this.titles = '建筑起重机械安装验收记录表'
         this.getyanshou()
       },
       getShow3() {
         this.tableShow = 'table3'
+        this.titles = '建筑起重机械顶升、加节情况表'
         this.getdingsheng()
       },
       getShow4() {
         this.tableShow = 'table4'
+        this.titles = '建筑起重机械附着情况表'
         this.getfuzhuo()
       },
       getShow5() {
         this.tableShow = 'table5'
+        this.titles = '建筑起重机械定期检查记录表'
         this.getdingqi()
       },
       getShow6() {
         this.tableShow = 'table6'
+        this.titles = '建筑起重机械维护保养记录表'
         this.getweihu()
       },
       handleCurrentChange(val) {
@@ -1170,7 +1194,7 @@
   /*}*/
 
   .type-list {
-    font-size: 0.26rem;
+    font-size: 0.22rem;
     color: white;
     cursor: pointer;
   }
@@ -1221,5 +1245,14 @@
   /*奇数行样式*/
   .data_table >>> .el-table__row:not(.el-table__row--striped) {
     background: #1439391c !important;
+  }
+  .titles-style {
+    color: white;
+    font-size: 0.3rem;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+
   }
 </style>

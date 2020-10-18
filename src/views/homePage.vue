@@ -3,7 +3,7 @@
     <div class="notice_container">
       <div class="notice_left">
         <img src="../assets/homepage/laba.png">
-        <span style="margin-left: 0.5rem">北京智慧工地新增一个项目引进了最新型建造方式......</span>
+        <span style="margin-left: 0.5rem; color: rgb(220,164,80);">视频监控存在1处警告，塔式起重机监控存在1处警告,请及时查看！</span>
       </div>
       <!--<div class="notice_right">-->
         <!--<span>用户身份:</span>-->
@@ -1351,7 +1351,7 @@
               },
                 {
                   value: 5,
-                  name: '项目经理',
+                  name: '项目负责人',
                   itemStyle: {
                     color: "#01FFFF",
                     borderColor: "#01FFFF",
@@ -1754,8 +1754,16 @@
   .schedule-content .el-step__title {
     font-size: 18px;
     font-weight: bold;
+    
   }
   .homePage_dialog .home_second .el-dialog__body {
     margin-left: 10%;
   }
+  .homePage_dialog .home_second .el-dialog{
+    background: rgb(32,63,112);
+  }
+  .homePage_dialog .home_second .el-dialog__title{
+    color: white;
+  }
+ 
 </style>
