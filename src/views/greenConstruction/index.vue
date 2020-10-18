@@ -359,6 +359,8 @@
             },
             max: function(value) {
               return value.max*1.5
+
+
               // if(value.max > 150){
               //   return value.max;
               // }else{
