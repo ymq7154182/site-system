@@ -427,8 +427,8 @@
             path: '/infoRecord',
             // name: 'infoRecord',
             query: {
-              planId: item.id,
-              sectionId: this.id,
+              planId: this.id,
+              sectionId: item.id,
               sitename: localStorage.siteName
             }
           })
