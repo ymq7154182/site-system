@@ -48,6 +48,11 @@ const routes = [
       {
         path: '/qualityControl',
         component: () => import('@/views/qualityControl/index'),
+      },
+      {
+        path: '/checkRecord',
+        name: 'Check Record',
+        component: () => import('@/views/qualityControl/checkRecord')
       }
     ]
   },
@@ -138,7 +143,7 @@ const routes = [
         component: () => import('@/views/deviceDetail/historySJ'),
       }
     ]
-  },
+  }
 ]
 const router = new VueRouter({
   mode: "history",
