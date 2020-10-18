@@ -61,6 +61,7 @@
                 >补打卡</el-button>
                 <!--              <el-button size="mini" type="text" icon="el-icon-view" @click="handleView(scope.row)"-->
                 <!--              >查看</el-button>-->
+                <el-button  type="text" icon="el-icon-view" style="font-size: 0.22rem;color: #7c7c7c; " >详情</el-button>
               </template>
             </el-table-column>
           </el-table>
