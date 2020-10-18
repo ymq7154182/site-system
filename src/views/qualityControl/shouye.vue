@@ -10,6 +10,9 @@
                   <div class="box-txt">
                     <span>质安检查</span>
                   </div>
+                  <div style="float:right; margin: 0 10px 0 0; z-index: 999; ">
+                    <el-button type="text" style="text-decoration: underline; " @click="gotoCheckRecord">历史数据</el-button>
+                  </div>
                   <div id="mychart1"></div>
                   <div class="saftNum">总数：{{sumNum}}件</div>
                 </div>
@@ -4498,6 +4501,7 @@
   #mychart1 {
     width: 100%;
     height: 25vh;
+    z-index: 1;
   }
   #mychart12 {
     width: 100%;
