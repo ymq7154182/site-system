@@ -76,7 +76,8 @@ import {getSite} from "../../api/dataManage";
 export default {
   name: 'Check Record',
   mounted() {
-    this.checkWord = this.$route.query.checkCode;
+    this.checkCode = this.$route.query.checkCode;
+    // this.checkCode = 1;
     this.constructionSiteId = parseInt(window.localStorage.getItem('siteId'));
     this.getConstructionSiteName(this.constructionSiteId);
   },
@@ -84,7 +85,7 @@ export default {
     return {
       constructionSiteId: 1,
       constructionSiteName: '',
-      checkWord: '',
+      checkCode: null,
       historyRecord: [],
       currentPage: 1,
       pageSize: 10,
@@ -94,6 +95,16 @@ export default {
     }
   },
   methods: {
+    loadingTable() {
+      getCheckInfoBySchedule({
+        sitename: this.constructionSiteName,
+        status: this.checkCode
+      }).then(response => {
+        if(response.data.code === 200) {
+          this.historyRecord = response.data.rows;
+        }
+      })
+    },
     refreshTable() {
       getCheckInfoBySchedule({
         sitename: this.constructionSiteName
@@ -130,7 +141,7 @@ export default {
       }).then(response => {
         if(response.data.code === 200) {
           this.constructionSiteName = response.data.data.deptName
-          this.refreshTable();
+          this.loadingTable();
         }
       })
     },
