@@ -122,6 +122,8 @@
     name: 'greenConstruction',
     data() {
       return {
+        upLine:[],
+        downLine:[],
         yMax:0,
         yMin:0,
         // 环境数据的当前类型
@@ -287,6 +289,8 @@
 
       },
       selectType(val){
+        this.upLine=[]
+        this.downLine=[]
         this.currentType = this.environmentType[val]
         console.log("当前类型",this.environmentType[val])
         getThreshold().then(req=>{
@@ -294,18 +298,35 @@
           for(var i=0;i<req.data.data.length;i++){
             if(req.data.data[i].name === this.environmentType[val]){
               console.log(req.data.data[i].name)
-              this.yMax = req.data.data[i].upThreshold
-              this.yMin = req.data.data[i].downThreshold
+              if(req.data.data[i].type === 2){
+                console.log("全天")
+                for(var l=0;l<24;l++){
+                  this.upLine.splice(l,0,req.data.data[i].upThreshold)
+                  this.downLine.splice(l,0,req.data.data[i].downThreshold)
+                }
+              }else if(req.data.data[i].type === 1){
+                console.log("白天")
+                for(var j=6;j<=21;j++){
+                  console.log(j)
+                  this.upLine.splice(j,0,req.data.data[i].upThreshold)
+                  this.downLine.splice(j,0,req.data.data[i].downThreshold)
+                }
+              }else if(req.data.data[i].type === 0){
+                console.log("晚上")
+                for(var k=0;k<24;k++){
+                  if(k<6||k>21){
+                    console.log(k)
+                    this.upLine.splice(k,0,req.data.data[i].upThreshold)
+                    this.downLine.splice(k,0,req.data.data[i].downThreshold)
+                  }
+
+                }
+              }
+
             }
           }
-          if(this.yMax === ''||this.yMax===null||this.yMax ===undefined){
-            this.yMax = 0
-          }
-          if(this.yMin === ''||this.yMin===null||this.yMin ===undefined){
-            this.yMin = 0
-          }
-          console.log("yMax",this.yMax)
-          console.log("yMin",this.yMin)
+          console.log("上线",this.upLine)
+          console.log("下线",this.downLine)
           this.environmentData = this.environmentDataList[val]
           this.environmentX = this.environmentXList[val]
           this.initEnvironment()
@@ -358,13 +379,7 @@
               }
             },
             max: function(value) {
-              return Math.round(value.max*1.6)
-              // if(value.max > 150){
-              //   return value.max;
-              // }else{
-              //   //var max = this.yMax
-              //   return 150;
-              // }
+              return Math.round(value.max*1.2)
             },
             splitLine: {
               show: false
@@ -376,19 +391,26 @@
               data:this.environmentData,
               type: 'line',
               smooth: true,
-              // 标线
-              markLine: {
-                data: [
-                  {yAxis:this.yMax, name: '阈值上限'},
-                  {yAxis:this.yMin, name: '阈值下限'},
-                ],
-                // lineStyle:{
-                //   color:red,
-                //   type:'dashed'
-                // },
-              },
             },
-          ]
+            {
+              name: '阈值上限',
+              data:this.upLine,
+              type: 'line',
+              smooth: true,
+              lineStyle:{
+                color:'#EFA44E'
+              }
+            },
+            {
+              name: '阈值下限',
+              data:this.downLine,
+              type: 'line',
+              smooth: true,
+              lineStyle:{
+              color:'#EFA44E'
+              }
+            },
+          ],
         });
       },
       initAlarmType() {
