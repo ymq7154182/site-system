@@ -115,22 +115,28 @@
 
 <script>
   import echarts from 'echarts';
+  import {getGreenInfo,getThreshold} from '@/api/green';
   require('echarts/theme/macarons') // echarts theme
 
   export default {
     name: 'greenConstruction',
     data() {
       return {
-        yMax:null,
-        yMin:null,
+        upLine:[],
+        downLine:[],
+        yMax:0,
+        yMin:0,
         // 环境数据的当前类型
         currentType:'',
         // 环境数据的当前类型
         environmentType:[],
         // 环境数据的当前数据
         environmentData:[],
+        environmentDataList:[],
         // 环境数据的当前x轴
         environmentX:[],
+        environmentXList:[],
+
         alarmTypeChart: null,
         alarmTrendChart: null,
         environChart: null,
@@ -244,51 +250,92 @@
         }
       },
       getenvironmentData(){
-        // getEnvironmentData({}).then(req =>{
-        //   console.log(res.data.data)
-        // })
-        this.environmentType = ['风速','PM2.5','PM10','噪音','温度','湿度'],
-        this.environmentData=[],
-        this.environmentX = [],
-        this.currentType = this.environmentType[0]
-        this.selectType(0)
+        var time= []
+        var greenValue = []
+        getGreenInfo({
+          siteId:101
+        }).then(res =>{
+          console.log("接口数据",res.data.data)
+          var Arr1 = []
+
+          if(res.data.data.length>0){
+            for(var a in res.data.data){
+              for(var b in res.data.data[a]){
+                var Arr2 = []
+                var Arr3 = []
+                this.environmentType.push(b)
+                console.log("数组",res.data.data[a][b])
+                for(var c in res.data.data[a][b]){
+                  Arr2.push(c)
+                  Arr3.push(res.data.data[a][b][c])
+                }
+                this.environmentXList.push(Arr2)
+                //console.log("environmentXList",this.environmentXList)
+                this.environmentDataList.push(Arr3)
+                //console.log("environmentDataList",this.environmentDataList)
+              }
+            }
+          }
+          // console.log("environmentType",this.environmentType)
+          // console.log("environmentXList",this.environmentXList[0])
+          // console.log("environmentDataList",this.environmentDataList[0])
+
+          this.environmentData=[],
+          this.environmentX = [],
+          this.currentType = this.environmentType[0]
+          this.selectType(0)
+        })
+        //this.environmentType = ['风速','PM2.5','PM10','噪音','温度','湿度'],
+
       },
       selectType(val){
+        this.upLine=[]
+        this.downLine=[]
         this.currentType = this.environmentType[val]
-        console.log("shuju",val)
-        if(val === 0){
-          this.yMin = 0.7,
-          this.yMax = 1.5,
-          this.environmentData  = [1.6, 0.7, 0.7, 0.3, 1.1, 1, 1.2, 1.4, 0.5, 1.2, 1, 1.5, 1.3, 0.8, 0.6, 1, 0.4, 0.5, 0.7, 0.6, 0.7, 0.9,1],
-          this.environmentX = ['00:00','1:00', '2:00', '3:00', '4:00', '5:00', '6:00', '7:00', '8:00', '9:00', '10:00', '11:00', '12:00', '13:00', '14:00', '15:00', '16:00', '17:00', '18:00', '19:00', '20:00', '21:00', '22:00']
-        }else if(val === 1){
-          this.yMin = 1.0,
-          this.yMax = 2.0,
-          this.environmentData  = [2, 1.8, 2.7, 1.3, 1.0, 0.8, 1.0, 1.1, 0.7, 1.5, 1.1, 1.6, 1.7, 0.9, 0.7, 0.5, 0.3, 0.7, 0.5, 1.6, 0.5, 1,0.8],
-          this.environmentX = ['00:00','1:00', '2:00', '3:00', '4:00', '5:00', '6:00', '7:00', '8:00', '9:00', '10:00', '11:00', '12:00', '13:00', '14:00', '15:00', '16:00', '17:00', '18:00', '19:00', '20:00', '21:00', '22:00']
-        }else if(val === 2){
-          this.yMin = 0.7,
-          this.yMax = 1.5,
-          this.environmentData  = [1.4, 0.8, 1.7, 2.3, 1.0, 0.8, 1.0, 1.1, 0.7, 1.5, 1.1, 1.6, 1.7, 0.9, 0.7, 0.5, 0.3, 0.7, 0.5, 1.6, 0.5, 1,0.8],
-          this.environmentX = ['00:00','1:00', '2:00', '3:00', '4:00', '5:00', '6:00', '7:00', '8:00', '9:00', '10:00', '11:00', '12:00', '13:00', '14:00', '15:00', '16:00', '17:00', '18:00', '19:00', '20:00', '21:00', '22:00']
-        }else if(val === 3){
-          this.yMin = 1.0,
-          this.yMax = 1.6,
-          this.environmentData  = [1.2, 2.8, 1.5, 1.5, 1.0, 1.1, 0.7, 1.5, 1.1, 1.6, 1.1, 1.6, 1.7, 0.9, 0.7, 0.5, 0.3, 0.7, 0.5, 1.6, 0.5, 1,0.8],
-          this.environmentX = ['00:00','1:00', '2:00', '3:00', '4:00', '5:00', '6:00', '7:00', '8:00', '9:00', '10:00', '11:00', '12:00', '13:00', '14:00', '15:00', '16:00', '17:00', '18:00', '19:00', '20:00', '21:00', '22:00']
-        }else if(val === 4){
-          this.yMin = 0.9,
-          this.yMax = 1.4,
-          this.environmentData  = [0.7, 0.5, 1.8, 2.3, 1.0, 0.8, 1.0, 1.1, 0.7, 1.5, 1.1, 1.6, 2.7, 1.3, 1.0, 0.8, 1.0, 1.1, 0.7, 1.6, 0.5, 1,0.8],
-          this.environmentX = ['00:00','1:00', '2:00', '3:00', '4:00', '5:00', '6:00', '7:00', '8:00', '9:00', '10:00', '11:00', '12:00', '13:00', '14:00', '15:00', '16:00', '17:00', '18:00', '19:00', '20:00', '21:00', '22:00']
-        }else if(val === 5){
-          this.yMin = 0.7,
-          this.yMax = 1.3,
-          this.environmentData  = [0.6, 0.7, 0.9, 2.3, 1.0, 0.8, 1.0, 1.1, 0.7, 1.5, 1.1, 1.6, 1.7, 0.9, 0.7, 0.5, 0.3, 0.7, 0.5, 1.6, 0.5, 1,0.8],
-          this.environmentX = ['00:00','1:00', '2:00', '3:00', '4:00', '5:00', '6:00', '7:00', '8:00', '9:00', '10:00', '11:00', '12:00', '13:00', '14:00', '15:00', '16:00', '17:00', '18:00', '19:00', '20:00', '21:00', '22:00']
-        }
-        this.initEnvironment()
-        this.buttonType(val)
+        console.log("当前类型",this.environmentType[val])
+        getThreshold().then(req=>{
+          console.log("阈值信息",req.data.data)
+          for(var i=0;i<req.data.data.length;i++){
+            if(req.data.data[i].name === this.environmentType[val]){
+              console.log(req.data.data[i].name)
+              if(req.data.data[i].type === 2){
+                console.log("全天")
+                for(var l=0;l<24;l++){
+                  this.upLine.splice(l,0,req.data.data[i].upThreshold)
+                  this.downLine.splice(l,0,req.data.data[i].downThreshold)
+                }
+              }else if(req.data.data[i].type === 1){
+                console.log("白天")
+                for(var j=6;j<=21;j++){
+                  console.log(j)
+                  this.upLine.splice(j,0,req.data.data[i].upThreshold)
+                  this.downLine.splice(j,0,req.data.data[i].downThreshold)
+                }
+              }else if(req.data.data[i].type === 0){
+                console.log("晚上")
+                for(var k=0;k<24;k++){
+                  if(k<6||k>21){
+                    console.log(k)
+                    this.upLine.splice(k,0,req.data.data[i].upThreshold)
+                    this.downLine.splice(k,0,req.data.data[i].downThreshold)
+                  }
+
+                }
+              }
+
+            }
+          }
+          console.log("上线",this.upLine)
+          console.log("下线",this.downLine)
+          this.environmentData = this.environmentDataList[val]
+          this.environmentX = this.environmentXList[val]
+          this.initEnvironment()
+          this.buttonType(val)
+        })
+        // console.log("shuju",val)
+        // console.log("value",this.environmentDataList[val])
+        // console.log("x轴",this.environmentXList[val])
+
       },
       initEnvironment() {
         this.environChart = echarts.init(document.getElementById('environmentChart'), 'macarons')
@@ -331,6 +378,9 @@
                 // width: 1, //这里是为了突出显示加上的
               }
             },
+            max: function(value) {
+              return Math.round(value.max*1.2)
+            },
             splitLine: {
               show: false
             }
@@ -341,19 +391,26 @@
               data:this.environmentData,
               type: 'line',
               smooth: true,
-              // 标线
-              markLine: {
-                data: [
-                  {yAxis:this.yMax, name: '最大值'},
-                  {yAxis:this.yMin, name: '最小值'},
-                ],
-                // lineStyle:{
-                //   color:red,
-                //   type:'dashed'
-                // },
-              },
             },
-          ]
+            {
+              name: '阈值上限',
+              data:this.upLine,
+              type: 'line',
+              smooth: true,
+              lineStyle:{
+                color:'#EFA44E'
+              }
+            },
+            {
+              name: '阈值下限',
+              data:this.downLine,
+              type: 'line',
+              smooth: true,
+              lineStyle:{
+              color:'#EFA44E'
+              }
+            },
+          ],
         });
       },
       initAlarmType() {
@@ -379,10 +436,14 @@
             right: 10,
             containLabel: true
           },
+          // tooltip: {
+          //   trigger: 'item',
+          //   formatter: "{b} : {c} ({d}%)"
+          // },
           tooltip: {
-            trigger: 'item',
-            formatter: "{b} : {c} ({d}%)"
-          },
+              trigger: 'item',
+              formatter: "空气质量统计 <br/>{b}: {c} ({d}%)"
+            },
           legend: {
             type: "scroll",
             orient: "vartical",

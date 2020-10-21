@@ -10,6 +10,9 @@
                   <div class="box-txt">
                     <span>质安检查</span>
                   </div>
+                  <!-- <div style="float:right; margin: 0 10px 0 0; z-index: 999; ">
+                    <el-button type="text" style="text-decoration: underline; " @click="gotoCheckRecord">历史数据</el-button>
+                  </div> -->
                   <div id="mychart1"></div>
                   <div class="saftNum">总数：{{sumNum}}件</div>
                 </div>
@@ -77,6 +80,9 @@
             <div class="col-div4">
               <div class="box-txt4">
                 <span>监督检查记录</span>
+              </div>
+              <div style="float:right; margin: 8px 10px 0 0; ">
+                <el-button type="text" style="text-decoration: underline; " @click="gotoCheckRecord">历史数据</el-button>
               </div>
               <dv-scroll-board :config="configTable" style="width: 100%;height: 5.5rem;position: absolute;top: 8%" />
             </div>
@@ -300,7 +306,8 @@
             var num6 = 75;
             var option = {
               // backgroundColor: '#292c33',
-              title: [{
+              title: [
+                {
                 text: '',
                 x: '50%',
                 y: 10,
@@ -311,7 +318,8 @@
                   color: '#fff',
                   textAlign: 'center',
                 },
-              },{
+              },
+                {
                 text: this.checkValue[0],
                 left: '14%',
                 top: '40%',
@@ -322,7 +330,8 @@
                   color: 'rgb(106,192,240)',
                   textAlign: 'center',
                 },
-              }, {
+              },
+                {
                 text: this.checkKey[0],
                 left: '14%',
                 top: '50%',
@@ -333,7 +342,8 @@
                   color: 'rgb(106,192,240)',
                   textAlign: 'center',
                 },
-              },{
+              },
+                {
                 text: this.checkValue[1],
                 left: '37%',
                 top: '40%',
@@ -344,7 +354,8 @@
                   color: 'rgba(251, 200, 79, 1)',
                   textAlign: 'center',
                 },
-              }, {
+              },
+                {
                 text: this.checkKey[1],
                 left: '37%',
                 top: '50%',
@@ -355,7 +366,8 @@
                   color: 'rgba(251, 200, 79, 1)',
                   textAlign: 'center',
                 },
-              },{
+              },
+                {
                 text: this.checkValue[2],
                 left: '61.5%',
                 top: '40%',
@@ -366,7 +378,8 @@
                   color: 'rgba(89, 180, 157, 1)',
                   textAlign: 'center',
                 },
-              },{
+              },
+                {
                 text: this.checkKey[2],
                 left: '61.5%',
                 top: '50%',
@@ -377,7 +390,8 @@
                   color: 'rgba(89, 180, 157, 1)',
                   textAlign: 'center',
                 },
-              },{
+              },
+                {
                 text: this.checkValue[3],
                 left: '84.5%',
                 top: '40%',
@@ -388,7 +402,8 @@
                   color: 'rgba(232, 85, 63, 1)',
                   textAlign: 'center',
                 },
-              },{
+              },
+                {
                 text: this.checkKey[3],
                 left: '84.5%',
                 top: '50%',
@@ -1639,13 +1654,12 @@
                 //     },
                 //   }]
                 // },
-
-
-
               ]
             };
-            this.myChart1.setOption(option)
-
+            this.myChart1.setOption(option);
+            this.myChart1.on('click', 'title.text', function(params) {
+              alert(params.name);
+            })
           },
         inchart13() {
           this.myChart13 = this.$echarts.init(document.getElementById('mychart13'));
@@ -2175,7 +2189,7 @@
             },
             tooltip: {
               trigger: 'item',
-              formatter: "{b} : {c} ({d}%)"
+              formatter: "重大危险源 <br/>{b}: {c} ({d}%)"
             },
             legend: {
               type: "scroll",
@@ -2246,6 +2260,7 @@
             },
             calculable: true,
             series: [{
+              name:'重大危险源',
               type: 'pie',
               radius: ["5%", "10%"],
               hoverAnimation: false,
@@ -4388,23 +4403,37 @@
           getSafetyTrouble ({
             sitename:this.proName
           }).then((res) => {
+            console.log("内外层数据",res.data.data)
             //console.log("安全隐患统计")
             // {value:335,unit:'次', name:'易燃物乱摆放',},
-             var Arr= res.data.data.map(item =>{
-              return{
-                value:item.value,
-                unit:'次',
-                name:item.key
-              }
-            })
+             if(res.data.code === 200){
+               console.log("有数据",res.data.data.qualityData)
+               console.log("有数据",res.data.data.safetyData)
+               this.innerData = res.data.data.safetyData.map(item =>{
+                 return{
+                   value:item.value,
+                   unit:'次',
+                   name:item.key
+                 }
+               })
+               console.log("内层数据",this.innerData )
+               this.outerData = res.data.data.qualityData.map(item =>{
+                 return{
+                   value:item.value,
+                   unit:'次',
+                   name:item.key
+                 }
+               })
+               console.log("外层数据",this.outerData )
+             }
             //console.log("Arr",Arr)
-            for(var i=0;i<Arr.length;i++){
-              if(i<Arr.length/2-1){
-                this.innerData.push(Arr[i])
-              }else{
-                this.outerData.push(Arr[i])
-              }
-            }
+            // for(var i=0;i<Arr.length;i++){
+            //   if(i<Arr.length/2-1){
+            //     this.innerData.push(Arr[i])
+            //   }else{
+            //     this.outerData.push(Arr[i])
+            //   }
+            // }
             // console.log(this.innerData)
             // console.log(this.outerData)
             this.inchart13()
@@ -4429,6 +4458,19 @@
             this.getSafetyCheck()
           })
         },
+        gotoCheckRecord() {
+          this.$router.push({
+            name: 'Check Record'
+          });
+        },
+        gotoCheckRecordWithCode(checkCode) {
+          this.$router.push({
+            name: 'Check Record',
+            query: {
+              checkCode: checkCode
+            }
+          });
+        }
       },
       destroyed() {
         clearInterval(this.timer);
@@ -4474,6 +4516,7 @@
   #mychart1 {
     width: 100%;
     height: 25vh;
+    z-index: 1;
   }
   #mychart12 {
     width: 100%;

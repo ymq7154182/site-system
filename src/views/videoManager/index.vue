@@ -42,7 +42,7 @@
                         <!-- </dv-border-box-8>
                         <dv-border-box-8> -->
                             <div class="fourArea" id="four2" >
-                                <img src="../../assets/videoManager/v_2.png" />
+                                <img src="../../assets/videoManager/v_2.png" style="width:81%;"/>
                             </div>
                         <!-- </dv-border-box-8>  -->
                     </div>
@@ -54,7 +54,7 @@
                         <!-- </dv-border-box-8>
                         <dv-border-box-8> -->
                             <div class="fourArea" id="four4" >
-                                <img src="../../assets/videoManager/v_4.png" />
+                                <img src="../../assets/videoManager/v_4.png" style="width:81%;"/>
                             </div>
                         <!-- </dv-border-box-8>  -->
                     </div>
@@ -124,7 +124,7 @@ export default {
                 children: [
                     {
                         id: 1,
-                        label: '大门',
+                        label: '石家庄宝能中心项目二标段-大门-枪机',
                         icon: 'el-icon-video-camera'
                     },
                     {

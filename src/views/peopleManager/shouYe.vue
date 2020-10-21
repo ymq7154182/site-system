@@ -479,14 +479,16 @@ export default {
       console.log("123")
       console.log("类型改变",val)
       if(val === "类型"){
-        this.legendData = ['施工员', '质量员', '安全员', '标准员', '材料员','机械员'],
+        this.legendData = ['施工员', '质量员', '安全员', '标准员', '材料员','机械员', '劳务员', '资料员'],
         this.gongzhongData = [
           {value: 35, name: '施工员'},
           {value: 18, name: '质量员'},
           {value: 19, name: '安全员'},
           {value: 7, name: '标准员'},
           {value: 48, name: '材料员'},
-          {value: 52, name: '机械员'}
+          {value: 52, name: '机械员'},
+          {value: 60, name: '劳务员'},
+          {value: 26, name: '资料员'}
         ]
       } else if(val === "年龄") {
         this.legendData = ['25-30', '30-35', '36-40', '41-45', '41-45','46-50','51-55'],

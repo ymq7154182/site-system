@@ -61,6 +61,7 @@
                 >补打卡</el-button>
                 <!--              <el-button size="mini" type="text" icon="el-icon-view" @click="handleView(scope.row)"-->
                 <!--              >查看</el-button>-->
+                <el-button  type="text" icon="el-icon-view" @click="ckeckDetails(scope.row)" >详情</el-button>
               </template>
             </el-table-column>
           </el-table>
@@ -144,6 +145,69 @@
         <el-button @click="cancel">取 消</el-button>
       </div>
     </el-dialog>
+    <!-- 查看详情 -->
+    <el-dialog title="查看" :visible.sync="openDetail" width="960px" append-to-body>
+      <el-form ref="form" :model="form"  label-width="80px">
+        <el-row>
+          <el-col :span="12">
+            <el-form-item label="工地编号" prop="id" label-width="100px">
+              <el-input v-model="form.id" placeholder="请输入工地编号" readonly='true'/>
+            </el-form-item>
+          </el-col>
+          <el-col :span="11">
+            <el-form-item label="用户名" prop="userSignName" >
+              <el-input v-model="form.userSignName" placeholder="请输入工地名称" readonly='true'/>
+            </el-form-item>
+          </el-col>
+          <!--          <el-col :span="12">-->
+          <!--            <el-form-item label="工地名称" prop="constructionSiteName">-->
+          <!--              <el-input v-model="form.constructionSiteName" placeholder="请输入工地名称" />-->
+          <!--            </el-form-item>-->
+          <!--          </el-col>-->
+        </el-row>
+        <el-row>
+          <el-col :span="12">
+            <el-form-item label="工种" prop="userType" label-width="100px">
+              <el-input v-model="form.userType" placeholder="请输入工种" maxlength="11" readonly='true'/>
+            </el-form-item>
+          </el-col>
+          <el-col :span="11">
+            <el-form-item label="年龄" prop="userAge">
+              <el-input v-model="form.userAge" placeholder="请输入年龄" maxlength="50" readonly='true'/>
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <el-row>
+          <el-col :span="12">
+            <el-form-item label="手机号码" prop="phone" label-width="100px">
+              <el-input v-model="form.phone" placeholder="请输入手机号码" maxlength="11" readonly='true'/>
+            </el-form-item>
+          </el-col>
+          <el-col :span="12">
+            <el-form-item label="打卡状态" prop="userSignStatus">
+              <el-input v-model="form.userSignStatus"   readonly='true'/>
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <el-row>
+          <el-col :span="12" >
+            <el-form-item label="更新时间" prop="userSignTime" label-width="100px" >
+              <el-input v-model="form.userSignTime"  readonly='true'/>
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <el-row>
+          <el-col :span="12" >
+            <el-form-item label="补打卡原因" prop="reClockingInfo" label-width="100px">
+              <el-input type="textarea" v-model="form.reClockingInfo" placeholder="请输入补打卡原因" maxlength="11" />
+            </el-form-item>
+          </el-col>
+        </el-row>
+      </el-form>
+      <div slot="footer" class="dialog-footer">
+        <el-button @click="cancelDetail">取 消</el-button>
+      </div>
+    </el-dialog>
   </div>
 </template>
 
@@ -171,6 +235,8 @@ export default {
 
   data() {
     return {
+      // 查看
+      openDetail:false,
       status:[{key:0, value:'已打卡'},{key:2,value:'迟到'},{key:3,value:'补打卡'}],
       // 当前每页数据的条数
       pageSize:5,
@@ -320,6 +386,30 @@ export default {
 
   },
   methods: {
+    cancelDetail(){
+      this.openDetail = false
+    },
+    // 得到‘查看’的数据
+    ckeckDetails(row){
+      list({
+        constructionSiteName:this.proName,
+        id:row.id,
+      }).then(res=>{
+        this.form.id = res.data.rows[0].id
+        this.form.userSignName = res.data.rows[0].userSignName
+        this.form.userType = res.data.rows[0].userType
+        this.form.userAge = res.data.rows[0].userAge
+        this.form.phone = res.data.rows[0].phone
+        this.form.userSignTime = res.data.rows[0].userSignTime
+
+        this.form.userSignStatus = res.data.rows[0].userSignStatus
+        this.form.reClockingInfo = res.data.rows[0].reClockingInfo
+        console.log(res.data.rows[0].id)
+        this.openDetail = true
+      })
+
+
+    },
     // 根据工地id获取
     getConstructionSiteName(id) {
       getSysProData({
@@ -530,10 +620,6 @@ export default {
       // })
 
       //const userId = row.userId || this.ids;
-    },
-    // 查看按钮操作
-    handleView(row){
-
     },
     /** 重置密码按钮操作 */
     handleResetPwd(row) {

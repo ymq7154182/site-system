@@ -5,9 +5,9 @@
         <el-tab-pane label="质安管理" name="first"  >
           <shou-ye></shou-ye>
         </el-tab-pane>
-        <el-tab-pane label="考评月报" name="second" >
+        <!-- <el-tab-pane label="考评月报" name="second" >
           <safe-record> </safe-record>
-        </el-tab-pane>
+        </el-tab-pane> -->
       </el-tabs>
     </div>
 
