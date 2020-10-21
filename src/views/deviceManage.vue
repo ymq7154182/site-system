@@ -2,13 +2,13 @@
   <div class="container">
     <div style="padding: 0.11rem">
       <el-tabs v-model="activeName" class="tabs" @tab-click="handleClick">
-        <el-tab-pane label="塔吊" name="first" lazy>
+        <el-tab-pane label="塔式起重机" name="first" lazy>
           <div>
             <el-row style="margin-bottom: 1.4vh; ">
               <el-col :span="6" style="padding: 0 0.5vw; ">
                 <div style="background-color: rgba(0, 36, 78, 0.5); height: 28vh; width: 100%; ">
                   <div class="border-top-left"></div>
-                  <div class="box-title">塔吊数据</div>
+                  <div class="box-title">塔式起重机数据</div>
                   <el-row>
                     <el-col :span="12">
                       <el-button class="style-btn" size="mini" @click="gotoTD">设备使用过程</el-button>
@@ -33,7 +33,7 @@
               <el-col :span="13">
                 <div style="background-color: rgba(0, 36, 78, 0.5); height: 28vh; width: 100%;position: relative">
                   <div class="border-top-center"></div>
-                  <div class="box-title">塔吊信息</div>
+                  <div class="box-title">塔式起重机信息</div>
                   <el-button class="style-btn2" size="mini" @click="gotoHistory">历史数据</el-button>
                   <div class="device-data">
                     <ul class="device-list">
@@ -68,7 +68,7 @@
                             <el-row>
                               <el-col :span="15">
                                 <div class="device-detail-span">
-                                  {{ '1号塔吊' }}&nbsp;
+                                  {{ '1号塔式起重机' }}&nbsp;
                                 </div>
                               </el-col>
                               <el-col :span="9">
@@ -109,7 +109,7 @@
                             <el-row>
                               <el-col :span="15">
                                 <div class="device-detail-span">
-                                  {{ '2号塔吊' }}&nbsp;
+                                  {{ '2号塔式起重机' }}&nbsp;
                                 </div>
                               </el-col>
                               <el-col :span="9">
@@ -150,7 +150,7 @@
                             <el-row>
                               <el-col :span="15">
                                 <div class="device-detail-span">
-                                  {{ '3号塔吊' }}&nbsp;
+                                  {{ '3号塔式起重机' }}&nbsp;
                                 </div>
                               </el-col>
                               <el-col :span="9">
@@ -191,7 +191,7 @@
                             <el-row>
                               <el-col :span="15">
                                 <div class="device-detail-span">
-                                  {{ '4号塔吊' }}&nbsp;
+                                  {{ '4号塔式起重机' }}&nbsp;
                                 </div>
                               </el-col>
                               <el-col :span="9">
@@ -232,7 +232,7 @@
                             <el-row>
                               <el-col :span="15">
                                 <div class="device-detail-span">
-                                  {{ '5号塔吊' }}&nbsp;
+                                  {{ '5号塔式起重机' }}&nbsp;
                                 </div>
                               </el-col>
                               <el-col :span="9">
@@ -273,7 +273,7 @@
                             <el-row>
                               <el-col :span="15">
                                 <div class="device-detail-span">
-                                  {{ '1号塔吊' }}&nbsp;
+                                  {{ '1号塔式起重机' }}&nbsp;
                                 </div>
                               </el-col>
                               <el-col :span="9">
@@ -314,7 +314,7 @@
                             <el-row>
                               <el-col :span="15">
                                 <div class="device-detail-span">
-                                  {{ '2号塔吊' }}&nbsp;
+                                  {{ '2号塔式起重机' }}&nbsp;
                                 </div>
                               </el-col>
                               <el-col :span="9">
@@ -355,7 +355,7 @@
                             <el-row>
                               <el-col :span="15">
                                 <div class="device-detail-span">
-                                  {{ '3号塔吊' }}&nbsp;
+                                  {{ '3号塔式起重机' }}&nbsp;
                                 </div>
                               </el-col>
                               <el-col :span="9">
@@ -396,7 +396,7 @@
                             <el-row>
                               <el-col :span="15">
                                 <div class="device-detail-span">
-                                  {{ '4号塔吊' }}&nbsp;
+                                  {{ '4号塔式起重机' }}&nbsp;
                                 </div>
                               </el-col>
                               <el-col :span="9">
@@ -437,7 +437,7 @@
                             <el-row>
                               <el-col :span="15">
                                 <div class="device-detail-span">
-                                  {{ '5号塔吊' }}&nbsp;
+                                  {{ '5号塔式起重机' }}&nbsp;
                                 </div>
                               </el-col>
                               <el-col :span="9">
@@ -473,11 +473,11 @@
               </span>
                       <el-dropdown-menu  style="background-color: rgba(255,255,255,0.5)" slot="dropdown">
                         <el-dropdown-item command="所有设备">所有设备</el-dropdown-item>
-                        <el-dropdown-item command="1号塔吊">1号塔吊</el-dropdown-item>
-                        <el-dropdown-item command="2号塔吊">2号塔吊</el-dropdown-item>
-                        <el-dropdown-item command="3号塔吊">3号塔吊</el-dropdown-item>
-                        <el-dropdown-item command="4号塔吊">4号塔吊</el-dropdown-item>
-                        <el-dropdown-item command="5号塔吊">5号塔吊</el-dropdown-item>
+                        <el-dropdown-item command="1号塔式起重机">1号塔式起重机</el-dropdown-item>
+                        <el-dropdown-item command="2号塔式起重机">2号塔式起重机</el-dropdown-item>
+                        <el-dropdown-item command="3号塔式起重机">3号塔式起重机</el-dropdown-item>
+                        <el-dropdown-item command="4号塔式起重机">4号塔式起重机</el-dropdown-item>
+                        <el-dropdown-item command="5号塔式起重机">5号塔式起重机</el-dropdown-item>
                       </el-dropdown-menu>
                     </el-dropdown>
                   </div>
@@ -931,11 +931,11 @@
               <!--</span>-->
                       <!--<el-dropdown-menu  style="background-color: rgba(255,255,255,0.5)" slot="dropdown">-->
                         <!--<el-dropdown-item command="所有设备">所有设备</el-dropdown-item>-->
-                        <!--<el-dropdown-item command="1号塔吊">1号物料提升机</el-dropdown-item>-->
-                        <!--<el-dropdown-item command="2号塔吊">2号物料提升机</el-dropdown-item>-->
-                        <!--<el-dropdown-item command="3号塔吊">3号物料提升机</el-dropdown-item>-->
-                        <!--<el-dropdown-item command="4号塔吊">4号物料提升机</el-dropdown-item>-->
-                        <!--<el-dropdown-item command="5号塔吊">5号物料提升机</el-dropdown-item>-->
+                        <!--<el-dropdown-item command="1号塔式起重机">1号物料提升机</el-dropdown-item>-->
+                        <!--<el-dropdown-item command="2号塔式起重机">2号物料提升机</el-dropdown-item>-->
+                        <!--<el-dropdown-item command="3号塔式起重机">3号物料提升机</el-dropdown-item>-->
+                        <!--<el-dropdown-item command="4号塔式起重机">4号物料提升机</el-dropdown-item>-->
+                        <!--<el-dropdown-item command="5号塔式起重机">5号物料提升机</el-dropdown-item>-->
                       <!--</el-dropdown-menu>-->
                     <!--</el-dropdown>-->
                   <!--</div>-->
@@ -1430,11 +1430,11 @@
               </span>
                       <el-dropdown-menu  style="background-color: rgba(255,255,255,0.5)" slot="dropdown">
                         <el-dropdown-item command="所有设备">所有设备</el-dropdown-item>
-                        <el-dropdown-item command="1号塔吊">1号施工升降机</el-dropdown-item>
-                        <el-dropdown-item command="2号塔吊">2号施工升降机</el-dropdown-item>
-                        <el-dropdown-item command="3号塔吊">3号施工升降机</el-dropdown-item>
-                        <el-dropdown-item command="4号塔吊">4号施工升降机</el-dropdown-item>
-                        <el-dropdown-item command="5号塔吊">5号施工升降机</el-dropdown-item>
+                        <el-dropdown-item command="1号塔式起重机">1号施工升降机</el-dropdown-item>
+                        <el-dropdown-item command="2号塔式起重机">2号施工升降机</el-dropdown-item>
+                        <el-dropdown-item command="3号塔式起重机">3号施工升降机</el-dropdown-item>
+                        <el-dropdown-item command="4号塔式起重机">4号施工升降机</el-dropdown-item>
+                        <el-dropdown-item command="5号塔式起重机">5号施工升降机</el-dropdown-item>
                       </el-dropdown-menu>
                     </el-dropdown>
                   </div>
@@ -1521,14 +1521,14 @@ export default {
         header: ['设备名称', '报警时间', '报警类型', '处理情况', '报警数值'],
         headerHeight: 45,
         data: [
-          ['1号塔吊', '2019-10-13 13:14:01', '高度限位', '<span style="color: #67c23a; ">已处理</span>', 53.5],
-          ['2号塔吊', '2019-10-13 14:14:01', '幅度限位', '<span style="color: #f56c6c; ">红色报警</span>', 54.5],
-          ['3号塔吊', '2019-10-15 15:14:01', '风速限位', '<span style="color: #67c23a; ">已处理</span>', 57.5],
-          ['4号塔吊', '2020-01-13 03:14:01', '角度限位', '<span style="color: #e6a23c; ">黄色报警</span>', 123.5],
-          ['2号塔吊', '2019-01-01 08:14:01', '高度限位', '<span style="color: #67c23a; ">已处理</span>', 56.5],
-          ['5号塔吊', '2019-12-30 10:14:01', '幅度限位', '<span style="color: #f56c6c; ">红色报警</span>', 87.5],
-          ['3号塔吊', '2020-01-15 12:14:01', '风速限位', '<span style="color: #f56c6c; ">红色报警</span>', 97],
-          ['1号塔吊', '2020-05-07 03:14:01', '角度限位', '<span style="color: #e6a23c; ">黄色报警</span>', 123.5],
+          ['1号塔式起重机', '2019-10-13 13:14:01', '高度限位', '<span style="color: #67c23a; ">已处理</span>', 53.5],
+          ['2号塔式起重机', '2019-10-13 14:14:01', '幅度限位', '<span style="color: #f56c6c; ">红色报警</span>', 54.5],
+          ['3号塔式起重机', '2019-10-15 15:14:01', '风速限位', '<span style="color: #67c23a; ">已处理</span>', 57.5],
+          ['4号塔式起重机', '2020-01-13 03:14:01', '角度限位', '<span style="color: #e6a23c; ">黄色报警</span>', 123.5],
+          ['2号塔式起重机', '2019-01-01 08:14:01', '高度限位', '<span style="color: #67c23a; ">已处理</span>', 56.5],
+          ['5号塔式起重机', '2019-12-30 10:14:01', '幅度限位', '<span style="color: #f56c6c; ">红色报警</span>', 87.5],
+          ['3号塔式起重机', '2020-01-15 12:14:01', '风速限位', '<span style="color: #f56c6c; ">红色报警</span>', 97],
+          ['1号塔式起重机', '2020-05-07 03:14:01', '角度限位', '<span style="color: #e6a23c; ">黄色报警</span>', 123.5],
         ],
         rowNum: 7,
         align: ['center', 'center', 'center', 'center', 'center'],
@@ -1848,7 +1848,7 @@ export default {
         },
         yAxis: {
           type: 'category',
-          data: ['一号塔吊', '二号塔吊', '三号塔吊', '四号塔吊', '五号塔吊'],
+          data: ['一号塔式起重机', '二号塔式起重机', '三号塔式起重机', '四号塔式起重机', '五号塔式起重机'],
           splitLine: {
             show: false
           },
@@ -2124,7 +2124,7 @@ export default {
 }
 
 .device-detail-span {
-  font-size: 0.25rem;
+  font-size: 0.2rem;
   color: #E8FEFF;
   text-align: right;
   margin: 0 auto;
