@@ -955,7 +955,9 @@
                 this.$message({
                   type: 'success',
                   message: '上传成功'
+
                 })
+                this.reset()
                 this.openadd = false
               } else {
                 this.$message.error(response.data.msg)
@@ -1080,33 +1082,32 @@
         this.opencheck = true
       },
       // 表单重置
-      // reset() {
-      //   form: {
-      //       //proid=null;
-      //       evaltime='';
-      //       progress='';
-      //       checkcode=null;
-      //       yhnum=null;
-      //       selfresult='';
-      //       checkuser='';
-      //       checktime='';
-      //       isrectify='';
-      //       rectifytime='';
-      //       situation='';
-      //       selfrecord='';
-      //       selfuser='';
-      //       selftime='';
-      //       affixstamp='';
-      //       affixorg=[];
-      //       jsrecord='';
-      //       jsuser='';
-      //       jstime='';
-      //       jlrecord='';
-      //       jluser='';
-      //       jltime='';
-      //       monthChild=[];
-      //   }
-      // },
+      reset() {
+        this.form.proid= 27467,
+        this.form.addressAll='',
+        this.form.evaltime='',
+        this.form.progress='',
+        this.form.checkcode=null,
+        this.form.yhnum=null,
+        this.form.selfresult='',
+        this.form.checkuser='',
+        this.form.checktime='',
+        this.form.isrectify='',
+        this.form.rectifytime='',
+        this.form.situation='',
+        this.form.selfrecord='',
+        this.form.selfuser='',
+        this.form.selftime='',
+        this.form.affixstamp= '',
+        this.form.affixorg= '',
+        this.form.jsrecord='',
+        this.form.jsuser='',
+        this.form.jstime='',
+        this.form.jlrecord='',
+        this.form.jluser='',
+        this.form.jltime='',
+        this.form.monthChild=[]
+      },
       /** 导出按钮操作 */
       handleExport(){
         const queryParams = this.queryParams

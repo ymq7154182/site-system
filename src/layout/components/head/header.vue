@@ -114,7 +114,7 @@
           <li>
             <div class="li-text2 pos-style-right4" :class="{'bg-img23': textStyle=== '考评月报', 'bg-img22': textStyle!== '考评月报'}" @click="gotosafeRecord">
                   <span>
-                   考评月报
+                   月度自评
                   </span>
             </div>
           </li>
