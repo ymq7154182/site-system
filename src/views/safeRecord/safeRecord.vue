@@ -868,14 +868,17 @@
         console.log(item)
         console.log(item.diccode)
         getTreedict(item.diccode).then((res) => {
-          console.log(res.data.data)
+          // console.log(res.data.data)
+          if (res.data.code === 200) {
+            this.form.monthChild[index].diccode = res.data.data.diccode
+            this.form.monthChild[index].firstCode = res.data.data.firstcode
+            this.form.monthChild[index].secondCode = res.data.data.secondcode
+            this.form.monthChild[index].threeCode = res.data.data.threecode
+            this.form.monthChild[index].fourCode = res.data.data.fourcode
+            this.form.monthChild[index].checkCode = res.data.data.checkcode
+          }
           // this.form.monthChild[index] = res.data.data
-          this.form.monthChild[index].diccode = res.data.data.diccode
-          this.form.monthChild[index].firstCode = res.data.data.firstcode
-          this.form.monthChild[index].secondCode = res.data.data.secondcode
-          this.form.monthChild[index].threeCode = res.data.data.threecode
-          this.form.monthChild[index].fourCode = res.data.data.fourcode
-          this.form.monthChild[index].checkCode = res.data.data.checkcode
+
         })
         // console.log(node)
         // console.log(instanceId)
