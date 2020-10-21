@@ -127,3 +127,17 @@ export function getCheckInfoBySchedule(data) {
     params: data
   })
 }
+
+export function getTree() {
+  return request({
+    url: '/check/dict/treeselect',
+    method: 'get'
+  })
+}
+
+export function getTreedict(data) {
+  return request({
+    url: '/check/dict/getInfo?dicCode=' + data,
+    method: 'get',
+  })
+}

@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "@jiaminghi/data-view": "^2.9.9",
+    "@riophae/vue-treeselect": "^0.4.0",
     "axios": "^0.20.0",
     "echarts": "^4.9.0",
     "element-ui": "^2.13.2",

@@ -605,7 +605,8 @@
                       required: true, message: 'diccode不能为空', trigger: 'blur'
                       }"
                     >
-                      <el-input v-model="item.diccode"></el-input>
+                      <treeselect v-model="item.diccode"  :options="options" :clearable="clearable" :show-count="true" :disable-branch-nodes="true"  style="width: 200px" @input="getSelectList(index, item)"/>
+                      <!--<el-input v-model="item.diccode"></el-input>-->
                     </el-form-item>
                   </el-col>
                   <el-col :span="12">
@@ -688,9 +689,14 @@
 </template>
 
 <script>
-  import {addCheckMonthChild,addMonthCheck,getAllCheckMonth,getCheckMonthData,getSafeAdminInfo,getCheckRecordByTime} from '@/api/qualityControl';
+  // import the component
+  import Treeselect from '@riophae/vue-treeselect'
+  // import the styles
+  import '@riophae/vue-treeselect/dist/vue-treeselect.css'
+  import {addCheckMonthChild,addMonthCheck,getAllCheckMonth,getCheckMonthData,getSafeAdminInfo,getCheckRecordByTime, getTree, getTreedict} from '@/api/qualityControl';
   export default {
     name: "safeRecord",
+    components: { Treeselect },
     mounted() {
       this.$store.dispatch('changeMsg', '考评月报');
     },
@@ -700,10 +706,12 @@
         pageSize:10,
         // 翻页功能当前页
         currentPage: 1,
+        dicCode: '',
         startTime: '',
         endTime: '',
         // 图片上传的弹出框
         dialogVisible:false,
+        options: [],
         dialogImageUrl: '',
         disabled: false,
         // 遮罩层
@@ -846,17 +854,43 @@
       // 月报检查添加一组
       addItem () {
         this.form.monthChild.push({
-          diccode: '',
+          diccode: null,
           firstCode: '',
           secondCode:'',
           threeCode:'',
           fourCode:'',
           checkCode:'',
         })
+        this.getTreeselect()
+      },
+      getSelectList(index, item) {
+        console.log(index)
+        console.log(item)
+        console.log(item.diccode)
+        getTreedict(item.diccode).then((res) => {
+          console.log(res.data.data)
+          // this.form.monthChild[index] = res.data.data
+          this.form.monthChild[index].diccode = res.data.data.diccode
+          this.form.monthChild[index].firstCode = res.data.data.firstcode
+          this.form.monthChild[index].secondCode = res.data.data.secondcode
+          this.form.monthChild[index].threeCode = res.data.data.threecode
+          this.form.monthChild[index].fourCode = res.data.data.fourcode
+          this.form.monthChild[index].checkCode = res.data.data.checkcode
+        })
+        // console.log(node)
+        // console.log(instanceId)
+        // this.dicCode = item.diccode
+        // console.log(this.form.monthChild[index].diccode)
+        // this.getDict()
       },
       // 月报检查删除一组
       deleteItem (item, index) {
         this.form.monthChild.splice(index, 1)
+      },
+      getTreeselect() {
+        getTree().then((response) => {
+          this.options = response.data.data;
+        });
       },
       getDataByTime(){
         var prams = {
@@ -905,6 +939,7 @@
       addRecord(){
         //this.reset()
         this.openadd = true
+
       },
       // 新增按钮的提交
       submitForm(formName){
