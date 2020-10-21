@@ -32,7 +32,7 @@
               <el-table-column prop="id" label="文件ID" width="100" align="center"  sortable />
               <el-table-column label="文件名称" align="center">
                 <template slot-scope="scope">
-                  <el-button v-if="scope.row.url" type="text" @click="openUrl(scope.row.url)" style="font-size: 0.22rem; ">{{ scope.row.name }}</el-button>
+                  <el-button v-if="scope.row.url" type="text" @click="openUrl(scope.row.lookUrl)" style="font-size: 0.22rem; ">{{ scope.row.name }}</el-button>
                   <span v-else>{{ scope.row.name }}</span>
                 </template>
               </el-table-column>
@@ -82,14 +82,45 @@
           </el-form-item>
           <el-form-item label="上传文件">
             <el-upload
+              v-if="uploadInfo.format === '文档'"
+              class="upload-demo"
+              action="http://121.36.106.18:38080/system/safe/uploadFile"
+              :limit="1"
+              :on-success="handleDocSuccess"
+              accept=".jpg,.png,.pdf,.doc,.docx,.xls,.xlsx,.ppt,.pptx"
+              style="width: 90%; "
+            >
+              <el-button slot="trigger" size="small" type="primary" icon="el-icon-plus">选取文件</el-button>
+              <div slot="tip" class="el-upload__tip">支持上传jpg/png/pdf/doc/docx/xls/xlsx/ppt/pptx格式文件</div>
+            </el-upload>
+            <el-upload
+              v-else-if="uploadInfo.format === '图片'"
               class="upload-demo"
               action="http://121.36.106.18:38080/system/safe/uploadFile"
               :limit="1"
               :on-success="handleSuccess"
-              style="width: 50%; "
+              accept=".jpg,.png"
+              style="width: 90%; "
             >
               <el-button slot="trigger" size="small" type="primary" icon="el-icon-plus">选取文件</el-button>
+              <div slot="tip" class="el-upload__tip">支持上传jpg/png格式图片</div>
             </el-upload>
+            <el-upload
+              v-else-if="uploadInfo.format === '视频'"
+              class="upload-demo"
+              action="http://121.36.106.18:38080/system/safe/uploadFile"
+              :limit="1"
+              :on-success="handleSuccess"
+              accept=".avi,.mp4"
+              style="width: 90%; "
+            >
+              <el-button slot="trigger" size="small" type="primary" icon="el-icon-plus">选取文件</el-button>
+              <div slot="tip" class="el-upload__tip">支持上传avi/mp4格式视频</div>
+            </el-upload>
+            <div v-else>
+              <el-button size="small" type="primary" icon="el-icon-plus" disabled>选取文件</el-button>
+              <span style="color: #f56c6c; ">&nbsp;请先选择文件类型</span>
+            </div>
           </el-form-item>
           <el-form-item>
             <el-button type="primary" @click="submitUpload('uploadInfo')">上传</el-button>
@@ -119,15 +150,45 @@
           </el-form-item>
           <el-form-item label="上传文件">
             <el-upload
+              v-if="currentInfo.format === '文档'"
+              class="upload-demo"
+              action="http://121.36.106.18:38080/system/safe/uploadFile"
+              :limit="1"
+              :on-success="handleDocSuccessEdit"
+              accept=".jpg,.png,.pdf,.doc,.docx,.xls,.xlsx,.ppt,.pptx"
+              style="width: 90%; "
+            >
+              <el-button slot="trigger" size="small" type="primary" icon="el-icon-plus">选取文件</el-button>
+              <div slot="tip" class="el-upload__tip">支持上传jpg/png/pdf/doc/docx/xls/xlsx/ppt/pptx格式文件</div>
+            </el-upload>
+            <el-upload
+              v-else-if="currentInfo.format === '图片'"
               class="upload-demo"
               action="http://121.36.106.18:38080/system/safe/uploadFile"
               :limit="1"
               :on-success="handleSuccessEdit"
-              :file-list="fileList"
-              style="width: 50%; "
+              accept=".jpg,.png"
+              style="width: 90%; "
             >
               <el-button slot="trigger" size="small" type="primary" icon="el-icon-plus">选取文件</el-button>
+              <div slot="tip" class="el-upload__tip">支持上传jpg/png格式图片</div>
             </el-upload>
+            <el-upload
+              v-else-if="currentInfo.format === '视频'"
+              class="upload-demo"
+              action="http://121.36.106.18:38080/system/safe/uploadFile"
+              :limit="1"
+              :on-success="handleSuccessEdit"
+              accept=".avi,.mp4"
+              style="width: 90%; "
+            >
+              <el-button slot="trigger" size="small" type="primary" icon="el-icon-plus">选取文件</el-button>
+              <div slot="tip" class="el-upload__tip">支持上传avi/mp4格式视频</div>
+            </el-upload>
+            <div v-else>
+              <el-button size="small" type="primary" icon="el-icon-plus" disabled>选取文件</el-button>
+              <span style="color: #f56c6c; ">&nbsp;请先选择文件类型</span>
+            </div>
           </el-form-item>
           <el-form-item>
             <el-button type="primary" @click="submitEdit('currentInfo')">提交修改</el-button>
@@ -140,7 +201,7 @@
 </template>
 
 <script>
-import {changeDoc, docType, findDoc, getSite, insertDoc} from "../../api/dataManage";
+import {changeDoc, docType, findDoc, getSite, insertDoc, toPdfFile} from "../../api/dataManage";
 
 export default {
   data() {
@@ -157,7 +218,8 @@ export default {
         format: '',
         info: '',
         name: '',
-        url: ''
+        url: '',
+        lookUrl: ''
       },
       rules: {
         name: [
@@ -201,7 +263,8 @@ export default {
         info: '',
         name: '',
         id: '',
-        url: ''
+        url: '',
+        lookUrl: ''
       },
       currentIndex: null,
       isActive1: true,
@@ -323,9 +386,57 @@ export default {
     },
     handleSuccess(response, file, fileList) {
       this.uploadInfo.url = response.data
+      this.uploadInfo.lookUrl = response.data
+    },
+    handleDocSuccess(response, file, fileList) {
+      this.uploadInfo.url = response.data
+      let fileType = file.name.substring(file.name.lastIndexOf('.') + 1);
+      let extension1 = fileType === 'jpg';
+      let extension2 = fileType === 'png';
+      let extension3 = fileType === 'pdf';
+      if(!extension1 && !extension2 && !extension3){
+        // 不是上述三种格式，需要转换
+        toPdfFile({
+          filePath: response.data
+        }).then(r => {
+          if(r.data.code === 200) {
+            this.uploadInfo.lookUrl = r.data.data
+          } else {
+            this.$message.error(r.data.msg)
+            return false;
+          }
+        })
+      }else{
+        // 是上述三种格式，直接使用url
+        this.uploadInfo.lookUrl = response.data
+      }
+    },
+    handleDocSuccessEdit(response, file, fileList) {
+      this.currentInfo.url = response.data
+      let fileType = file.name.substring(file.name.lastIndexOf('.') + 1);
+      let extension1 = fileType === 'jpg';
+      let extension2 = fileType === 'png';
+      let extension3 = fileType === 'pdf';
+      if(!extension1 && !extension2 && !extension3){
+        // 不是上述三种格式，需要转换
+        toPdfFile({
+          filePath: response.data
+        }).then(r => {
+          if(r.data.code === 200) {
+            this.currentInfo.lookUrl = r.data.data
+          } else {
+            this.$message.error(r.data.msg)
+            return false;
+          }
+        })
+      }else{
+        // 是上述三种格式，直接使用url
+        this.currentInfo.lookUrl = response.data
+      }
     },
     handleSuccessEdit(response, file, fileList) {
       this.currentInfo.url = response.data
+      this.currentInfo.lookUrl = response.data
     },
     refreshTable() {
       findDoc({
