@@ -110,7 +110,7 @@ export function addfuzhuo(data) {
   })
 }
 
-// 查询塔吊运行记录( 省安监字段 )列表
+// 查询塔式起重机运行记录( 省安监字段 )列表
 export function tadiao(data) {
   return request({
     url: 'device/deviceTowerCrane/list',
@@ -119,7 +119,7 @@ export function tadiao(data) {
   })
 }
 
-// 新增塔吊运行记录( 省安监字段 )
+// 新增塔式起重机运行记录( 省安监字段 )
 export function addtadiao(data) {
   return request({
     url: 'device/deviceTowerCrane',
@@ -128,7 +128,7 @@ export function addtadiao(data) {
   })
 }
 
-// 导出塔吊
+// 导出塔式起重机
 export function exporttadiao(data) {
   return request({
     url: 'device/deviceTowerCrane/export',
