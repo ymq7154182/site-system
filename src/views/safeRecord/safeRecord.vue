@@ -605,7 +605,7 @@
                       required: true, message: 'diccode不能为空', trigger: 'blur'
                       }"
                     >
-                      <treeselect v-model="item.diccode"  :options="options" :clearable="clearable" :show-count="true" :disable-branch-nodes="true"  style="width: 200px" @input="getSelectList(index, item)"/>
+                      <treeselect v-model="item.diccode"  :options="options" :clearable="true" :show-count="true" :disable-branch-nodes="true"  style="width: 200px" @input="getSelectList(index, item)"/>
                       <!--<el-input v-model="item.diccode"></el-input>-->
                     </el-form-item>
                   </el-col>
@@ -948,8 +948,33 @@
       submitForm(formName){
         this.$refs[formName].validate((valid) => {
           if(valid) {
-            console.log(this.form);
-            addMonthCheck(this.form).then(response => {
+            var p = new Object();
+              p.proid= 27467,
+              p.addressAll = this.form.addressAll
+              p.evaltime= this.form.evaltime
+              p.progress= this.form.progress
+              p.checkCode= this.form.checkcode
+              p.yhNum= this.form.yhnum
+              p.selfResult= this.form.selfresult
+              p.checkUser= this.form.checkuser
+              p.checkTime= this.form.checktime
+              p.isRectify= this.form.isrectify
+              p.rectifyTime= this.form.rectifytime
+              p.situation= this.form.situation
+              p.selfRecord= this.form.selfrecord
+              p.selfUser= this.form.selfuser
+              p.selfTime= this.form.selftime
+              p.affixStamp= this.form.affixstamp
+              p.affixOrg= this.form.affixorg
+              p.jsRecord= this.form.jsrecord
+              p.jsUser= this.form.jsuser
+              p.jsTime= this.form.jstime
+              p.jlRecord= this.form.jlrecord
+              p.jlUser= this.form.jluser
+              p.jlTime= this.form.jltime
+              p.checkMonthChildList= this.form.monthChild
+              console.log("p",p)
+            addMonthCheck(p).then(response => {
               if (response.data.code === 200) {
                 this.getList();
                 this.$message({
