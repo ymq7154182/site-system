@@ -650,7 +650,7 @@
                   </el-col>
                 </el-row>
                 <el-row>
-                  <el-col :span="12">
+                  <!-- <el-col :span="12">
                     <el-form-item
                       label-width="130px"
                       label="存在的问题"
@@ -661,7 +661,7 @@
                     >
                       <el-input v-model="item.fourCode" style="width: 350px"></el-input>
                     </el-form-item>
-                  </el-col>
+                  </el-col> -->
                   <el-col :span="12">
                     <el-form-item
                       label-width="130px"
