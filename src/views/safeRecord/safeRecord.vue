@@ -599,13 +599,13 @@
                   <el-col :span="12">
                     <el-form-item
                       label-width="130px"
-                      label="diccode"
+                      label="存在的问题"
                       :prop="'form.monthChild.' + index + '.diccode'"
                       :rules="{
                       required: true, message: 'diccode不能为空', trigger: 'blur'
                       }"
                     >
-                      <treeselect v-model="item.diccode"  :options="options" :clearable="true" :show-count="true" :disable-branch-nodes="true"  style="width: 200px" @input="getSelectList(index, item)"/>
+                      <treeselect v-model="item.diccode"  :options="options" :clearable="true" :show-count="true" :disable-branch-nodes="true"  style="width: 350px" @input="getSelectList(index, item)"/>
                       <!--<el-input v-model="item.diccode"></el-input>-->
                     </el-form-item>
                   </el-col>
@@ -616,7 +616,7 @@
                       :prop="'form.monthChild.' + index + '.firstCode'"
                       :rules="{required: true, message: '检查项不能为空', trigger: 'blur'}"
                     >
-                      <el-input v-model="item.firstCode"></el-input>
+                      <el-input v-model="item.firstCode" style="width: 250px"></el-input>
                     </el-form-item>
                   </el-col>
                 </el-row>
@@ -630,7 +630,7 @@
               required: true, message: '检查子项不能为空', trigger: 'blur'
               }"
                     >
-                      <el-input v-model="item.secondCode"></el-input>
+                      <el-input v-model="item.secondCode" style="width: 350px"></el-input>
                     </el-form-item>
                   </el-col>
                   <el-col :span="10">
@@ -642,7 +642,7 @@
               required: true, message: '检查部位及内容不能为空', trigger: 'blur'
               }"
                     >
-                      <el-input v-model="item.threeCode"></el-input>
+                      <el-input v-model="item.threeCode" ></el-input>
                     </el-form-item>
                   </el-col>
                   <el-col :span="2">
@@ -659,7 +659,7 @@
               required: true, message: '存在的问题不能为空', trigger: 'blur'
               }"
                     >
-                      <el-input v-model="item.fourCode"></el-input>
+                      <el-input v-model="item.fourCode" style="width: 350px"></el-input>
                     </el-form-item>
                   </el-col>
                   <el-col :span="12">
@@ -671,7 +671,7 @@
               required: true, message: '所扣分值不能为空', trigger: 'blur'
               }"
                     >
-                      <el-input v-model="item.checkCode"></el-input>
+                      <el-input v-model="item.checkCode" ></el-input>
                     </el-form-item>
                   </el-col>
                 </el-row>
