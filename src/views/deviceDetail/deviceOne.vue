@@ -35,7 +35,6 @@
             </div>
           </div>
 
-
           <div v-show="tableShow === 'table1'">
             <div class="data_table">
               <el-table
@@ -66,6 +65,11 @@
                 <el-table-column prop="maxLoad" label="最大载重量" align="center" />
                 <el-table-column prop="maxCapacity" label="最大起重量" align="center" />
                 <el-table-column prop="maxRange" label="幅度" align="center" />
+                <el-table-column label="查看详情" align="center">
+                  <template slot-scope="scope">
+                    <el-button type="text" icon="el-icon-view" @click="viewDetail1(scope.row)">查看</el-button>
+                  </template>
+                </el-table-column>
               </el-table>
             </div>
             <div class="block">
@@ -95,7 +99,6 @@
 <!--                <el-table-column prop="setupId" label="安装id" />-->
 <!--                <el-table-column prop="userid" label="当前登录人id" />-->
                 <el-table-column type="index" label="序号"  align="center"/>
-
                 <el-table-column prop="opinionSg" label="施工单位意见" align="center" />
                 <el-table-column prop="userSg" label="施工单位项目经理签字" align="center" />
                 <el-table-column prop="timeSg" label="时间" align="center" width="100"/>
@@ -109,6 +112,11 @@
                 <el-table-column prop="maxLoad" label="最大载重量" align="center" />
                 <el-table-column prop="maxCapacity" label="最大起重量" align="center" />
                 <el-table-column prop="maxRange" label="幅度" align="center" />
+                <el-table-column label="查看详情" align="center">
+                  <template slot-scope="scope">
+                    <el-button type="text" icon="el-icon-view" @click="viewDetail2(scope.row)">查看</el-button>
+                  </template>
+                </el-table-column>
               </el-table>
             </div>
             <div class="block">
@@ -156,7 +164,11 @@
                 <el-table-column prop="checkWriteTime" label="施工总承包单位审核意见" align="center" />
                 <el-table-column prop="installUserAqjg" label="监理单位审核意见" align="center" />
                 <el-table-column prop="installUser" label="施工总承包审核日期" align="center" />
-
+                <el-table-column label="查看详情" align="center">
+                  <template slot-scope="scope">
+                    <el-button type="text" icon="el-icon-view" @click="viewDetail3(scope.row)">查看</el-button>
+                  </template>
+                </el-table-column>
               </el-table>
             </div>
             <div class="block">
@@ -204,7 +216,11 @@
                 <el-table-column prop="checkWriteTime" label="施工总承包单位审核意见" align="center" />
                 <el-table-column prop="installUserAqjg" label="监理单位审核意见" align="center" />
                 <el-table-column prop="installUser" label="施工总承包审核日期" align="center" />
-
+                <el-table-column label="查看详情" align="center">
+                  <template slot-scope="scope">
+                    <el-button type="text" icon="el-icon-view" @click="viewDetail4(scope.row)">查看</el-button>
+                  </template>
+                </el-table-column>
               </el-table>
             </div>
             <div class="block">
@@ -249,6 +265,11 @@
                 <el-table-column prop="checkUser" label="检查人员" align="center" />
                 <el-table-column prop="conclusion" label="结论" align="center" />
                 <el-table-column prop="reporttime" label="上报时间" align="center" />
+                <el-table-column label="查看详情" align="center">
+                  <template slot-scope="scope">
+                    <el-button type="text" icon="el-icon-view" @click="viewDetail5(scope.row)">查看</el-button>
+                  </template>
+                </el-table-column>
               </el-table>
             </div>
             <div class="block">
@@ -285,6 +306,11 @@
                 <el-table-column prop="installuseraqjg" label="监理单位审核意见" align="center" />
                 <el-table-column prop="installuserzc" label="监理单位审核日期" align="center" />
                 <el-table-column prop="reporttime" label="上报时间" align="center" />
+                <el-table-column label="查看详情" align="center">
+                  <template slot-scope="scope">
+                    <el-button type="text" icon="el-icon-view" @click="viewDetail6(scope.row)">查看</el-button>
+                  </template>
+                </el-table-column>
               </el-table>
             </div>
             <div class="block">
@@ -701,6 +727,782 @@
         </el-form>
       </div>
     </el-dialog>
+    <el-dialog :visible.sync="view1" title="查看详情">
+      <table class="tableClass">
+        <tr>
+          <td class="tableHead">
+            ID
+          </td>
+          <td>
+            {{ detail1.id }}
+          </td>
+        </tr>
+        <tr>
+          <td class="tableHead">
+            安装单位负责人
+          </td>
+          <td>
+            {{ detail1.checkUser }}
+          </td>
+        </tr>
+        <tr>
+          <td class="tableHead">
+            安装单位自检意见
+          </td>
+          <td>
+            {{ detail1.checkContent }}
+          </td>
+        </tr>
+        <tr>
+          <td class="tableHead">
+            检查时间
+          </td>
+          <td>
+            {{ detail1.checkTime }}
+          </td>
+        </tr>
+        <tr>
+          <td class="tableHead">
+            检查填写时间
+          </td>
+          <td>
+            {{ detail1.checkWriteTime }}
+          </td>
+        </tr>
+        <tr>
+          <td class="tableHead">
+            安装单位技术负责人
+          </td>
+          <td>
+            {{ detail1.installUser }}
+          </td>
+        </tr>
+        <tr>
+          <td class="tableHead">
+            安装单位安全员、机管
+          </td>
+          <td>
+            {{ detail1.installUserAqjg }}
+          </td>
+        </tr>
+        <tr>
+          <td class="tableHead">
+            安装班组长
+          </td>
+          <td>
+            {{ detail1.installUserZc }}
+          </td>
+        </tr>
+        <tr>
+          <td class="tableHead">
+            机组人员
+          </td>
+          <td>
+            {{ detail1.installUserJzry }}
+          </td>
+        </tr>
+        <tr>
+          <td class="tableHead">
+            填写时间
+          </td>
+          <td>
+            {{ detail1.writeTime }}
+          </td>
+        </tr>
+        <tr>
+          <td class="tableHead">
+            起升高度
+          </td>
+          <td>
+            {{ detail1.leftHeight }}
+          </td>
+        </tr>
+        <tr>
+          <td class="tableHead">
+            塔高
+          </td>
+          <td>
+            {{ detail1.towerHeight }}
+          </td>
+        </tr>
+        <tr>
+          <td class="tableHead">
+            安装高度
+          </td>
+          <td>
+            {{ detail1.installHeigth }}
+          </td>
+        </tr>
+        <tr>
+          <td class="tableHead">
+            最大载重量
+          </td>
+          <td>
+            {{ detail1.maxLoad }}
+          </td>
+        </tr>
+        <tr>
+          <td class="tableHead">
+            最大起重量
+          </td>
+          <td>
+            {{ detail1.maxCapacity }}
+          </td>
+        </tr>
+        <tr>
+          <td class="tableHead">
+            幅度
+          </td>
+          <td>
+            {{ detail1.maxRange }}
+          </td>
+        </tr>
+      </table>
+    </el-dialog>
+    <el-dialog :visible.sync="view2" title="查看详情">
+      <table class="tableClass">
+        <tr>
+          <td class="tableHead">
+            ID
+          </td>
+          <td>
+            {{ detail2.id }}
+          </td>
+        </tr>
+        <tr>
+          <td class="tableHead">
+            施工单位意见
+          </td>
+          <td>
+            {{ detail2.opinionSg }}
+          </td>
+        </tr>
+        <tr>
+          <td class="tableHead">
+            施工单位项目经理签字
+          </td>
+          <td>
+            {{ detail2.userSg }}
+          </td>
+        </tr>
+        <tr>
+          <td class="tableHead">
+            时间
+          </td>
+          <td>
+            {{ detail2.timeSg }}
+          </td>
+        </tr>
+        <tr>
+          <td class="tableHead">
+            监理单位意见
+          </td>
+          <td>
+            {{ detail2.opinionJl }}
+          </td>
+        </tr>
+        <tr>
+          <td class="tableHead">
+            监理单位项目经理签字
+          </td>
+          <td>
+            {{ detail2.userJl }}
+          </td>
+        </tr>
+        <tr>
+          <td class="tableHead">
+            上报时间时间
+          </td>
+          <td>
+            {{ detail2.reporttime }}
+          </td>
+        </tr>
+        <tr>
+          <td class="tableHead">
+            起升高度
+          </td>
+          <td>
+            {{ detail2.leftHeight }}
+          </td>
+        </tr>
+        <tr>
+          <td class="tableHead">
+            塔高
+          </td>
+          <td>
+            {{ detail2.towerHeight }}
+          </td>
+        </tr>
+        <tr>
+          <td class="tableHead">
+            安装高度
+          </td>
+          <td>
+            {{ detail2.installHeigth }}
+          </td>
+        </tr>
+        <tr>
+          <td class="tableHead">
+            最大载重量
+          </td>
+          <td>
+            {{ detail2.maxLoad }}
+          </td>
+        </tr>
+        <tr>
+          <td class="tableHead">
+            最大起重量
+          </td>
+          <td>
+            {{ detail2.maxCapacity }}
+          </td>
+        </tr>
+        <tr>
+          <td class="tableHead">
+            幅度
+          </td>
+          <td>
+            {{ detail2.maxRange }}
+          </td>
+        </tr>
+      </table>
+    </el-dialog>
+    <el-dialog :visible.sync="view3" title="查看详情">
+      <table class="tableClass">
+        <tr>
+          <td class="tableHead">
+            ID
+          </td>
+          <td>
+            {{ detail3.id }}
+          </td>
+        </tr>
+        <tr>
+          <td class="tableHead">
+            附着道数
+          </td>
+          <td>
+            {{ detail3.leftHeight }}
+          </td>
+        </tr>
+        <tr>
+          <td class="tableHead">
+            当前已安装附着
+          </td>
+          <td>
+            {{ detail3.towerHeight }}
+          </td>
+        </tr>
+        <tr>
+          <td class="tableHead">
+            当前标准节
+          </td>
+          <td>
+            {{ detail3.installHeigth }}
+          </td>
+        </tr>
+        <tr>
+          <td class="tableHead">
+            新安装标准节
+          </td>
+          <td>
+            {{ detail3.maxLoad }}
+          </td>
+        </tr>
+        <tr>
+          <td class="tableHead">
+            企业id
+          </td>
+          <td>
+            {{ detail3.entid }}
+          </td>
+        </tr>
+        <tr>
+          <td class="tableHead">
+            设备使用ID
+          </td>
+          <td>
+            {{ detail3.useId }}
+          </td>
+        </tr>
+        <tr>
+          <td class="tableHead">
+            安装时间
+          </td>
+          <td>
+            {{ detail3.installtime }}
+          </td>
+        </tr>
+        <tr>
+          <td class="tableHead">
+            顶升后高度
+          </td>
+          <td>
+            {{ detail3.checkTime }}
+          </td>
+        </tr>
+        <tr>
+          <td class="tableHead">
+            附着间距
+          </td>
+          <td>
+            {{ detail3.spacing }}
+          </td>
+        </tr>
+        <tr>
+          <td class="tableHead">
+            监理单位审核日期
+          </td>
+          <td>
+            {{ detail3.installUserZcs }}
+          </td>
+        </tr>
+        <tr>
+          <td class="tableHead">
+            上报时间
+          </td>
+          <td>
+            {{ detail3.reporttime }}
+          </td>
+        </tr>
+        <tr>
+          <td class="tableHead">
+            与建筑物水平中心距离
+          </td>
+          <td>
+            {{ detail3.maxCapacity }}
+          </td>
+        </tr>
+        <tr>
+          <td class="tableHead">
+            原安装臂铰点（自由端）高度
+          </td>
+          <td>
+            {{ detail3.maxRange }}
+          </td>
+        </tr>
+        <tr>
+          <td class="tableHead">
+            是否附着
+          </td>
+          <td>
+            {{ detail3.checkUser }}
+          </td>
+        </tr>
+        <tr>
+          <td class="tableHead">
+            安装单位负责人
+          </td>
+          <td>
+            {{ detail3.installmanager }}
+          </td>
+        </tr>
+        <tr>
+          <td class="tableHead">
+            联系电话
+          </td>
+          <td>
+            {{ detail3.installphone }}
+          </td>
+        </tr>
+        <tr>
+          <td class="tableHead">
+            现场专业技术人员
+          </td>
+          <td>
+            {{ detail3.checkContent }}
+          </td>
+        </tr>
+        <tr>
+          <td class="tableHead">
+            施工总承包单位审核意见
+          </td>
+          <td>
+            {{ detail3.checkWriteTime }}
+          </td>
+        </tr>
+        <tr>
+          <td class="tableHead">
+            监理单位审核意见
+          </td>
+          <td>
+            {{ detail3.installUserAqjg }}
+          </td>
+        </tr>
+        <tr>
+          <td class="tableHead">
+            施工总承包审核日期
+          </td>
+          <td>
+            {{ detail3.installUser }}
+          </td>
+        </tr>
+      </table>
+    </el-dialog>
+    <el-dialog :visible.sync="view4" title="查看详情">
+      <table class="tableClass">
+        <tr>
+          <td class="tableHead">
+            ID
+          </td>
+          <td>
+            {{ detail4.id }}
+          </td>
+        </tr>
+        <tr>
+          <td class="tableHead">
+            附着道数
+          </td>
+          <td>
+            {{ detail4.leftHeight }}
+          </td>
+        </tr>
+        <tr>
+          <td class="tableHead">
+            当前已安装附着
+          </td>
+          <td>
+            {{ detail4.towerHeight }}
+          </td>
+        </tr>
+        <tr>
+          <td class="tableHead">
+            原附着点处高度
+          </td>
+          <td>
+            {{ detail4.installHeigth }}
+          </td>
+        </tr>
+        <tr>
+          <td class="tableHead">
+            新安装附着
+          </td>
+          <td>
+            {{ detail4.maxLoad }}
+          </td>
+        </tr>
+        <tr>
+          <td class="tableHead">
+            安装时间
+          </td>
+          <td>
+            {{ detail4.installtime }}
+          </td>
+        </tr>
+        <tr>
+          <td class="tableHead">
+            新附着点处高度
+          </td>
+          <td>
+            {{ detail4.checkTime }}
+          </td>
+        </tr>
+        <tr>
+          <td class="tableHead">
+            附着间距
+          </td>
+          <td>
+            {{ detail4.spacing }}
+          </td>
+        </tr>
+        <tr>
+          <td class="tableHead">
+            监理单位审核日期
+          </td>
+          <td>
+            {{ detail4.installUserZcs }}
+          </td>
+        </tr>
+        <tr>
+          <td class="tableHead">
+            上报时间
+          </td>
+          <td>
+            {{ detail4.reporttime }}
+          </td>
+        </tr>
+        <tr>
+          <td class="tableHead">
+            与建筑物水平中心距离
+          </td>
+          <td>
+            {{ detail4.maxCapacity }}
+          </td>
+        </tr>
+        <tr>
+          <td class="tableHead">
+            原安装臂铰点（自由端）高度
+          </td>
+          <td>
+            {{ detail4.maxRange }}
+          </td>
+        </tr>
+        <tr>
+          <td class="tableHead">
+            是否原厂附着
+          </td>
+          <td>
+            {{ detail4.checkUser }}
+          </td>
+        </tr>
+        <tr>
+          <td class="tableHead">
+            安装单位负责人
+          </td>
+          <td>
+            {{ detail4.installmanager }}
+          </td>
+        </tr>
+        <tr>
+          <td class="tableHead">
+            联系电话
+          </td>
+          <td>
+            {{ detail4.installphone }}
+          </td>
+        </tr>
+        <tr>
+          <td class="tableHead">
+            现场专业技术人员
+          </td>
+          <td>
+            {{ detail4.checkContent }}
+          </td>
+        </tr>
+        <tr>
+          <td class="tableHead">
+            施工总承包单位审核意见
+          </td>
+          <td>
+            {{ detail4.checkWriteTime }}
+          </td>
+        </tr>
+        <tr>
+          <td class="tableHead">
+            监理单位审核意见
+          </td>
+          <td>
+            {{ detail4.installUserAqjg }}
+          </td>
+        </tr>
+        <tr>
+          <td class="tableHead">
+            施工总承包审核日期
+          </td>
+          <td>
+            {{ detail4.installUser }}
+          </td>
+        </tr>
+      </table>
+    </el-dialog>
+    <el-dialog :visible.sync="view5" title="查看详情">
+      <table class="tableClass">
+        <tr>
+          <td class="tableHead">
+            ID
+          </td>
+          <td>
+            {{ detail5.id }}
+          </td>
+        </tr>
+        <tr>
+          <td class="tableHead">
+            起升高度
+          </td>
+          <td>
+            {{ detail5.leftHeight }}
+          </td>
+        </tr>
+        <tr>
+          <td class="tableHead">
+            塔高
+          </td>
+          <td>
+            {{ detail5.towerHeight }}
+          </td>
+        </tr>
+        <tr>
+          <td class="tableHead">
+            安装高度
+          </td>
+          <td>
+            {{ detail5.installHeigth }}
+          </td>
+        </tr>
+        <tr>
+          <td class="tableHead">
+            最大载重量
+          </td>
+          <td>
+            {{ detail5.maxLoad }}
+          </td>
+        </tr>
+        <tr>
+          <td class="tableHead">
+            检查时间
+          </td>
+          <td>
+            {{ detail5.checkTime }}
+          </td>
+        </tr>
+        <tr>
+          <td class="tableHead">
+            最大起重量
+          </td>
+          <td>
+            {{ detail5.maxCapacity }}
+          </td>
+        </tr>
+        <tr>
+          <td class="tableHead">
+            幅度
+          </td>
+          <td>
+            {{ detail5.maxRange }}
+          </td>
+        </tr>
+        <tr>
+          <td class="tableHead">
+            附着道数
+          </td>
+          <td>
+            {{ detail5.channels }}
+          </td>
+        </tr>
+        <tr>
+          <td class="tableHead">
+            检查结果代号说明
+          </td>
+          <td>
+            {{ detail5.checkResult }}
+          </td>
+        </tr>
+        <tr>
+          <td class="tableHead">
+            使用单位意见
+          </td>
+          <td>
+            {{ detail5.userContent }}
+          </td>
+        </tr>
+        <tr>
+          <td class="tableHead">
+            使用单位填写时间
+          </td>
+          <td>
+            {{ detail5.userTime }}
+          </td>
+        </tr>
+        <tr>
+          <td class="tableHead">
+            检查人员
+          </td>
+          <td>
+            {{ detail5.checkUser }}
+          </td>
+        </tr>
+        <tr>
+          <td class="tableHead">
+            结论
+          </td>
+          <td>
+            {{ detail5.conclusion }}
+          </td>
+        </tr>
+        <tr>
+          <td class="tableHead">
+            上报时间
+          </td>
+          <td>
+            {{ detail5.reporttime }}
+          </td>
+        </tr>
+      </table>
+    </el-dialog>
+    <el-dialog :visible.sync="view6" title="查看详情">
+      <table class="tableClass">
+        <tr>
+          <td class="tableHead">
+            ID
+          </td>
+          <td>
+            {{ detail6.id }}
+          </td>
+        </tr>
+        <tr>
+          <td class="tableHead">
+            维保时间
+          </td>
+          <td>
+            {{ detail6.weibaotime }}
+          </td>
+        </tr>
+        <tr>
+          <td class="tableHead">
+            运转台时
+          </td>
+          <td>
+            {{ detail6.maxcapacity }}
+          </td>
+        </tr>
+        <tr>
+          <td class="tableHead">
+            更换主要零部件
+          </td>
+          <td>
+            {{ detail6.maxrange }}
+          </td>
+        </tr>
+        <tr>
+          <td class="tableHead">
+            维管负责人
+          </td>
+          <td>
+            {{ detail6.leftheight }}
+          </td>
+        </tr>
+        <tr>
+          <td class="tableHead">
+            维保人员
+          </td>
+          <td>
+            {{ detail6.towerheight }}
+          </td>
+        </tr>
+        <tr>
+          <td class="tableHead">
+            维修（保养）内容
+          </td>
+          <td>
+            {{ detail6.installheigth }}
+          </td>
+        </tr>
+        <tr>
+          <td class="tableHead">
+            监理单位审核意见
+          </td>
+          <td>
+            {{ detail6.installuseraqjg }}
+          </td>
+        </tr>
+        <tr>
+          <td class="tableHead">
+            监理单位审核日期
+          </td>
+          <td>
+            {{ detail6.installuserzc }}
+          </td>
+        </tr>
+        <tr>
+          <td class="tableHead">
+            上报时间
+          </td>
+          <td>
+            {{ detail6.reporttime }}
+          </td>
+        </tr>
+      </table>
+    </el-dialog>
   </div>
 </template>
 
@@ -896,7 +1698,19 @@
           uploader: '',
           uploadTime: ''
         },
-        currentIndex: null
+        currentIndex: null,
+        detail1: {},
+        detail2: {},
+        detail3: {},
+        detail4: {},
+        detail5: {},
+        detail6: {},
+        view1: false,
+        view2: false,
+        view3: false,
+        view4: false,
+        view5: false,
+        view6: false,
       }
     },
     mounted() {
@@ -1115,6 +1929,35 @@
       },
       gotoback() {
         history.go(-1)
+      },
+      viewDetail1(row) {
+        this.detail1 = row;
+        this.view1 = true;
+      },
+      viewDetail2(row) {
+        this.detail2 = row;
+        this.view2 = true;
+
+      },
+      viewDetail3(row) {
+        this.detail3 = row;
+        this.view3 = true;
+
+      },
+      viewDetail4(row) {
+        this.detail4 = row;
+        this.view4 = true;
+
+      },
+      viewDetail5(row) {
+        this.detail5 = row;
+        this.view5 = true;
+
+      },
+      viewDetail6(row) {
+        this.detail6 = row;
+        this.view6 = true;
+
       }
     }
   }
@@ -1253,6 +2096,22 @@
     left: 50%;
     top: 50%;
     transform: translate(-50%, -50%);
+  }
 
+  .tableClass {
+    width: 100%;
+  }
+
+  .tableClass td {
+    width: 50%;
+    text-align: center;
+  }
+
+  .tableClass tr {
+    height: 30px;
+  }
+
+  .tableHead {
+    color: #409eff;
   }
 </style>
