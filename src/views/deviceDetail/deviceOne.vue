@@ -2027,7 +2027,7 @@
             label="检查项"
             :prop="'addForm3.childData.' + index + '.dicid'"
           >
-            <treeselect v-model="item.diccode"  :options="options3" :clearable="true" :show-count="true" :disable-branch-nodes="true"  style="width: 350px" @input="getSelectList(index, item)"/>
+            <treeselect v-model="item.dicid"  :options="options" :clearable="true" :show-count="true" :disable-branch-nodes="true"  style="width: 186px; "  />
           </el-form-item>
           <el-form-item
             label="检查结果"
@@ -2042,7 +2042,7 @@
             <el-input v-model="item.checkUser" placeholder="请输入检查人"></el-input>
           </el-form-item>
           <el-form-item>
-            <el-button type="danger" icon="el-icon-delete" circle></el-button>
+            <el-button type="danger" icon="el-icon-delete" circle @click="deleteChildData3(item, index)"></el-button>
           </el-form-item>
           <el-divider></el-divider>
         </div>
@@ -2155,7 +2155,7 @@
             label="检查项"
             :prop="'addForm4.childData.' + i + '.dicid'"
           >
-            <el-input v-model="item.dicid" placeholder="请输入检查结果"></el-input>
+            <treeselect v-model="item.dicid"  :options="options" :clearable="true" :show-count="true" :disable-branch-nodes="true" style="width: 186px; " />
           </el-form-item>
           <el-form-item
             label="检查结果"
@@ -2170,7 +2170,7 @@
             <el-input v-model="item.remarks" placeholder="请输入结论"></el-input>
           </el-form-item>
           <el-form-item>
-            <el-button type="danger" icon="el-icon-delete" circle></el-button>
+            <el-button type="danger" icon="el-icon-delete" circle @click="deleteChildData4(item, index)"></el-button>
           </el-form-item>
           <el-divider></el-divider>
         </div>
@@ -2191,6 +2191,7 @@
   import { zijian, addZijian,getSysProData,yanshou, addyanshou,weihu, addweihu, dingqi, adddingqi, dingsheng,adddingsheng,fuzhuo, addfuzhuo, devTreeSelect } from "@/api/deviceManage";
   // import { getSysProData } from "@/api/qualityControl"
   import axios from 'axios'
+  import {inJackingPlusRecordCheck} from "../../api/deviceManage";
   export default {
     components: { Treeselect },
     data() {
@@ -2467,6 +2468,8 @@
           ]
         },
         form4rule: {},
+        options3: [],
+        options4: []
       }
     },
     mounted() {
@@ -2823,8 +2826,6 @@
       deleteItem5 (item, index) {
         this.uploadInfo5.childData.splice(index, 1)
       },
-
-
       checkDetail3(row) {
         this.showAdd3 = true;
         this.addForm3.testid = row.id
@@ -2834,17 +2835,34 @@
         this.addForm4.fuid = row.id
       },
       submitAddForm3(formName) {
-        // this.$refs[formName].validate((valid) => {
-        //   if (valid) {
-        console.log(JSON.stringify(this.addForm3));
-        //   } else {
-        //     console.log('error submit!!');
-        //     return false;
-        //   }
-        // });
+        inJackingPlusRecordCheck({
+          dataJson: JSON.stringify(this.addForm3)
+        }).then(res => {
+          if(res.data.code === 200) {
+            this.$message({
+              type: 'success',
+              message: '添加成功'
+            });
+            this.cancelAdd();
+          } else {
+            this.$message.error(res.data.msg);
+          }
+        })
       },
       submitAddForm4(formName) {
-        console.log(this.addForm4);
+        absyncAttachRecordCheckData({
+          dataJson: JSON.stringify(this.addForm4)
+        }).then(res => {
+          if(res.data.code === 200) {
+            this.$message({
+              type: 'success',
+              message: '添加成功'
+            });
+            this.cancelAdd();
+          } else {
+            this.$message.error(res.data.msg);
+          }
+        })
       },
       cancelAdd() {
         this.showAdd3 = false
@@ -2884,17 +2902,27 @@
       },
       addForm3childData() {
         this.addForm3.childData.push({
-          dicid: null,
+          dicid: 352,
           result: '',
           checkUser: ''
         })
+        this.typeCode = 'AJB_DEV_SELF_TEST'
+        this.getTreeselect()
       },
       addForm4childData() {
         this.addForm4.childData.push({
-          dicid: null,
+          dicid: 333,
           result: '',
           remarks: ''
         })
+        this.typeCode = 'AJB_DEV_ATTACHED_ACCEPT'
+        this.getTreeselect()
+      },
+      deleteChildData3 (item, index) {
+        this.addForm3.childData.splice(index, 1)
+      },
+      deleteChildData4 (item, index) {
+        this.addForm4.childData.splice(index, 1)
       },
     }
   }
