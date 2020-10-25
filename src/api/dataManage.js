@@ -44,3 +44,11 @@ export function getSite(data) {
     params: data
   })
 }
+
+export function toPdfFile(data) {
+  return request({
+    url: '/doc/toPdfFile',
+    method: 'get',
+    params: data
+  })
+}

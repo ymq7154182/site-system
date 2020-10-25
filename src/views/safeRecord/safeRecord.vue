@@ -599,13 +599,13 @@
                   <el-col :span="12">
                     <el-form-item
                       label-width="130px"
-                      label="diccode"
+                      label="存在的问题"
                       :prop="'form.monthChild.' + index + '.diccode'"
                       :rules="{
                       required: true, message: 'diccode不能为空', trigger: 'blur'
                       }"
                     >
-                      <treeselect v-model="item.diccode"  :options="options" :clearable="clearable" :show-count="true" :disable-branch-nodes="true"  style="width: 200px" @input="getSelectList(index, item)"/>
+                      <treeselect v-model="item.diccode"  :options="options" :clearable="true" :show-count="true" :disable-branch-nodes="true"  style="width: 350px" @input="getSelectList(index, item)"/>
                       <!--<el-input v-model="item.diccode"></el-input>-->
                     </el-form-item>
                   </el-col>
@@ -616,7 +616,7 @@
                       :prop="'form.monthChild.' + index + '.firstCode'"
                       :rules="{required: true, message: '检查项不能为空', trigger: 'blur'}"
                     >
-                      <el-input v-model="item.firstCode"></el-input>
+                      <el-input v-model="item.firstCode" style="width: 250px"></el-input>
                     </el-form-item>
                   </el-col>
                 </el-row>
@@ -630,7 +630,7 @@
               required: true, message: '检查子项不能为空', trigger: 'blur'
               }"
                     >
-                      <el-input v-model="item.secondCode"></el-input>
+                      <el-input v-model="item.secondCode" style="width: 350px"></el-input>
                     </el-form-item>
                   </el-col>
                   <el-col :span="10">
@@ -642,7 +642,7 @@
               required: true, message: '检查部位及内容不能为空', trigger: 'blur'
               }"
                     >
-                      <el-input v-model="item.threeCode"></el-input>
+                      <el-input v-model="item.threeCode" ></el-input>
                     </el-form-item>
                   </el-col>
                   <el-col :span="2">
@@ -650,7 +650,7 @@
                   </el-col>
                 </el-row>
                 <el-row>
-                  <el-col :span="12">
+                  <!-- <el-col :span="12">
                     <el-form-item
                       label-width="130px"
                       label="存在的问题"
@@ -659,9 +659,9 @@
               required: true, message: '存在的问题不能为空', trigger: 'blur'
               }"
                     >
-                      <el-input v-model="item.fourCode"></el-input>
+                      <el-input v-model="item.fourCode" style="width: 350px"></el-input>
                     </el-form-item>
-                  </el-col>
+                  </el-col> -->
                   <el-col :span="12">
                     <el-form-item
                       label-width="130px"
@@ -671,7 +671,7 @@
               required: true, message: '所扣分值不能为空', trigger: 'blur'
               }"
                     >
-                      <el-input v-model="item.checkCode"></el-input>
+                      <el-input v-model="item.checkCode" ></el-input>
                     </el-form-item>
                   </el-col>
                 </el-row>
@@ -948,14 +948,41 @@
       submitForm(formName){
         this.$refs[formName].validate((valid) => {
           if(valid) {
-            console.log(this.form);
-            addMonthCheck(this.form).then(response => {
+            var p = new Object();
+              p.proid= 27467,
+              p.addressAll = this.form.addressAll
+              p.evaltime= this.form.evaltime
+              p.progress= this.form.progress
+              p.checkCode= this.form.checkcode
+              p.yhNum= this.form.yhnum
+              p.selfResult= this.form.selfresult
+              p.checkUser= this.form.checkuser
+              p.checkTime= this.form.checktime
+              p.isRectify= this.form.isrectify
+              p.rectifyTime= this.form.rectifytime
+              p.situation= this.form.situation
+              p.selfRecord= this.form.selfrecord
+              p.selfUser= this.form.selfuser
+              p.selfTime= this.form.selftime
+              p.affixStamp= this.form.affixstamp
+              p.affixOrg= this.form.affixorg
+              p.jsRecord= this.form.jsrecord
+              p.jsUser= this.form.jsuser
+              p.jsTime= this.form.jstime
+              p.jlRecord= this.form.jlrecord
+              p.jlUser= this.form.jluser
+              p.jlTime= this.form.jltime
+              p.checkMonthChildList= this.form.monthChild
+              console.log("p",p)
+            addMonthCheck(p).then(response => {
               if (response.data.code === 200) {
                 this.getList();
                 this.$message({
                   type: 'success',
                   message: '上传成功'
+
                 })
+                this.reset()
                 this.openadd = false
               } else {
                 this.$message.error(response.data.msg)
@@ -1080,33 +1107,32 @@
         this.opencheck = true
       },
       // 表单重置
-      // reset() {
-      //   form: {
-      //       //proid=null;
-      //       evaltime='';
-      //       progress='';
-      //       checkcode=null;
-      //       yhnum=null;
-      //       selfresult='';
-      //       checkuser='';
-      //       checktime='';
-      //       isrectify='';
-      //       rectifytime='';
-      //       situation='';
-      //       selfrecord='';
-      //       selfuser='';
-      //       selftime='';
-      //       affixstamp='';
-      //       affixorg=[];
-      //       jsrecord='';
-      //       jsuser='';
-      //       jstime='';
-      //       jlrecord='';
-      //       jluser='';
-      //       jltime='';
-      //       monthChild=[];
-      //   }
-      // },
+      reset() {
+        this.form.proid= 27467,
+        this.form.addressAll='',
+        this.form.evaltime='',
+        this.form.progress='',
+        this.form.checkcode=null,
+        this.form.yhnum=null,
+        this.form.selfresult='',
+        this.form.checkuser='',
+        this.form.checktime='',
+        this.form.isrectify='',
+        this.form.rectifytime='',
+        this.form.situation='',
+        this.form.selfrecord='',
+        this.form.selfuser='',
+        this.form.selftime='',
+        this.form.affixstamp= '',
+        this.form.affixorg= '',
+        this.form.jsrecord='',
+        this.form.jsuser='',
+        this.form.jstime='',
+        this.form.jlrecord='',
+        this.form.jluser='',
+        this.form.jltime='',
+        this.form.monthChild=[]
+      },
       /** 导出按钮操作 */
       handleExport(){
         const queryParams = this.queryParams
