@@ -154,3 +154,12 @@ export function exportshengjiang(data) {
     params: data
   })
 }
+
+// 获取设备检查字典下拉树列表
+export function devTreeSelect(data) {
+  return request({
+    url: 'check/devDict/devTreeSelect',
+    method: 'get',
+    params: data
+  })
+}

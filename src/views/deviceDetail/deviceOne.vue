@@ -24,7 +24,7 @@
           <div class="border-top-right"></div>
           <div style="padding: 0.13rem;position: relative">
             <el-button type="success" @click="gotoback"><i class="el-icon-d-arrow-left" />返回</el-button>
-            <el-button type="primary" @click="showUpload = true"><i class="el-icon-plus" /> 新增</el-button>
+            <el-button type="primary" @click="showAdd"><i class="el-icon-plus" /> 新增</el-button>
             <span style="font-size: 0.2rem;margin-left: 0.1rem;color: white">
                设备编号：
             </span>
@@ -55,15 +55,15 @@
                 <el-table-column prop="checkTime" label="检查时间" align="center" width="100"/>
                 <el-table-column prop="checkWriteTime" label="检查填写时间" align="center" width="100"/>
                 <el-table-column prop="installUser" label="安装单位技术负责人" align="center" />
-                <el-table-column prop="installUserAqjg" label="安装单位安全员、机管" align="center" />
+                <!--<el-table-column prop="installUserAqjg" label="安装单位安全员、机管" align="center" />-->
                 <el-table-column prop="installUserZc" label="安装班组长" align="center" />
-                <el-table-column prop="installUserJzry" label="机组人员" align="center" />
+                <!--<el-table-column prop="installUserJzry" label="机组人员" align="center" />-->
                 <el-table-column prop="writeTime" label="填写时间" align="center" width="100"/>
                 <el-table-column prop="leftHeight" label="起升高度" align="center"/>
-                <el-table-column prop="towerHeight" label="塔高"  align="center" />
-                <el-table-column prop="installHeigth" label="安装高度" align="center" />
-                <el-table-column prop="maxLoad" label="最大载重量" align="center" />
-                <el-table-column prop="maxCapacity" label="最大起重量" align="center" />
+                <!--<el-table-column prop="towerHeight" label="塔高"  align="center" />-->
+                <!--<el-table-column prop="installHeigth" label="安装高度" align="center" />-->
+                <!--<el-table-column prop="maxLoad" label="最大载重量" align="center" />-->
+                <!--<el-table-column prop="maxCapacity" label="最大起重量" align="center" />-->
                 <el-table-column prop="maxRange" label="幅度" align="center" />
                 <el-table-column label="查看详情" align="center">
                   <template slot-scope="scope">
@@ -251,7 +251,7 @@
                 <el-table-column prop="leftHeight" label="附着道数" />
                 <el-table-column prop="towerHeight" label="当前已安装附着" width="150" align="center" />
                 <el-table-column prop="installHeigth" label="当前标准节" align="center" />
-                <el-table-column prop="maxLoad" label="新安装标准节" align="center" />
+                <!--<el-table-column prop="maxLoad" label="新安装标准节" align="center" />-->
 <!--                <el-table-column prop="entid" label="企业id" align="center" />-->
 <!--                <el-table-column prop="useId" label="设备使用ID" align="center" />-->
                 <el-table-column prop="checkTime" label="检查时间" align="center" />
@@ -259,8 +259,8 @@
                 <el-table-column prop="maxRange" label="幅度" align="center" />
                 <el-table-column prop="installHeigth" label="安装高度" align="center" />
                 <el-table-column prop="channels" label="附着道数" align="center" />
-                <el-table-column prop="checkResult" label="与建筑物水平中心距离" align="center" />
-                <el-table-column prop="maxRange" label="检查结果代号说明" align="center" />
+                <!--<el-table-column prop="checkResult" label="与建筑物水平中心距离" align="center" />-->
+                <!--<el-table-column prop="maxRange" label="检查结果代号说明" align="center" />-->
                 <el-table-column prop="userTime" label="使用单位填写时间" align="center" />
                 <el-table-column prop="checkUser" label="检查人员" align="center" />
                 <el-table-column prop="conclusion" label="结论" align="center" />
@@ -336,9 +336,17 @@
 <!--          <el-form-item label="安装id" >-->
 <!--            <el-input v-model="uploadInfo.setupId" style="width: 50%" placeholder="请输入安装id"></el-input>-->
 <!--          </el-form-item>-->
-<!--          <el-form-item label="当前登录人id" >-->
-<!--            <el-input v-model="uploadInfo.userid" style="width: 50%" placeholder="请输入当前登录人id"></el-input>-->
-<!--          </el-form-item>-->
+          <el-form-item label="施工单位负责人" >
+            <el-select v-model="uploadInfo.userid" placeholder="请选择施工单位负责人" style="width: 50%">
+              <el-option
+                v-for="item in userOptions"
+                :key="item.guid"
+                :label="item.pname"
+                :value="item.guid">
+              </el-option>
+            </el-select>
+            <!--<el-input v-model="uploadInfo.userid" style="width: 50%" placeholder="请选择施工单位负责人"></el-input>-->
+          </el-form-item>
           <el-form-item label="起升高度" >
             <el-input v-model="uploadInfo.leftHeight" style="width: 50%" placeholder="请输入起升高度"></el-input>
           </el-form-item>
@@ -384,16 +392,88 @@
           <el-form-item label="幅度" >
             <el-input v-model="uploadInfo.maxRange" placeholder="请输入幅度" style="width: 50%; "></el-input>
           </el-form-item>
-          <el-form-item>
-            <el-button type="primary" @click="submitUpload('uploadInfo')">提交</el-button>
-            <el-button @click="resetForm('uploadInfo')">重置</el-button>
-          </el-form-item>
           <el-row>
             <div class="divider">添加子项:</div>
           </el-row>
           <el-row>
             <el-button @click="addItem" type="primary"  style="width: 200px;margin-bottom: 20px">增加</el-button>
           </el-row>
+          <el-row>
+            <el-form
+              ref="form"
+              :rules="uploadInfo.childData"
+              :inline="true"
+              :model="form"
+              label-width="80px"
+            >
+              <div v-for="(item, index) in uploadInfo.childData" :key="index" style="border-bottom: dashed 1px #DCDFE6;margin-bottom: 20px">
+                <el-row>
+                  <el-col :span="12">
+                    <el-form-item
+                      label-width="100px"
+                      label="设备情况"
+                      :prop="'uploadInfo.childData.' + index + '.dicid'"
+                      :rules="{
+                      required: true, message: 'ddicid不能为空', trigger: 'blur'
+                      }"
+                    >
+                      <treeselect v-model="item.dicid"  :options="options" :clearable="true" :show-count="true" :disable-branch-nodes="true"  style="width: 200px"/>
+                      <!--<el-input v-model="item.diccode"></el-input>-->
+                    </el-form-item>
+                  </el-col>
+                  <el-col :span="12">
+                    <el-form-item
+                      label-width="100px"
+                      label="测试结果"
+                      :prop="'uploadInfo.childData.' + index + '.result'"
+                      :rules="{required: true, message: '测试结果', trigger: 'blur'}"
+                    >
+                      <el-input v-model="item.result"  placeholder="请输入内容"></el-input>
+                    </el-form-item>
+                  </el-col>
+                </el-row>
+                <el-row>
+                  <el-col :span="12">
+                    <el-form-item
+                      label-width="100px"
+                      label="检查人"
+                      :prop="'uploadInfo.childData.' + index + '.checkUser'"
+                      :rules="{
+              required: true, message: '检查人', trigger: 'blur'
+              }"
+                    >
+                      <el-input v-model="item.checkUser" placeholder="请输入内容"></el-input>
+                    </el-form-item>
+                  </el-col>
+                  <el-col :span="12">
+                    <el-button type="danger" icon="el-icon-delete" circle @click="deleteItem(item, index)" ></el-button>
+                  </el-col>
+                </el-row>
+                <el-row>
+                  <!-- <el-col :span="12">
+                    <el-form-item
+                      label-width="130px"
+                      label="存在的问题"
+                      :prop="'form.monthChild.' + index + '.fourCode'"
+                      :rules="{
+              required: true, message: '存在的问题不能为空', trigger: 'blur'
+              }"
+                    >
+                      <el-input v-model="item.fourCode" style="width: 350px"></el-input>
+                    </el-form-item>
+                  </el-col> -->
+                </el-row>
+              </div>
+            </el-form>
+          </el-row>
+          <el-form-item >
+            <div style="float: right; margin-right: 10px; ">
+              <el-button type="primary" @click="submitUpload('uploadInfo')" >提交</el-button>
+              <el-button @click="resetForm('uploadInfo')">重置</el-button>
+            </div>
+
+          </el-form-item>
+
         </el-form>
         <el-form :model="uploadInfo2"   label-width="1.5rem" v-show="tableShow === 'table2'">
 <!--          <el-form-item label="设备id" >-->
@@ -444,9 +524,85 @@
           <el-form-item label="幅度" >
             <el-input v-model="uploadInfo2.maxRange" placeholder="请输入幅度" style="width: 50%; "></el-input>
           </el-form-item>
+          <el-row>
+            <div class="divider">添加子项:</div>
+          </el-row>
+          <el-row>
+            <el-button @click="addItem2" type="primary"  style="width: 200px;margin-bottom: 20px">增加</el-button>
+          </el-row>
+          <el-row>
+            <el-form
+              ref="form"
+              :rules="uploadInfo2.childData"
+              :inline="true"
+              :model="form"
+              label-width="80px"
+            >
+              <div v-for="(item, index) in uploadInfo2.childData" :key="index" style="border-bottom: dashed 1px #DCDFE6;margin-bottom: 20px">
+                <el-row>
+                  <el-col :span="12">
+                    <el-form-item
+                      label-width="100px"
+                      label="设备情况"
+                      :prop="'uploadInfo2.childData.' + index + '.dicid'"
+                      :rules="{
+                      required: true, message: 'ddicid不能为空', trigger: 'blur'
+                      }"
+                    >
+                      <treeselect v-model="item.dicid"  :options="options" :clearable="true" :show-count="true" :disable-branch-nodes="true"  style="width: 200px" @input="getSelectList(index, item)"/>
+                      <!--<el-input v-model="item.diccode"></el-input>-->
+                    </el-form-item>
+                  </el-col>
+                  <el-col :span="12">
+                    <el-form-item
+                      label-width="100px"
+                      label="测试结果"
+                      :prop="'uploadInfo2.childData.' + index + '.result'"
+                      :rules="{required: true, message: '测试结果', trigger: 'blur'}"
+                    >
+                      <el-input v-model="item.result"  placeholder="请输入内容"></el-input>
+                    </el-form-item>
+                  </el-col>
+                </el-row>
+                <el-row>
+                  <el-col :span="12">
+                    <el-form-item
+                      label-width="100px"
+                      label="测试数据"
+                      :prop="'uploadInfo2.childData.' + index + '.remarks'"
+                      :rules="{
+              required: true, message: '测试数据', trigger: 'blur'
+              }"
+                    >
+                      <el-input v-model="item.remarks" placeholder="请输入内容"></el-input>
+                    </el-form-item>
+                  </el-col>
+                  <el-col :span="12">
+                    <el-button type="danger" icon="el-icon-delete" circle @click="deleteItem2(item, index)" ></el-button>
+                  </el-col>
+                </el-row>
+                <el-row>
+                  <!-- <el-col :span="12">
+                    <el-form-item
+                      label-width="130px"
+                      label="存在的问题"
+                      :prop="'form.monthChild.' + index + '.fourCode'"
+                      :rules="{
+              required: true, message: '存在的问题不能为空', trigger: 'blur'
+              }"
+                    >
+                      <el-input v-model="item.fourCode" style="width: 350px"></el-input>
+                    </el-form-item>
+                  </el-col> -->
+                </el-row>
+              </div>
+            </el-form>
+          </el-row>
           <el-form-item>
-            <el-button type="primary" @click="submitUpload('uploadInfo')">提交</el-button>
-            <el-button @click="resetForm('uploadInfo')">重置</el-button>
+            <div style="float: right; margin-right: 10px; ">
+              <el-button type="primary" @click="submitUpload('uploadInfo')">提交</el-button>
+              <el-button @click="resetForm('uploadInfo')">重置</el-button>
+            </div>
           </el-form-item>
         </el-form>
         <el-form :model="uploadInfo3"   label-width="1.5rem" v-show="tableShow === 'table3'">
@@ -654,9 +810,85 @@
           <el-form-item label="上报时间">
             <el-date-picker v-model="uploadInfo5.reporttime" align="right" type="date" placeholder="选择日期" :picker-options="pickerOptions" value-format="yyyy-MM-dd" style="width: 50%; " />
           </el-form-item>
+          <el-row>
+            <div class="divider">添加子项:</div>
+          </el-row>
+          <el-row>
+            <el-button @click="addItem5" type="primary"  style="width: 200px;margin-bottom: 20px">增加</el-button>
+          </el-row>
+          <el-row>
+            <el-form
+              ref="form"
+              :rules="uploadInfo5.childData"
+              :inline="true"
+              :model="form"
+              label-width="80px"
+            >
+              <div v-for="(item, index) in uploadInfo5.childData" :key="index" style="border-bottom: dashed 1px #DCDFE6;margin-bottom: 20px">
+                <el-row>
+                  <el-col :span="12">
+                    <el-form-item
+                      label-width="100px"
+                      label="设备情况"
+                      :prop="'uploadInfo5.childData.' + index + '.dicid'"
+                      :rules="{
+                      required: true, message: 'ddicid不能为空', trigger: 'blur'
+                      }"
+                    >
+                      <treeselect v-model="item.dicid"  :options="options" :clearable="true" :show-count="true" :disable-branch-nodes="true"  style="width: 200px" @input="getSelectList(index, item)"/>
+                      <!--<el-input v-model="item.diccode"></el-input>-->
+                    </el-form-item>
+                  </el-col>
+                  <el-col :span="12">
+                    <el-form-item
+                      label-width="100px"
+                      label="测试结果"
+                      :prop="'uploadInfo5.childData.' + index + '.result'"
+                      :rules="{required: true, message: '测试结果', trigger: 'blur'}"
+                    >
+                      <el-input v-model="item.result" placeholder="请输入内容"></el-input>
+                    </el-form-item>
+                  </el-col>
+                </el-row>
+                <el-row>
+                  <el-col :span="12">
+                    <el-form-item
+                      label-width="100px"
+                      label="测试数据"
+                      :prop="'uploadInfo5.childData.' + index + '.remarks'"
+                      :rules="{
+              required: true, message: '测试数据', trigger: 'blur'
+              }"
+                    >
+                      <el-input v-model="item.remarks" placeholder="请输入内容"></el-input>
+                    </el-form-item>
+                  </el-col>
+                  <el-col :span="12">
+                    <el-button type="danger" icon="el-icon-delete" circle @click="deleteItem5(item, index)" ></el-button>
+                  </el-col>
+                </el-row>
+                <el-row>
+                  <!-- <el-col :span="12">
+                    <el-form-item
+                      label-width="130px"
+                      label="存在的问题"
+                      :prop="'form.monthChild.' + index + '.fourCode'"
+                      :rules="{
+              required: true, message: '存在的问题不能为空', trigger: 'blur'
+              }"
+                    >
+                      <el-input v-model="item.fourCode" style="width: 350px"></el-input>
+                    </el-form-item>
+                  </el-col> -->
+                </el-row>
+              </div>
+            </el-form>
+          </el-row>
           <el-form-item>
-            <el-button type="primary" @click="submitUpload('uploadInfo')">提交</el-button>
-            <el-button @click="resetForm('uploadInfo')">重置</el-button>
+            <div style="float: right; margin-right: 10px; ">
+              <el-button type="primary" @click="submitUpload('uploadInfo')">提交</el-button>
+              <el-button @click="resetForm('uploadInfo')">重置</el-button>
+            </div>
           </el-form-item>
         </el-form>
         <el-form :model="uploadInfo6"   label-width="1.5rem" v-show="tableShow === 'table6'">
@@ -1513,18 +1745,27 @@
 </template>
 
 <script>
-  import { zijian, addZijian,getSysProData,yanshou, addyanshou,weihu, addweihu, dingqi, adddingqi, dingsheng,adddingsheng,fuzhuo, addfuzhuo } from "@/api/deviceManage";
-  // import axios from 'axios'
+  // import the component
+  import Treeselect from '@riophae/vue-treeselect'
+  // import the styles
+  import '@riophae/vue-treeselect/dist/vue-treeselect.css'
+  import { zijian, addZijian,getSysProData,yanshou, addyanshou,weihu, addweihu, dingqi, adddingqi, dingsheng,adddingsheng,fuzhuo, addfuzhuo, devTreeSelect } from "@/api/deviceManage";
+  // import { getSysProData } from "@/api/qualityControl"
+  import axios from 'axios'
   export default {
+    components: { Treeselect },
     data() {
       return {
         fileTable: [],
+        options: [],
+        typeCode: '',
         titles: '建筑起重机械安装自检记录表',
         tableShow: 'table1',
         currentPage: 1,
         pageSize: 10,
         siteId: '',
         showUpload: false,
+        userOptions: [],
         uploadInfo: {
           proid: '', // 项目id
           devid: '', // 设备id
@@ -1545,6 +1786,7 @@
           writeTime: '', // 填写时间
           maxCapacity: '', // 最大起重量
           maxRange: '', // 幅度
+          childData: []
         },
         uploadInfo2: {
           proid: '', // 项目id
@@ -1564,6 +1806,7 @@
           reporttime: '', // 上报时间时间
           maxCapacity: '', // 最大起重量
           maxRange: '', // 幅度
+          childData: []
         },
         uploadInfo3: {
           proid: '', // 项目id
@@ -1638,6 +1881,7 @@
           checkUser: '', // 检查人员
           conclusion: '', // 结论(T、同意继续使用 X、限制使用 B、不准使用，整改后二次验收)
           reporttime: '', // 上报时间
+          childData: [],
         },
         uploadInfo6: {
           proid: '', // 项目id
@@ -1717,6 +1961,7 @@
         view4: false,
         view5: false,
         view6: false,
+        entid: ''
       }
     },
     mounted() {
@@ -1736,13 +1981,29 @@
           this.uploadInfo4.proid = res.data.guid
           this.uploadInfo5.proid = res.data.guid
           this.uploadInfo6.proid = res.data.guid
+          this.entid = res.data.guid
           this.getZiJian()
 
         })
       },
       getZiJian() {
         zijian(this.uploadInfo.proid).then((res) => {
-          this.fileTable = res.data.data
+          if(res.data.code === 200) {
+            this.fileTable = res.data.data.data
+          } else {
+            this.fileTable = []
+          }
+
+        })
+      },
+      getPeople() {
+        var url = 'http://211.90.39.2:39912/newAj/device/queryPerson?entid=' + this.entid
+        axios.get(url).then((res) => {
+          if (res.data.code === 200) {
+            this.userOptions = res.data.data
+          } else {
+            this.userOptions = []
+          }
         })
       },
       getShow1() {
@@ -1819,7 +2080,11 @@
       },
       getyanshou() {
         yanshou(this.uploadInfo2.proid).then((res) => {
-          this.fileTable = res.data.data
+          if(res.data.code === 200) {
+            this.fileTable = res.data.data.data
+          } else {
+            this.fileTable = []
+          }
         })
       },
       getaddyanshou() {
@@ -1863,7 +2128,11 @@
       },
       getdingqi() {
         dingqi(this.uploadInfo5.proid).then((res) => {
-          this.fileTable = res.data.rows
+          if (res.data.code === 200) {
+            this.fileTable = res.data.rows
+          }else {
+            this.fileTable = []
+          }
         })
       },
       getadddingqi() {
@@ -1936,6 +2205,10 @@
       gotoback() {
         history.go(-1)
       },
+      showAdd() {
+        this.showUpload = true
+        this.getPeople()
+      },
       viewDetail1(row) {
         this.detail1 = row;
         this.view1 = true;
@@ -1963,8 +2236,51 @@
       viewDetail6(row) {
         this.detail6 = row;
         this.view6 = true;
-
-      }
+      },
+      getTreeselect() {
+        var data = {
+          typeCode: this.typeCode
+        }
+        devTreeSelect(data).then((response) => {
+          if (response.data.code === 200) {
+            this.options = response.data.data
+          }
+        });
+      },
+      addItem () {
+        this.uploadInfo.childData.push({
+          dicid: null,
+          result: '', // 测试结果
+          checkUser:'',  // 检查人
+        })
+        this.typeCode = 'AJB_DEV_INSTALLATION_RECORD'
+        this.getTreeselect()
+      },
+      deleteItem (item, index) {
+        this.uploadInfo.childData.splice(index, 1)
+      },
+      addItem2() {
+        this.uploadInfo2.childData.push({
+          dicid: null,
+          result: '', // 测试结果
+          remarks:'',  // 测试数据
+        })
+        this.getTreeselect()
+      },
+      deleteItem2 (item, index) {
+        this.uploadInfo2.childData.splice(index, 1)
+      },
+      addItem5() {
+        this.uploadInfo5.childData.push({
+          dicid: null,
+          result: '', // 测试结果
+          remarks:'',  // 测试数据
+        })
+        this.getTreeselect()
+      },
+      deleteItem5 (item, index) {
+        this.uploadInfo5.childData.splice(index, 1)
+      },
     }
   }
 </script>
@@ -2119,5 +2435,12 @@
 
   .tableHead {
     color: #409eff;
+  }
+  .divider{
+    border-bottom: dashed 1px #DCDFE6;
+    padding-bottom: 5px;
+    font-weight: bold;
+    font-size: 16px;
+    margin: 10px 0 20px 10px;
   }
 </style>
