@@ -362,6 +362,12 @@
             <el-button type="primary" @click="submitUpload('uploadInfo')">提交</el-button>
             <el-button @click="resetForm('uploadInfo')">重置</el-button>
           </el-form-item>
+          <el-row>
+            <div class="divider">添加子项:</div>
+          </el-row>
+          <el-row>
+            <el-button @click="addItem" type="primary"  style="width: 200px;margin-bottom: 20px">增加</el-button>
+          </el-row>
         </el-form>
         <el-form :model="uploadInfo2"   label-width="1.5rem" v-show="tableShow === 'table2'">
 <!--          <el-form-item label="设备id" >-->
