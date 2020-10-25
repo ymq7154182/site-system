@@ -164,6 +164,11 @@
                 <el-table-column prop="checkWriteTime" label="施工总承包单位审核意见" align="center" />
                 <el-table-column prop="installUserAqjg" label="监理单位审核意见" align="center" />
                 <el-table-column prop="installUser" label="施工总承包审核日期" align="center" />
+                <el-table-column label="顶升加节自检" align="center">
+                  <template slot-scope="scope">
+                    <el-button type="text" icon="el-icon-circle-check" @click="checkDetail3(scope.row)">自检</el-button>
+                  </template>
+                </el-table-column>
                 <el-table-column label="查看详情" align="center">
                   <template slot-scope="scope">
                     <el-button type="text" icon="el-icon-view" @click="viewDetail3(scope.row)">查看</el-button>
@@ -216,6 +221,11 @@
                 <el-table-column prop="checkWriteTime" label="施工总承包单位审核意见" align="center" />
                 <el-table-column prop="installUserAqjg" label="监理单位审核意见" align="center" />
                 <el-table-column prop="installUser" label="施工总承包审核日期" align="center" />
+                <el-table-column label="附着验收" align="center">
+                  <template slot-scope="scope">
+                    <el-button type="text" icon="el-icon-circle-check" @click="checkDetail4(scope.row)">验收</el-button>
+                  </template>
+                </el-table-column>
                 <el-table-column label="查看详情" align="center">
                   <template slot-scope="scope">
                     <el-button type="text" icon="el-icon-view" @click="viewDetail4(scope.row)">查看</el-button>
@@ -1503,6 +1513,25 @@
         </tr>
       </table>
     </el-dialog>
+    <el-dialog :visible.sync="showAdd3" title="顶升加节自检">
+      <el-form v-model="addForm3" label-width="100px">
+        <el-form-item label="检查时间">
+          <el-date-picker
+            v-model="addForm3.checkTime"
+            type="datetime"
+            placeholder="选择日期时间">
+          </el-date-picker>
+        </el-form-item>
+        <el-form-item label="">
+
+        </el-form-item>
+      </el-form>
+    </el-dialog>
+    <el-dialog :visible.sync="showAdd4" title="附着验收">
+      <el-form v-model="addForm4" label-width="100px">
+
+      </el-form>
+    </el-dialog>
   </div>
 </template>
 
@@ -1711,6 +1740,40 @@
         view4: false,
         view5: false,
         view6: false,
+        showAdd3: false,
+        showAdd4: false,
+        addForm3: {
+          testid: null,
+          checkTime: null,
+          opinionAz: '',
+          userAz: '',
+          timeAz: null,
+          installUser: '',
+          installUserAqjg: '',
+          installUserZc: '',
+          installUserJzry: '',
+          writeTime: null,
+          childData: []
+        },
+        addForm4: {
+          fuid: null,  // 附着ID
+          opinionAz: '',  // 安装单位验收意见
+          userAz: '',  // 安装单位验收人
+          timeAz: null,  // 安装单位日期
+          opinionSy: '',  // 使用单位验收意见
+          userSy: '',  // 使用单位验收人
+          timeSy: null,  // 使用单位日期
+          opinionCq: '',  // 产权单位验收意见
+          userCq: '',  // 产权单位验收人
+          timeCq: null,  // 产权单位日期
+          opinionSg: '',  // 施工单位验收意见
+          userSg: '',  // 施工单位验收人
+          timeSg: null,  // 施工单位日期
+          opinionJl: '',  // 监理单位验收意见
+          userJl: '',  // 监理单位验收人
+          timeJl: null,  // 监理单位日期
+          childData: []
+        }
       }
     },
     mounted() {
@@ -1874,7 +1937,17 @@
       },
       getdingsheng() {
         dingsheng(this.uploadInfo3.proid).then((res) => {
-          this.fileTable = res.data.rows
+          let rows = res.data.rows;
+          let format_row = []
+          for(let i=0;i<rows.length;i++) {
+            format_row.push(rows[i].data)
+          }
+          for(let j=0;j<format_row.length;j++) {
+            format_row[j]["devid"] = rows[j].devid;
+            format_row[j]["devName"] = rows[j].devName;
+          }
+          console.log(format_row)
+          this.fileTable = format_row;
         })
       },
       getadddingsheng() {
@@ -1958,7 +2031,13 @@
         this.detail6 = row;
         this.view6 = true;
 
-      }
+      },
+      checkDetail3(row) {
+        this.showAdd3 = true;
+      },
+      checkDetail4(row) {
+        this.showAdd4 = true;
+      },
     }
   }
 </script>
