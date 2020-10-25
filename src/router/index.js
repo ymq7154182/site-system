@@ -38,6 +38,11 @@ const routes = [
       {
         path: '/device',
         component: () => import('@/views/deviceManage'),
+      },
+      {
+        path: '/deviceHistory',
+        name: 'deviceHistory',
+        component: () => import('@/views/device/deviceHistory')
       }
     ]
   },{

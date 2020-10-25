@@ -24,7 +24,7 @@
           <div class="border-top-right"></div>
           <div style="padding: 0.13rem;position: relative">
             <el-button type="success" @click="gotoback"><i class="el-icon-d-arrow-left" />返回</el-button>
-            <el-button type="primary" @click="showUpload = true"><i class="el-icon-plus" /> 新增</el-button>
+            <el-button type="primary" @click="showAdd"><i class="el-icon-plus" /> 新增</el-button>
             <span style="font-size: 0.2rem;margin-left: 0.1rem;color: white">
                设备编号：
             </span>
@@ -55,15 +55,15 @@
                 <el-table-column prop="checkTime" label="检查时间" align="center" width="100"/>
                 <el-table-column prop="checkWriteTime" label="检查填写时间" align="center" width="100"/>
                 <el-table-column prop="installUser" label="安装单位技术负责人" align="center" />
-                <el-table-column prop="installUserAqjg" label="安装单位安全员、机管" align="center" />
+                <!--<el-table-column prop="installUserAqjg" label="安装单位安全员、机管" align="center" />-->
                 <el-table-column prop="installUserZc" label="安装班组长" align="center" />
-                <el-table-column prop="installUserJzry" label="机组人员" align="center" />
+                <!--<el-table-column prop="installUserJzry" label="机组人员" align="center" />-->
                 <el-table-column prop="writeTime" label="填写时间" align="center" width="100"/>
                 <el-table-column prop="leftHeight" label="起升高度" align="center"/>
-                <el-table-column prop="towerHeight" label="塔高"  align="center" />
-                <el-table-column prop="installHeigth" label="安装高度" align="center" />
-                <el-table-column prop="maxLoad" label="最大载重量" align="center" />
-                <el-table-column prop="maxCapacity" label="最大起重量" align="center" />
+                <!--<el-table-column prop="towerHeight" label="塔高"  align="center" />-->
+                <!--<el-table-column prop="installHeigth" label="安装高度" align="center" />-->
+                <!--<el-table-column prop="maxLoad" label="最大载重量" align="center" />-->
+                <!--<el-table-column prop="maxCapacity" label="最大起重量" align="center" />-->
                 <el-table-column prop="maxRange" label="幅度" align="center" />
                 <el-table-column label="查看详情" align="center">
                   <template slot-scope="scope">
@@ -147,20 +147,20 @@
                 <el-table-column prop="leftHeight" label="附着道数" align="center"/>
                 <el-table-column prop="towerHeight" label="当前已安装附着" width="150" align="center" />
                 <el-table-column prop="installHeigth" label="当前标准节" align="center" />
-                <el-table-column prop="maxLoad" label="新安装标准节" align="center" />
+                <!--<el-table-column prop="maxLoad" label="新安装标准节" align="center" />-->
 <!--                <el-table-column prop="entid" label="企业id" align="center" />-->
 <!--                <el-table-column prop="useId" label="设备使用ID" align="center" />-->
                 <el-table-column prop="installtime" label="安装时间" align="center" />
-                <el-table-column prop="checkTime" label="顶升后高度" align="center" />
-                <el-table-column prop="spacing" label="附着间距" align="center" />
+                <!--<el-table-column prop="checkTime" label="顶升后高度" align="center" />-->
+                <!--<el-table-column prop="spacing" label="附着间距" align="center" />-->
                 <el-table-column prop="installUserZcs" label="监理单位审核日期" align="center" />
                 <el-table-column prop="reporttime" label="上报时间" align="center" />
-                <el-table-column prop="maxCapacity" label="与建筑物水平中心距离" align="center" />
-                <el-table-column prop="maxRange" label="原安装臂铰点（自由端）高度" align="center" />
-                <el-table-column prop="checkUser" label="是否附着" align="center" />
+                <!--<el-table-column prop="maxCapacity" label="与建筑物水平中心距离" align="center" />-->
+                <!--<el-table-column prop="maxRange" label="原安装臂铰点（自由端）高度" align="center" />-->
+                <!--<el-table-column prop="checkUser" label="是否附着" align="center" />-->
                 <el-table-column prop="installmanager" label="安装单位负责人" align="center" />
                 <el-table-column prop="installphone" label="联系电话" align="center" />
-                <el-table-column prop="checkContent" label="现场专业技术人员" align="center" />
+                <!--<el-table-column prop="checkContent" label="现场专业技术人员" align="center" />-->
                 <el-table-column prop="checkWriteTime" label="施工总承包单位审核意见" align="center" />
                 <el-table-column prop="installUserAqjg" label="监理单位审核意见" align="center" />
                 <el-table-column prop="installUser" label="施工总承包审核日期" align="center" />
@@ -204,21 +204,21 @@
                 <el-table-column prop="leftHeight" label="附着道数" />
                 <el-table-column prop="towerHeight" label="当前已安装附着" width="150" align="center" />
                 <el-table-column prop="installHeigth" label="当前标准节" align="center" />
-                <el-table-column prop="maxLoad" label="新安装标准节" align="center" />
+                <!--<el-table-column prop="maxLoad" label="新安装标准节" align="center" />-->
 <!--                <el-table-column prop="entid" label="企业id" align="center" />-->
 <!--                <el-table-column prop="useId" label="设备使用ID" align="center" />-->
                 <el-table-column prop="installtime" label="安装时间" align="center" />
                 <el-table-column prop="checkTime" label="顶升后高度" align="center" />
-                <el-table-column prop="spacing" label="附着间距" align="center" />
+                <!--<el-table-column prop="spacing" label="附着间距" align="center" />-->
                 <el-table-column prop="installUserZcs" label="监理单位审核日期" align="center" />
-                <el-table-column prop="reporttime" label="上报时间" align="center" />
-                <el-table-column prop="maxCapacity" label="与建筑物水平中心距离" align="center" />
-                <el-table-column prop="maxRange" label="原安装臂铰点（自由端）高度" align="center" />
-                <el-table-column prop="checkUser" label="是否附着" align="center" />
+                <!--<el-table-column prop="reporttime" label="上报时间" align="center" />-->
+                <!--<el-table-column prop="maxCapacity" label="与建筑物水平中心距离" align="center" />-->
+                <!--<el-table-column prop="maxRange" label="原安装臂铰点（自由端）高度" align="center" />-->
+                <!--<el-table-column prop="checkUser" label="是否附着" align="center" />-->
                 <el-table-column prop="installmanager" label="安装单位负责人" align="center" />
                 <el-table-column prop="installphone" label="联系电话" align="center" />
-                <el-table-column prop="checkContent" label="现场专业技术人员" align="center" />
-                <el-table-column prop="checkWriteTime" label="施工总承包单位审核意见" align="center" />
+                <!--<el-table-column prop="checkContent" label="现场专业技术人员" align="center" />-->
+                <!--<el-table-column prop="checkWriteTime" label="施工总承包单位审核意见" align="center" />-->
                 <el-table-column prop="installUserAqjg" label="监理单位审核意见" align="center" />
                 <el-table-column prop="installUser" label="施工总承包审核日期" align="center" />
                 <el-table-column label="附着验收" align="center">
@@ -261,7 +261,7 @@
                 <el-table-column prop="leftHeight" label="附着道数" />
                 <el-table-column prop="towerHeight" label="当前已安装附着" width="150" align="center" />
                 <el-table-column prop="installHeigth" label="当前标准节" align="center" />
-                <el-table-column prop="maxLoad" label="新安装标准节" align="center" />
+                <!--<el-table-column prop="maxLoad" label="新安装标准节" align="center" />-->
 <!--                <el-table-column prop="entid" label="企业id" align="center" />-->
 <!--                <el-table-column prop="useId" label="设备使用ID" align="center" />-->
                 <el-table-column prop="checkTime" label="检查时间" align="center" />
@@ -269,8 +269,8 @@
                 <el-table-column prop="maxRange" label="幅度" align="center" />
                 <el-table-column prop="installHeigth" label="安装高度" align="center" />
                 <el-table-column prop="channels" label="附着道数" align="center" />
-                <el-table-column prop="checkResult" label="与建筑物水平中心距离" align="center" />
-                <el-table-column prop="maxRange" label="检查结果代号说明" align="center" />
+                <!--<el-table-column prop="checkResult" label="与建筑物水平中心距离" align="center" />-->
+                <!--<el-table-column prop="maxRange" label="检查结果代号说明" align="center" />-->
                 <el-table-column prop="userTime" label="使用单位填写时间" align="center" />
                 <el-table-column prop="checkUser" label="检查人员" align="center" />
                 <el-table-column prop="conclusion" label="结论" align="center" />
@@ -339,67 +339,154 @@
     </el-row>
     <el-dialog :visible.sync="showUpload" title="新增信息" width="40%">
       <div style="height: 55vh; overflow-y: scroll; ">
-        <el-form :model="uploadInfo"   label-width="1.5rem" v-show="tableShow === 'table1'">
+        <el-form :model="uploadInfo"  ref="uploadInfo" :rules="rules" label-width="1.5rem" v-show="tableShow === 'table1'">
 <!--          <el-form-item label="设备id" >-->
 <!--            <el-input v-model="uploadInfo.devid" style="width: 50%" placeholder="请输入设备id"></el-input>-->
 <!--          </el-form-item>-->
 <!--          <el-form-item label="安装id" >-->
 <!--            <el-input v-model="uploadInfo.setupId" style="width: 50%" placeholder="请输入安装id"></el-input>-->
 <!--          </el-form-item>-->
-<!--          <el-form-item label="当前登录人id" >-->
-<!--            <el-input v-model="uploadInfo.userid" style="width: 50%" placeholder="请输入当前登录人id"></el-input>-->
-<!--          </el-form-item>-->
-          <el-form-item label="起升高度" >
+          <el-form-item label="施工单位负责人" prop="userid">
+            <el-select v-model="uploadInfo.userid" placeholder="请选择施工单位负责人" style="width: 50%">
+              <el-option
+                v-for="item in userOptions"
+                :key="item.guid"
+                :label="item.pname"
+                :value="item.guid">
+              </el-option>
+            </el-select>
+            <!--<el-input v-model="uploadInfo.userid" style="width: 50%" placeholder="请选择施工单位负责人"></el-input>-->
+          </el-form-item>
+          <el-form-item label="起升高度" prop="leftHeight">
             <el-input v-model="uploadInfo.leftHeight" style="width: 50%" placeholder="请输入起升高度"></el-input>
           </el-form-item>
-          <el-form-item label="塔高" >
+          <el-form-item label="塔高" prop="towerHeight">
             <el-input v-model="uploadInfo.towerHeight" style="width: 50%" placeholder="请输入塔高"></el-input>
           </el-form-item>
-          <el-form-item label="安装高度" >
+          <el-form-item label="安装高度" prop="installHeigth">
             <el-input v-model="uploadInfo.installHeigth" style="width: 50%" placeholder="请输入安装高度"></el-input>
           </el-form-item>
-          <el-form-item label="最大载重量" >
+          <el-form-item label="最大载重量" prop="maxLoad">
             <el-input v-model="uploadInfo.maxLoad" style="width: 50%" placeholder="请输入最大载重量"></el-input>
           </el-form-item>
-          <el-form-item label="检查时间" >
+          <el-form-item label="检查时间" prop="checkTime">
             <el-date-picker v-model="uploadInfo.checkTime" align="right" type="date" placeholder="选择日期" :picker-options="pickerOptions" value-format="yyyy-MM-dd" style="width: 50%; " />
           </el-form-item>
-          <el-form-item label="安装单位负责人" >
+          <el-form-item label="安装单位负责人" prop="checkUser">
             <el-input v-model="uploadInfo.checkUser" placeholder="请输入安装单位负责人" style="width: 50%; "></el-input>
           </el-form-item>
-          <el-form-item label="安装单位自检意见" >
+          <el-form-item label="安装单位自检意见" prop="checkContent">
             <el-input v-model="uploadInfo.checkContent" type="textarea" placeholder="请输入安装单位自检意见" style="width: 70%; "></el-input>
           </el-form-item>
-          <el-form-item label="检查填写时间" >
+          <el-form-item label="检查填写时间" prop="checkWriteTime">
             <el-date-picker v-model="uploadInfo.checkWriteTime" align="right" type="date" placeholder="选择日期" :picker-options="pickerOptions" value-format="yyyy-MM-dd" style="width: 50%; " />
           </el-form-item>
-          <el-form-item label="安装单位技术负责人" >
+          <el-form-item label="安装单位技术负责人" prop="installUser">
             <el-input v-model="uploadInfo.installUser" placeholder="请输入安装单位技术负责人" style="width: 50%; "></el-input>
           </el-form-item>
-          <el-form-item label="安装单位安全员、机管" >
+          <el-form-item label="安装单位安全员、机管" prop="installUserAqjg">
             <el-input v-model="uploadInfo.installUserAqjg" placeholder="请输入内容" style="width: 50%; "></el-input>
           </el-form-item>
-          <el-form-item label="安装班组长" >
+          <el-form-item label="安装班组长" prop="installUserZc">
             <el-input v-model="uploadInfo.installUserZc" placeholder="请输入安装班组长" style="width: 50%; "></el-input>
           </el-form-item>
-          <el-form-item label="机组人员" >
+          <el-form-item label="机组人员" prop="installUserJzry">
             <el-input v-model="uploadInfo.installUserJzry" placeholder="请输入机组人员" style="width: 50%; "></el-input>
           </el-form-item>
-          <el-form-item label="填写时间" >
+          <el-form-item label="填写时间" prop="writeTime">
             <el-date-picker v-model="uploadInfo.writeTime" align="right" type="date" placeholder="选择日期" :picker-options="pickerOptions" value-format="yyyy-MM-dd" style="width: 50%; " />
           </el-form-item>
-          <el-form-item label="最大起重量" >
+          <el-form-item label="最大起重量" prop="maxCapacity">
             <el-input v-model="uploadInfo.maxCapacity" placeholder="请输入最大起重量" style="width: 50%; "></el-input>
           </el-form-item>
-          <el-form-item label="幅度" >
+          <el-form-item label="幅度" prop="maxRange">
             <el-input v-model="uploadInfo.maxRange" placeholder="请输入幅度" style="width: 50%; "></el-input>
           </el-form-item>
-          <el-form-item>
-            <el-button type="primary" @click="submitUpload('uploadInfo')">提交</el-button>
-            <el-button @click="resetForm('uploadInfo')">重置</el-button>
+          <el-row>
+            <div class="divider">添加子项:</div>
+          </el-row>
+          <el-row>
+            <el-button @click="addItem" type="primary"  style="width: 200px;margin-bottom: 20px">增加</el-button>
+          </el-row>
+          <el-row>
+            <!--<el-form-->
+              <!--ref="uploadInfo"-->
+              <!--:rules="uploadInfo.childData"-->
+              <!--:inline="true"-->
+              <!--:model="uploadInfo"-->
+              <!--label-width="80px"-->
+            <!--&gt;-->
+              <!---->
+            <!--</el-form>-->
+            <div v-for="(item, index) in uploadInfo.childData" :key="index" style="border-bottom: dashed 1px #DCDFE6;margin-bottom: 20px;padding-right: 20px">
+              <el-row :gutter="10">
+                <el-col :span="12">
+                  <el-form-item
+                    label-width="100px"
+                    label="设备情况"
+                    :prop="'uploadInfo.childData.' + index + '.dicid'"
+                    :rules="{
+                      required: true, message: 'ddicid不能为空', trigger: 'blur'
+                      }"
+                  >
+                    <treeselect v-model="item.dicid"  :options="options" :clearable="true" :show-count="true" :disable-branch-nodes="true" />
+                    <!--<el-input v-model="item.diccode"></el-input>-->
+                  </el-form-item>
+                </el-col>
+                <el-col :span="12">
+                  <el-form-item
+                    label-width="100px"
+                    label="测试结果"
+                    :prop="'uploadInfo.childData.' + index + '.result'"
+                    :rules="{required: true, message: '测试结果', trigger: 'blur'}"
+                  >
+                    <el-input v-model="item.result"  placeholder="请输入内容"></el-input>
+                  </el-form-item>
+                </el-col>
+              </el-row>
+              <el-row>
+                <el-col :span="12">
+                  <el-form-item
+                    label-width="100px"
+                    label="检查人"
+                    :prop="'uploadInfo.childData.' + index + '.checkUser'"
+                    :rules="{
+              required: true, message: '检查人', trigger: 'blur'
+              }"
+                  >
+                    <el-input v-model="item.checkUser" placeholder="请输入内容"></el-input>
+                  </el-form-item>
+                </el-col>
+                <el-col :span="12">
+                  <el-button type="danger" icon="el-icon-delete" circle @click="deleteItem(item, index)" class="delButton"></el-button>
+                </el-col>
+              </el-row>
+              <el-row>
+                <!-- <el-col :span="12">
+                  <el-form-item
+                    label-width="130px"
+                    label="存在的问题"
+                    :prop="'form.monthChild.' + index + '.fourCode'"
+                    :rules="{
+            required: true, message: '存在的问题不能为空', trigger: 'blur'
+            }"
+                  >
+                    <el-input v-model="item.fourCode" style="width: 350px"></el-input>
+                  </el-form-item>
+                </el-col> -->
+              </el-row>
+            </div>
+          </el-row>
+          <el-form-item >
+            <div style="float: right; margin-right: 10px; ">
+              <el-button type="primary" @click="submitUpload('uploadInfo')" >提交</el-button>
+              <el-button @click="resetForm('uploadInfo')">重置</el-button>
+            </div>
+
           </el-form-item>
+
         </el-form>
-        <el-form :model="uploadInfo2"   label-width="1.5rem" v-show="tableShow === 'table2'">
+        <el-form :model="uploadInfo2" ref="uploadInfo2" :rules="rules"  label-width="1.5rem" v-show="tableShow === 'table2'">
 <!--          <el-form-item label="设备id" >-->
 <!--            <el-input v-model="uploadInfo2.devid" style="width: 50%" placeholder="请输入设备id"></el-input>-->
 <!--          </el-form-item>-->
@@ -409,51 +496,129 @@
 <!--          <el-form-item label="当前登录人id" >-->
 <!--            <el-input v-model="uploadInfo2.userid" style="width: 50%" placeholder="请输入当前登录人id"></el-input>-->
 <!--          </el-form-item>-->
-          <el-form-item label="起升高度" >
+          <el-form-item label="施工单位负责人" prop="userid">
+            <el-select v-model="uploadInfo2.userid" placeholder="请选择施工单位负责人" style="width: 50%">
+              <el-option
+                v-for="item in userOptions"
+                :key="item.guid"
+                :label="item.pname"
+                :value="item.guid">
+              </el-option>
+            </el-select>
+          </el-form-item>
+          <el-form-item label="起升高度" prop="leftHeight">
             <el-input v-model="uploadInfo2.leftHeight" style="width: 50%" placeholder="请输入起升高度"></el-input>
           </el-form-item>
-          <el-form-item label="塔高" >
+          <el-form-item label="塔高" prop="towerHeight">
             <el-input v-model="uploadInfo2.towerHeight" style="width: 50%" placeholder="请输入塔高"></el-input>
           </el-form-item>
-          <el-form-item label="安装高度" >
+          <el-form-item label="安装高度" prop="installHeigth">
             <el-input v-model="uploadInfo2.installHeigth" style="width: 50%" placeholder="请输入安装高度"></el-input>
           </el-form-item>
-          <el-form-item label="最大载重量" >
+          <el-form-item label="最大载重量" prop="maxLoad">
             <el-input v-model="uploadInfo2.maxLoad" style="width: 50%" placeholder="请输入最大载重量"></el-input>
           </el-form-item>
-          <el-form-item label="施工单位意见" >
+          <el-form-item label="施工单位意见" prop="opinionSg">
             <el-input v-model="uploadInfo2.opinionSg" style="width: 50%" placeholder="请输入施工单位意见" type="textarea"></el-input>
           </el-form-item>
-          <el-form-item label="施工单位项目经理签字" >
+          <el-form-item label="施工单位项目经理签字" prop="userSg">
             <el-input v-model="uploadInfo2.userSg" style="width: 50%" placeholder="请输入内容"></el-input>
           </el-form-item>
-          <el-form-item label="时间" >
+          <el-form-item label="时间"  prop="timeSg">
             <el-date-picker v-model="uploadInfo2.timeSg" align="right" type="date" placeholder="选择日期" :picker-options="pickerOptions" value-format="yyyy-MM-dd" style="width: 50%; " />
           </el-form-item>
-          <el-form-item label="监理单位意见" >
+          <el-form-item label="监理单位意见" prop="opinionJl">
             <el-input v-model="uploadInfo2.opinionJl" style="width: 50%" placeholder="请输入监理单位意见" type="textarea"></el-input>
           </el-form-item>
-          <el-form-item label="监理单位项目经理签字" >
+          <el-form-item label="监理单位项目经理签字" prop="userJl">
             <el-input v-model="uploadInfo2.userJl" style="width: 50%" placeholder="请输入内容"></el-input>
           </el-form-item>
-          <el-form-item label="时间" >
+          <el-form-item label="时间" prop="timeJl">
             <el-date-picker v-model="uploadInfo2.timeJl" align="right" type="date" placeholder="选择日期" :picker-options="pickerOptions" value-format="yyyy-MM-dd" style="width: 50%; " />
           </el-form-item>
-          <el-form-item label="上报时间时间">
+          <el-form-item label="上报时间时间" prop="reporttime">
             <el-date-picker v-model="uploadInfo2.reporttime" align="right" type="date" placeholder="选择日期" :picker-options="pickerOptions" value-format="yyyy-MM-dd" style="width: 50%; " />
           </el-form-item>
-          <el-form-item label="最大起重量" >
+          <el-form-item label="最大起重量" prop="maxCapacity">
             <el-input v-model="uploadInfo2.maxCapacity" placeholder="请输入最大起重量" style="width: 50%; "></el-input>
           </el-form-item>
-          <el-form-item label="幅度" >
+          <el-form-item label="幅度" prop="maxRange">
             <el-input v-model="uploadInfo2.maxRange" placeholder="请输入幅度" style="width: 50%; "></el-input>
           </el-form-item>
+          <el-row>
+            <div class="divider">添加子项:</div>
+          </el-row>
+          <el-row>
+            <el-button @click="addItem2" type="primary"  style="width: 200px;margin-bottom: 20px">增加</el-button>
+          </el-row>
+          <el-row>
+            <div v-for="(item, index) in uploadInfo2.childData" :key="index" style="border-bottom: dashed 1px #DCDFE6;margin-bottom: 20px;padding-right: 20px">
+              <el-row :gutter="10">
+                <el-col :span="12">
+                  <el-form-item
+                    label-width="100px"
+                    label="设备情况"
+                    :prop="'uploadInfo2.childData.' + index + '.dicid'"
+                    :rules="{
+                      required: true, message: 'ddicid不能为空', trigger: 'blur'
+                      }"
+                  >
+                    <treeselect v-model="item.dicid"  :options="options" :clearable="true" :show-count="true" :disable-branch-nodes="true" />
+                    <!--<el-input v-model="item.diccode"></el-input>-->
+                  </el-form-item>
+                </el-col>
+                <el-col :span="12">
+                  <el-form-item
+                    label-width="100px"
+                    label="测试结果"
+                    :prop="'uploadInfo2.childData.' + index + '.result'"
+                    :rules="{required: true, message: '测试结果', trigger: 'blur'}"
+                  >
+                    <el-input v-model="item.result"  placeholder="请输入内容"></el-input>
+                  </el-form-item>
+                </el-col>
+              </el-row>
+              <el-row>
+                <el-col :span="12">
+                  <el-form-item
+                    label-width="100px"
+                    label="测试数据"
+                    :prop="'uploadInfo2.childData.' + index + '.remarks'"
+                    :rules="{
+              required: true, message: '测试数据', trigger: 'blur'
+              }"
+                  >
+                    <el-input v-model="item.remarks" placeholder="请输入内容"></el-input>
+                  </el-form-item>
+                </el-col>
+                <el-col :span="12">
+                  <el-button type="danger" icon="el-icon-delete" circle @click="deleteItem2(item, index)"  class="delButton"></el-button>
+                </el-col>
+              </el-row>
+              <el-row>
+                <!-- <el-col :span="12">
+                  <el-form-item
+                    label-width="130px"
+                    label="存在的问题"
+                    :prop="'form.monthChild.' + index + '.fourCode'"
+                    :rules="{
+            required: true, message: '存在的问题不能为空', trigger: 'blur'
+            }"
+                  >
+                    <el-input v-model="item.fourCode" style="width: 350px"></el-input>
+                  </el-form-item>
+                </el-col> -->
+              </el-row>
+            </div>
+          </el-row>
           <el-form-item>
-            <el-button type="primary" @click="submitUpload('uploadInfo')">提交</el-button>
-            <el-button @click="resetForm('uploadInfo')">重置</el-button>
+            <div style="float: right; margin-right: 10px; ">
+              <el-button type="primary" @click="submitUpload('uploadInfo2')">提交</el-button>
+              <el-button @click="resetForm('uploadInfo2')">重置</el-button>
+            </div>
           </el-form-item>
         </el-form>
-        <el-form :model="uploadInfo3"   label-width="1.5rem" v-show="tableShow === 'table3'">
+        <el-form :model="uploadInfo3" ref="uploadInfo3" :rules="rules"  label-width="1.5rem" v-show="tableShow === 'table3'">
 <!--          <el-form-item label="设备id" >-->
 <!--            <el-input v-model="uploadInfo3.devid" style="width: 50%" placeholder="请输入设备id"></el-input>-->
 <!--          </el-form-item>-->
@@ -463,72 +628,174 @@
 <!--          <el-form-item label="当前登录人id" >-->
 <!--            <el-input v-model="uploadInfo3.userid" style="width: 50%" placeholder="请输入当前登录人id"></el-input>-->
 <!--          </el-form-item>-->
-          <el-form-item label="附着道数" >
+          <el-form-item label="施工单位负责人"  prop="userid">
+            <el-select v-model="uploadInfo3.userid" placeholder="请选择施工单位负责人" style="width: 50%">
+              <el-option
+                v-for="item in userOptions"
+                :key="item.guid"
+                :label="item.pname"
+                :value="item.guid">
+              </el-option>
+            </el-select>
+          </el-form-item>
+          <el-form-item label="附着道数" prop="leftHeight">
             <el-input v-model="uploadInfo3.leftHeight" style="width: 50%" placeholder="请输入起升高度"></el-input>
           </el-form-item>
-          <el-form-item label="当前已安装附着" >
+          <el-form-item label="当前已安装附着" prop="towerHeight">
             <el-input v-model="uploadInfo3.towerHeight" style="width: 50%" placeholder="当前已安装附着"></el-input>
           </el-form-item>
-          <el-form-item label="当前标准节" >
+          <el-form-item label="当前标准节" prop="installHeigth">
             <el-input v-model="uploadInfo3.installHeigth" style="width: 50%" placeholder="请输入当前标准节"></el-input>
           </el-form-item>
-          <el-form-item label="新安装标准节" >
+          <el-form-item label="新安装标准节" prop="maxLoad">
             <el-input v-model="uploadInfo3.maxLoad" style="width: 50%" placeholder="请输入新安装标准节"></el-input>
           </el-form-item>
-          <el-form-item label="企业id" >
+          <el-form-item label="企业id" prop="entid">
             <el-input v-model="uploadInfo3.entid" style="width: 50%" placeholder="请输入企业id" type="textarea"></el-input>
           </el-form-item>
-          <el-form-item label="设备使用ID" >
+          <el-form-item label="设备使用ID" prop="useId">
             <el-input v-model="uploadInfo3.useId" style="width: 50%" placeholder="请输入内容设备使用ID"></el-input>
           </el-form-item>
-          <el-form-item label="安装时间" >
+          <el-form-item label="安装时间" prop="installtime">
             <el-date-picker v-model="uploadInfo3.installtime" align="right" type="date" placeholder="选择日期" :picker-options="pickerOptions" value-format="yyyy-MM-dd" style="width: 50%; " />
           </el-form-item>
-          <el-form-item label="顶升后高度" >
+          <el-form-item label="顶升后高度" prop="checkTime">
             <el-input v-model="uploadInfo3.checkTime" style="width: 50%" placeholder="请输入顶升后高度" type="textarea"></el-input>
           </el-form-item>
-          <el-form-item label="附着间距" >
+          <el-form-item label="附着间距" prop="spacing">
             <el-input v-model="uploadInfo3.spacing" style="width: 50%" placeholder="请输入附着间距"></el-input>
           </el-form-item>
-          <el-form-item label="监理单位审核日期" >
+          <el-form-item label="监理单位审核日期" prop="installUserZcs">
             <el-date-picker v-model="uploadInfo3.installUserZcs" align="right" type="date" placeholder="选择日期" :picker-options="pickerOptions" value-format="yyyy-MM-dd" style="width: 50%; " />
           </el-form-item>
-          <el-form-item label="上报时间时间">
+          <el-form-item label="上报时间时间" prop="reporttime">
             <el-date-picker v-model="uploadInfo3.reporttime" align="right" type="date" placeholder="选择日期" :picker-options="pickerOptions" value-format="yyyy-MM-dd" style="width: 50%; " />
           </el-form-item>
-          <el-form-item label="与建筑物水平中心距离" >
+          <el-form-item label="与建筑物水平中心距离" prop="maxCapacity">
             <el-input v-model="uploadInfo3.maxCapacity" placeholder="请输入与建筑物水平中心距离" style="width: 50%; "></el-input>
           </el-form-item>
-          <el-form-item label="原安装臂铰点（自由端）高度" >
+          <el-form-item label="原安装臂铰点（自由端）高度" prop="maxRange">
             <el-input v-model="uploadInfo3.maxRange" placeholder="请输入内容" style="width: 50%; "></el-input>
           </el-form-item>
-          <el-form-item label="是否附着" >
+          <el-form-item label="是否附着" prop="checkUser">
             <el-input v-model="uploadInfo3.checkUser" placeholder="请输入内容" style="width: 50%; "></el-input>
           </el-form-item>
-          <el-form-item label="安装单位负责人" >
+          <el-form-item label="安装单位负责人" prop="installmanager">
             <el-input v-model="uploadInfo3.installmanager" placeholder="安装单位负责人" style="width: 50%; "></el-input>
           </el-form-item>
-          <el-form-item label="联系电话" >
+          <el-form-item label="联系电话" prop="installphone">
             <el-input v-model="uploadInfo3.installphone" placeholder="请输入联系电话" style="width: 50%; "></el-input>
           </el-form-item>
-          <el-form-item label="现场专业技术人员" >
+          <el-form-item label="现场专业技术人员" prop="checkContent">
             <el-input v-model="uploadInfo3.checkContent" placeholder="请输入现场专业技术人员" style="width: 50%; "></el-input>
           </el-form-item>
-          <el-form-item label="施工总承包单位审核意见" >
+          <el-form-item label="施工总承包单位审核意见" prop="checkWriteTime">
             <el-input v-model="uploadInfo3.checkWriteTime" placeholder="请输入施工总承包单位审核意见" style="width: 50%; "></el-input>
           </el-form-item>
-          <el-form-item label="监理单位审核意见" >
+          <el-form-item label="监理单位审核意见" prop="installUserAqjg">
             <el-input v-model="uploadInfo3.installUserAqjg" placeholder="请输入监理单位审核意见" style="width: 50%; "></el-input>
           </el-form-item>
-          <el-form-item label="施工总承包审核日期">
+          <el-form-item label="施工总承包审核日期" prop="installUser">
             <el-date-picker v-model="uploadInfo3.installUser" align="right" type="date" placeholder="选择日期" :picker-options="pickerOptions" value-format="yyyy-MM-dd" style="width: 50%; " />
           </el-form-item>
+          <el-row>
+            <div class="divider">添加子项:</div>
+          </el-row>
+          <el-row>
+            <el-button @click="addItem3" type="primary"  style="width: 200px;margin-bottom: 20px">增加</el-button>
+          </el-row>
+          <el-row>
+            <div v-for="(item, index) in uploadInfo3.childData" :key="index" style="border-bottom: dashed 1px #DCDFE6;margin-bottom: 20px;padding-right: 20px">
+              <el-row>
+                <el-col :span="12">
+                  <el-form-item
+                    label-width="100px"
+                    label="人员id"
+                    :prop="'uploadInfo3.childData.' + index + '.personid'"
+                    :rules="{
+                      required: true, message: '人员id', trigger: 'blur'
+                      }"
+                  >
+                    <!--<treeselect v-model="item.dicid"  :options="options" :clearable="true" :show-count="true" :disable-branch-nodes="true"  style="width: 200px"/>-->
+                    <el-input v-model="item.personid"></el-input>
+                  </el-form-item>
+                </el-col>
+                <el-col :span="12">
+                  <el-form-item
+                    label-width="100px"
+                    label="姓名"
+                    :prop="'uploadInfo3.childData.' + index + '.name'"
+                    :rules="{required: true, message: '姓名', trigger: 'blur'}"
+                  >
+                    <el-input v-model="item.name"  placeholder="请输入内容"></el-input>
+                  </el-form-item>
+                </el-col>
+              </el-row>
+              <el-row>
+                <el-col :span="12">
+                  <el-form-item
+                    label-width="100px"
+                    label="作业工种"
+                    :prop="'uploadInfo3.childData.' + index + '.pspec'"
+                    :rules="{
+              required: true, message: '作业工种', trigger: 'blur'
+              }"
+                  >
+                    <el-input v-model="item.pspec" placeholder="请输入内容"></el-input>
+                  </el-form-item>
+                </el-col>
+                <el-col :span="12">
+                  <el-form-item
+                    label-width="100px"
+                    label="身份证"
+                    :prop="'uploadInfo3.childData.' + index + '.pcode'"
+                    :rules="{
+              required: true, message: '身份证', trigger: 'blur'
+              }"
+                  >
+                    <el-input v-model="item.pcode" placeholder="请输入内容"></el-input>
+                  </el-form-item>
+                </el-col>
+              </el-row>
+              <el-row>
+                <el-col :span="12">
+                  <el-form-item
+                    label-width="100px"
+                    label="作业证号"
+                    :prop="'uploadInfo3.childData.' + index + '.qualifiCode'"
+                    :rules="{
+              required: true, message: '作业证号', trigger: 'blur'
+              }"
+                  >
+                    <el-input v-model="item.qualifiCode" placeholder="请输入内容"></el-input>
+                  </el-form-item>
+                </el-col>
+                <el-col :span="12">
+                  <el-button type="danger" icon="el-icon-delete" circle @click="deleteItem3(item, index)" class="delButton"></el-button>
+                </el-col>
+                <!-- <el-col :span="12">
+                  <el-form-item
+                    label-width="130px"
+                    label="存在的问题"
+                    :prop="'form.monthChild.' + index + '.fourCode'"
+                    :rules="{
+            required: true, message: '存在的问题不能为空', trigger: 'blur'
+            }"
+                  >
+                    <el-input v-model="item.fourCode" style="width: 350px"></el-input>
+                  </el-form-item>
+                </el-col> -->
+              </el-row>
+            </div>
+          </el-row>
           <el-form-item>
-            <el-button type="primary" @click="submitUpload('uploadInfo')">提交</el-button>
-            <el-button @click="resetForm('uploadInfo')">重置</el-button>
+            <div style="float: right; margin-right: 10px; ">
+              <el-button type="primary" @click="submitUpload('uploadInfo3')">提交</el-button>
+              <el-button @click="resetForm('uploadInfo3')">重置</el-button>
+            </div>
           </el-form-item>
         </el-form>
-        <el-form :model="uploadInfo4"   label-width="1.5rem" v-show="tableShow === 'table4'">
+        <el-form :model="uploadInfo4" ref="uploadInfo4" :rules="rules"  label-width="1.5rem" v-show="tableShow === 'table4'">
 <!--          <el-form-item label="设备id" >-->
 <!--            <el-input v-model="uploadInfo4.devid" style="width: 50%" placeholder="请输入设备id"></el-input>-->
 <!--          </el-form-item>-->
@@ -538,85 +805,197 @@
 <!--          <el-form-item label="当前登录人id" >-->
 <!--            <el-input v-model="uploadInfo4.userid" style="width: 50%" placeholder="请输入当前登录人id"></el-input>-->
 <!--          </el-form-item>-->
-          <el-form-item label="附着道数" >
+          <el-form-item label="施工单位负责人" prop="userid">
+            <el-select v-model="uploadInfo4.userid" placeholder="请选择施工单位负责人" style="width: 50%">
+              <el-option
+                v-for="item in userOptions"
+                :key="item.guid"
+                :label="item.pname"
+                :value="item.guid">
+              </el-option>
+            </el-select>
+          </el-form-item>
+          <el-form-item label="附着道数" prop="leftHeight">
             <el-input v-model="uploadInfo4.leftHeight" style="width: 50%" placeholder="请输入起升高度"></el-input>
           </el-form-item>
-          <el-form-item label="当前已安装附着" >
+          <el-form-item label="当前已安装附着" prop="towerHeight">
             <el-input v-model="uploadInfo4.towerHeight" style="width: 50%" placeholder="当前已安装附着"></el-input>
           </el-form-item>
-          <el-form-item label="当前标准节" >
+          <el-form-item label="当前标准节" prop="installHeigth">
             <el-input v-model="uploadInfo4.installHeigth" style="width: 50%" placeholder="请输入当前标准节"></el-input>
           </el-form-item>
-          <el-form-item label="新安装标准节" >
+          <el-form-item label="新安装标准节" prop="maxLoad">
             <el-input v-model="uploadInfo4.maxLoad" style="width: 50%" placeholder="请输入新安装标准节"></el-input>
           </el-form-item>
-          <el-form-item label="企业id" >
+          <el-form-item label="企业id" prop="entid">
             <el-input v-model="uploadInfo4.entid" style="width: 50%" placeholder="请输入企业id" type="textarea"></el-input>
           </el-form-item>
-          <el-form-item label="设备使用ID" >
+          <el-form-item label="设备使用ID" prop="useId">
             <el-input v-model="uploadInfo4.useId" style="width: 50%" placeholder="请输入内容设备使用ID"></el-input>
           </el-form-item>
-          <el-form-item label="安装时间" >
+          <el-form-item label="安装时间" prop="installtime">
             <el-date-picker v-model="uploadInfo4.installtime" align="right" type="date" placeholder="选择日期" :picker-options="pickerOptions" value-format="yyyy-MM-dd" style="width: 50%; " />
           </el-form-item>
-          <el-form-item label="顶升后高度" >
+          <el-form-item label="顶升后高度" prop="checkTime">
             <el-input v-model="uploadInfo4.checkTime" style="width: 50%" placeholder="请输入顶升后高度" type="textarea"></el-input>
           </el-form-item>
-          <el-form-item label="附着间距" >
+          <el-form-item label="附着间距" prop="spacing">
             <el-input v-model="uploadInfo4.spacing" style="width: 50%" placeholder="请输入附着间距"></el-input>
           </el-form-item>
-          <el-form-item label="监理单位审核日期" >
+          <el-form-item label="监理单位审核日期" prop="installUserZcs">
             <el-date-picker v-model="uploadInfo4.installUserZcs" align="right" type="date" placeholder="选择日期" :picker-options="pickerOptions" value-format="yyyy-MM-dd" style="width: 50%; " />
           </el-form-item>
-          <el-form-item label="上报时间时间">
+          <el-form-item label="上报时间时间" prop="reporttime">
             <el-date-picker v-model="uploadInfo4.reporttime" align="right" type="date" placeholder="选择日期" :picker-options="pickerOptions" value-format="yyyy-MM-dd" style="width: 50%; " />
           </el-form-item>
-          <el-form-item label="与建筑物水平中心距离" >
+          <el-form-item label="与建筑物水平中心距离" prop="maxCapacity">
             <el-input v-model="uploadInfo4.maxCapacity" placeholder="请输入与建筑物水平中心距离" style="width: 50%; "></el-input>
           </el-form-item>
-          <el-form-item label="原安装臂铰点（自由端）高度" >
+          <el-form-item label="原安装臂铰点（自由端）高度" prop="maxRange">
             <el-input v-model="uploadInfo4.maxRange" placeholder="请输入内容" style="width: 50%; "></el-input>
           </el-form-item>
-          <el-form-item label="是否附着" >
+          <el-form-item label="是否附着" prop="checkUser">
             <el-input v-model="uploadInfo4.checkUser" placeholder="请输入内容" style="width: 50%; "></el-input>
           </el-form-item>
-          <el-form-item label="安装单位负责人" >
+          <el-form-item label="安装单位负责人" prop="installmanager">
             <el-input v-model="uploadInfo4.installmanager" placeholder="安装单位负责人" style="width: 50%; "></el-input>
           </el-form-item>
-          <el-form-item label="联系电话" >
+          <el-form-item label="联系电话" prop="installphone">
             <el-input v-model="uploadInfo4.installphone" placeholder="请输入联系电话" style="width: 50%; "></el-input>
           </el-form-item>
-          <el-form-item label="现场专业技术人员" >
+          <el-form-item label="现场专业技术人员" prop="checkContent">
             <el-input v-model="uploadInfo4.checkContent" placeholder="请输入现场专业技术人员" style="width: 50%; "></el-input>
           </el-form-item>
-          <el-form-item label="施工总承包单位审核意见" >
+          <el-form-item label="施工总承包单位审核意见" prop="checkWriteTime">
             <el-input v-model="uploadInfo4.checkWriteTime" placeholder="请输入施工总承包单位审核意见" style="width: 50%; "></el-input>
           </el-form-item>
-          <el-form-item label="监理单位审核意见" >
+          <el-form-item label="监理单位审核意见" prop="installUserAqjg">
             <el-input v-model="uploadInfo4.installUserAqjg" placeholder="请输入监理单位审核意见" style="width: 50%; "></el-input>
           </el-form-item>
-          <el-form-item label="施工总承包审核日期">
+          <el-form-item label="施工总承包审核日期" prop="installUser">
             <el-date-picker v-model="uploadInfo4.installUser" align="right" type="date" placeholder="选择日期" :picker-options="pickerOptions" value-format="yyyy-MM-dd" style="width: 50%; " />
           </el-form-item>
+          <el-row>
+            <div class="divider">添加子项:</div>
+          </el-row>
+          <el-row>
+            <el-button @click="addItem4" type="primary"  style="width: 200px;margin-bottom: 20px">增加</el-button>
+          </el-row>
+          <el-row>
+            <div v-for="(item, index) in uploadInfo4.childData" :key="index" style="border-bottom: dashed 1px #DCDFE6;margin-bottom: 20px;padding-right: 20px">
+              <el-row>
+                <el-col :span="12">
+                  <el-form-item
+                    label-width="100px"
+                    label="人员id"
+                    :prop="'uploadInfo4.childData.' + index + '.personid'"
+                    :rules="{
+                      required: true, message: '人员id', trigger: 'blur'
+                      }"
+                  >
+                    <!--<treeselect v-model="item.dicid"  :options="options" :clearable="true" :show-count="true" :disable-branch-nodes="true"  style="width: 200px"/>-->
+                    <el-input v-model="item.personid"></el-input>
+                  </el-form-item>
+                </el-col>
+                <el-col :span="12">
+                  <el-form-item
+                    label-width="100px"
+                    label="姓名"
+                    :prop="'uploadInfo4.childData.' + index + '.name'"
+                    :rules="{required: true, message: '姓名', trigger: 'blur'}"
+                  >
+                    <el-input v-model="item.name"  placeholder="请输入内容"></el-input>
+                  </el-form-item>
+                </el-col>
+              </el-row>
+              <el-row>
+                <el-col :span="12">
+                  <el-form-item
+                    label-width="100px"
+                    label="作业工种"
+                    :prop="'uploadInfo4.childData.' + index + '.pspec'"
+                    :rules="{
+              required: true, message: '作业工种', trigger: 'blur'
+              }"
+                  >
+                    <el-input v-model="item.pspec" placeholder="请输入内容"></el-input>
+                  </el-form-item>
+                </el-col>
+                <el-col :span="12">
+                  <el-form-item
+                    label-width="100px"
+                    label="身份证"
+                    :prop="'uploadInfo4.childData.' + index + '.pcode'"
+                    :rules="{
+              required: true, message: '身份证', trigger: 'blur'
+              }"
+                  >
+                    <el-input v-model="item.pcode" placeholder="请输入内容"></el-input>
+                  </el-form-item>
+                </el-col>
+              </el-row>
+              <el-row>
+                <el-col :span="12">
+                  <el-form-item
+                    label-width="100px"
+                    label="作业证号"
+                    :prop="'uploadInfo4.childData.' + index + '.qualifiCode'"
+                    :rules="{
+              required: true, message: '作业证号', trigger: 'blur'
+              }"
+                  >
+                    <el-input v-model="item.qualifiCode" placeholder="请输入内容"></el-input>
+                  </el-form-item>
+                </el-col>
+                <el-col :span="12">
+                  <el-button type="danger" icon="el-icon-delete" circle @click="deleteItem4(item, index)" class="delButton"></el-button>
+                </el-col>
+                <!-- <el-col :span="12">
+                  <el-form-item
+                    label-width="130px"
+                    label="存在的问题"
+                    :prop="'form.monthChild.' + index + '.fourCode'"
+                    :rules="{
+            required: true, message: '存在的问题不能为空', trigger: 'blur'
+            }"
+                  >
+                    <el-input v-model="item.fourCode" style="width: 350px"></el-input>
+                  </el-form-item>
+                </el-col> -->
+              </el-row>
+            </div>
+          </el-row>
           <el-form-item>
-            <el-button type="primary" @click="submitUpload('uploadInfo')">提交</el-button>
-            <el-button @click="resetForm('uploadInfo')">重置</el-button>
+            <div style="float: right; margin-right: 10px; ">
+              <el-button type="primary" @click="submitUpload('uploadInfo4')">提交</el-button>
+              <el-button @click="resetForm('uploadInfo4')">重置</el-button>
+            </div>
           </el-form-item>
         </el-form>
-        <el-form :model="uploadInfo5"   label-width="1.5rem" v-show="tableShow === 'table5'">
+        <el-form :model="uploadInfo5"  ref="uploadInfo5" :rules="rules" label-width="1.5rem" v-show="tableShow === 'table5'">
 <!--          <el-form-item label="设备id" >-->
 <!--            <el-input v-model="uploadInfo5.devid" style="width: 50%" placeholder="请输入设备id"></el-input>-->
 <!--          </el-form-item>-->
 <!--          <el-form-item label="当前登录人id" >-->
 <!--            <el-input v-model="uploadInfo5.userid" style="width: 50%" placeholder="请输入当前登录人id"></el-input>-->
 <!--          </el-form-item>-->
-          <el-form-item label="起升高度" >
+          <el-form-item label="施工单位负责人"  prop="userid">
+            <el-select v-model="uploadInfo5.userid" placeholder="请选择施工单位负责人" style="width: 50%">
+              <el-option
+                v-for="item in userOptions"
+                :key="item.guid"
+                :label="item.pname"
+                :value="item.guid">
+              </el-option>
+            </el-select>
+          </el-form-item>
+          <el-form-item label="起升高度" prop="leftHeight">
             <el-input v-model="uploadInfo5.leftHeight" style="width: 50%" placeholder="请输入起升高度"></el-input>
           </el-form-item>
-          <el-form-item label="塔高" >
+          <el-form-item label="塔高" prop="towerHeight">
             <el-input v-model="uploadInfo5.towerHeight" style="width: 50%" placeholder="塔高"></el-input>
           </el-form-item>
-          <el-form-item label="新安装标准节" >
+          <el-form-item label="新安装标准节" prop="maxLoad">
             <el-input v-model="uploadInfo5.maxLoad" style="width: 50%" placeholder="请输入新安装标准节"></el-input>
           </el-form-item>
 <!--          <el-form-item label="企业id" >-->
@@ -625,45 +1004,113 @@
 <!--          <el-form-item label="设备使用ID" >-->
 <!--            <el-input v-model="uploadInfo5.useId" style="width: 50%" placeholder="请输入内容设备使用ID"></el-input>-->
 <!--          </el-form-item>-->
-          <el-form-item label="检查时间" >
+          <el-form-item label="检查时间" prop="checkTime">
             <el-date-picker v-model="uploadInfo5.checkTime" align="right" type="date" placeholder="选择日期" :picker-options="pickerOptions" value-format="yyyy-MM-dd" style="width: 50%; " />
           </el-form-item>
-          <el-form-item label="最大起重量" >
+          <el-form-item label="最大起重量" prop="maxCapacity">
             <el-input v-model="uploadInfo5.maxCapacity" style="width: 50%" placeholder="请输入最大起重量" type="textarea"></el-input>
           </el-form-item>
-          <el-form-item label="幅度" >
+          <el-form-item label="幅度" prop="maxRange">
             <el-input v-model="uploadInfo5.maxRange" style="width: 50%" placeholder="请输入幅度"></el-input>
           </el-form-item>
-          <el-form-item label="安装高度" >
+          <el-form-item label="安装高度" prop="installHeigth">
             <el-input v-model="uploadInfo5.installHeigth" style="width: 50%" placeholder="请输入安装高度"></el-input>
           </el-form-item>
-          <el-form-item label="附着道数" >
+          <el-form-item label="附着道数" prop="channels">
             <el-input v-model="uploadInfo5.channels" style="width: 50%" placeholder="请输入附着道数"></el-input>
           </el-form-item>
-          <el-form-item label="检查结果代号说明" >
+          <el-form-item label="检查结果代号说明" prop="checkResult">
             <el-input v-model="uploadInfo5.checkResult" style="width: 50%" placeholder="请输入检查结果代号说明"></el-input>
           </el-form-item>
-          <el-form-item label="使用单位意见" >
+          <el-form-item label="使用单位意见" prop="userContent">
             <el-input v-model="uploadInfo5.userContent" style="width: 50%" placeholder="请输入使用单位意见"></el-input>
           </el-form-item>
-          <el-form-item label="使用单位填写时间" >
+          <el-form-item label="使用单位填写时间" prop="userTime">
             <el-date-picker v-model="uploadInfo5.userTime" align="right" type="date" placeholder="选择日期" :picker-options="pickerOptions" value-format="yyyy-MM-dd" style="width: 50%; " />
           </el-form-item>
-          <el-form-item label="检查人员" >
+          <el-form-item label="检查人员" prop="checkUser">
             <el-input v-model="uploadInfo5.checkUser" style="width: 50%" placeholder="请输入检查人员"></el-input>
           </el-form-item>
-          <el-form-item label="结论" >
+          <el-form-item label="结论" prop="conclusion">
             <el-input v-model="uploadInfo5.conclusion" style="width: 50%" placeholder="请输入结论"></el-input>
           </el-form-item>
-          <el-form-item label="上报时间">
+          <el-form-item label="上报时间" prop="reporttime">
             <el-date-picker v-model="uploadInfo5.reporttime" align="right" type="date" placeholder="选择日期" :picker-options="pickerOptions" value-format="yyyy-MM-dd" style="width: 50%; " />
           </el-form-item>
+          <el-row>
+            <div class="divider">添加子项:</div>
+          </el-row>
+          <el-row>
+            <el-button @click="addItem5" type="primary"  style="width: 200px;margin-bottom: 20px">增加</el-button>
+          </el-row>
+          <el-row>
+            <div v-for="(item, index) in uploadInfo5.childData" :key="index" style="border-bottom: dashed 1px #DCDFE6;margin-bottom: 20px;padding-right: 20px">
+              <el-row>
+                <el-col :span="12">
+                  <el-form-item
+                    label-width="110px"
+                    label="定期检查数据"
+                    :prop="'uploadInfo5.childData.' + index + '.dicid'"
+                    :rules="{
+                      required: true, message: '定期检查数据', trigger: 'blur'
+                      }"
+                  >
+                    <treeselect v-model="item.dicid"  :options="options" :clearable="true" :show-count="true" :disable-branch-nodes="true"   @input="getSelectList(index, item)"/>
+                    <!--<el-input v-model="item.diccode"></el-input>-->
+                  </el-form-item>
+                </el-col>
+                <el-col :span="12">
+                  <el-form-item
+                    label-width="100px"
+                    label="结果"
+                    :prop="'uploadInfo5.childData.' + index + '.result'"
+                    :rules="{required: true, message: '结果', trigger: 'blur'}"
+                  >
+                    <el-input v-model="item.result" placeholder="请输入内容"></el-input>
+                  </el-form-item>
+                </el-col>
+              </el-row>
+              <el-row>
+                <el-col :span="12">
+                  <el-form-item
+                    label-width="100px"
+                    label="备注"
+                    :prop="'uploadInfo5.childData.' + index + '.remarks'"
+                    :rules="{
+              required: true, message: '备注', trigger: 'blur'
+              }"
+                  >
+                    <el-input v-model="item.remarks" placeholder="请输入内容"></el-input>
+                  </el-form-item>
+                </el-col>
+                <el-col :span="12">
+                  <el-button type="danger" icon="el-icon-delete" circle @click="deleteItem5(item, index)" class="delButton" ></el-button>
+                </el-col>
+              </el-row>
+              <el-row>
+                <!-- <el-col :span="12">
+                  <el-form-item
+                    label-width="130px"
+                    label="存在的问题"
+                    :prop="'form.monthChild.' + index + '.fourCode'"
+                    :rules="{
+            required: true, message: '存在的问题不能为空', trigger: 'blur'
+            }"
+                  >
+                    <el-input v-model="item.fourCode" style="width: 350px"></el-input>
+                  </el-form-item>
+                </el-col> -->
+              </el-row>
+            </div>
+          </el-row>
           <el-form-item>
-            <el-button type="primary" @click="submitUpload('uploadInfo')">提交</el-button>
-            <el-button @click="resetForm('uploadInfo')">重置</el-button>
+            <div style="float: right; margin-right: 10px; ">
+              <el-button type="primary" @click="submitUpload('uploadInfo5')">提交</el-button>
+              <el-button @click="resetForm('uploadInfo5')">重置</el-button>
+            </div>
           </el-form-item>
         </el-form>
-        <el-form :model="uploadInfo6"   label-width="1.5rem" v-show="tableShow === 'table6'">
+        <el-form :model="uploadInfo6" ref="uploadInfo6" :rules="rules"  label-width="1.5rem" v-show="tableShow === 'table6'">
 <!--          <el-form-item label="设备id" >-->
 <!--            <el-input v-model="uploadInfo6.devid" style="width: 50%" placeholder="请输入设备id"></el-input>-->
 <!--          </el-form-item>-->
@@ -673,70 +1120,80 @@
 <!--          <el-form-item label="当前登录人id" >-->
 <!--            <el-input v-model="uploadInfo6.userid" style="width: 50%" placeholder="请输入当前登录人id"></el-input>-->
 <!--          </el-form-item>-->
-          <el-form-item label="维保时间" >
+          <el-form-item label="施工单位负责人"  prop="userid">
+            <el-select v-model="uploadInfo6.userid" placeholder="请选择施工单位负责人" style="width: 50%">
+              <el-option
+                v-for="item in userOptions"
+                :key="item.guid"
+                :label="item.pname"
+                :value="item.guid">
+              </el-option>
+            </el-select>
+          </el-form-item>
+          <el-form-item label="维保时间" prop="weibaotime">
             <el-date-picker v-model="uploadInfo6.weibaotime" align="right" type="date" placeholder="选择日期" :picker-options="pickerOptions" value-format="yyyy-MM-dd" style="width: 50%; " />
           </el-form-item>
-          <el-form-item label="运转台时" >
+          <el-form-item label="运转台时" prop="maxcapacity">
             <el-input v-model="uploadInfo6.maxcapacity" style="width: 50%" placeholder="请输入运转台时"></el-input>
           </el-form-item>
-          <el-form-item label="更换主要零部件" >
+          <el-form-item label="更换主要零部件" prop="maxrange">
             <el-input v-model="uploadInfo6.maxrange" style="width: 50%" placeholder="请输入更换主要零部件"></el-input>
           </el-form-item>
 
-          <el-form-item label="维管负责人" >
+          <el-form-item label="维管负责人" prop="leftheight">
             <el-input v-model="uploadInfo6.leftheight" style="width: 50%" placeholder="请输入维管负责人"></el-input>
           </el-form-item>
-          <el-form-item label="维保人员" >
+          <el-form-item label="维保人员" prop="towerheight">
             <el-input v-model="uploadInfo6.towerheight" style="width: 50%" placeholder="维保人员"></el-input>
           </el-form-item>
-          <el-form-item label="维修（保养）内容" >
+          <el-form-item label="维修（保养）内容" prop="installheigth">
             <el-input v-model="uploadInfo6.installheigth" style="width: 50%" placeholder="请输入维修（保养）内容"></el-input>
           </el-form-item>
-          <el-form-item label="监理单位审核意见" >
+          <el-form-item label="监理单位审核意见" prop="installuseraqjg">
             <el-input v-model="uploadInfo6.installuseraqjg" style="width: 50%" placeholder="请输入监理单位审核意见"></el-input>
           </el-form-item>
-          <el-form-item label="监理单位审核日期" >
+          <el-form-item label="监理单位审核日期" prop="installuserzc">
             <el-date-picker v-model="uploadInfo6.installuserzc" align="right" type="date" placeholder="选择日期" :picker-options="pickerOptions" value-format="yyyy-MM-dd" style="width: 50%; " />
           </el-form-item>
-          <el-form-item label="上报时间">
+          <el-form-item label="上报时间" prop="reporttime">
             <el-date-picker v-model="uploadInfo6.reporttime" align="right" type="date" placeholder="选择日期" :picker-options="pickerOptions" value-format="yyyy-MM-dd"  style="width: 50%; " />
           </el-form-item>
           <el-form-item>
-            <el-button type="primary" @click="submitUpload('uploadInfo')">提交</el-button>
-            <el-button @click="resetForm('uploadInfo')">重置</el-button>
+            <el-button type="primary" @click="submitUpload('uploadInfo6')">提交</el-button>
+            <el-button @click="resetForm('uploadInfo6')">重置</el-button>
           </el-form-item>
         </el-form>
       </div>
     </el-dialog>
-    <el-dialog :visible.sync="showEdit" title="修改文件" width="40%">
-      <div>
-        <el-form :model="currentInfo" :rules="rules" ref="currentInfo" label-width="1.5rem">
-          <el-form-item label="文件名称" prop="name">
-            <el-input v-model="currentInfo.name" style="width: 50%"></el-input>
-          </el-form-item>
-          <el-form-item label="文件类型" prop="type">
-            <el-select v-model="currentInfo.type" placeholder="请选择文件类型" style="width: 50%; ">
-              <el-option label="文件" value="文件" />
-              <el-option label="图片" value="图片" />
-              <el-option label="视频" value="视频" />
-            </el-select>
-          </el-form-item>
-          <el-form-item label="文件描述" prop="description">
-            <el-input type="textarea" v-model="currentInfo.description" style="width: 90%; "></el-input>
-          </el-form-item>
-          <el-form-item label="上传日期" prop="uploadTime">
-            <el-date-picker v-model="currentInfo.uploadTime" align="right" type="date" placeholder="选择日期" :picker-options="pickerOptions" value-format="yyyy-MM-dd" style="width: 50%; " />
-          </el-form-item>
-          <el-form-item label="上传人" prop="uploader">
-            <el-input v-model="currentInfo.uploader" placeholder="请输入上传人" style="width: 50%; "></el-input>
-          </el-form-item>
-          <el-form-item>
-            <el-button type="primary" @click="submitEdit('currentInfo')">提交修改</el-button>
-            <el-button @click="showEdit = false">取消</el-button>
-          </el-form-item>
-        </el-form>
-      </div>
-    </el-dialog>
+    <!--<el-dialog :visible.sync="showEdit" title="修改文件" width="40%">-->
+      <!--<div>-->
+        <!--<el-form :model="currentInfo" :rules="rules" ref="currentInfo" label-width="1.5rem">-->
+          <!--<el-form-item label="文件名称" prop="name">-->
+            <!--<el-input v-model="currentInfo.name" style="width: 50%"></el-input>-->
+          <!--</el-form-item>-->
+          <!--<el-form-item label="文件类型" prop="type">-->
+            <!--<el-select v-model="currentInfo.type" placeholder="请选择文件类型" style="width: 50%; ">-->
+              <!--<el-option label="文件" value="文件" />-->
+              <!--<el-option label="图片" value="图片" />-->
+              <!--<el-option label="视频" value="视频" />-->
+            <!--</el-select>-->
+          <!--</el-form-item>-->
+          <!--<el-form-item label="文件描述" prop="description">-->
+            <!--<el-input type="textarea" v-model="currentInfo.description" style="width: 90%; "></el-input>-->
+          <!--</el-form-item>-->
+          <!--<el-form-item label="上传日期" prop="uploadTime">-->
+            <!--<el-date-picker v-model="currentInfo.uploadTime" align="right" type="date" placeholder="选择日期" :picker-options="pickerOptions" value-format="yyyy-MM-dd" style="width: 50%; " />-->
+          <!--</el-form-item>-->
+          <!--<el-form-item label="上传人" prop="uploader">-->
+            <!--<el-input v-model="currentInfo.uploader" placeholder="请输入上传人" style="width: 50%; "></el-input>-->
+          <!--</el-form-item>-->
+          <!--<el-form-item>-->
+            <!--<el-button type="primary" @click="submitEdit('currentInfo')">提交修改</el-button>-->
+            <!--<el-button @click="showEdit = false">取消</el-button>-->
+          <!--</el-form-item>-->
+        <!--</el-form>-->
+      <!--</div>-->
+    <!--</el-dialog>-->
     <el-dialog :visible.sync="view1" title="查看详情">
       <table class="tableClass">
         <tr>
@@ -1727,18 +2184,27 @@
 </template>
 
 <script>
-  import { zijian, addZijian,getSysProData,yanshou, addyanshou,weihu, addweihu, dingqi, adddingqi, dingsheng,adddingsheng,fuzhuo, addfuzhuo } from "@/api/deviceManage";
-  // import axios from 'axios'
+  // import the component
+  import Treeselect from '@riophae/vue-treeselect'
+  // import the styles
+  import '@riophae/vue-treeselect/dist/vue-treeselect.css'
+  import { zijian, addZijian,getSysProData,yanshou, addyanshou,weihu, addweihu, dingqi, adddingqi, dingsheng,adddingsheng,fuzhuo, addfuzhuo, devTreeSelect } from "@/api/deviceManage";
+  // import { getSysProData } from "@/api/qualityControl"
+  import axios from 'axios'
   export default {
+    components: { Treeselect },
     data() {
       return {
         fileTable: [],
+        options: [],
+        typeCode: '',
         titles: '建筑起重机械安装自检记录表',
         tableShow: 'table1',
         currentPage: 1,
         pageSize: 10,
         siteId: '',
         showUpload: false,
+        userOptions: [],
         uploadInfo: {
           proid: '', // 项目id
           devid: '', // 设备id
@@ -1759,6 +2225,7 @@
           writeTime: '', // 填写时间
           maxCapacity: '', // 最大起重量
           maxRange: '', // 幅度
+          childData: []
         },
         uploadInfo2: {
           proid: '', // 项目id
@@ -1778,6 +2245,7 @@
           reporttime: '', // 上报时间时间
           maxCapacity: '', // 最大起重量
           maxRange: '', // 幅度
+          childData: []
         },
         uploadInfo3: {
           proid: '', // 项目id
@@ -1804,6 +2272,7 @@
           checkWriteTime: '', // 施工总承包单位审核意见
           installUserAqjg: '', // 监理单位审核意见
           installUser: '', // 施工总承包审核日期
+          childData: []
         },
         uploadInfo4: {
           proid: '', // 项目id
@@ -1830,6 +2299,7 @@
           checkWriteTime: '', // 施工总承包单位审核意见
           installUserAqjg: '', // 监理单位审核意见
           installUser: '', // 施工总承包审核日期
+          childData: []
         },
         uploadInfo5: {
           proid: '', // 项目id
@@ -1852,6 +2322,7 @@
           checkUser: '', // 检查人员
           conclusion: '', // 结论(T、同意继续使用 X、限制使用 B、不准使用，整改后二次验收)
           reporttime: '', // 上报时间
+          childData: [],
         },
         uploadInfo6: {
           proid: '', // 项目id
@@ -1869,9 +2340,9 @@
           reporttime: '',  // 上报时间
         },
         rules: {
-          name: [
-            { required: true, message: '请输入文件名称', trigger: 'blur' }
-          ],
+          // userid: [
+          //   { required: true, message: '请选择施工单位负责人', trigger: 'change' }
+          // ],
           type: [
             { required: true, message: '请选择文件类型', trigger: 'change' }
           ],
@@ -1931,6 +2402,7 @@
         view4: false,
         view5: false,
         view6: false,
+        entid: '',
         showAdd3: false,
         showAdd4: false,
         addForm3: {
@@ -2014,13 +2486,30 @@
           this.uploadInfo4.proid = res.data.guid
           this.uploadInfo5.proid = res.data.guid
           this.uploadInfo6.proid = res.data.guid
+          this.entid = res.data.guid
+          this.getPeople()
           this.getZiJian()
 
         })
       },
       getZiJian() {
         zijian(this.uploadInfo.proid).then((res) => {
-          this.fileTable = res.data.data
+          if(res.data.code === 200) {
+            this.fileTable = res.data.data.data
+          } else {
+            this.fileTable = []
+          }
+
+        })
+      },
+      getPeople() {
+        var url = 'http://211.90.39.2:39912/newAj/device/queryPerson?entid=' + this.entid
+        axios.get(url).then((res) => {
+          if (res.data.code === 200) {
+            this.userOptions = res.data.data
+          } else {
+            this.userOptions = []
+          }
         })
       },
       getShow1() {
@@ -2097,7 +2586,11 @@
       },
       getyanshou() {
         yanshou(this.uploadInfo2.proid).then((res) => {
-          this.fileTable = res.data.data
+          if(res.data.code === 200) {
+            this.fileTable = res.data.data.data
+          } else {
+            this.fileTable = []
+          }
         })
       },
       getaddyanshou() {
@@ -2141,7 +2634,11 @@
       },
       getdingqi() {
         dingqi(this.uploadInfo5.proid).then((res) => {
-          this.fileTable = res.data.rows
+          if (res.data.code === 200) {
+            this.fileTable = res.data.rows
+          }else {
+            this.fileTable = []
+          }
         })
       },
       getadddingqi() {
@@ -2223,6 +2720,9 @@
       gotoback() {
         history.go(-1)
       },
+      showAdd() {
+        this.showUpload = true
+      },
       viewDetail1(row) {
         this.detail1 = row;
         this.view1 = true;
@@ -2250,8 +2750,81 @@
       viewDetail6(row) {
         this.detail6 = row;
         this.view6 = true;
-
       },
+      getTreeselect() {
+        var data = {
+          typeCode: this.typeCode
+        }
+        devTreeSelect(data).then((response) => {
+          if (response.data.code === 200) {
+            this.options = response.data.data
+          }
+        });
+      },
+      addItem () {
+        this.uploadInfo.childData.push({
+          dicid: null,
+          result: '', // 测试结果
+          checkUser:'',  // 检查人
+        })
+        this.typeCode = 'AJB_DEV_INSTALLATION_RECORD'
+        this.getTreeselect()
+      },
+      deleteItem (item, index) {
+        this.uploadInfo.childData.splice(index, 1)
+      },
+      addItem2() {
+        this.uploadInfo2.childData.push({
+          dicid: null,
+          result: '', // 测试结果
+          remarks:'',  // 测试数据
+        })
+        this.typeCode = 'AJB_DEV_INSTALLATION_RECORD'
+        this.getTreeselect()
+      },
+      addItem3() {
+        this.uploadInfo3.childData.push({
+          personid: null, // 人员ID
+          name: '', // 姓名
+          pspec:'',  // 作业工种
+          pcode:'',  // 身份证号
+          qualifiCode:''  // 作业证号
+        })
+        // this.typeCode = 'AJB_DEV_INSTALLATION_RECORD'
+        // this.getTreeselect()
+      },
+      deleteItem3(item, index) {
+        this.uploadInfo3.childData.splice(index, 1)
+      },
+      deleteItem2 (item, index) {
+        this.uploadInfo2.childData.splice(index, 1)
+      },
+      addItem4() {
+        this.uploadInfo4.childData.push({
+          personid: null, // 人员ID
+          name: '', // 姓名
+          pspec:'',  // 作业工种
+          pcode:'',  // 身份证号
+          qualifiCode:''  // 作业证号
+        })
+      },
+      deleteItem4(item, index) {
+        this.uploadInfo4.childData.splice(index, 1)
+      },
+      addItem5() {
+        this.uploadInfo5.childData.push({
+          dicid: null,
+          result: '', // 测试结果
+          remarks:'',  // 测试数据
+        })
+        this.typeCode = 'AJB_DEV_REGULAR_CHECK'
+        this.getTreeselect()
+      },
+      deleteItem5 (item, index) {
+        this.uploadInfo5.childData.splice(index, 1)
+      },
+
+
       checkDetail3(row) {
         this.showAdd3 = true;
         this.addForm3.testid = row.id
@@ -2477,5 +3050,15 @@
 
   .tableHead {
     color: #409eff;
+  }
+  .divider{
+    border-bottom: dashed 1px #DCDFE6;
+    padding-bottom: 5px;
+    font-weight: bold;
+    font-size: 16px;
+    margin: 10px 0 20px 10px;
+  }
+  .delButton {
+   float: right;
   }
 </style>

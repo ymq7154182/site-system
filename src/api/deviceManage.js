@@ -11,7 +11,7 @@ export function getSysProData(data) {
 //获取安装自检表
 export function zijian(data) {
   return request({
-    url: 'device/CraneDevice/getDevInstallRecord?proId=' + data,
+    url: 'device/craneDevice/getDevInstallRecord?proId=' + data,
     method: 'get'
   })
 }
@@ -19,7 +19,7 @@ export function zijian(data) {
 // 新增安装自检新增表
 export function addZijian(data) {
   return request({
-    url: 'device/CraneDevice/insertDevInstallRecord',
+    url: 'device/craneDevice/insertDevInstallRecord',
     method: 'post',
     params: data
   })
@@ -28,7 +28,7 @@ export function addZijian(data) {
 // 获取安装验收新增表
 export function yanshou(data) {
   return request({
-    url: 'device/CraneDevice/getInstalAcceptRecord?proId=' + data,
+    url: 'device/craneDevice/getInstalAcceptRecord?proId=' + data,
     method: 'get'
   })
 }
@@ -36,7 +36,7 @@ export function yanshou(data) {
 // 新增安装验收新增表
 export function addyanshou(data) {
   return request({
-    url: 'device/CraneDevice/insertInstallAcceptRecord',
+    url: 'device/craneDevice/insertInstallAcceptRecord',
     method: 'post',
     params: data
   })
@@ -169,5 +169,14 @@ export function absyncAttachRecordCheckData(data) {
     url: 'device/attachRecordCheck/absyncAttachRecordCheckData',
     method: 'post',
     data
+  })
+}
+
+// 获取设备检查字典下拉树列表
+export function devTreeSelect(data) {
+  return request({
+    url: 'check/devDict/devTreeSelect',
+    method: 'get',
+    params: data
   })
 }
