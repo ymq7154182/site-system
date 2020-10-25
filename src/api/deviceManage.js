@@ -154,3 +154,20 @@ export function exportshengjiang(data) {
     params: data
   })
 }
+
+//
+export function inJackingPlusRecordCheck(data) {
+  return request({
+    url: 'device/jackingPlusRecordCheck/inJackingPlusRecordCheck',
+    method: 'post',
+    data
+  })
+}
+
+export function absyncAttachRecordCheckData(data) {
+  return request({
+    url: 'device/attachRecordCheck/absyncAttachRecordCheckData',
+    method: 'post',
+    data
+  })
+}

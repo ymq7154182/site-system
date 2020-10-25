@@ -1513,24 +1513,215 @@
         </tr>
       </table>
     </el-dialog>
-    <el-dialog :visible.sync="showAdd3" title="顶升加节自检">
-      <el-form v-model="addForm3" label-width="100px">
-        <el-form-item label="检查时间">
+    <el-dialog :visible.sync="showAdd3" title="顶升加节自检" width="60%">
+      <el-form v-model="addForm3" ref="addForm3" label-width="200px">
+        <el-form-item label="检查时间" prop="checkTime">
           <el-date-picker
             v-model="addForm3.checkTime"
             type="datetime"
             placeholder="选择日期时间">
           </el-date-picker>
         </el-form-item>
-        <el-form-item label="">
-
+        <el-form-item label="安装单位自检意见" prop="opinionAz">
+          <el-input
+            type="textarea"
+            :rows="2"
+            placeholder="请输入内容"
+            v-model="addForm3.opinionAz">
+          </el-input>
+        </el-form-item>
+        <el-form-item label="自检负责人" prop="userAz">
+          <el-input placeholder="请输入自检负责人" v-model="addForm3.userAz"></el-input>
+        </el-form-item>
+        <el-form-item label="自检日期" prop="timeAz">
+          <el-date-picker
+            v-model="addForm3.timeAz"
+            type="datetime"
+            placeholder="选择日期时间">
+          </el-date-picker>
+        </el-form-item>
+        <el-form-item label="安装单位技术负责人" prop="installUser">
+          <el-input placeholder="请输入安装单位技术负责人" v-model="addForm3.installUser"></el-input>
+        </el-form-item>
+        <el-form-item label="安装单位安全员、机管员" prop="installUserAqjg">
+          <el-input placeholder="请输入安装单位安全员、机管员" v-model="addForm3.installUserAqjg"></el-input>
+        </el-form-item>
+        <el-form-item label="安装班组长" prop="installUserZc">
+          <el-input placeholder="请输入安装班组长" v-model="addForm3.installUserZc"></el-input>
+        </el-form-item>
+        <el-form-item label="机组人员" prop="installUserJzry">
+          <el-input placeholder="请输入机组人员" v-model="addForm3.installUserJzry"></el-input>
+        </el-form-item>
+        <el-form-item label="填写日期" prop="writeTime">
+          <el-date-picker
+            v-model="addForm3.writeTime"
+            type="date"
+            placeholder="选择日期">
+          </el-date-picker>
         </el-form-item>
       </el-form>
-    </el-dialog>
-    <el-dialog :visible.sync="showAdd4" title="附着验收">
-      <el-form v-model="addForm4" label-width="100px">
-
+      <div>
+        <span style="font-size: 18px; ">顶升加节自检子项</span>
+        <el-button @click="addForm3childData" type="primary" icon="el-icon-plus" round style="margin-left: 20px; ">增加</el-button>
+      </div>
+      <el-form v-model="addForm3.childData" ref="form3childData" :inline="true">
+        <div v-for="(item, index) in addForm3.childData" :key="index" style="margin-top: 10px; ">
+          <el-form-item
+            label="检查项"
+            :prop="'addForm3.childData.' + index + '.dicid'"
+          >
+            <treeselect v-model="item.diccode"  :options="options3" :clearable="true" :show-count="true" :disable-branch-nodes="true"  style="width: 350px" @input="getSelectList(index, item)"/>
+          </el-form-item>
+          <el-form-item
+            label="检查结果"
+            :prop="'addForm3.childData.' + index + '.result'"
+          >
+            <el-input v-model="item.result" placeholder="请输入检查结果"></el-input>
+          </el-form-item>
+          <el-form-item
+            label="检查人"
+            :prop="'addForm3.childData.' + index + '.checkUser'"
+          >
+            <el-input v-model="item.checkUser" placeholder="请输入检查人"></el-input>
+          </el-form-item>
+          <el-form-item>
+            <el-button type="danger" icon="el-icon-delete" circle></el-button>
+          </el-form-item>
+          <el-divider></el-divider>
+        </div>
       </el-form>
+      <div style="text-align: right;">
+        <el-button type="primary" @click="submitAddForm3('addForm3')">提交</el-button>
+        <el-button @click="cancelAdd">取消</el-button>
+      </div>
+    </el-dialog>
+    <el-dialog :visible.sync="showAdd4" title="附着验收" width="60%">
+      <el-form v-model="addForm4" ref="addForm4" label-width="200px">
+        <el-form-item label="安装单位验收意见" prop="opinionAz">
+          <el-input
+            type="textarea"
+            :rows="2"
+            placeholder="请输入内容"
+            v-model="addForm4.opinionAz">
+          </el-input>
+        </el-form-item>
+        <el-form-item label="安装单位验收人" prop="userAz">
+          <el-input placeholder="请输入安装单位验收人" v-model="addForm4.userAz"></el-input>
+        </el-form-item>
+        <el-form-item label="安装单位日期" prop="timeAz">
+          <el-date-picker
+            v-model="addForm4.timeAz"
+            type="date"
+            placeholder="选择日期时间">
+          </el-date-picker>
+        </el-form-item>
+        <el-form-item label="使用单位验收意见" prop="opinionSy">
+          <el-input
+            type="textarea"
+            :rows="2"
+            placeholder="请输入内容"
+            v-model="addForm4.opinionSy">
+          </el-input>
+        </el-form-item>
+        <el-form-item label="使用单位验收人" prop="userSy">
+          <el-input placeholder="请输入使用单位验收人" v-model="addForm4.userSy"></el-input>
+        </el-form-item>
+        <el-form-item label="使用单位日期" prop="timeSy">
+          <el-date-picker
+            v-model="addForm4.timeSy"
+            type="date"
+            placeholder="选择日期时间">
+          </el-date-picker>
+        </el-form-item>
+        <el-form-item label="产权单位验收意见" prop="opinionCq">
+          <el-input
+            type="textarea"
+            :rows="2"
+            placeholder="请输入内容"
+            v-model="addForm4.opinionCq">
+          </el-input>
+        </el-form-item>
+        <el-form-item label="产权单位验收人" prop="userCq">
+          <el-input placeholder="请输入产权单位验收人" v-model="addForm4.userCq"></el-input>
+        </el-form-item>
+        <el-form-item label="产权单位日期" prop="timeCq">
+          <el-date-picker
+            v-model="addForm4.timeCq"
+            type="date"
+            placeholder="选择日期时间">
+          </el-date-picker>
+        </el-form-item>
+        <el-form-item label="施工单位验收意见" prop="opinionSg">
+          <el-input
+            type="textarea"
+            :rows="2"
+            placeholder="请输入内容"
+            v-model="addForm4.opinionSg">
+          </el-input>
+        </el-form-item>
+        <el-form-item label="施工单位验收人" prop="userSg">
+          <el-input placeholder="请输入施工单位验收人" v-model="addForm4.userSg"></el-input>
+        </el-form-item>
+        <el-form-item label="施工单位日期" prop="timeSg">
+          <el-date-picker
+            v-model="addForm4.timeSg"
+            type="date"
+            placeholder="选择日期时间">
+          </el-date-picker>
+        </el-form-item>
+        <el-form-item label="监理单位验收意见" prop="opinionJl">
+          <el-input
+            type="textarea"
+            :rows="2"
+            placeholder="请输入内容"
+            v-model="addForm4.opinionJl">
+          </el-input>
+        </el-form-item>
+        <el-form-item label="监理单位验收人" prop="userJl">
+          <el-input placeholder="请输入监理单位验收人" v-model="addForm4.userJl"></el-input>
+        </el-form-item>
+        <el-form-item label="监理单位日期" prop="timeJl">
+          <el-date-picker
+            v-model="addForm4.timeJl"
+            type="date"
+            placeholder="选择日期时间">
+          </el-date-picker>
+        </el-form-item>
+      </el-form>
+      <div>
+        <span style="font-size: 18px; ">附着验收子项</span>
+        <el-button @click="addForm4childData" type="primary" icon="el-icon-plus" round style="margin-left: 20px; ">增加</el-button>
+      </div>
+      <el-form v-model="addForm4.childData" ref="form4childData" :inline="true">
+        <div v-for="(item, i) in addForm4.childData" :key="i" style="margin-top: 10px; ">
+          <el-form-item
+            label="检查项"
+            :prop="'addForm4.childData.' + i + '.dicid'"
+          >
+            <el-input v-model="item.dicid" placeholder="请输入检查结果"></el-input>
+          </el-form-item>
+          <el-form-item
+            label="检查结果"
+            :prop="'addForm4.childData.' + i + '.result'"
+          >
+            <el-input v-model="item.result" placeholder="请输入检查结果"></el-input>
+          </el-form-item>
+          <el-form-item
+            label="结论"
+            :prop="'addForm3.childData.' + i + '.remarks'"
+          >
+            <el-input v-model="item.remarks" placeholder="请输入结论"></el-input>
+          </el-form-item>
+          <el-form-item>
+            <el-button type="danger" icon="el-icon-delete" circle></el-button>
+          </el-form-item>
+          <el-divider></el-divider>
+        </div>
+      </el-form>
+      <div style="text-align: right;">
+        <el-button type="primary" @click="submitAddForm4('addForm4')">提交</el-button>
+        <el-button @click="cancelAdd">取消</el-button>
+      </div>
     </el-dialog>
   </div>
 </template>
@@ -1773,7 +1964,37 @@
           userJl: '',  // 监理单位验收人
           timeJl: null,  // 监理单位日期
           childData: []
-        }
+        },
+        form3rule: {
+          checkTime: [
+            { type: 'date', required: true, message: '请选择日期时间', trigger: 'change' },
+          ],
+          opinionAz: [
+            { required: true, message: '内容不能为空', trigger: 'blur' }
+          ],
+          userAz: [
+            { required: true, message: '内容不能为空', trigger: 'blur' }
+          ],
+          timeAz: [
+            { type: 'date', required: true, message: '请选择日期时间', trigger: 'change' }
+          ],
+          installUser: [
+            { required: true, message: '内容不能为空', trigger: 'blur' }
+          ],
+          installUserAqjg: [
+            { required: true, message: '内容不能为空', trigger: 'blur' }
+          ],
+          installUserZc: [
+            { required: true, message: '内容不能为空', trigger: 'blur' }
+          ],
+          installUserJzry: [
+            { required: true, message: '内容不能为空', trigger: 'blur' }
+          ],
+          writeTime: [
+            { type: 'date', required: true, message: '请选择日期', trigger: 'change' }
+          ]
+        },
+        form4rule: {},
       }
     },
     mounted() {
@@ -1946,7 +2167,6 @@
             format_row[j]["devid"] = rows[j].devid;
             format_row[j]["devName"] = rows[j].devName;
           }
-          console.log(format_row)
           this.fileTable = format_row;
         })
       },
@@ -2034,9 +2254,74 @@
       },
       checkDetail3(row) {
         this.showAdd3 = true;
+        this.addForm3.testid = row.id
       },
       checkDetail4(row) {
         this.showAdd4 = true;
+        this.addForm4.fuid = row.id
+      },
+      submitAddForm3(formName) {
+        // this.$refs[formName].validate((valid) => {
+        //   if (valid) {
+        console.log(JSON.stringify(this.addForm3));
+        //   } else {
+        //     console.log('error submit!!');
+        //     return false;
+        //   }
+        // });
+      },
+      submitAddForm4(formName) {
+        console.log(this.addForm4);
+      },
+      cancelAdd() {
+        this.showAdd3 = false
+        this.addForm3 = {
+          testid: null,
+          checkTime: null,
+          opinionAz: '',
+          userAz: '',
+          timeAz: null,
+          installUser: '',
+          installUserAqjg: '',
+          installUserZc: '',
+          installUserJzry: '',
+          writeTime: null,
+          childData: []
+        }
+        this.showAdd4 = false
+        this.addForm4 = {
+          fuid: null,  // 附着ID
+          opinionAz: '',  // 安装单位验收意见
+          userAz: '',  // 安装单位验收人
+          timeAz: null,  // 安装单位日期
+          opinionSy: '',  // 使用单位验收意见
+          userSy: '',  // 使用单位验收人
+          timeSy: null,  // 使用单位日期
+          opinionCq: '',  // 产权单位验收意见
+          userCq: '',  // 产权单位验收人
+          timeCq: null,  // 产权单位日期
+          opinionSg: '',  // 施工单位验收意见
+          userSg: '',  // 施工单位验收人
+          timeSg: null,  // 施工单位日期
+          opinionJl: '',  // 监理单位验收意见
+          userJl: '',  // 监理单位验收人
+          timeJl: null,  // 监理单位日期
+          childData: []
+        }
+      },
+      addForm3childData() {
+        this.addForm3.childData.push({
+          dicid: null,
+          result: '',
+          checkUser: ''
+        })
+      },
+      addForm4childData() {
+        this.addForm4.childData.push({
+          dicid: null,
+          result: '',
+          remarks: ''
+        })
       },
     }
   }
