@@ -160,7 +160,7 @@ export function inJackingPlusRecordCheck(data) {
   return request({
     url: 'device/jackingPlusRecordCheck/inJackingPlusRecordCheck',
     method: 'post',
-    data
+    params: data
   })
 }
 
@@ -168,7 +168,7 @@ export function absyncAttachRecordCheckData(data) {
   return request({
     url: 'device/attachRecordCheck/absyncAttachRecordCheckData',
     method: 'post',
-    data
+    params: data
   })
 }
 
