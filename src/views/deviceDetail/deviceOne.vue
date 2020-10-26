@@ -337,7 +337,7 @@
         </div>
       </el-col>
     </el-row>
-    <el-dialog :visible.sync="showUpload" title="新增信息" width="40%">
+    <el-dialog :visible.sync="showUpload" title="新增信息" width="60%">
       <div style="height: 55vh; overflow-y: scroll; ">
         <el-form :model="uploadInfo"  ref="uploadInfo" :rules="rules" label-width="1.5rem" v-show="tableShow === 'table1'">
 <!--          <el-form-item label="设备id" >-->
