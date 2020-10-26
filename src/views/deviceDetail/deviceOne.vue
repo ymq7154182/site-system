@@ -105,7 +105,7 @@
                 <el-table-column prop="opinionJl" label="监理单位意见" align="center" />
                 <el-table-column prop="userJl" label="监理单位项目经理签字" align="center" />
                 <el-table-column prop="timeJl" label="时间" align="center" width="100"/>
-                <el-table-column prop="reporttime" label="上报时间时间" align="center" />
+                <el-table-column prop="reporttime" label="上报时间时间" align="center" width="100"/>
                 <el-table-column prop="leftHeight" label="起升高度"  align="center"/>
                 <el-table-column prop="towerHeight" label="塔高"  align="center" />
                 <el-table-column prop="installHeigth" label="安装高度" align="center" />
@@ -150,11 +150,11 @@
                 <!--<el-table-column prop="maxLoad" label="新安装标准节" align="center" />-->
 <!--                <el-table-column prop="entid" label="企业id" align="center" />-->
 <!--                <el-table-column prop="useId" label="设备使用ID" align="center" />-->
-                <el-table-column prop="installtime" label="安装时间" align="center" />
+                <el-table-column prop="installtime" label="安装时间" align="center" width="100"/>
                 <!--<el-table-column prop="checkTime" label="顶升后高度" align="center" />-->
                 <!--<el-table-column prop="spacing" label="附着间距" align="center" />-->
-                <el-table-column prop="installUserZcs" label="监理单位审核日期" align="center" />
-                <el-table-column prop="reporttime" label="上报时间" align="center" />
+                <el-table-column prop="installUserZcs" label="监理单位审核日期" align="center" width="100"/>
+                <el-table-column prop="reporttime" label="上报时间" align="center" width="100"/>
                 <!--<el-table-column prop="maxCapacity" label="与建筑物水平中心距离" align="center" />-->
                 <!--<el-table-column prop="maxRange" label="原安装臂铰点（自由端）高度" align="center" />-->
                 <!--<el-table-column prop="checkUser" label="是否附着" align="center" />-->
@@ -163,7 +163,7 @@
                 <!--<el-table-column prop="checkContent" label="现场专业技术人员" align="center" />-->
                 <el-table-column prop="checkWriteTime" label="施工总承包单位审核意见" align="center" />
                 <el-table-column prop="installUserAqjg" label="监理单位审核意见" align="center" />
-                <el-table-column prop="installUser" label="施工总承包审核日期" align="center" />
+                <el-table-column prop="installUser" label="施工总承包审核日期" align="center" width="100"/>
                 <el-table-column label="顶升加节自检" align="center">
                   <template slot-scope="scope">
                     <el-button type="text" icon="el-icon-circle-check" @click="checkDetail3(scope.row)">自检</el-button>
@@ -207,10 +207,10 @@
                 <!--<el-table-column prop="maxLoad" label="新安装标准节" align="center" />-->
 <!--                <el-table-column prop="entid" label="企业id" align="center" />-->
 <!--                <el-table-column prop="useId" label="设备使用ID" align="center" />-->
-                <el-table-column prop="installtime" label="安装时间" align="center" />
+                <el-table-column prop="installtime" label="安装时间" align="center" width="100"/>
                 <el-table-column prop="checkTime" label="顶升后高度" align="center" />
                 <!--<el-table-column prop="spacing" label="附着间距" align="center" />-->
-                <el-table-column prop="installUserZcs" label="监理单位审核日期" align="center" />
+                <el-table-column prop="installUserZcs" label="监理单位审核日期" align="center" width="100"/>
                 <!--<el-table-column prop="reporttime" label="上报时间" align="center" />-->
                 <!--<el-table-column prop="maxCapacity" label="与建筑物水平中心距离" align="center" />-->
                 <!--<el-table-column prop="maxRange" label="原安装臂铰点（自由端）高度" align="center" />-->
@@ -220,7 +220,7 @@
                 <!--<el-table-column prop="checkContent" label="现场专业技术人员" align="center" />-->
                 <!--<el-table-column prop="checkWriteTime" label="施工总承包单位审核意见" align="center" />-->
                 <el-table-column prop="installUserAqjg" label="监理单位审核意见" align="center" />
-                <el-table-column prop="installUser" label="施工总承包审核日期" align="center" />
+                <el-table-column prop="installUser" label="施工总承包审核日期" align="center" width="100"/>
                 <el-table-column label="附着验收" align="center">
                   <template slot-scope="scope">
                     <el-button type="text" icon="el-icon-circle-check" @click="checkDetail4(scope.row)">验收</el-button>
@@ -264,17 +264,17 @@
                 <!--<el-table-column prop="maxLoad" label="新安装标准节" align="center" />-->
 <!--                <el-table-column prop="entid" label="企业id" align="center" />-->
 <!--                <el-table-column prop="useId" label="设备使用ID" align="center" />-->
-                <el-table-column prop="checkTime" label="检查时间" align="center" />
+                <el-table-column prop="checkTime" label="检查时间" align="center" width="100"/>
                 <el-table-column prop="maxCapacity" label="最大起重量" align="center" />
                 <el-table-column prop="maxRange" label="幅度" align="center" />
                 <el-table-column prop="installHeigth" label="安装高度" align="center" />
                 <el-table-column prop="channels" label="附着道数" align="center" />
                 <!--<el-table-column prop="checkResult" label="与建筑物水平中心距离" align="center" />-->
                 <!--<el-table-column prop="maxRange" label="检查结果代号说明" align="center" />-->
-                <el-table-column prop="userTime" label="使用单位填写时间" align="center" />
+                <el-table-column prop="userTime" label="使用单位填写时间" align="center" width="100"/>
                 <el-table-column prop="checkUser" label="检查人员" align="center" />
                 <el-table-column prop="conclusion" label="结论" align="center" />
-                <el-table-column prop="reporttime" label="上报时间" align="center" />
+                <el-table-column prop="reporttime" label="上报时间" align="center" width="100"/>
                 <el-table-column label="查看详情" align="center">
                   <template slot-scope="scope">
                     <el-button type="text" icon="el-icon-view" @click="viewDetail5(scope.row)">查看</el-button>
@@ -307,15 +307,15 @@
 <!--                <el-table-column prop="useId" label="使用id" />-->
 <!--                <el-table-column prop="userid" label="当前登录人id" />-->
                 <el-table-column type="index" label="序号"  align="center"/>
-                <el-table-column prop="weibaotime" label="维保时间" />
+                <el-table-column prop="weibaotime" label="维保时间" width="100"/>
                 <el-table-column prop="maxcapacity" label="运转台时" />
                 <el-table-column prop="maxrange" label="更换主要零部件" />
                 <!-- <el-table-column prop="leftheight" label="维管负责人" />
                 <el-table-column prop="towerheight" label="维保人员" width="150" align="center" />
                 <el-table-column prop="installheigth" label="维修（保养）内容" align="center" /> -->
                 <el-table-column prop="installuseraqjg" label="监理单位审核意见" align="center" />
-                <el-table-column prop="installuserzc" label="监理单位审核日期" align="center" />
-                <el-table-column prop="reporttime" label="上报时间" align="center" />
+                <el-table-column prop="installuserzc" label="监理单位审核日期" align="center" width="100"/>
+                <el-table-column prop="reporttime" label="上报时间" align="center" width="100"/>
                 <el-table-column label="查看详情" align="center">
                   <template slot-scope="scope">
                     <el-button type="text" icon="el-icon-view" @click="viewDetail6(scope.row)">查看</el-button>
