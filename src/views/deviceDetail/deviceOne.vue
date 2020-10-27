@@ -636,6 +636,7 @@
           </el-form-item>
         </el-form>
         <el-form :model="uploadInfo3" ref="uploadInfo3" :rules="rules"  label-width="1.5rem" v-show="tableShow === 'table3'">
+
 <!--          <el-form-item label="设备id" >-->
 <!--            <el-input v-model="uploadInfo3.devid" style="width: 50%" placeholder="请输入设备id"></el-input>-->
 <!--          </el-form-item>-->
@@ -645,13 +646,24 @@
 <!--          <el-form-item label="当前登录人id" >-->
 <!--            <el-input v-model="uploadInfo3.userid" style="width: 50%" placeholder="请输入当前登录人id"></el-input>-->
 <!--          </el-form-item>-->
-          <el-form-item label="施工单位负责人"  prop="userid">
-            <el-select v-model="uploadInfo3.userid" placeholder="请选择施工单位负责人" style="width: 50%">
+          <el-form-item label="设备编号" prop="selectName">
+            <el-select v-model="table3select" style="width: 50%" @change="table3UseId">
               <el-option
-                v-for="item in userOptions"
-                :key="item.guid"
+                v-for="(item, index) in idsList"
+                :key="index"
+                :label="`${item.devId}-${item.devName}`"
+                :value="index"
+              >
+              </el-option>
+            </el-select>
+          </el-form-item>
+          <el-form-item label="施工单位负责人"  prop="selectUser">
+            <el-select v-model="table3entSelect" placeholder="请选择施工单位负责人" @change="table3EntId" style="width: 50%">
+              <el-option
+                v-for="(item, index) in userOptions"
+                :key="index"
                 :label="item.pname"
-                :value="item.guid">
+                :value="index">
               </el-option>
             </el-select>
           </el-form-item>
@@ -667,12 +679,12 @@
           <el-form-item label="新安装标准节" prop="maxLoad">
             <el-input v-model="uploadInfo3.maxLoad" style="width: 50%" placeholder="请输入新安装标准节"></el-input>
           </el-form-item>
-          <el-form-item label="企业id" prop="entid">
-            <el-input v-model="uploadInfo3.entid" style="width: 50%" placeholder="请输入企业id" type="textarea"></el-input>
-          </el-form-item>
-          <el-form-item label="设备使用ID" prop="useId">
-            <el-input v-model="uploadInfo3.useId" style="width: 50%" placeholder="请输入内容设备使用ID"></el-input>
-          </el-form-item>
+<!--          <el-form-item label="企业id" prop="entid">-->
+<!--            <el-input v-model="uploadInfo3.entid" style="width: 50%" placeholder="请输入企业id" type="textarea"></el-input>-->
+<!--          </el-form-item>-->
+<!--          <el-form-item label="设备使用ID" prop="useId">-->
+<!--            <el-input v-model="uploadInfo3.useId" style="width: 50%" placeholder="请输入内容设备使用ID"></el-input>-->
+<!--          </el-form-item>-->
           <el-form-item label="安装时间" prop="installtime">
             <el-date-picker v-model="uploadInfo3.installtime" align="right" type="date" placeholder="选择日期" :picker-options="pickerOptions" value-format="yyyy-MM-dd" style="width: 50%; " />
           </el-form-item>
@@ -727,15 +739,29 @@
                 <el-col :span="12">
                   <el-form-item
                     label-width="100px"
-                    label="人员id"
-                    :prop="'uploadInfo3.childData.' + index + '.personid'"
-                    :rules="{
-                      required: true, message: '人员id', trigger: 'blur'
-                      }"
+                    label="人员列表"
                   >
-                    <!--<treeselect v-model="item.dicid"  :options="options" :clearable="true" :show-count="true" :disable-branch-nodes="true"  style="width: 200px"/>-->
-                    <el-input v-model="item.personid"></el-input>
+                    <el-select v-model="selectValue3[index].select" placeholder="请选择" @change="selectPeople3(index)">
+                      <el-option
+                        v-for="(item, i) in peopleDetail3"
+                        :key="index"
+                        :label="`${item.pname}-${item.guid}`"
+                        :value="i"
+                      >
+                      </el-option>
+                    </el-select>
                   </el-form-item>
+<!--                  <el-form-item-->
+<!--                    label-width="100px"-->
+<!--                    label="人员id"-->
+<!--                    :prop="'uploadInfo3.childData.' + index + '.personid'"-->
+<!--                    :rules="{-->
+<!--                      required: true, message: '人员id', trigger: 'blur'-->
+<!--                    }"-->
+<!--                  >-->
+<!--                    &lt;!&ndash;<treeselect v-model="item.dicid"  :options="options" :clearable="true" :show-count="true" :disable-branch-nodes="true"  style="width: 200px"/>&ndash;&gt;-->
+<!--                    <el-input v-model="item.personid"></el-input>-->
+<!--                  </el-form-item>-->
                 </el-col>
                 <el-col :span="12">
                   <el-form-item
@@ -744,7 +770,7 @@
                     :prop="'uploadInfo3.childData.' + index + '.name'"
                     :rules="{required: true, message: '姓名', trigger: 'blur'}"
                   >
-                    <el-input v-model="item.name"  placeholder="请输入内容"></el-input>
+                    <el-input v-model="item.name"  placeholder="请输入内容" disabled></el-input>
                   </el-form-item>
                 </el-col>
               </el-row>
@@ -758,7 +784,7 @@
               required: true, message: '作业工种', trigger: 'blur'
               }"
                   >
-                    <el-input v-model="item.pspec" placeholder="请输入内容"></el-input>
+                    <el-input v-model="item.pspec" placeholder="请输入内容" disabled></el-input>
                   </el-form-item>
                 </el-col>
                 <el-col :span="12">
@@ -770,7 +796,7 @@
               required: true, message: '身份证', trigger: 'blur'
               }"
                   >
-                    <el-input v-model="item.pcode" placeholder="请输入内容"></el-input>
+                    <el-input v-model="item.pcode" placeholder="请输入内容" disabled></el-input>
                   </el-form-item>
                 </el-col>
               </el-row>
@@ -784,7 +810,7 @@
               required: true, message: '作业证号', trigger: 'blur'
               }"
                   >
-                    <el-input v-model="item.qualifiCode" placeholder="请输入内容"></el-input>
+                    <el-input v-model="item.qualifiCode" placeholder="请输入内容" disabled></el-input>
                   </el-form-item>
                 </el-col>
                 <el-col :span="12">
@@ -822,13 +848,24 @@
 <!--          <el-form-item label="当前登录人id" >-->
 <!--            <el-input v-model="uploadInfo4.userid" style="width: 50%" placeholder="请输入当前登录人id"></el-input>-->
 <!--          </el-form-item>-->
-          <el-form-item label="施工单位负责人" prop="userid">
-            <el-select v-model="uploadInfo4.userid" placeholder="请选择施工单位负责人" style="width: 50%">
+          <el-form-item label="设备名称" prop="selectName">
+            <el-select v-model="table4select" style="width: 50%" @change="table4UseId">
               <el-option
-                v-for="item in userOptions"
-                :key="item.guid"
+                v-for="(item, index) in idsList"
+                :key="index"
+                :label="`${item.devId}-${item.devName}`"
+                :value="index"
+              >
+              </el-option>
+            </el-select>
+          </el-form-item>
+          <el-form-item label="施工单位负责人"  prop="selectUser">
+            <el-select v-model="table4entSelect" placeholder="请选择施工单位负责人" @change="table4EntId" style="width: 50%">
+              <el-option
+                v-for="(item, index) in userOptions"
+                :key="index"
                 :label="item.pname"
-                :value="item.guid">
+                :value="index">
               </el-option>
             </el-select>
           </el-form-item>
@@ -844,12 +881,12 @@
           <el-form-item label="新安装标准节" prop="maxLoad">
             <el-input v-model="uploadInfo4.maxLoad" style="width: 50%" placeholder="请输入新安装标准节"></el-input>
           </el-form-item>
-          <el-form-item label="企业id" prop="entid">
-            <el-input v-model="uploadInfo4.entid" style="width: 50%" placeholder="请输入企业id" type="textarea"></el-input>
-          </el-form-item>
-          <el-form-item label="设备使用ID" prop="useId">
-            <el-input v-model="uploadInfo4.useId" style="width: 50%" placeholder="请输入内容设备使用ID"></el-input>
-          </el-form-item>
+<!--          <el-form-item label="企业id" prop="entid">-->
+<!--            <el-input v-model="uploadInfo4.entid" style="width: 50%" placeholder="请输入企业id" type="textarea"></el-input>-->
+<!--          </el-form-item>-->
+<!--          <el-form-item label="设备使用ID" prop="useId">-->
+<!--            <el-input v-model="uploadInfo4.useId" style="width: 50%" placeholder="请输入内容设备使用ID"></el-input>-->
+<!--          </el-form-item>-->
           <el-form-item label="安装时间" prop="installtime">
             <el-date-picker v-model="uploadInfo4.installtime" align="right" type="date" placeholder="选择日期" :picker-options="pickerOptions" value-format="yyyy-MM-dd" style="width: 50%; " />
           </el-form-item>
@@ -904,15 +941,29 @@
                 <el-col :span="12">
                   <el-form-item
                     label-width="100px"
-                    label="人员id"
-                    :prop="'uploadInfo4.childData.' + index + '.personid'"
-                    :rules="{
-                      required: true, message: '人员id', trigger: 'blur'
-                      }"
+                    label="人员列表"
                   >
-                    <!--<treeselect v-model="item.dicid"  :options="options" :clearable="true" :show-count="true" :disable-branch-nodes="true"  style="width: 200px"/>-->
-                    <el-input v-model="item.personid"></el-input>
+                    <el-select v-model="selectValue4[index].select" placeholder="请选择" @change="selectPeople4(index)">
+                      <el-option
+                        v-for="(item, i) in peopleDetail4"
+                        :key="index"
+                        :label="`${item.pname}-${item.guid}`"
+                        :value="i"
+                      >
+                      </el-option>
+                    </el-select>
                   </el-form-item>
+<!--                  <el-form-item-->
+<!--                    label-width="100px"-->
+<!--                    label="人员id"-->
+<!--                    :prop="'uploadInfo4.childData.' + index + '.personid'"-->
+<!--                    :rules="{-->
+<!--                      required: true, message: '人员id', trigger: 'blur'-->
+<!--                      }"-->
+<!--                  >-->
+<!--                    &lt;!&ndash;<treeselect v-model="item.dicid"  :options="options" :clearable="true" :show-count="true" :disable-branch-nodes="true"  style="width: 200px"/>&ndash;&gt;-->
+<!--                    <el-input v-model="item.personid"></el-input>-->
+<!--                  </el-form-item>-->
                 </el-col>
                 <el-col :span="12">
                   <el-form-item
@@ -921,7 +972,7 @@
                     :prop="'uploadInfo4.childData.' + index + '.name'"
                     :rules="{required: true, message: '姓名', trigger: 'blur'}"
                   >
-                    <el-input v-model="item.name"  placeholder="请输入内容"></el-input>
+                    <el-input v-model="item.name"  placeholder="请输入内容" disabled></el-input>
                   </el-form-item>
                 </el-col>
               </el-row>
@@ -935,7 +986,7 @@
               required: true, message: '作业工种', trigger: 'blur'
               }"
                   >
-                    <el-input v-model="item.pspec" placeholder="请输入内容"></el-input>
+                    <el-input v-model="item.pspec" placeholder="请输入内容" disabled></el-input>
                   </el-form-item>
                 </el-col>
                 <el-col :span="12">
@@ -947,7 +998,7 @@
               required: true, message: '身份证', trigger: 'blur'
               }"
                   >
-                    <el-input v-model="item.pcode" placeholder="请输入内容"></el-input>
+                    <el-input v-model="item.pcode" placeholder="请输入内容" disabled></el-input>
                   </el-form-item>
                 </el-col>
               </el-row>
@@ -961,7 +1012,7 @@
               required: true, message: '作业证号', trigger: 'blur'
               }"
                   >
-                    <el-input v-model="item.qualifiCode" placeholder="请输入内容"></el-input>
+                    <el-input v-model="item.qualifiCode" placeholder="请输入内容" disabled></el-input>
                   </el-form-item>
                 </el-col>
                 <el-col :span="12">
@@ -996,13 +1047,24 @@
 <!--          <el-form-item label="当前登录人id" >-->
 <!--            <el-input v-model="uploadInfo5.userid" style="width: 50%" placeholder="请输入当前登录人id"></el-input>-->
 <!--          </el-form-item>-->
-          <el-form-item label="施工单位负责人"  prop="userid">
-            <el-select v-model="uploadInfo5.userid" placeholder="请选择施工单位负责人" style="width: 50%">
+          <el-form-item label="设备名称" prop="selectName">
+            <el-select v-model="table5select" style="width: 50%" @change="table5UseId">
               <el-option
-                v-for="item in userOptions"
-                :key="item.guid"
+                v-for="(item, index) in idsList"
+                :key="index"
+                :label="`${item.devId}-${item.devName}`"
+                :value="index"
+              >
+              </el-option>
+            </el-select>
+          </el-form-item>
+          <el-form-item label="施工单位负责人"  prop="selectUser">
+            <el-select v-model="table5entSelect" placeholder="请选择施工单位负责人" @change="table5EntId" style="width: 50%">
+              <el-option
+                v-for="(item, index) in userOptions"
+                :key="index"
                 :label="item.pname"
-                :value="item.guid">
+                :value="index">
               </el-option>
             </el-select>
           </el-form-item>
@@ -2217,6 +2279,7 @@
   // import { getSysProData } from "@/api/qualityControl"
   import axios from 'axios'
   import {absyncAttachRecordCheckData, inJackingPlusRecordCheck} from "../../api/deviceManage";
+
   export default {
     components: { Treeselect },
     name: 'deviceOne',
@@ -2233,7 +2296,6 @@
         tableShow: 'table1',
         currentPage: 1,
         pageSize: 10,
-        siteId: '',
         showUpload: false,
         userOptions: [],
         uploadInfo: {
@@ -2471,7 +2533,17 @@
             timeJl: null,  // 监理单位日期
           },
           childData: []
-        }
+        },
+        table3select: null,
+        table4select: null,
+        table5select: null,
+        table3entSelect: null,
+        table4entSelect: null,
+        table5entSelect: null,
+        peopleDetail3: null,
+        peopleDetail4: null,
+        selectValue3: [],
+        selectValue4: []
       }
     },
     mounted() {
@@ -2479,7 +2551,6 @@
       var id = localStorage.getItem("siteId")
       this.siteId = id
       this.getAllData()
-
       this.devName = this.$route.params.devName
       this.getProidBySiteId()
     },
@@ -2512,12 +2583,45 @@
         })
       },
       getPeople() {
-        var url = 'http://211.90.39.2:39912/newAj/device/queryPerson?entid=' + this.entid
+        var url = 'http://211.90.39.2:39912/WinsdomSite/Project/winsdomSite_QueryProjectPerson?proid=' + this.entid
         axios.get(url).then((res) => {
           if (res.data.code === 200) {
             this.userOptions = res.data.data
           } else {
             this.userOptions = []
+          }
+        })
+      },
+      getPeopleDetail3(entid) {
+        var url = 'http://211.90.39.2:39912/newAj/device/queryPerson?entid=' + entid
+        axios.get(url).then(res => {
+          if (res.data.code === 200) {
+            this.peopleDetail3 = res.data.data
+          } else {
+            this.$message.error(res.data.msg)
+            return false
+          }
+        })
+      },
+      getPeopleDetail4(entid) {
+        var url = 'http://211.90.39.2:39912/newAj/device/queryPerson?entid=' + entid
+        axios.get(url).then(res => {
+          if (res.data.code === 200) {
+            this.peopleDetail4 = res.data.data
+          } else {
+            this.$message.error(res.data.msg)
+            return false
+          }
+        })
+      },
+      getPeopleDetail5(entid) {
+        var url = 'http://211.90.39.2:39912/newAj/device/queryPerson?entid=' + entid
+        axios.get(url).then(res => {
+          if (res.data.code === 200) {
+            this.peopleDetail5 = res.data.data
+          } else {
+            this.$message.error(res.data.msg)
+            return false
           }
         })
       },
@@ -2652,15 +2756,35 @@
       },
       getadddingqi() {
         var data = this.uploadInfo5
-        adddingqi(data).then((res) => {
-          if(res.data.code === 200) {
-            this.$message.success(res.data.msg)
-            this.getdingqi()
-            this.showUpload = false
+        if (this.uploadInfo5.devid) {
+          if (this.uploadInfo5.entid) {
+            if (this.uploadInfo5.proid) {
+              if (this.uploadInfo5.useId) {
+                adddingqi(data).then((res) => {
+                  if(res.data.code === 200) {
+                    this.$message.success(res.data.msg)
+                    this.getdingqi()
+                    this.showUpload = false
+                  } else {
+                    this.$message.error(res.data.msg)
+                  }
+                })
+              } else {
+                this.$message.error('设备使用ID不能为空');
+                return false;
+              }
+            } else {
+              this.$message.error('项目ID不能为空');
+              return false;
+            }
           } else {
-            this.$message.error(res.data.msg)
+            this.$message.error('企业ID不能为空');
+            return false;
           }
-        })
+        } else {
+          this.$message.error('设备ID不能为空');
+          return false;
+        }
       },
       getdingsheng() {
         dingsheng(this.uploadInfo3.proid).then((res) => {
@@ -2677,16 +2801,37 @@
         })
       },
       getadddingsheng() {
-
-        adddingsheng(this.uploadInfo3).then((res) => {
-          if(res.data.code === 200) {
-            this.$message.success(res.data.msg)
-            this.getdingsheng()
-            this.showUpload = false
+        if (this.uploadInfo3.devid) {
+          if (this.uploadInfo3.entid) {
+            if (this.uploadInfo3.proid) {
+              if (this.uploadInfo3.useId) {
+                adddingsheng(this.uploadInfo3).then((res) => {
+                  if(res.data.code === 200) {
+                    this.$message.success(res.data.msg)
+                    this.getdingsheng()
+                    this.showUpload = false
+                  } else {
+                    this.$message.error(res.data.msg);
+                    return false;
+                  }
+                })
+              } else {
+                this.$message.error('设备使用ID不能为空');
+                return false;
+              }
+            } else {
+              this.$message.error('项目ID不能为空');
+              return false;
+            }
           } else {
-            this.$message.error(res.data.msg)
+            this.$message.error('企业ID不能为空');
+            return false;
           }
-        })
+        } else {
+          this.$message.error('设备ID不能为空');
+          return false;
+        }
+
       },
       getfuzhuo() {
         fuzhuo(this.uploadInfo4.proid).then((res) => {
@@ -2695,15 +2840,35 @@
       },
       getaddfuzhuo() {
         var data = this.uploadInfo4
-        addfuzhuo(data).then((res) => {
-          if(res.data.code === 200) {
-            this.$message.success(res.data.msg)
-            this.getfuzhuo()
-            this.showUpload = false
+        if (this.uploadInfo4.devid) {
+          if (this.uploadInfo4.entid) {
+            if (this.uploadInfo4.proid) {
+              if (this.uploadInfo4.useId) {
+                addfuzhuo(data).then((res) => {
+                  if(res.data.code === 200) {
+                    this.$message.success(res.data.msg)
+                    this.getfuzhuo()
+                    this.showUpload = false
+                  } else {
+                    this.$message.error(res.data.msg)
+                  }
+                })
+              } else {
+                this.$message.error('设备使用ID不能为空');
+                return false;
+              }
+            } else {
+              this.$message.error('项目ID不能为空');
+              return false;
+            }
           } else {
-            this.$message.error(res.data.msg)
+            this.$message.error('企业ID不能为空');
+            return false;
           }
-        })
+        } else {
+          this.$message.error('设备ID不能为空');
+          return false;
+        }
       },
       resetForm(formName) {
         this.$refs[formName].resetFields();
@@ -2796,10 +2961,19 @@
         this.uploadInfo3.childData.push({
           personid: null, // 人员ID
           name: '', // 姓名
-          pspec:'',  // 作业工种
-          pcode:'',  // 身份证号
-          qualifiCode:''  // 作业证号
+          pspec: '',  // 作业工种
+          pcode: '',  // 身份证号
+          qualifiCode: ''  // 作业证号
         })
+        this.selectValue3.push({select: ''})
+        if (this.uploadInfo3.entid !== '') {
+          this.getPeopleDetail3(this.uploadInfo3.entid);
+        } else {
+          this.$message({
+            type: 'warning',
+            message: '请先选择施工单位负责人'
+          })
+        }
         // this.typeCode = 'AJB_DEV_INSTALLATION_RECORD'
         // this.getTreeselect()
       },
@@ -2816,7 +2990,16 @@
           pspec:'',  // 作业工种
           pcode:'',  // 身份证号
           qualifiCode:''  // 作业证号
-        })
+        });
+        this.selectValue4.push({select: ''})
+        if (this.uploadInfo4.entid !== '') {
+          this.getPeopleDetail4(this.uploadInfo4.entid);
+        } else {
+          this.$message({
+            type: 'warning',
+            message: '请先选择施工单位负责人'
+          })
+        }
       },
       deleteItem4(item, index) {
         this.uploadInfo4.childData.splice(index, 1)
@@ -2935,7 +3118,62 @@
       deleteChildData4 (item, index) {
         this.addForm4.childData.splice(index, 1)
       },
-
+      table3UseId() {
+        this.uploadInfo3.devid = this.idsList[this.table3select].devId
+        this.uploadInfo3.useId = this.idsList[this.table3select].useId
+      },
+      table3EntId() {
+        this.uploadInfo3.entid = this.userOptions[this.table3entSelect].entid
+        this.uploadInfo3.userid = this.userOptions[this.table3entSelect].guid
+        if (this.uploadInfo3.entid !== '') {
+          this.getPeopleDetail3(this.uploadInfo3.entid);
+        } else {
+          this.$message({
+            type: 'warning',
+            message: '请先选择施工单位负责人'
+          })
+        }
+      },
+      table4UseId() {
+        this.uploadInfo4.devid = this.idsList[this.table4select].devId
+        this.uploadInfo4.useId = this.idsList[this.table4select].useId
+      },
+      table4EntId() {
+        this.uploadInfo4.entid = this.userOptions[this.table4entSelect].entid
+        this.uploadInfo4.userid = this.userOptions[this.table4entSelect].guid
+        if (this.uploadInfo4.entid !== '') {
+          this.getPeopleDetail4(this.uploadInfo4.entid);
+        } else {
+          this.$message({
+            type: 'warning',
+            message: '请先选择施工单位负责人'
+          })
+        }
+      },
+      table5UseId() {
+        this.uploadInfo5.devid = this.idsList[this.table5select].devId
+        this.uploadInfo5.useId = this.idsList[this.table5select].useId
+      },
+      table5EntId() {
+        this.uploadInfo5.entid = this.userOptions[this.table5entSelect].entid
+        this.uploadInfo5.userid = this.userOptions[this.table5entSelect].guid
+      },
+      selectPeople3(index) {
+        let currentPeople = this.peopleDetail3[this.selectValue3[index].select]
+        this.uploadInfo3.childData[index].name = currentPeople.pname
+        this.uploadInfo3.childData[index].personid = currentPeople.guid
+        this.uploadInfo3.childData[index].pspec = currentPeople.pspec
+        this.uploadInfo3.childData[index].pcode = currentPeople.pcode
+        this.uploadInfo3.childData[index].qualifiCode = currentPeople.pcode
+      },
+      selectPeople4(index) {
+        let currentPeople = this.peopleDetail4[this.selectValue4[index].select]
+        this.uploadInfo4.childData[index].name = currentPeople.pname
+        this.uploadInfo4.childData[index].personid = currentPeople.guid
+        this.uploadInfo4.childData[index].pspec = currentPeople.pspec
+        this.uploadInfo4.childData[index].pcode = currentPeople.pcode
+        this.uploadInfo4.childData[index].qualifiCode = currentPeople.pcode
+      },
 
       // 通过设备编号获取信息
       getProidBySiteId() {
@@ -2955,9 +3193,8 @@
           deviceName: this.devName
         }
         getIds(params).then((res) => {
-          this.idsList = res.data
+          this.idsList = res.data.data.devData
         })
-
       }
 
     }

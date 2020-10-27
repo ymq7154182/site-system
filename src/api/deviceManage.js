@@ -227,5 +227,3 @@ export function getIds(data) {
     params: data
   })
 }
-
-
