@@ -352,6 +352,17 @@
 <!--          <el-form-item label="安装id" >-->
 <!--            <el-input v-model="uploadInfo.setupId" style="width: 50%" placeholder="请输入安装id"></el-input>-->
 <!--          </el-form-item>-->
+           <el-form-item label="设备编号" prop="userid">
+            <el-select v-model="uploadInfo.userid" placeholder="请选择施工单位负责人" style="width: 50%">
+              <el-option
+                v-for="item in idsList"
+                :key="item.guid"
+                :label="item.pname"
+                :value="item.guid">
+              </el-option>
+            </el-select>
+            <!--<el-input v-model="uploadInfo.userid" style="width: 50%" placeholder="请选择施工单位负责人"></el-input>-->
+          </el-form-item>
           <el-form-item label="施工单位负责人" prop="userid">
             <el-select v-model="uploadInfo.userid" placeholder="请选择施工单位负责人" style="width: 50%">
               <el-option
@@ -2468,7 +2479,9 @@
       var id = localStorage.getItem("siteId")
       this.siteId = id
       this.getAllData()
+
       this.devName = this.$route.params.devName
+      this.getProidBySiteId()
     },
     methods: {
       getAllData() {
@@ -2719,6 +2732,7 @@
       },
       showAdd() {
         this.showUpload = true
+        this.getKindsId()
       },
       viewDetail1(row) {
         this.detail1 = row;

@@ -472,13 +472,13 @@
                 {{ chosen }}<i class="el-icon-arrow-down el-icon--right"></i>
               </span>
                       <el-dropdown-menu  style="background-color: rgba(255,255,255,0.5)" slot="dropdown">
-                        <el-dropdown-item v-for="(index, item) in taDiaoList" v-text="index" :command="index"></el-dropdown-item>
-                        <!-- <el-dropdown-item command="所有设备">所有设备</el-dropdown-item>
+                        <!-- <el-dropdown-item v-for="(index, item) in taDiaoList" v-text="index" :command="index"></el-dropdown-item> -->
+                        <el-dropdown-item command="所有设备">所有设备</el-dropdown-item>
                         <el-dropdown-item command="1号塔式起重机">1号塔式起重机</el-dropdown-item>
                         <el-dropdown-item command="2号塔式起重机">2号塔式起重机</el-dropdown-item>
                         <el-dropdown-item command="3号塔式起重机">3号塔式起重机</el-dropdown-item>
                         <el-dropdown-item command="4号塔式起重机">4号塔式起重机</el-dropdown-item>
-                        <el-dropdown-item command="5号塔式起重机">5号塔式起重机</el-dropdown-item> -->
+                        <el-dropdown-item command="5号塔式起重机">5号塔式起重机</el-dropdown-item>
                       </el-dropdown-menu>
                     </el-dropdown>
                   </div>
