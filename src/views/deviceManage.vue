@@ -494,7 +494,7 @@
               <el-col :span="8" style="padding: 0 0.5vw; ">
                 <div style="background-color: rgba(0, 36, 78, 0.5); height: 53vh; width: 100%; ">
                   <div class="border-top-left"></div>
-                  <div class="box-title">报警记录</div>
+                  <div class="box-title">预警记录</div>
                   <div style="float:right;margin-top: -32px; margin-right:10px;">
                     <el-button type="text" style="text-decoration: underline; " @click="gotoCheckRecord">历史数据</el-button>
                   </div>
@@ -1454,7 +1454,7 @@
               <el-col :span="8" style="padding: 0 0.5vw; ">
                 <div style="background-color: rgba(0, 36, 78, 0.5); height: 53vh; width: 100%; ">
                   <div class="border-top-left"></div>
-                  <div class="box-title">报警记录</div>
+                  <div class="box-title">预警记录</div>
                   <div style="float:right;margin-top: -32px; margin-right:10px;">
                     <el-button type="text" style="text-decoration: underline; " @click="gotoCheckRecord">历史数据</el-button>
                   </div>
@@ -1479,21 +1479,29 @@
 </template>
 
 <script>
+import { getHistroy } from "@/api/deviceManage";
 import echarts from 'echarts';
-require('echarts/theme/macarons') // echarts theme
+require('echarts/theme/macarons'); // echarts theme
+
+
 
 export default {
   created() {
 
   },
   mounted() {
+    this.siteId = localStorage.getItem('siteId')
     this.$store.dispatch('changeMsg', '设备管理');
     this.initAlarmType()
     this.initAlarmTrend()
 
+    this.getDevHistory()
+    this.getDevHistory2()
+
   },
   data() {
     return {
+      siteId: '',
       myChart100: '',
       myChart10: '',
       alarmTypeChart: null,
@@ -1524,26 +1532,26 @@ export default {
         showOriginValue: true
       },
       configTable: {
-        header: ['设备名称', '报警时间', '报警类型', '处理情况', '报警数值'],
+        header: ['设备编号', '报警时间', '报警类型', '驾驶人'],
         headerHeight: 45,
         data: [
-          ['1号塔式起重机', '2019-10-13 13:14:01', '高度限位', '<span style="color: #67c23a; ">已处理</span>', 53.5],
-          ['2号塔式起重机', '2019-10-13 14:14:01', '幅度限位', '<span style="color: #f56c6c; ">红色报警</span>', 54.5],
-          ['3号塔式起重机', '2019-10-15 15:14:01', '风速限位', '<span style="color: #67c23a; ">已处理</span>', 57.5],
-          ['4号塔式起重机', '2020-01-13 03:14:01', '角度限位', '<span style="color: #e6a23c; ">黄色报警</span>', 123.5],
-          ['2号塔式起重机', '2019-01-01 08:14:01', '高度限位', '<span style="color: #67c23a; ">已处理</span>', 56.5],
-          ['5号塔式起重机', '2019-12-30 10:14:01', '幅度限位', '<span style="color: #f56c6c; ">红色报警</span>', 87.5],
-          ['3号塔式起重机', '2020-01-15 12:14:01', '风速限位', '<span style="color: #f56c6c; ">红色报警</span>', 97],
-          ['1号塔式起重机', '2020-05-07 03:14:01', '角度限位', '<span style="color: #e6a23c; ">黄色报警</span>', 123.5],
+          // ['1号塔式起重机', '2019-10-13 13:14:01', '高度限位', '<span style="color: #67c23a; ">已处理</span>', 53.5],
+          // ['2号塔式起重机', '2019-10-13 14:14:01', '幅度限位', '<span style="color: #f56c6c; ">红色报警</span>', 54.5],
+          // ['3号塔式起重机', '2019-10-15 15:14:01', '风速限位', '<span style="color: #67c23a; ">已处理</span>', 57.5],
+          // ['4号塔式起重机', '2020-01-13 03:14:01', '角度限位', '<span style="color: #e6a23c; ">黄色报警</span>', 123.5],
+          // ['2号塔式起重机', '2019-01-01 08:14:01', '高度限位', '<span style="color: #67c23a; ">已处理</span>', 56.5],
+          // ['5号塔式起重机', '2019-12-30 10:14:01', '幅度限位', '<span style="color: #f56c6c; ">红色报警</span>', 87.5],
+          // ['3号塔式起重机', '2020-01-15 12:14:01', '风速限位', '<span style="color: #f56c6c; ">红色报警</span>', 97],
+          // ['1号塔式起重机', '2020-05-07 03:14:01', '角度限位', '<span style="color: #e6a23c; ">黄色报警</span>', 123.5],
         ],
         rowNum: 7,
         align: ['center', 'center', 'center', 'center', 'center'],
         headerBGC: '',
         evenRowBGC: '',
-        columnWidth: [ , 200]
+        columnWidth: [80, 300, 200, 200]
       },
       configTable2: {
-        header: ['设备名称', '报警时间', '报警类型', '处理情况', '报警数值'],
+        header: ['设备编号', '报警时间', '报警类型', '驾驶人'],
         headerHeight: 45,
         data: [
           ['1号物料提升机', '2019-10-13 13:14:01', '高度限位', '<span style="color: #67c23a; ">已处理</span>', 53.5],
@@ -1562,7 +1570,7 @@ export default {
         columnWidth: [ , 200]
       },
       configTable3: {
-        header: ['设备名称', '报警时间', '报警类型', '处理情况', '报警数值'],
+        header: ['设备编号', '报警时间', '报警类型', '驾驶人'],
         headerHeight: 45,
         data: [
           ['1号施工升降机', '2019-10-13 13:14:01', '高度限位', '<span style="color: #67c23a; ">已处理</span>', 53.5],
@@ -2051,6 +2059,70 @@ export default {
         name: 'deviceHistory'
       });
     },
+    getDevHistory() {
+      console.log("AAA")
+      var params = {
+        constructionSiteId: this.siteId,
+        deviceType: '塔式起重机'
+      }
+      getHistroy(params).then((res) => {
+        console.log(res)
+        var data2 = []
+        var list = res.data.rows
+        for(var i = 0 ;i < list.length;i++ ){
+          var data1 = []
+          data1.push(list[i].deviceId)
+          data1.push(list[i].warnTime)
+          data1.push(list[i].warnType)
+          data1.push(list[i].driverName)
+          data2.push(data1)
+
+        }
+
+        this.configTable = {
+          header: ['设备编号', '报警时间', '报警类型', '驾驶人'],
+          headerHeight: 45,
+          data: data2,
+          rowNum: 7,
+          align: ['center', 'center', 'center', 'center', 'center'],
+          headerBGC: '',
+          evenRowBGC: '',
+          columnWidth: [120, 250, 120, 100]
+        }
+      })
+    },
+    getDevHistory2() {
+      console.log("AAA")
+      var params = {
+        constructionSiteId: this.siteId,
+        deviceType: '施工升降机'
+      }
+      getHistroy(params).then((res) => {
+        console.log(res)
+        var data2 = []
+        var list = res.data.rows
+        for(var i = 0 ;i < list.length;i++ ){
+          var data1 = []
+          data1.push(list[i].deviceId)
+          data1.push(list[i].warnTime)
+          data1.push(list[i].warnType)
+          data1.push(list[i].driverName)
+          data2.push(data1)
+
+        }
+
+        this.configTable3 = {
+          header: ['设备编号', '报警时间', '报警类型', '驾驶人'],
+          headerHeight: 45,
+          data: data2,
+          rowNum: 7,
+          align: ['center', 'center', 'center', 'center', 'center'],
+          headerBGC: '',
+          evenRowBGC: '',
+          columnWidth: [120, 250, 120, 100]
+        }
+      })
+    }
   }
 }
 </script>

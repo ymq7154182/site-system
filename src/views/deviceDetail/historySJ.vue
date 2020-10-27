@@ -13,7 +13,7 @@
         <span class="input-label">设备运行状态：</span><el-input placeholder="请输入设备运行状态" v-model="uploadInfo.windState" class="input-style"></el-input>
         <el-button type="primary" icon="el-icon-search" style="margin-left: 0.2rem" @click="getShengjiang">查询</el-button>
         <el-button type="danger" icon="el-icon-refresh" plain @click="resetSumbit">重置</el-button>
-        <div class="titleTable">{{'起重机历史记录'}}</div>
+        <div class="titleTable">{{'施工升降机历史记录'}}</div>
       </div>
       <div>
         <div class="data_table">
