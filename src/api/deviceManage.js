@@ -188,3 +188,26 @@ export function getHistroy(data) {
     params: data
   })
 }
+
+export function getCheckDetailById(id) {
+  return request({
+    url: 'device/deviceCheck/' +id,
+    method: 'get'
+  })
+}
+
+export function getAllDevName(data) {
+  return request({
+    url: 'device/deviceCheck/getDeviceName',
+    method: 'get',
+    params: data
+  })
+}
+
+export function getCountsByType(data) {
+  return request({
+    url: 'device/deviceCheck/getCountsByType',
+    method: 'get',
+    params: data
+  })
+}

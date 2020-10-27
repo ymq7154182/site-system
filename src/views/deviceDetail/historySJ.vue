@@ -66,7 +66,7 @@
         </div>
       </div>
     </div>
-    <el-dialog :visible.sync="showUpload" title="新增信息" width="40%">
+    <el-dialog :visible.sync="showUpload" title="详细信息" width="40%">
       <div style="height: 55vh; overflow-y: scroll; ">
 
         <!--<el-form :model="uploadInfo"  ref="uploadInfo" label-width="1.5rem">-->

@@ -454,7 +454,7 @@
               <el-col :span="5" style="padding: 0 0.5vw; ">
                 <div style="background-color: rgba(0, 36, 78, 0.5); height: 28vh; width: 100%; ">
                   <div class="border-top-left"></div>
-                  <div class="box-title">处理总览</div>
+                  <div class="box-title">预警总览</div>
                   <div class="solve-view">
                     <dv-active-ring-chart :config="configPie" style="width: 3rem; height: 3rem; margin: auto; " />
                   </div>
@@ -472,12 +472,13 @@
                 {{ chosen }}<i class="el-icon-arrow-down el-icon--right"></i>
               </span>
                       <el-dropdown-menu  style="background-color: rgba(255,255,255,0.5)" slot="dropdown">
-                        <el-dropdown-item command="所有设备">所有设备</el-dropdown-item>
+                        <el-dropdown-item v-for="(index, item) in taDiaoList" v-text="index" :command="index"></el-dropdown-item>
+                        <!-- <el-dropdown-item command="所有设备">所有设备</el-dropdown-item>
                         <el-dropdown-item command="1号塔式起重机">1号塔式起重机</el-dropdown-item>
                         <el-dropdown-item command="2号塔式起重机">2号塔式起重机</el-dropdown-item>
                         <el-dropdown-item command="3号塔式起重机">3号塔式起重机</el-dropdown-item>
                         <el-dropdown-item command="4号塔式起重机">4号塔式起重机</el-dropdown-item>
-                        <el-dropdown-item command="5号塔式起重机">5号塔式起重机</el-dropdown-item>
+                        <el-dropdown-item command="5号塔式起重机">5号塔式起重机</el-dropdown-item> -->
                       </el-dropdown-menu>
                     </el-dropdown>
                   </div>
@@ -496,7 +497,7 @@
                   <div class="border-top-left"></div>
                   <div class="box-title">预警记录</div>
                   <div style="float:right;margin-top: -32px; margin-right:10px;">
-                    <el-button type="text" style="text-decoration: underline; " @click="gotoCheckRecord">历史数据</el-button>
+                    <el-button type="text" style="text-decoration: underline; " @click="gotoCheckRecord('塔式起重机')">历史数据</el-button>
                   </div>
                   <dv-scroll-board :config="configTable" style="width: 100%; height: calc(53vh - 10px - 0.5rem); " />
                 </div>
@@ -1414,9 +1415,9 @@
               <el-col :span="5" style="padding: 0 0.5vw; ">
                 <div style="background-color: rgba(0, 36, 78, 0.5); height: 28vh; width: 100%; ">
                   <div class="border-top-left"></div>
-                  <div class="box-title">处理总览</div>
+                  <div class="box-title">预警总览</div>
                   <div class="solve-view">
-                    <dv-active-ring-chart :config="configPie" style="width: 3rem; height: 3rem; margin: auto; " />
+                    <dv-active-ring-chart :config="configPie1" style="width: 3rem; height: 3rem; margin: auto; " />
                   </div>
                 </div>
               </el-col>
@@ -1456,7 +1457,7 @@
                   <div class="border-top-left"></div>
                   <div class="box-title">预警记录</div>
                   <div style="float:right;margin-top: -32px; margin-right:10px;">
-                    <el-button type="text" style="text-decoration: underline; " @click="gotoCheckRecord">历史数据</el-button>
+                    <el-button type="text" style="text-decoration: underline; " @click="gotoCheckRecord('施工升降机')">历史数据</el-button>
                   </div>
                   <dv-scroll-board :config="configTable3" style="width: 100%; height: calc(53vh - 10px - 0.5rem); " />
                 </div>
@@ -1479,7 +1480,7 @@
 </template>
 
 <script>
-import { getHistroy } from "@/api/deviceManage";
+import { getHistroy, getAllDevName, getCountsByType } from "@/api/deviceManage";
 import echarts from 'echarts';
 require('echarts/theme/macarons'); // echarts theme
 
@@ -1497,10 +1498,13 @@ export default {
 
     this.getDevHistory()
     this.getDevHistory2()
+    this.getAllTaDevList()
+    this.getCounts()
 
   },
   data() {
     return {
+      taDiaoList: [],
       siteId: '',
       myChart100: '',
       myChart10: '',
@@ -1513,22 +1517,31 @@ export default {
       configPie: {
         data: [
           {
-            name: '红色报警',
-            value: 55
+            name: '预警总览',
+            value: 0
           },
-          {
-            name: '已处理',
-            value: 120
-          },
-          {
-            name: '黄色报警',
-            value: 78
-          }
+          
+          
         ],
         digitalFlopStyle: {
           fontSize: 17
         },
-        color: ['#f56c6c', '#67c23a', '#e6a23c'],
+        color: ['#f56c6c'],
+        showOriginValue: true
+      },
+      configPie1: {
+        data: [
+          {
+            name: '预警总览',
+            value: 0
+          },
+          
+          
+        ],
+        digitalFlopStyle: {
+          fontSize: 17
+        },
+        color: ['#f56c6c'],
         showOriginValue: true
       },
       configTable: {
@@ -1545,10 +1558,10 @@ export default {
           // ['1号塔式起重机', '2020-05-07 03:14:01', '角度限位', '<span style="color: #e6a23c; ">黄色报警</span>', 123.5],
         ],
         rowNum: 7,
-        align: ['center', 'center', 'center', 'center', 'center'],
+        align: ['center', 'center', 'right', 'right'],
         headerBGC: '',
         evenRowBGC: '',
-        columnWidth: [80, 300, 200, 200]
+        columnWidth: [100, 300, 200, 200]
       },
       configTable2: {
         header: ['设备编号', '报警时间', '报警类型', '驾驶人'],
@@ -2054,9 +2067,13 @@ export default {
     gotoHistory2() {
       this.$router.push('/historySJ')
     },
-    gotoCheckRecord() {
+    gotoCheckRecord(name) {
+      console.log("name", name)
       this.$router.push({
-        name: 'deviceHistory'
+        name: 'deviceHistory',
+        params: {
+          devName: name
+        }
       });
     },
     getDevHistory() {
@@ -2069,6 +2086,20 @@ export default {
         console.log(res)
         var data2 = []
         var list = res.data.rows
+       
+         this.configPie = {
+          data: [
+            {
+              name: '预警总览',
+              value: list.length
+            }
+          ],
+          digitalFlopStyle: {
+            fontSize: 17
+          },
+          color: ['#22c3aa'],
+          showOriginValue: true
+        }
         for(var i = 0 ;i < list.length;i++ ){
           var data1 = []
           data1.push(list[i].deviceId)
@@ -2084,7 +2115,7 @@ export default {
           headerHeight: 45,
           data: data2,
           rowNum: 7,
-          align: ['center', 'center', 'center', 'center', 'center'],
+          align: ['center', 'center', 'center', 'center'],
           headerBGC: '',
           evenRowBGC: '',
           columnWidth: [120, 250, 120, 100]
@@ -2098,9 +2129,24 @@ export default {
         deviceType: '施工升降机'
       }
       getHistroy(params).then((res) => {
+
         console.log(res)
         var data2 = []
         var list = res.data.rows
+        this.configPie1 = {
+          data: [
+            {
+              name: '预警总览',
+              value: list.length
+            }
+          ],
+          digitalFlopStyle: {
+            fontSize: 17
+          },
+          color: ['#22c3aa'],
+          showOriginValue: true
+        }
+       
         for(var i = 0 ;i < list.length;i++ ){
           var data1 = []
           data1.push(list[i].deviceId)
@@ -2122,6 +2168,32 @@ export default {
           columnWidth: [120, 250, 120, 100]
         }
       })
+    },
+
+    getAllTaDevList() {
+      var params = {
+        siteId: this.siteId,
+        deviceType: '塔式起重机'
+      }
+      getAllDevName(params).then((res) => {
+        this.taDiaoList = res.data.data
+      })
+    },
+    getCounts(name) {
+      if(name === '全部设备') {
+        var params = {
+          siteId: this.siteId
+        }
+      } else {
+        var params = {
+          siteId: this.siteId,
+          deviceName: name
+        }
+      }
+      getCountsByType(params).then((res) => {
+        console.log(res.data)
+      })
+
     }
   }
 }
