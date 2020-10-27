@@ -2062,26 +2062,37 @@
         <span style="font-size: 18px; ">顶升加节自检子项</span>
         <el-button @click="addForm3childData" type="primary" icon="el-icon-plus" round style="margin-left: 20px; ">增加</el-button>
       </div>
-      <el-form v-model="addForm3.dsData.childData" ref="form3childData" :inline="true">
+      <el-form v-model="addForm3.dsData.childData" ref="form3childData" :inline="true" style="width:100%;">
         <div v-for="(item, index) in addForm3.childData" :key="index" style="margin-top: 10px; ">
-          <el-form-item
+          <el-row>
+            <el-form-item
             label="检查项"
             :prop="'addForm3.childData.' + index + '.dicid'"
           >
-            <treeselect v-model="item.dicid"  :options="options" :clearable="true" :show-count="true" :disable-branch-nodes="true"  style="width: 186px; "  />
+            <treeselect v-model="item.dicid"  :options="options" :clearable="true" :show-count="true" :disable-branch-nodes="true"  style="width: 486px; "  />
           </el-form-item>
-          <el-form-item
-            label="检查结果"
-            :prop="'addForm3.childData.' + index + '.result'"
-          >
-            <el-input v-model="item.result" placeholder="请输入检查结果"></el-input>
-          </el-form-item>
-          <el-form-item
-            label="检查人"
-            :prop="'addForm3.childData.' + index + '.checkUser'"
-          >
-            <el-input v-model="item.checkUser" placeholder="请输入检查人"></el-input>
-          </el-form-item>
+          </el-row>
+          <el-row>
+            <el-col :span="12">
+               <el-form-item
+                label="检查结果"
+                :prop="'addForm3.childData.' + index + '.result'"
+              >
+                <el-input v-model="item.result" placeholder="请输入检查结果"></el-input>
+              </el-form-item>
+            </el-col>
+            <el-col :span="12">
+              <el-form-item
+                label="检查人"
+                :prop="'addForm3.childData.' + index + '.checkUser'"
+              >
+                <el-input v-model="item.checkUser" placeholder="请输入检查人"></el-input>
+              </el-form-item>
+            </el-col>
+           
+          </el-row>
+          
+          
           <el-form-item>
             <el-button type="danger" icon="el-icon-delete" circle @click="deleteChildData3(item, index)"></el-button>
           </el-form-item>
@@ -2197,24 +2208,35 @@
       </div>
       <el-form v-model="addForm4.childData" ref="form4childData" :inline="true">
         <div v-for="(item, i) in addForm4.childData" :key="i" style="margin-top: 10px; ">
-          <el-form-item
-            label="检查项"
-            :prop="'addForm4.childData.' + i + '.dicid'"
-          >
-            <treeselect v-model="item.dicid"  :options="options" :clearable="true" :show-count="true" :disable-branch-nodes="true" style="width: 186px; " />
-          </el-form-item>
-          <el-form-item
-            label="检查结果"
-            :prop="'addForm4.childData.' + i + '.result'"
-          >
-            <el-input v-model="item.result" placeholder="请输入检查结果"></el-input>
-          </el-form-item>
-          <el-form-item
-            label="结论"
-            :prop="'addForm3.childData.' + i + '.remarks'"
-          >
-            <el-input v-model="item.remarks" placeholder="请输入结论"></el-input>
-          </el-form-item>
+          <el-row>
+            <el-form-item
+              label="检查项"
+              :prop="'addForm4.childData.' + i + '.dicid'"
+            >
+              <treeselect v-model="item.dicid"  :options="options" :clearable="true" :show-count="true" :disable-branch-nodes="true" style="width: 486px; " />
+            </el-form-item>
+          </el-row>
+          <el-row>
+            <el-col :span="12">
+              <el-form-item
+                label="检查结果"
+                :prop="'addForm4.childData.' + i + '.result'"
+              >
+                <el-input v-model="item.result" placeholder="请输入检查结果"></el-input>
+              </el-form-item>
+            </el-col>
+            <el-col :span="12">
+              <el-form-item
+                label="结论"
+                :prop="'addForm3.childData.' + i + '.remarks'"
+              >
+                <el-input v-model="item.remarks" placeholder="请输入结论"></el-input>
+              </el-form-item>
+            </el-col>
+          </el-row>
+          
+          
+          
           <el-form-item>
             <el-button type="danger" icon="el-icon-delete" circle @click="deleteChildData4(item, index)"></el-button>
           </el-form-item>
