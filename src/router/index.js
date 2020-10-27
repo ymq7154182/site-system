@@ -130,10 +130,11 @@ const routes = [
   {
     path: '/deviceOne',
     component: Layout,
-    name: 'deviceOne',
+    
     children: [
       {
         path: '/deviceOne',
+        name: 'deviceOne',
         component: () => import('@/views/deviceDetail/deviceOne'),
       }
     ]
