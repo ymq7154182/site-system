@@ -227,3 +227,12 @@ export function getIds(data) {
     params: data
   })
 }
+
+export function getDevInfoByDevId(id) {
+  return request({
+    url: 'device/craneDevice/' + id,
+    method: 'get'
+  })
+}
+
+

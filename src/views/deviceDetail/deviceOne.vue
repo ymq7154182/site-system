@@ -313,15 +313,15 @@
 <!--                <el-table-column prop="userid" label="当前登录人id" />-->
                 <el-table-column type="index" label="序号"  align="center"/>
                 <el-table-column prop="devid" label="设备编号" align="center" />
-                <el-table-column prop="weibaotime" label="维保时间" width="100"/>
+                <el-table-column prop="weibaotime" label="维保时间" width="200"/>
                 <el-table-column prop="maxcapacity" label="运转台时" />
                 <el-table-column prop="maxrange" label="更换主要零部件" />
                 <!-- <el-table-column prop="leftheight" label="维管负责人" />
                 <el-table-column prop="towerheight" label="维保人员" width="150" align="center" />
                 <el-table-column prop="installheigth" label="维修（保养）内容" align="center" /> -->
                 <el-table-column prop="installuseraqjg" label="监理单位审核意见" align="center" />
-                <el-table-column prop="installuserzc" label="监理单位审核日期" align="center" width="100"/>
-                <el-table-column prop="reporttime" label="上报时间" align="center" width="100"/>
+                <el-table-column prop="installuserzc" label="监理单位审核日期" align="center" width="200"/>
+                <el-table-column prop="reporttime" label="上报时间" align="center" width="200"/>
                 <el-table-column label="查看详情" align="center">
                   <template slot-scope="scope">
                     <el-button type="text" icon="el-icon-view" @click="viewDetail6(scope.row)">查看</el-button>
@@ -352,16 +352,15 @@
 <!--          <el-form-item label="安装id" >-->
 <!--            <el-input v-model="uploadInfo.setupId" style="width: 50%" placeholder="请输入安装id"></el-input>-->
 <!--          </el-form-item>-->
-           <el-form-item label="设备编号" prop="userid">
-            <el-select v-model="uploadInfo.userid" placeholder="请选择施工单位负责人" style="width: 50%">
+           <el-form-item label="设备编号" prop="devId">
+            <el-select v-model="uploadInfo.devId" placeholder="请选择设备编号" style="width: 50%" @change="getItemInfo1">
               <el-option
                 v-for="item in idsList"
-                :key="item.guid"
-                :label="item.pname"
-                :value="item.guid">
+                :key="item.devId"
+                :label="`${item.devId}-${item.devName}`"
+                :value="item.devId">
               </el-option>
             </el-select>
-            <!--<el-input v-model="uploadInfo.userid" style="width: 50%" placeholder="请选择施工单位负责人"></el-input>-->
           </el-form-item>
           <el-form-item label="施工单位负责人" prop="userid">
             <el-select v-model="uploadInfo.userid" placeholder="请选择施工单位负责人" style="width: 50%">
@@ -513,6 +512,17 @@
 <!--          <el-form-item label="当前登录人id" >-->
 <!--            <el-input v-model="uploadInfo2.userid" style="width: 50%" placeholder="请输入当前登录人id"></el-input>-->
 <!--          </el-form-item>-->
+          <el-form-item label="设备编号" prop="devId">
+            <el-select v-model="uploadInfo2.devId" placeholder="请选择设备编号" style="width: 50%" @change="getItemInfo2">
+              <el-option
+                v-for="item in idsList"
+                :key="item.devId"
+                :label="`${item.devId}-${item.devName}`"
+                :value="item.devId">
+              </el-option>
+            </el-select>
+          </el-form-item>
+
           <el-form-item label="施工单位负责人" prop="userid">
             <el-select v-model="uploadInfo2.userid" placeholder="请选择施工单位负责人" style="width: 50%">
               <el-option
@@ -1199,6 +1209,17 @@
 <!--          <el-form-item label="当前登录人id" >-->
 <!--            <el-input v-model="uploadInfo6.userid" style="width: 50%" placeholder="请输入当前登录人id"></el-input>-->
 <!--          </el-form-item>-->
+
+          <el-form-item label="设备编号" prop="devid">
+            <el-select v-model="uploadInfo6.devid" placeholder="请选择设备编号" style="width: 50%" @change="getItemInfo6">
+              <el-option
+                v-for="item in idsList"
+                :key="item.devId"
+                :label="`${item.devId}-${item.devName}`"
+                :value="item.devId">
+              </el-option>
+            </el-select>
+          </el-form-item>
           <el-form-item label="施工单位负责人"  prop="userid">
             <el-select v-model="uploadInfo6.userid" placeholder="请选择施工单位负责人" style="width: 50%">
               <el-option
@@ -2103,26 +2124,37 @@
         <span style="font-size: 18px; ">顶升加节自检子项</span>
         <el-button @click="addForm3childData" type="primary" icon="el-icon-plus" round style="margin-left: 20px; ">增加</el-button>
       </div>
-      <el-form v-model="addForm3.dsData.childData" ref="form3childData" :inline="true">
+      <el-form v-model="addForm3.dsData.childData" ref="form3childData" :inline="true" style="width:100%;">
         <div v-for="(item, index) in addForm3.childData" :key="index" style="margin-top: 10px; ">
-          <el-form-item
+          <el-row>
+            <el-form-item
             label="检查项"
             :prop="'addForm3.childData.' + index + '.dicid'"
           >
-            <treeselect v-model="item.dicid"  :options="options" :clearable="true" :show-count="true" :disable-branch-nodes="true"  style="width: 186px; "  />
+            <treeselect v-model="item.dicid"  :options="options" :clearable="true" :show-count="true" :disable-branch-nodes="true"  style="width: 486px; "  />
           </el-form-item>
-          <el-form-item
-            label="检查结果"
-            :prop="'addForm3.childData.' + index + '.result'"
-          >
-            <el-input v-model="item.result" placeholder="请输入检查结果"></el-input>
-          </el-form-item>
-          <el-form-item
-            label="检查人"
-            :prop="'addForm3.childData.' + index + '.checkUser'"
-          >
-            <el-input v-model="item.checkUser" placeholder="请输入检查人"></el-input>
-          </el-form-item>
+          </el-row>
+          <el-row>
+            <el-col :span="12">
+               <el-form-item
+                label="检查结果"
+                :prop="'addForm3.childData.' + index + '.result'"
+              >
+                <el-input v-model="item.result" placeholder="请输入检查结果"></el-input>
+              </el-form-item>
+            </el-col>
+            <el-col :span="12">
+              <el-form-item
+                label="检查人"
+                :prop="'addForm3.childData.' + index + '.checkUser'"
+              >
+                <el-input v-model="item.checkUser" placeholder="请输入检查人"></el-input>
+              </el-form-item>
+            </el-col>
+           
+          </el-row>
+          
+          
           <el-form-item>
             <el-button type="danger" icon="el-icon-delete" circle @click="deleteChildData3(item, index)"></el-button>
           </el-form-item>
@@ -2238,24 +2270,35 @@
       </div>
       <el-form v-model="addForm4.childData" ref="form4childData" :inline="true">
         <div v-for="(item, i) in addForm4.childData" :key="i" style="margin-top: 10px; ">
-          <el-form-item
-            label="检查项"
-            :prop="'addForm4.childData.' + i + '.dicid'"
-          >
-            <treeselect v-model="item.dicid"  :options="options" :clearable="true" :show-count="true" :disable-branch-nodes="true" style="width: 186px; " />
-          </el-form-item>
-          <el-form-item
-            label="检查结果"
-            :prop="'addForm4.childData.' + i + '.result'"
-          >
-            <el-input v-model="item.result" placeholder="请输入检查结果"></el-input>
-          </el-form-item>
-          <el-form-item
-            label="结论"
-            :prop="'addForm3.childData.' + i + '.remarks'"
-          >
-            <el-input v-model="item.remarks" placeholder="请输入结论"></el-input>
-          </el-form-item>
+          <el-row>
+            <el-form-item
+              label="检查项"
+              :prop="'addForm4.childData.' + i + '.dicid'"
+            >
+              <treeselect v-model="item.dicid"  :options="options" :clearable="true" :show-count="true" :disable-branch-nodes="true" style="width: 486px; " />
+            </el-form-item>
+          </el-row>
+          <el-row>
+            <el-col :span="12">
+              <el-form-item
+                label="检查结果"
+                :prop="'addForm4.childData.' + i + '.result'"
+              >
+                <el-input v-model="item.result" placeholder="请输入检查结果"></el-input>
+              </el-form-item>
+            </el-col>
+            <el-col :span="12">
+              <el-form-item
+                label="结论"
+                :prop="'addForm3.childData.' + i + '.remarks'"
+              >
+                <el-input v-model="item.remarks" placeholder="请输入结论"></el-input>
+              </el-form-item>
+            </el-col>
+          </el-row>
+          
+          
+          
           <el-form-item>
             <el-button type="danger" icon="el-icon-delete" circle @click="deleteChildData4(item, index)"></el-button>
           </el-form-item>
@@ -2275,7 +2318,7 @@
   import Treeselect from '@riophae/vue-treeselect'
   // import the styles
   import '@riophae/vue-treeselect/dist/vue-treeselect.css'
-  import { zijian, addZijian,getSysProData,yanshou, addyanshou,weihu, addweihu, dingqi, adddingqi, dingsheng,adddingsheng,fuzhuo, addfuzhuo, devTreeSelect, getProid, getIds } from "@/api/deviceManage";
+  import { zijian, addZijian,getSysProData,yanshou, addyanshou,weihu, addweihu, dingqi, adddingqi, dingsheng,adddingsheng,fuzhuo, addfuzhuo, devTreeSelect, getProid, getIds, getDevInfoByDevId } from "@/api/deviceManage";
   // import { getSysProData } from "@/api/qualityControl"
   import axios from 'axios'
   import {absyncAttachRecordCheckData, inJackingPlusRecordCheck} from "../../api/deviceManage";
@@ -2300,7 +2343,7 @@
         userOptions: [],
         uploadInfo: {
           proid: '', // 项目id
-          devid: '', // 设备id
+          devid: undefined, // 设备id
           setupId: '', // 安装id
           userid: '', // 当前登录人id
           leftHeight: '', // 起升高度
@@ -2687,8 +2730,19 @@
       },
       getaddZijian() {
         var data = this.uploadInfo
+        console.log("data", data)
+        if(data.userid === null || data.userid == '') {
+          this.$message.error('userid为空，提交错误');
+          return;
+        } 
+        if(data.setupId === null || data.setupId === '') {
+          this.$message.error('setupId为空，提交错误');
+          return;
+        }
+        
         addZijian(data).then((res) => {
           if(res.data.code === 200) {
+            console.log("测试",this.showUpload)
             this.$message.success(res.data.msg)
             this.getyanshou()
             this.showUpload = false
@@ -2708,6 +2762,14 @@
       },
       getaddyanshou() {
         var data = this.uploadInfo2
+        if(data.userid === null || data.userid == '') {
+          this.$message.error('userid为空，提交错误');
+          return;
+        } 
+        if(data.setupId === null || data.setupId === '') {
+          this.$message.error('setupId为空，提交错误');
+          return;
+        }
         addyanshou(data).then((res) => {
           if(res.data.code === 200) {
             this.$message.success(res.data.msg)
@@ -2735,6 +2797,18 @@
         //       this.$message.error(res.data.msg)
         //     }
         // })
+        if(data.userid === null || data.userid == '') {
+          this.$message.error('userid为空，提交错误');
+          return;
+        } 
+        if(data.setupId === null || data.setupId === '') {
+          this.$message.error('setupId为空，提交错误');
+          return;
+        }
+        if(data.useId === null || data.useId === '') {
+          this.$message.error('useId为空，提交错误');
+          return;
+        }
         addweihu(data).then((res) => {
           if(res.data.code === 200) {
             this.$message.success(res.data.msg)
@@ -3195,7 +3269,50 @@
         getIds(params).then((res) => {
           this.idsList = res.data.data.devData
         })
-      }
+        
+      },
+
+      getItemInfo1(id) {
+        
+        this.getDetailInfo1(id)
+        
+      },
+      getItemInfo2(id) {
+        
+        this.getDetailInfo2(id)
+        
+      },
+      getItemInfo6(id) {
+        
+        this.getDetailInfo6(id)
+        
+      },
+      getDetailInfo1(id) {
+        getDevInfoByDevId(id).then((res) => {
+          this.uploadInfo.proId = this.entid
+          // this.uploadInfo.devId = res.data.data.guid
+          this.uploadInfo.setupId = res.data.data.orgid
+        })
+      },
+      getDetailInfo2(id) {
+        getDevInfoByDevId(id).then((res) => {
+          console.log("res2", res.data.data)
+          this.uploadInfo2.proId = this.entid
+          // this.uploadInfo.devId = res.data.data.guid
+          this.uploadInfo2.setupId = res.data.data.orgid
+        })
+      },
+      getDetailInfo6(id) {
+        getDevInfoByDevId(id).then((res) => {
+          console.log("res2", res.data.data)
+          this.uploadInfo6.proId = this.entid
+          // this.uploadInfo.devId = res.data.data.guid
+          this.uploadInfo6.setupId = res.data.data.orgid
+          this.uploadInfo6.useId = res.data.data.useId
+        })
+      },
+
+
 
     }
   }
