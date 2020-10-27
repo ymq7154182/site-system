@@ -180,3 +180,11 @@ export function devTreeSelect(data) {
     params: data
   })
 }
+
+export function getHistroy(data) {
+  return request({
+    url: 'device/deviceCheck/list',
+    method: 'get',
+    params: data
+  })
+}
