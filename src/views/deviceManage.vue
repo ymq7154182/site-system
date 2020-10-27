@@ -466,21 +466,23 @@
                 <div style="background-color: rgba(0, 36, 78, 0.5); height: 53vh; width: 100%; ">
                   <div class="border-top-left"></div>
                   <div class="box-title">报警类型</div>
-                  <div style="margin-left: 80%; ">
-                    <el-dropdown @command="handleCommand">
-              <span class="el-dropdown-link">
-                {{ chosen }}<i class="el-icon-arrow-down el-icon--right"></i>
-              </span>
-                      <el-dropdown-menu  style="background-color: rgba(255,255,255,0.5)" slot="dropdown">
-                        <el-dropdown-item v-for="(index, item) in taDiaoList" v-text="index" :command="index"></el-dropdown-item>
-                        <!-- <el-dropdown-item command="所有设备">所有设备</el-dropdown-item>
-                        <el-dropdown-item command="1号塔式起重机">1号塔式起重机</el-dropdown-item>
-                        <el-dropdown-item command="2号塔式起重机">2号塔式起重机</el-dropdown-item>
-                        <el-dropdown-item command="3号塔式起重机">3号塔式起重机</el-dropdown-item>
-                        <el-dropdown-item command="4号塔式起重机">4号塔式起重机</el-dropdown-item>
-                        <el-dropdown-item command="5号塔式起重机">5号塔式起重机</el-dropdown-item> -->
-                      </el-dropdown-menu>
-                    </el-dropdown>
+                  <div style="height: 36px; ">
+                    <div style="float:right; margin-right: 15px; ">
+                      <el-dropdown @command="handleCommand">
+                      <span class="el-dropdown-link">
+                        {{ chosen }}<i class="el-icon-arrow-down el-icon--right"></i>
+                      </span>
+                        <el-dropdown-menu  style="background-color: rgba(255,255,255,0.5)" slot="dropdown">
+                          <el-dropdown-item v-for="(item, index) in taDiaoList" :key="index" v-text="item" :command="item"></el-dropdown-item>
+                          <!-- <el-dropdown-item command="所有设备">所有设备</el-dropdown-item>
+                          <el-dropdown-item command="1号塔式起重机">1号塔式起重机</el-dropdown-item>
+                          <el-dropdown-item command="2号塔式起重机">2号塔式起重机</el-dropdown-item>
+                          <el-dropdown-item command="3号塔式起重机">3号塔式起重机</el-dropdown-item>
+                          <el-dropdown-item command="4号塔式起重机">4号塔式起重机</el-dropdown-item>
+                          <el-dropdown-item command="5号塔式起重机">5号塔式起重机</el-dropdown-item> -->
+                        </el-dropdown-menu>
+                      </el-dropdown>
+                    </div>
                   </div>
                   <div id="alarmType" class="alarm-type"></div>
                 </div>
@@ -1520,8 +1522,8 @@ export default {
             name: '预警总览',
             value: 0
           },
-          
-          
+
+
         ],
         digitalFlopStyle: {
           fontSize: 17
@@ -1535,8 +1537,8 @@ export default {
             name: '预警总览',
             value: 0
           },
-          
-          
+
+
         ],
         digitalFlopStyle: {
           fontSize: 17
@@ -2091,7 +2093,7 @@ export default {
         console.log(res)
         var data2 = []
         var list = res.data.rows
-       
+
          this.configPie = {
           data: [
             {
@@ -2151,7 +2153,7 @@ export default {
           color: ['#22c3aa'],
           showOriginValue: true
         }
-       
+
         for(var i = 0 ;i < list.length;i++ ){
           var data1 = []
           data1.push(list[i].deviceId)

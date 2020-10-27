@@ -2486,7 +2486,6 @@
           this.entid = res.data.guid
           this.getPeople()
           this.getZiJian()
-
         })
       },
       getZiJian() {
@@ -2924,9 +2923,9 @@
       },
 
 
-      // 通过设备编号获取信息 
+      // 通过设备编号获取信息
       getProidBySiteId() {
-        
+
         var params = {
           deptId: this.siteId
         }
@@ -2944,7 +2943,7 @@
         getIds(params).then((res) => {
           this.idsList = res.data
         })
-        
+
       }
 
     }
