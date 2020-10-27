@@ -211,3 +211,21 @@ export function getCountsByType(data) {
     params: data
   })
 }
+
+export function getProid(data) {
+  return request({
+    url: 'getSysProData',
+    method: 'get',
+    params: data
+  })
+}
+
+export function getIds(data) {
+  return request({
+    url: 'device/sysDev/getDevData',
+    method: 'get',
+    params: data
+  })
+}
+
+

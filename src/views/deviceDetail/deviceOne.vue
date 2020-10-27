@@ -50,6 +50,7 @@
 <!--                <el-table-column prop="setupId" label="安装id" />-->
 <!--                <el-table-column prop="userid" label="当前登录人id" />-->
                 <el-table-column type="index" label="序号"  align="center"/>
+                <el-table-column prop="devId" label="设备编号" align="center" />
                 <el-table-column prop="checkUser" label="安装单位负责人" align="center" />
                 <el-table-column prop="checkContent" label="安装单位自检意见" align="center" />
                 <el-table-column prop="checkTime" label="检查时间" align="center" width="100"/>
@@ -99,6 +100,7 @@
 <!--                <el-table-column prop="setupId" label="安装id" />-->
 <!--                <el-table-column prop="userid" label="当前登录人id" />-->
                 <el-table-column type="index" label="序号"  align="center"/>
+                <el-table-column prop="devId" label="设备编号" align="center" />
                 <el-table-column prop="opinionSg" label="施工单位意见" align="center" />
                 <el-table-column prop="userSg" label="施工单位项目经理签字" align="center" />
                 <el-table-column prop="timeSg" label="时间" align="center" width="100"/>
@@ -144,6 +146,7 @@
 <!--                <el-table-column prop="installid" label="安装单位id" />-->
 <!--                <el-table-column prop="userid" label="当前登录人id" />-->
                 <el-table-column type="index" label="序号"  align="center"/>
+                <el-table-column prop="devid" label="设备编号" align="center" />
                 <el-table-column prop="leftHeight" label="附着道数" align="center"/>
                 <el-table-column prop="towerHeight" label="当前已安装附着" width="150" align="center" />
                 <el-table-column prop="installHeigth" label="当前标准节" align="center" />
@@ -201,6 +204,7 @@
 <!--                <el-table-column prop="installid" label="安装单位id" />-->
 <!--                <el-table-column prop="userid" label="当前登录人id" />-->
                 <el-table-column type="index" label="序号"  align="center"/>
+                <el-table-column prop="devid" label="设备编号" align="center" />
                 <el-table-column prop="leftHeight" label="附着道数" />
                 <el-table-column prop="towerHeight" label="当前已安装附着" width="150" align="center" />
                 <el-table-column prop="installHeigth" label="当前标准节" align="center" />
@@ -258,6 +262,7 @@
 <!--                <el-table-column prop="useId" label="使用id" />-->
 <!--                <el-table-column prop="userid" label="当前登录人id" />-->
                 <el-table-column type="index" label="序号"  align="center"/>
+                <el-table-column prop="devid" label="设备编号" align="center" />
                 <el-table-column prop="leftHeight" label="附着道数" />
                 <el-table-column prop="towerHeight" label="当前已安装附着" width="150" align="center" />
                 <el-table-column prop="installHeigth" label="当前标准节" align="center" />
@@ -307,6 +312,7 @@
 <!--                <el-table-column prop="useId" label="使用id" />-->
 <!--                <el-table-column prop="userid" label="当前登录人id" />-->
                 <el-table-column type="index" label="序号"  align="center"/>
+                <el-table-column prop="devid" label="设备编号" align="center" />
                 <el-table-column prop="weibaotime" label="维保时间" width="100"/>
                 <el-table-column prop="maxcapacity" label="运转台时" />
                 <el-table-column prop="maxrange" label="更换主要零部件" />
@@ -337,7 +343,7 @@
         </div>
       </el-col>
     </el-row>
-    <el-dialog :visible.sync="showUpload" title="新增信息" width="60%">
+    <el-dialog :visible.sync="showUpload" :title="titles" width="60%">
       <div style="height: 55vh; overflow-y: scroll; ">
         <el-form :model="uploadInfo"  ref="uploadInfo" :rules="rules" label-width="1.5rem" v-show="tableShow === 'table1'">
 <!--          <el-form-item label="设备id" >-->
@@ -2196,14 +2202,19 @@
   import Treeselect from '@riophae/vue-treeselect'
   // import the styles
   import '@riophae/vue-treeselect/dist/vue-treeselect.css'
-  import { zijian, addZijian,getSysProData,yanshou, addyanshou,weihu, addweihu, dingqi, adddingqi, dingsheng,adddingsheng,fuzhuo, addfuzhuo, devTreeSelect } from "@/api/deviceManage";
+  import { zijian, addZijian,getSysProData,yanshou, addyanshou,weihu, addweihu, dingqi, adddingqi, dingsheng,adddingsheng,fuzhuo, addfuzhuo, devTreeSelect, getProid, getIds } from "@/api/deviceManage";
   // import { getSysProData } from "@/api/qualityControl"
   import axios from 'axios'
   import {absyncAttachRecordCheckData, inJackingPlusRecordCheck} from "../../api/deviceManage";
   export default {
     components: { Treeselect },
+    name: 'deviceOne',
     data() {
       return {
+        idsList: [],
+        siteId: '',
+        proId: '',
+        devName: '',
         fileTable: [],
         options: [],
         typeCode: '',
@@ -2454,7 +2465,10 @@
     },
     mounted() {
       // this.getZiJian()
+      var id = localStorage.getItem("siteId")
+      this.siteId = id
       this.getAllData()
+      this.devName = this.$route.params.devName
     },
     methods: {
       getAllData() {
@@ -2908,6 +2922,31 @@
       deleteChildData4 (item, index) {
         this.addForm4.childData.splice(index, 1)
       },
+
+
+      // 通过设备编号获取信息 
+      getProidBySiteId() {
+        
+        var params = {
+          deptId: this.siteId
+        }
+        getProid(params).then((res) => {
+          this.proId = res.data.guid
+        })
+
+      },
+
+      getKindsId() {
+        var params = {
+          deptId: this.siteId,
+          deviceName: this.devName
+        }
+        getIds(params).then((res) => {
+          this.idsList = res.data
+        })
+        
+      }
+
     }
   }
 </script>
