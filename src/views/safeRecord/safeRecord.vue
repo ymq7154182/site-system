@@ -198,14 +198,14 @@
             <el-col :span="14">
               <el-form-item label="附件_企业盖章页" prop="affixStamp" label-width="160px">
                 <!--                <el-button type="text" @click="openFile(checkForm.affixStamp)" :disabled="false">{{ '查看附件' }}</el-button>-->
-                <a :href="'http://' + checkForm.affixStamp" target="_blank">{{ '查看附件' }}</a>
+                <a :href=" checkForm.affixStamp" target="_blank">{{ '查看附件' }}</a>
               </el-form-item>
             </el-col>
           </el-row>
           <el-row>
             <el-col :span="14">
               <el-form-item label="附件_企业机构按期检查" prop="affixOrg" label-width="160px">
-                <a :href="'http://' + checkForm.affixOrg" target="_blank">{{ '查看附件' }}</a>
+                <a :href=" checkForm.affixOrg" target="_blank">{{ '查看附件' }}</a>
                 <!--              <img src="checkForm.affixOrg" alt="">-->
                 <!--              <el-input v-model="form.affixOrg" placeholder="请输入整改内容" />-->
               </el-form-item>
@@ -605,7 +605,7 @@
                       required: true, message: 'diccode不能为空', trigger: 'blur'
                       }"
                     >
-                      <treeselect v-model="item.diccode"  :options="options" :clearable="true" :show-count="true" :disable-branch-nodes="true"  style="width: 350px" @input="getSelectList(index, item)"/>
+                      <treeselect v-model="item.diccode"  :options="options" placeholder="请选择存在的问题" :clearable="true" :show-count="true" :disable-branch-nodes="true"  style="width: 350px" @input="getSelectList(index, item)" />
                       <!--<el-input v-model="item.diccode"></el-input>-->
                     </el-form-item>
                   </el-col>

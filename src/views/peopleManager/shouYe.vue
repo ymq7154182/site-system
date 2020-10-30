@@ -913,7 +913,7 @@ export default {
       });
       myChart2.setOption({
 
-        color:['#FF9DB0','#FFC361', '#EED898', '#6ECB99', '#75FFFF','#6AC0F0'] ,
+        color:['#FF9DB0','#FFC361', '#EED898', '#6ECB99', '#75FFFF','#6AC0F0', '#6495ED', '#98FB98'] ,
 
         angleAxis: {
           type: 'category',
@@ -980,6 +980,18 @@ export default {
           coordinateSystem: 'polar',
           name: '机械员',
           stack: 'a'
+        },{
+          type: 'bar',
+          data: [1, 3, 5, 4, 2, 6, 8],
+          coordinateSystem: 'polar',
+          name: '劳务员',
+          stack: 'a'
+        },{
+          type: 'bar',
+          data: [4, 2, 5, 6, 2, 1, 7],
+          coordinateSystem: 'polar',
+          name: '资料员',
+          stack: 'a'
         }],
         // radar: {
         //   center: ['0', '40%'],
@@ -991,7 +1003,7 @@ export default {
           itemWidth: 13 ,
           show: true,
           right:'right',
-          data: ['施工员', '质量员', '安全员','标准员','材料员','机械员'],
+          data: ['施工员', '质量员', '安全员','标准员','材料员','机械员', '劳务员', '资料员'],
           textStyle: {
             fontSize:10,
             color: '#6ac0f0' ,

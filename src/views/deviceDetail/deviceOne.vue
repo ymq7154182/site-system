@@ -445,7 +445,7 @@
                       required: true, message: 'ddicid不能为空', trigger: 'blur'
                       }"
                   >
-                    <treeselect v-model="item.dicid"  :options="options" :clearable="true" :show-count="true" :disable-branch-nodes="true" />
+                    <treeselect v-model="item.dicid"  :options="options" placeholder="请选择设备情况" :clearable="true" :show-count="true" :disable-branch-nodes="true" />
                     <!--<el-input v-model="item.diccode"></el-input>-->
                   </el-form-item>
                 </el-col>
@@ -590,7 +590,7 @@
                       required: true, message: 'ddicid不能为空', trigger: 'blur'
                       }"
                   >
-                    <treeselect v-model="item.dicid"  :options="options" :clearable="true" :show-count="true" :disable-branch-nodes="true" />
+                    <treeselect v-model="item.dicid"  :options="options" placeholder="请选择设备情况" :clearable="true" :show-count="true" :disable-branch-nodes="true" />
                     <!--<el-input v-model="item.diccode"></el-input>-->
                   </el-form-item>
                 </el-col>
@@ -1144,7 +1144,7 @@
                       required: true, message: '定期检查数据', trigger: 'blur'
                       }"
                   >
-                    <treeselect v-model="item.dicid"  :options="options" :clearable="true" :show-count="true" :disable-branch-nodes="true"   @input="getSelectList(index, item)"/>
+                    <treeselect v-model="item.dicid"  :options="options" placeholder="请选择" :clearable="true" :show-count="true" :disable-branch-nodes="true"   @input="getSelectList(index, item)"/>
                     <!--<el-input v-model="item.diccode"></el-input>-->
                   </el-form-item>
                 </el-col>
@@ -2131,7 +2131,7 @@
             label="检查项"
             :prop="'addForm3.childData.' + index + '.dicid'"
           >
-            <treeselect v-model="item.dicid"  :options="options" :clearable="true" :show-count="true" :disable-branch-nodes="true"  style="width: 486px; "  />
+            <treeselect v-model="item.dicid"  :options="options" placeholder="请选择" :clearable="true" :show-count="true" :disable-branch-nodes="true"  style="width: 486px; "  />
           </el-form-item>
           </el-row>
           <el-row>
@@ -2275,7 +2275,7 @@
               label="检查项"
               :prop="'addForm4.childData.' + i + '.dicid'"
             >
-              <treeselect v-model="item.dicid"  :options="options" :clearable="true" :show-count="true" :disable-branch-nodes="true" style="width: 486px; " />
+              <treeselect v-model="item.dicid"  :options="options" placeholder="请选择" :clearable="true" :show-count="true" :disable-branch-nodes="true" style="width: 486px; " />
             </el-form-item>
           </el-row>
           <el-row>
