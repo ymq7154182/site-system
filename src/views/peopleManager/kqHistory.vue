@@ -401,8 +401,16 @@ export default {
         this.form.userAge = res.data.rows[0].userAge
         this.form.phone = res.data.rows[0].phone
         this.form.userSignTime = res.data.rows[0].userSignTime
+        var statusTmp = res.data.rows[0].userSignStatus
+        if(statusTmp === 0) {
+          this.form.userSignStatus = '已打卡'
+        } else if(statusTmp === 1) {
+          this.form.userSignStatus = '未打卡'
+        } else {
+          this.form.userSignStatus = '迟到'
+        }
 
-        this.form.userSignStatus = res.data.rows[0].userSignStatus
+        // this.form.userSignStatus = res.data.rows[0].userSignStatus
         this.form.reClockingInfo = res.data.rows[0].reClockingInfo
         console.log(res.data.rows[0].id)
         this.openDetail = true
