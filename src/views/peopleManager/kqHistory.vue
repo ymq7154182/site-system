@@ -406,8 +406,10 @@ export default {
           this.form.userSignStatus = '已打卡'
         } else if(statusTmp === 1) {
           this.form.userSignStatus = '未打卡'
-        } else {
+        } else if(statusTmp === 2){
           this.form.userSignStatus = '迟到'
+        } else {
+          this.form.userSignStatus = '补打卡'
         }
 
         // this.form.userSignStatus = res.data.rows[0].userSignStatus
