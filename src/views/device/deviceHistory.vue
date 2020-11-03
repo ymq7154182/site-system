@@ -7,9 +7,9 @@
           <div style="float: right; ">
             <el-form :model="form" ref="form" label-width="80px" :inline="true">
               <el-form-item label="报警类型" >
-                <el-select v-model="form.processStatus" placeholder="请选择" clearable>
-                  <el-option label="风速预警" value="1"></el-option>
-                  <el-option label="力矩预警" value="2"></el-option>
+                <el-select v-model="selectWarnType" placeholder="请选择" clearable @change="getType">
+                  <el-option label="风速预警" value="风速预警"></el-option>
+                  <el-option label="力矩预警" value="力矩预警"></el-option>
                 </el-select>
               </el-form-item>
               <el-form-item>
@@ -313,7 +313,7 @@
 </template>
 
 <script>
-import {getCheckInfoBySchedule} from "../../api/qualityControl";
+import {getInfoByWarnType} from "../../api/qualityControl";
 import {getSite} from "../../api/dataManage";
 import { getHistroy, getCheckDetailById } from "@/api/deviceManage";
 
@@ -332,6 +332,7 @@ export default {
   },
   data() {
     return {
+      selectWarnType: '',
       showUpload2: false,
       showUpload: false,
       siteId: '',
@@ -420,9 +421,8 @@ export default {
   },
   methods: {
     loadingTable() {
-      getCheckInfoBySchedule({
-        sitename: this.constructionSiteName,
-        status: this.checkCode
+      getInfoByWarnType({
+        warnType: this.selectWarnType
       }).then(response => {
         if(response.data.code === 200) {
           this.historyRecord = response.data.rows;
@@ -430,8 +430,8 @@ export default {
       })
     },
     refreshTable() {
-      getCheckInfoBySchedule({
-        sitename: this.constructionSiteName
+      getInfoByWarnType({
+        warnType: this.selectWarnType
       }).then(response => {
         if(response.data.code === 200) {
           this.historyRecord = response.data.rows;
@@ -441,13 +441,15 @@ export default {
     handleCurrentChange(val) {
       this.currentPage = val;
     },
+    getType(e) {
+      this.selectWarnType = e
+    },
     goBack() {
       this.$router.go(-1);
     },
     sumbitFilter(formName) {
-      getCheckInfoBySchedule({
-        sitename: this.constructionSiteName,
-        status: this.form.processStatus
+      getInfoByWarnType({
+        warnType: this.selectWarnType
       }).then(response => {
         if(response.data.code === 200) {
           this.historyRecord = response.data.rows;
@@ -456,8 +458,8 @@ export default {
     },
     resetForm(formName) {
       // this.$refs[formName].resetFields();
-      this.form.processStatus = null;
-      this.refreshTable();
+      this.selectWarnType = ''
+      this.getDevHistory();
     },
     
     getDevHistory() {
