@@ -613,10 +613,10 @@
                     <el-form-item
                       label-width="130px"
                       label="检查项"
-                      :prop="'form.monthChild.' + index + '.firstCode'"
+                      :prop="'form.monthChild.' + index + '.firstcode'"
                       :rules="{required: true, message: '检查项不能为空', trigger: 'blur'}"
                     >
-                      <el-input v-model="item.firstCode" style="width: 250px"></el-input>
+                      <el-input v-model="item.firstcode" style="width: 250px"></el-input>
                     </el-form-item>
                   </el-col>
                 </el-row>
@@ -625,24 +625,24 @@
                     <el-form-item
                       label-width="130px"
                       label="检查子项"
-                      :prop="'form.monthChild.' + index + '.secondCode'"
+                      :prop="'form.monthChild.' + index + '.secondcode'"
                       :rules="{
               required: true, message: '检查子项不能为空', trigger: 'blur'
               }"
                     >
-                      <el-input v-model="item.secondCode" style="width: 350px"></el-input>
+                      <el-input v-model="item.secondcode" style="width: 350px"></el-input>
                     </el-form-item>
                   </el-col>
                   <el-col :span="10">
                     <el-form-item
                       label-width="130px"
                       label="检查部位及内容"
-                      :prop="'form.monthChild.' + index + '.threeCode'"
+                      :prop="'form.monthChild.' + index + '.threecode'"
                       :rules="{
               required: true, message: '检查部位及内容不能为空', trigger: 'blur'
               }"
                     >
-                      <el-input v-model="item.threeCode" ></el-input>
+                      <el-input v-model="item.threecode" ></el-input>
                     </el-form-item>
                   </el-col>
                   <el-col :span="2">
@@ -666,12 +666,12 @@
                     <el-form-item
                       label-width="130px"
                       label="所扣分值"
-                      :prop="'form.monthChild.' + index + '.checkCode'"
+                      :prop="'form.monthChild.' + index + '.checkcode'"
                       :rules="{
               required: true, message: '所扣分值不能为空', trigger: 'blur'
               }"
                     >
-                      <el-input v-model="item.checkCode" ></el-input>
+                      <el-input v-model="item.checkcode" ></el-input>
                     </el-form-item>
                   </el-col>
                 </el-row>
@@ -855,11 +855,11 @@
       addItem () {
         this.form.monthChild.push({
           diccode: null,
-          firstCode: '',
-          secondCode:'',
-          threeCode:'',
-          fourCode:'',
-          checkCode:'',
+          firstcode: '',
+          secondcode:'',
+          threecode:'',
+          fourcode:'',
+          checkcode:'',
         })
         this.getTreeselect()
       },
@@ -871,11 +871,11 @@
           // console.log(res.data.data)
           if (res.data.code === 200) {
             this.form.monthChild[index].diccode = res.data.data.diccode
-            this.form.monthChild[index].firstCode = res.data.data.firstcode
-            this.form.monthChild[index].secondCode = res.data.data.secondcode
-            this.form.monthChild[index].threeCode = res.data.data.threecode
-            this.form.monthChild[index].fourCode = res.data.data.fourcode
-            this.form.monthChild[index].checkCode = res.data.data.checkcode
+            this.form.monthChild[index].firstcode = res.data.data.firstcode
+            this.form.monthChild[index].secondcode = res.data.data.secondcode
+            this.form.monthChild[index].threecode = res.data.data.threecode
+            this.form.monthChild[index].fourcode = res.data.data.fourcode
+            this.form.monthChild[index].checkcode = res.data.data.checkcode
           }
           // this.form.monthChild[index] = res.data.data
 

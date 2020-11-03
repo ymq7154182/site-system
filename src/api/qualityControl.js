@@ -141,3 +141,11 @@ export function getTreedict(data) {
     method: 'get',
   })
 }
+
+export function getInfoByWarnType(data) {
+  return request({
+    url: 'device/deviceCheck/list',
+    method: 'get',
+    params: data
+  })
+}
