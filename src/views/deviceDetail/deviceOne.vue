@@ -1295,7 +1295,138 @@
       <!--</div>-->
     <!--</el-dialog>-->
     <el-dialog :visible.sync="view1" title="查看详情">
-      <table class="tableClass">
+      <el-form>
+        <el-row>
+          <el-col :span="12">
+           <el-form-item label="ID" prop="id" label-width="120px">
+              <el-input v-model="detail1.id" placeholder="请输入工地编号" readonly='true'/>
+            </el-form-item>
+          </el-col>
+          <el-col :span="12">
+           <el-form-item label="安装单位负责人" prop="checkUser" label-width="120px">
+              <el-input v-model="detail1.checkUser" placeholder="请输入工地编号" readonly='true'/>
+            </el-form-item>
+          </el-col>
+        </el-row>
+
+        <el-row>
+          <el-col :span="12">
+           <el-form-item label="安装单位自检意见" prop="checkContent" label-width="120px">
+              <el-input v-model="detail1.checkContent" placeholder="请输入工地编号" readonly='true'/>
+            </el-form-item>
+          </el-col>
+          <el-col :span="12">
+           <el-form-item label="检查时间" prop="checkTime" label-width="120px">
+              <el-input v-model="detail1.checkTime" placeholder="请输入工地编号" readonly='true'/>
+            </el-form-item>
+          </el-col>
+        </el-row>
+
+        <el-row>
+          <el-col :span="12">
+           <el-form-item label="检查填写时间" prop="checkWriteTime" label-width="120px">
+              <el-input v-model="detail1.checkWriteTime" placeholder="请输入工地编号" readonly='true'/>
+            </el-form-item>
+          </el-col>
+          <el-col :span="12">
+           <el-form-item label="安装单位技术负责人" prop="installUser" label-width="120px">
+              <el-input v-model="detail1.installUser" placeholder="请输入工地编号" readonly='true'/>
+            </el-form-item>
+          </el-col>
+        </el-row>
+
+        <el-row>
+          <el-col :span="12">
+           <el-form-item label="安装单位安全员、机管" prop="installUserAqjg" label-width="120px">
+              <el-input v-model="detail1.installUserAqjg" placeholder="请输入工地编号" readonly='true'/>
+            </el-form-item>
+          </el-col>
+          <el-col :span="12">
+           <el-form-item label="安装班组长" prop="installUserZc" label-width="120px">
+              <el-input v-model="detail1.installUserZc" placeholder="请输入工地编号" readonly='true'/>
+            </el-form-item>
+          </el-col>
+        </el-row>
+
+        <el-row>
+          <el-col :span="12">
+           <el-form-item label="机组人员" prop="installUserJzry" label-width="120px">
+              <el-input v-model="detail1.installUserJzry" placeholder="请输入工地编号" readonly='true'/>
+            </el-form-item>
+          </el-col>
+          <el-col :span="12">
+           <el-form-item label="填写时间" prop="writeTime" label-width="120px">
+              <el-input v-model="detail1.writeTime" placeholder="请输入工地编号" readonly='true'/>
+            </el-form-item>
+          </el-col>
+        </el-row>
+
+        <el-row>
+          <el-col :span="12">
+           <el-form-item label="起升高度" prop="leftHeight" label-width="120px">
+              <el-input v-model="detail1.leftHeight" placeholder="请输入工地编号" readonly='true'/>
+            </el-form-item>
+          </el-col>
+          <el-col :span="12">
+           <el-form-item label="塔高" prop="towerHeight" label-width="120px">
+              <el-input v-model="detail1.towerHeight" placeholder="请输入工地编号" readonly='true'/>
+            </el-form-item>
+          </el-col>
+        </el-row>
+
+        <el-row>
+          <el-col :span="12">
+           <el-form-item label="安装高度" prop="installHeigth" label-width="120px">
+              <el-input v-model="detail1.installHeigth" placeholder="请输入工地编号" readonly='true'/>
+            </el-form-item>
+          </el-col>
+          <el-col :span="12">
+           <el-form-item label="最大载重量" prop="maxLoad" label-width="120px">
+              <el-input v-model="detail1.maxLoad" placeholder="请输入工地编号" readonly='true'/>
+            </el-form-item>
+          </el-col>
+        </el-row>
+
+        <el-row>
+          <el-col :span="12">
+           <el-form-item label="安装高度" prop="installHeigth" label-width="120px">
+              <el-input v-model="detail1.installHeigth" placeholder="请输入工地编号" readonly='true'/>
+            </el-form-item>
+          </el-col>
+          <el-col :span="12">
+           <el-form-item label="最大载重量" prop="maxLoad" label-width="120px">
+              <el-input v-model="detail1.maxLoad" placeholder="请输入工地编号" readonly='true'/>
+            </el-form-item>
+          </el-col>
+        </el-row>
+
+        <el-row>
+          <el-col :span="12">
+           <el-form-item label="最大起重量" prop="maxCapacity" label-width="120px">
+              <el-input v-model="detail1.maxCapacity" placeholder="请输入工地编号" readonly='true'/>
+            </el-form-item>
+          </el-col>
+          <el-col :span="12">
+           <el-form-item label="幅度" prop="maxRange" label-width="120px">
+              <el-input v-model="detail1.maxRange" placeholder="请输入工地编号" readonly='true'/>
+            </el-form-item>
+          </el-col>
+        </el-row>
+
+        <el-row>
+          <el-col :span="12">
+           <el-form-item label="最大起重量" prop="maxCapacity" label-width="120px">
+              <el-input v-model="detail1.maxCapacity" placeholder="请输入工地编号" readonly='true'/>
+            </el-form-item>
+          </el-col>
+          <el-col :span="12">
+           <el-form-item label="幅度" prop="maxRange" label-width="120px">
+              <el-input v-model="detail1.maxRange" placeholder="请输入工地编号" readonly='true'/>
+            </el-form-item>
+          </el-col>
+        </el-row>
+      </el-form>
+      <!-- <table class="tableClass">
         <tr>
           <td class="tableHead">
             ID
@@ -1424,10 +1555,102 @@
             {{ detail1.maxRange }}
           </td>
         </tr>
-      </table>
+      </table> -->
     </el-dialog>
     <el-dialog :visible.sync="view2" title="查看详情">
-      <table class="tableClass">
+      <el-form>
+        <el-row>
+          <el-col :span="12">
+           <el-form-item label="设备编号" prop="devId" label-width="120px">
+              <el-input v-model="detail2.devId" placeholder="请输入工地编号" readonly='true'/>
+            </el-form-item>
+          </el-col>
+          <el-col :span="12">
+           <el-form-item label="施工单位意见" prop="opinionSg" label-width="120px">
+              <el-input v-model="detail2.opinionSg" placeholder="请输入工地编号" readonly='true'/>
+            </el-form-item>
+          </el-col>
+        </el-row>
+
+        <el-row>
+          <el-col :span="12">
+           <el-form-item label="施工单位项目经理签字" prop="userSg" label-width="120px">
+              <el-input v-model="detail2.userSg" placeholder="请输入工地编号" readonly='true'/>
+            </el-form-item>
+          </el-col>
+          <el-col :span="12">
+           <el-form-item label="时间" prop="timeSg" label-width="120px">
+              <el-input v-model="detail2.timeSg" placeholder="请输入工地编号" readonly='true'/>
+            </el-form-item>
+          </el-col>
+        </el-row>
+
+        <el-row>
+          <el-col :span="12">
+           <el-form-item label="监理单位意见" prop="opinionJl" label-width="120px">
+              <el-input v-model="detail2.opinionJl" placeholder="请输入工地编号" readonly='true'/>
+            </el-form-item>
+          </el-col>
+          <el-col :span="12">
+           <el-form-item label="监理单位项目经理签字" prop="userJl" label-width="120px">
+              <el-input v-model="detail2.userJl" placeholder="请输入工地编号" readonly='true'/>
+            </el-form-item>
+          </el-col>
+        </el-row>
+
+        <el-row>
+          <el-col :span="12">
+           <el-form-item label="上报时间时间" prop="reporttime" label-width="120px">
+              <el-input v-model="detail2.reporttime" placeholder="请输入工地编号" readonly='true'/>
+            </el-form-item>
+          </el-col>
+          <el-col :span="12">
+           <el-form-item label="起升高度" prop="leftHeight" label-width="120px">
+              <el-input v-model="detail2.leftHeight" placeholder="请输入工地编号" readonly='true'/>
+            </el-form-item>
+          </el-col>
+        </el-row>
+
+        <el-row>
+          <el-col :span="12">
+           <el-form-item label="塔高" prop="towerHeight" label-width="120px">
+              <el-input v-model="detail2.towerHeight" placeholder="请输入工地编号" readonly='true'/>
+            </el-form-item>
+          </el-col>
+          <el-col :span="12">
+           <el-form-item label="安装高度" prop="installHeigth" label-width="120px">
+              <el-input v-model="detail2.installHeigth" placeholder="请输入工地编号" readonly='true'/>
+            </el-form-item>
+          </el-col>
+        </el-row>
+
+        <el-row>
+          <el-col :span="12">
+           <el-form-item label="最大载重量" prop="maxLoad" label-width="120px">
+              <el-input v-model="detail2.maxLoad" placeholder="请输入工地编号" readonly='true'/>
+            </el-form-item>
+          </el-col>
+          <el-col :span="12">
+           <el-form-item label="最大起重量" prop="maxCapacity" label-width="120px">
+              <el-input v-model="detail2.maxCapacity" placeholder="请输入工地编号" readonly='true'/>
+            </el-form-item>
+          </el-col>
+        </el-row>
+
+        <el-row>
+          <el-col :span="12">
+           <el-form-item label="幅度" prop="maxRange" label-width="120px">
+              <el-input v-model="detail2.maxRange" placeholder="请输入工地编号" readonly='true'/>
+            </el-form-item>
+          </el-col>
+          <el-col :span="12">
+           <el-form-item label="最大起重量" prop="maxCapacity" label-width="120px">
+              <el-input v-model="detail2.maxCapacity" placeholder="请输入工地编号" readonly='true'/>
+            </el-form-item>
+          </el-col>
+        </el-row>
+      </el-form>
+      <!-- <table class="tableClass">
         <tr>
           <td class="tableHead">
             ID
@@ -1532,10 +1755,150 @@
             {{ detail2.maxRange }}
           </td>
         </tr>
-      </table>
+      </table> -->
     </el-dialog>
     <el-dialog :visible.sync="view3" title="查看详情">
-      <table class="tableClass">
+      <el-form>
+        <el-row>
+          <el-col :span="12">
+           <el-form-item label="设备编号" prop="devid" label-width="120px">
+              <el-input v-model="detail3.devid" placeholder="请输入工地编号" readonly='true'/>
+            </el-form-item>
+          </el-col>
+          <el-col :span="12">
+           <el-form-item label="附着道数" prop="leftHeight" label-width="120px">
+              <el-input v-model="detail3.leftHeight" placeholder="请输入工地编号" readonly='true'/>
+            </el-form-item>
+          </el-col>
+        </el-row>
+
+        <el-row>
+          <el-col :span="12">
+           <el-form-item label="当前已安装附着" prop="towerHeight" label-width="120px">
+              <el-input v-model="detail3.towerHeight" placeholder="请输入工地编号" readonly='true'/>
+            </el-form-item>
+          </el-col>
+          <el-col :span="12">
+           <el-form-item label="当前标准节" prop="installHeigth" label-width="120px">
+              <el-input v-model="detail3.installHeigth" placeholder="请输入工地编号" readonly='true'/>
+            </el-form-item>
+          </el-col>
+        </el-row>
+
+        <el-row>
+          <el-col :span="12">
+           <el-form-item label="新安装标准节" prop="maxLoad" label-width="120px">
+              <el-input v-model="detail3.maxLoad" placeholder="请输入工地编号" readonly='true'/>
+            </el-form-item>
+          </el-col>
+          <el-col :span="12">
+           <el-form-item label="企业id" prop="entid" label-width="120px">
+              <el-input v-model="detail3.entid" placeholder="请输入工地编号" readonly='true'/>
+            </el-form-item>
+          </el-col>
+        </el-row>
+
+        <el-row>
+          <el-col :span="12">
+           <el-form-item label="设备使用ID" prop="useId" label-width="120px">
+              <el-input v-model="detail3.useId" placeholder="请输入工地编号" readonly='true'/>
+            </el-form-item>
+          </el-col>
+          <el-col :span="12">
+           <el-form-item label="安装时间" prop="installtime" label-width="120px">
+              <el-input v-model="detail3.installtime" placeholder="请输入工地编号" readonly='true'/>
+            </el-form-item>
+          </el-col>
+        </el-row>
+
+        <el-row>
+          <el-col :span="12">
+           <el-form-item label="顶升后高度" prop="checkTime" label-width="120px">
+              <el-input v-model="detail3.checkTime" placeholder="请输入工地编号" readonly='true'/>
+            </el-form-item>
+          </el-col>
+          <el-col :span="12">
+           <el-form-item label="附着间距" prop="spacing" label-width="120px">
+              <el-input v-model="detail3.spacing" placeholder="请输入工地编号" readonly='true'/>
+            </el-form-item>
+          </el-col>
+        </el-row>
+
+        <el-row>
+          <el-col :span="12">
+           <el-form-item label="监理单位审核日期" prop="installUserZcs" label-width="120px">
+              <el-input v-model="detail3.installUserZcs" placeholder="请输入工地编号" readonly='true'/>
+            </el-form-item>
+          </el-col>
+          <el-col :span="12">
+           <el-form-item label="上报时间" prop="reporttime" label-width="120px">
+              <el-input v-model="detail3.reporttime" placeholder="请输入工地编号" readonly='true'/>
+            </el-form-item>
+          </el-col>
+        </el-row>
+
+        <el-row>
+          <el-col :span="12">
+           <el-form-item label="与建筑物水平中心距离" prop="maxCapacity" label-width="120px">
+              <el-input v-model="detail3.maxCapacity" placeholder="请输入工地编号" readonly='true'/>
+            </el-form-item>
+          </el-col>
+          <el-col :span="12">
+           <el-form-item label="原安装臂铰点（自由端）高度" prop="maxRange" label-width="120px">
+              <el-input v-model="detail3.maxRange" placeholder="请输入工地编号" readonly='true'/>
+            </el-form-item>
+          </el-col>
+        </el-row>
+
+        <el-row>
+          <el-col :span="12">
+           <el-form-item label="是否附着" prop="checkUser" label-width="120px">
+              <el-input v-model="detail3.checkUser" placeholder="请输入工地编号" readonly='true'/>
+            </el-form-item>
+          </el-col>
+          <el-col :span="12">
+           <el-form-item label="安装单位负责人" prop="installmanager" label-width="120px">
+              <el-input v-model="detail3.installmanager" placeholder="请输入工地编号" readonly='true'/>
+            </el-form-item>
+          </el-col>
+        </el-row>
+
+        <el-row>
+          <el-col :span="12">
+           <el-form-item label="联系电话" prop="installphone" label-width="120px">
+              <el-input v-model="detail3.installphone" placeholder="请输入工地编号" readonly='true'/>
+            </el-form-item>
+          </el-col>
+          <el-col :span="12">
+           <el-form-item label="现场专业技术人员" prop="checkContent" label-width="120px">
+              <el-input v-model="detail3.checkContent" placeholder="请输入工地编号" readonly='true'/>
+            </el-form-item>
+          </el-col>
+        </el-row>
+
+        <el-row>
+          <el-col :span="12">
+           <el-form-item label="施工总承包单位审核意见" prop="checkWriteTime" label-width="120px">
+              <el-input v-model="detail3.checkWriteTime" placeholder="请输入工地编号" readonly='true'/>
+            </el-form-item>
+          </el-col>
+          <el-col :span="12">
+           <el-form-item label="监理单位审核意见" prop="installUserAqjg" label-width="120px">
+              <el-input v-model="detail3.installUserAqjg" placeholder="请输入工地编号" readonly='true'/>
+            </el-form-item>
+          </el-col>
+        </el-row>
+
+        <el-row>
+          <el-col :span="24">
+           <el-form-item label="施工总承包审核日期" prop="installUser" label-width="160px">
+              <el-input v-model="detail3.installUser" placeholder="请输入工地编号" readonly='true'/>
+            </el-form-item>
+          </el-col>
+          
+        </el-row>
+      </el-form>
+      <!-- <table class="tableClass">
         <tr>
           <td class="tableHead">
             ID
@@ -1704,10 +2067,137 @@
             {{ detail3.installUser }}
           </td>
         </tr>
-      </table>
+      </table> -->
     </el-dialog>
     <el-dialog :visible.sync="view4" title="查看详情">
-      <table class="tableClass">
+      <el-form>
+        <el-row>
+          <el-col :span="12">
+           <el-form-item label="设备编号" prop="devid" label-width="120px">
+              <el-input v-model="detail4.devid" placeholder="请输入工地编号" readonly='true'/>
+            </el-form-item>
+          </el-col>
+          <el-col :span="12">
+           <el-form-item label="附着道数" prop="leftHeight" label-width="120px">
+              <el-input v-model="detail4.leftHeight" placeholder="请输入工地编号" readonly='true'/>
+            </el-form-item>
+          </el-col>
+        </el-row>
+
+        <el-row>
+          <el-col :span="12">
+           <el-form-item label="当前已安装附着" prop="towerHeight" label-width="120px">
+              <el-input v-model="detail4.towerHeight" placeholder="请输入工地编号" readonly='true'/>
+            </el-form-item>
+          </el-col>
+          <el-col :span="12">
+           <el-form-item label="原附着点处高度" prop="installHeigth" label-width="120px">
+              <el-input v-model="detail4.installHeigth" placeholder="请输入工地编号" readonly='true'/>
+            </el-form-item>
+          </el-col>
+        </el-row>
+
+        <el-row>
+          <el-col :span="12">
+           <el-form-item label="新安装附着" prop="maxLoad" label-width="120px">
+              <el-input v-model="detail4.maxLoad" placeholder="请输入工地编号" readonly='true'/>
+            </el-form-item>
+          </el-col>
+          <el-col :span="12">
+           <el-form-item label="安装时间" prop="installtime" label-width="120px">
+              <el-input v-model="detail4.installtime" placeholder="请输入工地编号" readonly='true'/>
+            </el-form-item>
+          </el-col>
+        </el-row>
+
+         <el-row>
+          <el-col :span="12">
+           <el-form-item label="新附着点处高度" prop="checkTime" label-width="120px">
+              <el-input v-model="detail4.checkTime" placeholder="请输入工地编号" readonly='true'/>
+            </el-form-item>
+          </el-col>
+          <el-col :span="12">
+           <el-form-item label="附着间距" prop="spacing" label-width="120px">
+              <el-input v-model="detail4.spacing" placeholder="请输入工地编号" readonly='true'/>
+            </el-form-item>
+          </el-col>
+        </el-row>
+
+        <el-row>
+          <el-col :span="12">
+           <el-form-item label="监理单位审核日期" prop="installUserZcs" label-width="120px">
+              <el-input v-model="detail4.installUserZcs" placeholder="请输入工地编号" readonly='true'/>
+            </el-form-item>
+          </el-col>
+          <el-col :span="12">
+           <el-form-item label="上报时间" prop="reporttime" label-width="120px">
+              <el-input v-model="detail4.reporttime" placeholder="请输入工地编号" readonly='true'/>
+            </el-form-item>
+          </el-col>
+        </el-row>
+
+        <el-row>
+          <el-col :span="12">
+           <el-form-item label="与建筑物水平中心距离" prop="maxCapacity" label-width="120px">
+              <el-input v-model="detail4.maxCapacity" placeholder="请输入工地编号" readonly='true'/>
+            </el-form-item>
+          </el-col>
+          <el-col :span="12">
+           <el-form-item label="原安装臂铰点（自由端）高度" prop="maxRange" label-width="120px">
+              <el-input v-model="detail4.maxRange" placeholder="请输入工地编号" readonly='true'/>
+            </el-form-item>
+          </el-col>
+        </el-row>
+
+        <el-row>
+          <el-col :span="12">
+           <el-form-item label="是否原厂附着" prop="checkUser" label-width="120px">
+              <el-input v-model="detail4.checkUser" placeholder="请输入工地编号" readonly='true'/>
+            </el-form-item>
+          </el-col>
+          <el-col :span="12">
+           <el-form-item label="安装单位负责人" prop="installmanager" label-width="120px">
+              <el-input v-model="detail4.installmanager" placeholder="请输入工地编号" readonly='true'/>
+            </el-form-item>
+          </el-col>
+        </el-row>
+
+        <el-row>
+          <el-col :span="12">
+           <el-form-item label="联系电话" prop="installphone" label-width="120px">
+              <el-input v-model="detail4.installphone" placeholder="请输入工地编号" readonly='true'/>
+            </el-form-item>
+          </el-col>
+          <el-col :span="12">
+           <el-form-item label="现场专业技术人员" prop="checkContent" label-width="120px">
+              <el-input v-model="detail4.checkContent" placeholder="请输入工地编号" readonly='true'/>
+            </el-form-item>
+          </el-col>
+        </el-row>
+
+        <el-row>
+          <el-col :span="12">
+           <el-form-item label="施工总承包单位审核意见" prop="checkWriteTime" label-width="120px">
+              <el-input v-model="detail4.checkWriteTime" placeholder="请输入工地编号" readonly='true'/>
+            </el-form-item>
+          </el-col>
+          <el-col :span="12">
+           <el-form-item label="监理单位审核意见" prop="installUserAqjg" label-width="120px">
+              <el-input v-model="detail4.installUserAqjg" placeholder="请输入工地编号" readonly='true'/>
+            </el-form-item>
+          </el-col>
+        </el-row>
+
+        <el-row>
+          <el-col :span="24">
+           <el-form-item label="施工总承包审核日期" prop="installUser" label-width="160px">
+              <el-input v-model="detail4.installUser" placeholder="请输入工地编号" readonly='true'/>
+            </el-form-item>
+          </el-col>
+         
+        </el-row>
+      </el-form>
+      <!-- <table class="tableClass">
         <tr>
           <td class="tableHead">
             ID
@@ -1860,10 +2350,111 @@
             {{ detail4.installUser }}
           </td>
         </tr>
-      </table>
+      </table> -->
     </el-dialog>
     <el-dialog :visible.sync="view5" title="查看详情">
-      <table class="tableClass">
+      <el-form>
+        <el-row>
+          <el-col :span="12">
+           <el-form-item label="设备编号" prop="devid" label-width="120px">
+              <el-input v-model="detail5.devid" placeholder="请输入工地编号" readonly='true'/>
+            </el-form-item>
+          </el-col>
+          <el-col :span="12">
+           <el-form-item label="起升高度" prop="leftHeight" label-width="120px">
+              <el-input v-model="detail5.leftHeight" placeholder="请输入工地编号" readonly='true'/>
+            </el-form-item>
+          </el-col>
+        </el-row>
+
+        <el-row>
+          <el-col :span="12">
+           <el-form-item label="塔高" prop="towerHeight" label-width="120px">
+              <el-input v-model="detail5.towerHeight" placeholder="请输入工地编号" readonly='true'/>
+            </el-form-item>
+          </el-col>
+          <el-col :span="12">
+           <el-form-item label="安装高度" prop="installHeigth" label-width="120px">
+              <el-input v-model="detail5.installHeigth" placeholder="请输入工地编号" readonly='true'/>
+            </el-form-item>
+          </el-col>
+        </el-row>
+
+        <el-row>
+          <el-col :span="12">
+           <el-form-item label="最大载重量" prop="maxLoad" label-width="120px">
+              <el-input v-model="detail5.maxLoad" placeholder="请输入工地编号" readonly='true'/>
+            </el-form-item>
+          </el-col>
+          <el-col :span="12">
+           <el-form-item label="检查时间" prop="checkTime" label-width="120px">
+              <el-input v-model="detail5.checkTime" placeholder="请输入工地编号" readonly='true'/>
+            </el-form-item>
+          </el-col>
+        </el-row>
+
+        <el-row>
+          <el-col :span="12">
+           <el-form-item label="最大起重量" prop="maxCapacity" label-width="120px">
+              <el-input v-model="detail5.maxCapacity" placeholder="请输入工地编号" readonly='true'/>
+            </el-form-item>
+          </el-col>
+          <el-col :span="12">
+           <el-form-item label="幅度" prop="maxRange" label-width="120px">
+              <el-input v-model="detail5.maxRange" placeholder="请输入工地编号" readonly='true'/>
+            </el-form-item>
+          </el-col>
+        </el-row>
+
+        <el-row>
+          <el-col :span="12">
+           <el-form-item label="附着道数" prop="channels" label-width="120px">
+              <el-input v-model="detail5.channels" placeholder="请输入工地编号" readonly='true'/>
+            </el-form-item>
+          </el-col>
+          <el-col :span="12">
+           <el-form-item label="检查结果" prop="checkResult" label-width="120px">
+              <el-input v-model="detail5.checkResult" placeholder="请输入工地编号" readonly='true'/>
+            </el-form-item>
+          </el-col>
+        </el-row>
+
+        <el-row>
+          <el-col :span="12">
+           <el-form-item label="使用单位意见" prop="userContent" label-width="120px">
+              <el-input v-model="detail5.userContent" placeholder="请输入工地编号" readonly='true'/>
+            </el-form-item>
+          </el-col>
+          <el-col :span="12">
+           <el-form-item label="使用单位填写时间" prop="userTime" label-width="120px">
+              <el-input v-model="detail5.userTime" placeholder="请输入工地编号" readonly='true'/>
+            </el-form-item>
+          </el-col>
+        </el-row>
+
+        <el-row>
+          <el-col :span="12">
+           <el-form-item label="检查人员" prop="checkUser" label-width="120px">
+              <el-input v-model="detail5.checkUser" placeholder="请输入工地编号" readonly='true'/>
+            </el-form-item>
+          </el-col>
+          <el-col :span="12">
+           <el-form-item label="结论" prop="conclusion" label-width="120px">
+              <el-input v-model="detail5.conclusion" placeholder="请输入工地编号" readonly='true'/>
+            </el-form-item>
+          </el-col>
+        </el-row>
+
+        <el-row>
+          <el-col :span="24">
+           <el-form-item label="上报时间" prop="reporttime" label-width="120px">
+              <el-input v-model="detail5.reporttime" placeholder="请输入工地编号" readonly='true'/>
+            </el-form-item>
+          </el-col>
+          
+        </el-row>
+      </el-form>
+      <!-- <table class="tableClass">
         <tr>
           <td class="tableHead">
             ID
@@ -1984,10 +2575,76 @@
             {{ detail5.reporttime }}
           </td>
         </tr>
-      </table>
+      </table> -->
     </el-dialog>
     <el-dialog :visible.sync="view6" title="查看详情">
-      <table class="tableClass">
+      <el-form>
+        <el-row>
+          <el-col :span="12">
+           <el-form-item label="设备编号" prop="devid" label-width="120px">
+              <el-input v-model="detail6.devid" placeholder="请输入工地编号" readonly='true'/>
+            </el-form-item>
+          </el-col>
+          <el-col :span="12">
+           <el-form-item label="维保时间" prop="weibaotime" label-width="120px">
+              <el-input v-model="detail6.weibaotime" placeholder="请输入工地编号" readonly='true'/>
+            </el-form-item>
+          </el-col>
+        </el-row>
+
+        <el-row>
+          <el-col :span="12">
+           <el-form-item label="运转台时" prop="maxcapacity" label-width="120px">
+              <el-input v-model="detail6.maxcapacity" placeholder="请输入工地编号" readonly='true'/>
+            </el-form-item>
+          </el-col>
+          <el-col :span="12">
+           <el-form-item label="更换主要零部件" prop="maxrange" label-width="120px">
+              <el-input v-model="detail6.maxrange" placeholder="请输入工地编号" readonly='true'/>
+            </el-form-item>
+          </el-col>
+        </el-row>
+
+        <el-row>
+          <el-col :span="12">
+           <el-form-item label="维管负责人" prop="leftheight" label-width="120px">
+              <el-input v-model="detail6.leftheight" placeholder="请输入工地编号" readonly='true'/>
+            </el-form-item>
+          </el-col>
+          <el-col :span="12">
+           <el-form-item label="维保人员" prop="towerheight" label-width="120px">
+              <el-input v-model="detail6.towerheight" placeholder="请输入工地编号" readonly='true'/>
+            </el-form-item>
+          </el-col>
+        </el-row>
+
+        <el-row>
+          <el-col :span="12">
+           <el-form-item label="维修（保养）内容" prop="installheigth" label-width="120px">
+              <el-input v-model="detail6.installheigth" placeholder="请输入工地编号" readonly='true'/>
+            </el-form-item>
+          </el-col>
+          <el-col :span="12">
+           <el-form-item label="监理单位审核意见" prop="installuseraqjg" label-width="120px">
+              <el-input v-model="detail6.installuseraqjg" placeholder="请输入工地编号" readonly='true'/>
+            </el-form-item>
+          </el-col>
+        </el-row>
+
+        <el-row>
+          <el-col :span="12">
+           <el-form-item label="监理单位审核日期" prop="installuserzc" label-width="120px">
+              <el-input v-model="detail6.installuserzc" placeholder="请输入工地编号" readonly='true'/>
+            </el-form-item>
+          </el-col>
+          <el-col :span="12">
+           <el-form-item label="上报时间" prop="reporttime" label-width="120px">
+              <el-input v-model="detail6.reporttime" placeholder="请输入工地编号" readonly='true'/>
+            </el-form-item>
+          </el-col>
+        </el-row>
+      </el-form>
+      <!-- <table class="tableClass">
         <tr>
           <td class="tableHead">
             ID
@@ -2068,7 +2725,7 @@
             {{ detail6.reporttime }}
           </td>
         </tr>
-      </table>
+      </table> -->
     </el-dialog>
     <el-dialog :visible.sync="showAdd3" title="顶升加节自检" width="60%">
       <el-form v-model="addForm3.dsData" ref="addForm3" label-width="200px">
