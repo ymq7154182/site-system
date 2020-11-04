@@ -182,112 +182,219 @@
         <!--<el-button @click="resetForm('uploadInfo')">重置</el-button>-->
         <!--</el-form-item>-->
         <!--</el-form>-->
+
         <el-form :model="uploadInfo"  ref="uploadInfo" label-width="1.5rem">
-          <el-form-item label="设备id:" :rules="[{ required: true, message: '内容不能为空'},{ type: 'number', message: 'id必须为数字值'}]" prop="guid">
+          <el-row>
+            <el-col :span="12">
+              <el-form-item label="设备id:" prop="guid">
+                 <el-input v-model="uploadInfo.guid"  readonly='true'/>
+              </el-form-item>
+            </el-col>
+            <el-col :span="12">
+              <el-form-item label="黑匣子厂商编号:" prop="fsn">
+                 <el-input v-model="uploadInfo.fsn"  readonly='true'/>
+              </el-form-item>
+            </el-col>
+          </el-row>
 
-            <span>{{uploadInfo.guid}}</span>
-          </el-form-item>
-          <el-form-item label="黑匣子厂商编号:"  prop="fsn">
-            <span>{{uploadInfo.fsn}}</span>
-          </el-form-item>
-          <el-form-item label="接口请求key:" prop="reqkey">
+          <el-row>
+            <el-col :span="12">
+              <el-form-item label="接口请求key:" prop="reqkey">
+                 <el-input v-model="uploadInfo.reqkey"  readonly='true'/>
+              </el-form-item>
+            </el-col>
+            <el-col :span="12">
+              <el-form-item label="黑匣子出厂编号:" prop="hoistBoxId">
+                 <el-input v-model="uploadInfo.hoistBoxId"  readonly='true'/>
+              </el-form-item>
+            </el-col>
+          </el-row>
 
-            <span>{{uploadInfo.reqkey}}</span>
-          </el-form-item>
-          <el-form-item label="黑匣子出厂编号:" prop="hoistBoxId">
-            <span>{{uploadInfo.hoistBoxId}}</span>
-          </el-form-item>
-          <el-form-item label="黑匣子备案编号:" prop="recordNumber">
-            <span>{{uploadInfo.recordNumber}}</span>
-          </el-form-item>
-          <el-form-item label="轿厢后门门锁状态:" prop="beforeLockState">
-            <span>{{uploadInfo.beforeLockState}}</span>
-          </el-form-item>
-          <el-form-item label="轿厢后门门锁状态:" prop="afterLockState">
+          <el-row>
+            <el-col :span="12">
+              <el-form-item label="黑匣子备案编号:" prop="recordNumber">
+                 <el-input v-model="uploadInfo.recordNumber"  readonly='true'/>
+              </el-form-item>
+            </el-col>
+            <el-col :span="12">
+              <el-form-item label="轿厢后门门锁状态:" prop="beforeLockState">
+                 <el-input v-model="uploadInfo.beforeLockState"  readonly='true'/>
+              </el-form-item>
+            </el-col>
+          </el-row>
 
-            <span>{{uploadInfo.afterLockState}}</span>
-          </el-form-item>
-          <el-form-item label="倾角1（倾斜度1）:" prop="realTimeGradientOne">
-            <span>{{uploadInfo.realTimeGradientOne}}</span>
-          </el-form-item>
-          <el-form-item label="倾角2（倾斜度2）:" prop="realTimeGradientTwo">
+          <el-row>
+            <el-col :span="12">
+              <el-form-item label="轿厢后门门锁状态:" prop="afterLockState">
+                 <el-input v-model="uploadInfo.afterLockState"  readonly='true'/>
+              </el-form-item>
+            </el-col>
+            <el-col :span="12">
+              <el-form-item label="倾角1（倾斜度1）:" prop="realTimeGradientOne">
+                 <el-input v-model="uploadInfo.realTimeGradientOne"  readonly='true'/>
+              </el-form-item>
+            </el-col>
+          </el-row>
 
-            <span>{{uploadInfo.realTimeGradientTwo}}</span>
-          </el-form-item>
-          <el-form-item label="倾角1（倾斜百分比1）:" prop="tiltPercentageOne">
+          <el-row>
+            <el-col :span="12">
+              <el-form-item label="倾角2（倾斜度2）:" prop="realTimeGradientTwo">
+                 <el-input v-model="uploadInfo.realTimeGradientTwo"  readonly='true'/>
+              </el-form-item>
+            </el-col>
+            <el-col :span="12">
+              <el-form-item label="倾角1（倾斜百分比1）:" prop="tiltPercentageOne">
+                 <el-input v-model="uploadInfo.tiltPercentageOne"  readonly='true'/>
+              </el-form-item>
+            </el-col>
+          </el-row>
 
-            <span>{{uploadInfo.tiltPercentageOne}}</span>
-          </el-form-item>
-          <el-form-item label="倾角2（倾斜百分比1）:" prop="tiltPercentageTne">
-            <span>{{uploadInfo.tiltPercentageTne}}</span>
-          </el-form-item>
-          <el-form-item label="设备运行轿厢内人数:" prop="realTimeNumberOfPeople">
+          <el-row>
+            <el-col :span="12">
+              <el-form-item label="倾角2（倾斜百分比1）:" prop="tiltPercentageTne">
+                 <el-input v-model="uploadInfo.tiltPercentageTne"  readonly='true'/>
+              </el-form-item>
+            </el-col>
+            <el-col :span="12">
+              <el-form-item label="设备运行轿厢内人数:" prop="realTimeNumberOfPeople">
+                 <el-input v-model="uploadInfo.realTimeNumberOfPeople"  readonly='true'/>
+              </el-form-item>
+            </el-col>
+          </el-row>
 
-            <span>{{uploadInfo.realTimeNumberOfPeople}}</span>
-          </el-form-item>
-          <el-form-item label="运行速度:" prop="windSpeed">
+          <el-row>
+            <el-col :span="12">
+              <el-form-item label="运行速度:" prop="windSpeed">
+                 <el-input v-model="uploadInfo.windSpeed"  readonly='true'/>
+              </el-form-item>
+            </el-col>
+            <el-col :span="12">
+              <el-form-item label="运行方向:" prop="realTimeSpeedDirection">
+                 <el-input v-model="uploadInfo.realTimeSpeedDirection"  readonly='true'/>
+              </el-form-item>
+            </el-col>
+          </el-row>
 
-            <span>{{uploadInfo.windSpeed}}</span>
-          </el-form-item>
-          <el-form-item label="运行方向:" prop="realTimeSpeedDirection">
+          <el-row>
+            <el-col :span="12">
+              <el-form-item label="实时数据产生时间:" prop="happenTime">
+                 <el-input v-model="uploadInfo.happenTime"  readonly='true'/>
+              </el-form-item>
+            </el-col>
+            <el-col :span="12">
+              <el-form-item label="轿厢运行高度（m）:" prop="realTimeHeight">
+                 <el-input v-model="uploadInfo.realTimeHeight"  readonly='true'/>
+              </el-form-item>
+            </el-col>
+          </el-row>
 
-            <span>{{uploadInfo.realTimeSpeedDirection}}</span>
-          </el-form-item>
-          <el-form-item label="实时数据产生时间:" prop="happenTime">
+          <el-row>
+            <el-col :span="12">
+              <el-form-item label="轿厢运行高度百分比（%）:" prop="heightPercentage">
+                 <el-input v-model="uploadInfo.heightPercentage"  readonly='true'/>
+              </el-form-item>
+            </el-col>
+            <el-col :span="12">
+              <el-form-item label="轿厢当前运行重量百分比（%）:" prop="weightPercentage">
+                 <el-input v-model="uploadInfo.weightPercentage"  readonly='true'/>
+              </el-form-item>
+            </el-col>
+          </el-row>
 
-            <span>{{uploadInfo.happenTime}}</span>
-          </el-form-item>
-          <el-form-item label="轿厢运行高度（m）:" prop="realTimeHeight">
+          <el-row>
+            <el-col :span="12">
+              <el-form-item label="轿厢当前运行重量（t）:" prop="realTimeLiftingWeight">
+                 <el-input v-model="uploadInfo.realTimeLiftingWeight"  readonly='true'/>
+              </el-form-item>
+            </el-col>
+            <el-col :span="12">
+              <el-form-item label="设备运行状态:" prop="windState">
+                 <el-input v-model="uploadInfo.windState"  readonly='true'/>
+              </el-form-item>
+            </el-col>
+          </el-row>
 
-            <span>{{uploadInfo.realTimeHeight}}</span>
-          </el-form-item>
-          <el-form-item label="轿厢运行高度百分比（%）:" prop="heightPercentage">
-            <span>{{uploadInfo.heightPercentage}}</span>
-          </el-form-item>
-          <el-form-item label="轿厢当前运行重量百分比（%）:" prop="weightPercentage">
+          <el-row>
+            <el-col :span="12">
+              <el-form-item label="报警原因:" prop="hoistAlarmReason">
+                 <el-input v-model="uploadInfo.hoistAlarmReason"  readonly='true'/>
+              </el-form-item>
+            </el-col>
+            <el-col :span="12">
+              <el-form-item label="报警级别:" prop="hoistLevel">
+                 <el-input v-model="uploadInfo.hoistLevel"  readonly='true'/>
+              </el-form-item>
+            </el-col>
+          </el-row>
 
-            <span>{{uploadInfo.weightPercentage}}</span>
-          </el-form-item>
-          <el-form-item label="轿厢当前运行重量（t）:" prop="realTimeLiftingWeight">
+          <el-row>
+            <el-col :span="12">
+              <el-form-item label="驾驶人员姓名:" prop="driverName">
+                 <el-input v-model="uploadInfo.driverName"  readonly='true'/>
+              </el-form-item>
+            </el-col>
+            <el-col :span="12">
+              <el-form-item label="驾驶人员公民身份号码:" prop="driverIdcard">
+                 <el-input v-model="uploadInfo.driverIdcard"  readonly='true'/>
+              </el-form-item>
+            </el-col>
+          </el-row>
 
-            <span>{{uploadInfo.realTimeLiftingWeight}}</span>
-          </el-form-item>
-          <el-form-item label="设备运行状态:" prop="windState">
+          <el-row>
+            <el-col :span="12">
+              <el-form-item label="驾驶人员作业证编号:" prop="driverCertificateNumber">
+                 <el-input v-model="uploadInfo.driverCertificateNumber"  readonly='true'/>
+              </el-form-item>
+            </el-col>
+            <el-col :span="12">
+              <el-form-item label="驾驶人员身份认证结果:" prop="driverIdentificationState">
+                 <el-input v-model="uploadInfo.driverIdentificationState"  readonly='true'/>
+              </el-form-item>
+            </el-col>
+          </el-row>
 
-            <span>{{uploadInfo.windState}}</span>
-          </el-form-item>
-          <el-form-item label="报警原因:" prop="hoistAlarmReason">
+          <el-row>
+            <el-col :span="12">
+              <el-form-item label="驾驶人员作业证编号:" prop="driverCertificateNumber">
+                 <el-input v-model="uploadInfo.driverCertificateNumber"  readonly='true'/>
+              </el-form-item>
+            </el-col>
+            <el-col :span="12">
+              <el-form-item label="驾驶人员身份认证结果:" prop="driverIdentificationState">
+                 <el-input v-model="uploadInfo.driverIdentificationState"  readonly='true'/>
+              </el-form-item>
+            </el-col>
+          </el-row>
 
-            <span>{{uploadInfo.hoistAlarmReason}}</span>
-          </el-form-item>
-          <el-form-item label="报警级别:" prop="hoistLevel">
-            <span>{{uploadInfo.hoistLevel}}</span>
-          </el-form-item>
-          <el-form-item label="驾驶人员姓名:" prop="driverName">
-            <span>{{uploadInfo.driverName}}</span>
-          </el-form-item>
-          <el-form-item label="驾驶人员公民身份号码:" prop="driverIdcard">
-            <span>{{uploadInfo.driverIdcard}}</span>
-          </el-form-item>
-          <el-form-item label="驾驶人员作业证编号:" prop="driverCertificateNumber">
-            <span>{{uploadInfo.driverCertificateNumber}}</span>
-          </el-form-item>
-          <el-form-item label="驾驶人员身份认证结果:" prop="driverIdentificationState">
-            <span>{{uploadInfo.driverIdentificationState}}</span>
-          </el-form-item>
-          <el-form-item label="本次作业时间区间段:" prop="thisJobtime">
-            <span>{{uploadInfo.thisJobtime}}</span>
-          </el-form-item>
-          <el-form-item label="抓拍图片的URL:" prop="takeAPhotoUrl">
-            <span>{{uploadInfo.takeAPhotoUrl}}</span>
-          </el-form-item>
+          <el-row>
+            <el-col :span="12">
+              <el-form-item label="本次作业时间区间段:" prop="thisJobtime">
+                 <el-input v-model="uploadInfo.thisJobtime"  readonly='true'/>
+              </el-form-item>
+            </el-col>
+            <el-col :span="12">
+              <el-form-item label="抓拍图片的URL:" prop="takeAPhotoUrl">
+                 <el-input v-model="uploadInfo.takeAPhotoUrl"  readonly='true'/>
+              </el-form-item>
+            </el-col>
+          </el-row>
 
+          <el-row>
+            <el-col :span="12">
+              <el-form-item label="本次作业时间区间段:" prop="thisJobtime">
+                 <el-input v-model="uploadInfo.thisJobtime"  readonly='true'/>
+              </el-form-item>
+            </el-col>
+            <el-col :span="12">
+              <el-form-item label="抓拍图片的URL:" prop="takeAPhotoUrl">
+                 <el-input v-model="uploadInfo.takeAPhotoUrl"  readonly='true'/>
+              </el-form-item>
+            </el-col>
+          </el-row>
 
-          <el-form-item>
-            <el-button type="primary" @click="showUpload = false">关闭</el-button>
-            <!--<el-button @click="resetForm('uploadInfo')">重置</el-button>-->
-          </el-form-item>
         </el-form>
+       
+        
       </div>
     </el-dialog>
     <!--<el-dialog :visible.sync="showEdit" title="修改文件" width="40%">-->
