@@ -60,8 +60,65 @@
         </div>
       </li>
     </ul>
-    <el-dialog :visible.sync="showUpdate" title="补充信息" width="35%" @close="editClose">
-      <table cellspacing="0" class="lesson-table">
+    <el-dialog :visible.sync="showUpdate" title="补充信息" width="35%" @close="editClose" class="buchong">
+
+       <el-form :model="currentInfo"  ref="currentInfo" label-width="1rem">
+          <el-row>
+            <el-col :span="12">
+              <el-form-item label="ID:" prop="id">
+                 <el-input v-model="currentInfo.id"  readonly='true'/>
+              </el-form-item>
+            </el-col>
+            <el-col :span="12">
+              <el-form-item label="姓名:" prop="userName">
+                 <el-input v-model="currentInfo.userName"  readonly='true'/>
+              </el-form-item>
+            </el-col>
+          </el-row>
+
+          <el-row>
+            <el-col :span="12">
+              <el-form-item label="工种:" prop="userType">
+                 <el-input v-model="currentInfo.userType"  readonly='true'/>
+              </el-form-item>
+            </el-col>
+            <el-col :span="12">
+              <el-form-item label="年龄:" prop="userAge">
+                 <el-input v-model="currentInfo.userAge"  readonly='true'/>
+              </el-form-item>
+            </el-col>
+          </el-row>
+          <el-row>
+            <el-col :span="12">
+              <el-form-item label="联系方式:" prop="phone">
+                 <el-input v-model="currentInfo.phone"  readonly='true'/>
+              </el-form-item>
+            </el-col>
+            <el-col :span="12">
+              <el-form-item label="资质证书:" prop="checkImg" >
+                <a :href=" currentInfo.checkImg" target="_blank">{{ '查看图片' }}</a>
+              </el-form-item>
+            </el-col>
+          </el-row>
+          <el-row>
+            <el-col :span="14">
+              <el-form-item label="上传图片:" >
+                <el-upload
+                  class="upload-demo"
+                  action="http://121.36.106.18:38080/system/safe/uploadFile"
+                  :limit="1"
+                  :on-success="handleSuccess"
+                  :file-list="fileList"
+                >
+                  <el-button slot="trigger" type="text" icon="el-icon-upload" style="text-align: center; font-size: 14px; ">选取文件</el-button>
+                </el-upload>
+              </el-form-item>
+            </el-col>
+          </el-row>
+          
+       </el-form>
+
+      <!-- <table cellspacing="0" class="lesson-table">
         <tr>
           <td class="table-head">ID</td>
           <td>{{ currentInfo.id }}</td>
@@ -100,7 +157,7 @@
             </el-upload>
           </td>
         </tr>
-      </table>
+      </table> -->
       <div style="text-align: center; ">
         <el-button type="primary" @click="confirmEdit">确认修改</el-button>
         <el-button @click="showUpdate = false">取消</el-button>
@@ -274,5 +331,8 @@ export default {
 
 .searchBar {
   /*width: 100%;*/
+}
+.buchong >>> .el-form-item__label {
+  color: #606266;
 }
 </style>
