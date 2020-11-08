@@ -185,14 +185,19 @@
         </el-form> -->
         <el-form :model="uploadInfo"  ref="uploadInfo" label-width="1.5rem">
           <el-row>
-            <el-col :span="12">
+            <!-- <el-col :span="12">
               <el-form-item label="设备id:" prop="guid">
                  <el-input v-model="uploadInfo.guid"  readonly='true'/>
               </el-form-item>
-            </el-col>
+            </el-col> -->
             <el-col :span="12">
               <el-form-item label="设备编号:" prop="deviceSn">
                  <el-input v-model="uploadInfo.deviceSn"  readonly='true'/>
+              </el-form-item>
+            </el-col>
+            <el-col :span="12">
+              <el-form-item label="最大力矩:" prop="maxTorque">
+                 <el-input v-model="uploadInfo.maxTorque"  readonly='true'/>
               </el-form-item>
             </el-col>
           </el-row>
@@ -379,14 +384,14 @@
             </el-col>
           </el-row>
           
-          <el-row>
+          <!-- <el-row>
             <el-col :span="24">
               <el-form-item label="最大力矩:" prop="maxTorque">
                  <el-input v-model="uploadInfo.maxTorque"  readonly='true'/>
               </el-form-item>
             </el-col>
             
-          </el-row>
+          </el-row> -->
 
   
           
