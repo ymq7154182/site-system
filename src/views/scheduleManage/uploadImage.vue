@@ -15,7 +15,7 @@
       :on-success="handleAvatarSuccess"
       :on-preview="handlePictureCardPreview"
       :data="obj"
-      :on-remove="handleRemove">
+      >
       <i class="el-icon-plus"></i>
     </el-upload>
     <el-dialog :visible.sync="dialogVisible">
@@ -48,6 +48,7 @@
     },
     methods: {
       getImageList () { // 获取所有图片
+      this.imageList = []
         getImageList({
           deptId: this.deptId
         }).then(res => {
@@ -68,7 +69,9 @@
         this.dialogVisible = true;
       },
       handleAvatarSuccess(file) {
-        // console.log('啊哈哈哈', file)
+
+        console.log('啊哈哈哈', file)
+        this.getImageList()
       }
     }
   }
