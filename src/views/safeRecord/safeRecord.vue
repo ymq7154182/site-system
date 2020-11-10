@@ -198,14 +198,16 @@
             <el-col :span="14">
               <el-form-item label="附件_企业盖章页" prop="affixStamp" label-width="160px">
                 <!--                <el-button type="text" @click="openFile(checkForm.affixStamp)" :disabled="false">{{ '查看附件' }}</el-button>-->
-                <a :href=" checkForm.affixStamp" target="_blank">{{ '查看附件' }}</a>
+                <a :href=" checkForm.affixStamp" target="_blank" v-if="checkForm.affixStamp !==   '' ">{{ '查看附件' }}</a>
+                <span v-else>暂无附件,请上传附件</span>
               </el-form-item>
             </el-col>
           </el-row>
           <el-row>
             <el-col :span="14">
               <el-form-item label="附件_企业机构按期检查" prop="affixOrg" label-width="160px">
-                <a :href=" checkForm.affixOrg" target="_blank">{{ '查看附件' }}</a>
+                <a :href=" checkForm.affixOrg" target="_blank" v-if="checkForm.affixOrg !== '' ">{{ '查看附件' }}</a>
+                <span v-else>暂无附件,请上传附件</span>
                 <!--              <img src="checkForm.affixOrg" alt="">-->
                 <!--              <el-input v-model="form.affixOrg" placeholder="请输入整改内容" />-->
               </el-form-item>
@@ -699,9 +701,11 @@
     components: { Treeselect },
     mounted() {
       this.$store.dispatch('changeMsg', '考评月报');
+      this.siteName = localStorage.getItem('siteName')
     },
     data(){
       return{
+        siteName: '',
         // 当前每页数据的条数
         pageSize:10,
         // 翻页功能当前页
@@ -846,6 +850,7 @@
       }
     },
     created() {
+      this.siteName = localStorage.getItem('siteName')
       this.getList()
     },
     methods:{
@@ -897,6 +902,7 @@
       },
       getDataByTime(){
         var prams = {
+          siteName: this.siteName,
           start:this.startTime,
           end:this.endTime
         }
@@ -916,7 +922,10 @@
         // 获取所有的月评信息
         // var total1 = 0
         // var total2 = 0
-        getAllCheckMonth().then((res) => {
+        var params = {
+          siteName: this.siteName
+        }
+        getAllCheckMonth(params).then((res) => {
           this.userList = res.data.rows
           console.log("所有月评",this.userList)
           this.pageTotal += res.data.total
