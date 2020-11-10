@@ -34,7 +34,8 @@
         dialogVisible: false,
         obj: {
           deptId: 0
-        }
+        },
+        
       };
     },
     computed: {
@@ -43,14 +44,16 @@
         }
       },
     mounted () {
-      this.obj.deptId = this.deptId
+      
+      this.obj.deptId = localStorage.getItem('siteId')
+      
       this.getImageList()
     },
     methods: {
       getImageList () { // 获取所有图片
       this.imageList = []
         getImageList({
-          deptId: this.deptId
+          deptId: localStorage.getItem('siteId')
         }).then(res => {
           let imgs = res.data.scheduleImgUrl
           let list = imgs.split(';').slice(1)

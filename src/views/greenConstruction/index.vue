@@ -253,7 +253,7 @@
         var time= []
         var greenValue = []
         getGreenInfo({
-          siteId:101
+          siteId:localStorage.getItem('siteId')
         }).then(res =>{
           console.log("接口数据",res.data.data)
           var Arr1 = []
