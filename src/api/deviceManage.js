@@ -212,6 +212,16 @@ export function getCountsByType(data) {
   })
 }
 
+export function getDevInfo(data) {
+  return request({
+    url: 'device/sysDev/getDevData',
+    method: 'get',
+    params: data
+  })
+}
+
+
+
 export function getProid(data) {
   return request({
     url: 'getSysProData',

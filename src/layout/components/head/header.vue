@@ -126,6 +126,8 @@
 
 <script>
   import { getSite } from '@/api/dataManage'
+  import {getSysProData} from '@/api/qualityControl';
+
     export default {
         name: "header",
       data() {
@@ -205,6 +207,14 @@
           getSite(data).then((res) => {
             localStorage.setItem('siteName', res.data.data.deptName)
             this.siteName = res.data.data.deptName
+          })
+
+          getSysProData({
+            deptId: siteId
+          }).then(res => {
+            var guid = res.data.guid
+            console.log("GUID", guid)
+            localStorage.setItem("guid", guid)
           })
         }
       }

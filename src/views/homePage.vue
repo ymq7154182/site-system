@@ -373,7 +373,11 @@
                   <div style="position: absolute;top: 0.2rem;left: 0.2rem">
                     <span style="font-size: 0.2rem;color: #ffa454;">安全管理</span>
                   </div>
-                  <div id="mychart22"></div>
+                  <!-- <div id="mychart22"></div> -->
+                  <div id="mychart22" v-show="safeFlag"></div>
+                  <div v-show="!safeFlag" style="text-align: center;padding-top: 120px">
+                    <span style="font-size: 12px;color: #ffffff;font-weight: bolder;">暂无数据，此数据来源于建工随手拍小程序</span>
+                  </div>
                 </div>
               </el-col>
             </el-row>
@@ -383,7 +387,11 @@
               <div style="position: absolute;top: 0.2rem;left: 0.2rem">
                 <span style="font-size: 0.2rem;color: #ffa454;">质量管理</span>
               </div>
-              <div id="mychart13"></div>
+              <!-- <div id="mychart13"></div> -->
+              <div id="mychart13" v-show="quaFlag"></div>
+                  <div v-show="!quaFlag" style="text-align: center;padding-top: 120px">
+                    <span style="font-size: 12px;color: #ffffff;font-weight: bolder;">暂无数据，此数据来源于建工随手拍小程序</span>
+                  </div>
             </div>
           </el-row>
         </el-col>
@@ -430,16 +438,18 @@
         // },100)
         setTimeout(()=>{
           this.inchart13()
-        },100)
+        },300)
         setTimeout(()=>{
           this.inchart22()
-        },100)
+        },300)
         // window.onload = function () {
         //
         // }
       },
       data(){
           return{
+            safeFlag: true,
+            quaFlag: true,
             showComplete: false, // 选择完成时间框
             currentSche: {},
             formComplete: {
@@ -812,6 +822,9 @@
           getSafeOrQualityChartData(prams).then(response=>{
             console.log('测试质量管理获取数据')
             console.log(response.data.data)
+            if (response.data.data.length === 0){
+              this.quaFlag = false
+            }
             for(let i = 0;i<response.data.data.length;i++){
               let obj = {}
               obj.value = response.data.data[i].counts
@@ -1173,6 +1186,9 @@
           getSafeOrQualityChartData(prams).then(response=>{
             console.log('测试安全管理获取数据')
             console.log(response.data.data)
+            if (response.data.data.length === 0){
+              this.safeFlag = false
+            }
             for(let i = 0;i<response.data.data.length;i++){
               let obj = {}
               obj.value = response.data.data[i].counts
@@ -1230,7 +1246,8 @@
                 color: '#ACCFFF',
                 fontSize: 12,
               },
-              data: ['塔式起重机', '遵章守纪', '楼梯口防护', '电梯口防护',  '安全教育','施工机具']
+              // data: ['塔式起重机', '遵章守纪', '楼梯口防护', '电梯口防护',  '安全教育','施工机具']
+              data: ['临时用电', '工作区域', '特种设备', '现场人员',  '高处作业']
             },
             tooltip: {
               trigger: 'item',
@@ -1307,7 +1324,7 @@
           option.legend.data = detail
           setTimeout(()=>{
             this.myChart22.setOption(option)
-          },600)
+          },200)
         },
         inchart21() {
           this.myChart21 = this.$echarts.init(document.getElementById('mychart21'));

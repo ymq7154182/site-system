@@ -34,7 +34,7 @@
             :header-row-style="{ color: '#409eff' }"
             :row-style="{ color: 'white' }"
           >
-            <el-table-column label="ID" align="center" prop="id" width="50" />
+            <el-table-column label="序号" align="center" type="index" width="80" />
             <el-table-column label="姓名" align="center" prop="userName" />
             <el-table-column label="工种" align="center" prop="userType" />
             <el-table-column label="年龄" align="center" prop="userAge" />
@@ -64,14 +64,19 @@
 
        <el-form :model="currentInfo"  ref="currentInfo" label-width="1rem">
           <el-row>
-            <el-col :span="12">
+            <!-- <el-col :span="12">
               <el-form-item label="ID:" prop="id">
                  <el-input v-model="currentInfo.id"  readonly='true'/>
               </el-form-item>
-            </el-col>
+            </el-col> -->
             <el-col :span="12">
               <el-form-item label="姓名:" prop="userName">
                  <el-input v-model="currentInfo.userName"  readonly='true'/>
+              </el-form-item>
+            </el-col>
+            <el-col :span="12">
+              <el-form-item label="联系方式:" prop="phone">
+                 <el-input v-model="currentInfo.phone"  readonly='true'/>
               </el-form-item>
             </el-col>
           </el-row>
@@ -89,11 +94,11 @@
             </el-col>
           </el-row>
           <el-row>
-            <el-col :span="12">
+            <!-- <el-col :span="12">
               <el-form-item label="联系方式:" prop="phone">
                  <el-input v-model="currentInfo.phone"  readonly='true'/>
               </el-form-item>
-            </el-col>
+            </el-col> -->
             <el-col :span="12">
               <el-form-item label="资质证书:" prop="checkImg" >
                 <a :href=" currentInfo.checkImg" target="_blank">{{ '查看图片' }}</a>
@@ -185,6 +190,7 @@ export default {
         userType: '',
         userAge: 0,
         phone: '',
+        checkImg:''
       },
       uploadInfo: {
         id: 0,
@@ -217,16 +223,19 @@ export default {
     updateImg(row) {
       this.showUpdate = true;
       this.currentInfo = row;
+      // console.log(this.currentInfo)
     },
     editClose() {
       this.fileList = [];
     },
     handleSuccess(response, file, fileList) {
       this.uploadInfo.checkImg = response.data
+      this.currentInfo.checkImg = response.data
     },
     confirmEdit() {
       this.uploadInfo.id = this.currentInfo.id;
-      updateMember(this.uploadInfo).then(response => {
+      console.log("ceshi",this.currentInfo)
+      updateMember(this.currentInfo).then(response => {
         if (response.data.code === 200) {
           this.$message({
             type: 'success',
