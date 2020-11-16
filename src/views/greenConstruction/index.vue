@@ -63,7 +63,7 @@
         <div style="background-color: rgba(0, 36, 78, 0.5); height: 40vh; width: 100%;">
           <div class="border-top-center"></div>
           <div class="box-title">环境数据趋势图</div>
-          <div class="environmentTag" >
+          <div v-show="envFlag" class="environmentTag" >
                 <el-tag :type="buttonType(index)" v-for="(type,index) in environmentType" :key="index"  @click.native="selectType(index)">{{type}}</el-tag>
 <!--                <el-tag  @click.native="selectType('PM2.5')">PM2.5</el-tag>-->
 <!--                <el-tag  @click.native="selectType('PM10')">PM10</el-tag>-->
@@ -72,7 +72,10 @@
 <!--                <el-tag  @click.native="selectType('湿度')">湿度</el-tag>-->
           </div>
 <!--          <div class="device-data">-->
-          <div id="environmentChart" style="height: 31vh"></div>
+          <div v-show="envFlag" id="environmentChart" style="height: 31vh" ></div>
+          <div v-show="!envFlag" style="text-align: center;padding-top: 120px">
+            <span style="font-size: 12px;color: #ffffff;font-weight: bolder;">暂无数据，此数据来源于建工随手拍小程序</span>
+          </div>
 <!--          </div>-->
         </div>
       </el-col>
@@ -122,6 +125,7 @@
     name: 'greenConstruction',
     data() {
       return {
+        envFlag: true,
         upLine:[],
         downLine:[],
         yMax:0,
@@ -255,6 +259,9 @@
         getGreenInfo({
           siteId:localStorage.getItem('siteId')
         }).then(res =>{
+          if(res.data.data.length === 0) {
+            this.envFlag = false
+          }
           console.log("接口数据",res.data.data)
           var Arr1 = []
 

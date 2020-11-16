@@ -2975,7 +2975,7 @@
   import Treeselect from '@riophae/vue-treeselect'
   // import the styles
   import '@riophae/vue-treeselect/dist/vue-treeselect.css'
-  import { zijian, addZijian,getSysProData,yanshou, addyanshou,weihu, addweihu, dingqi, adddingqi, dingsheng,adddingsheng,fuzhuo, addfuzhuo, devTreeSelect, getProid, getIds, getDevInfoByDevId } from "@/api/deviceManage";
+  import { zijian, addZijian, getSysProData,yanshou, addyanshou,weihu, addweihu, dingqi, adddingqi, dingsheng,adddingsheng,fuzhuo, addfuzhuo, devTreeSelect, getProid, getIds, getDevInfoByDevId } from "@/api/deviceManage";
   // import { getSysProData } from "@/api/qualityControl"
   import axios from 'axios'
   import {absyncAttachRecordCheckData, inJackingPlusRecordCheck} from "../../api/deviceManage";
@@ -3389,11 +3389,11 @@
         var data = this.uploadInfo
         console.log("data", data)
         if(data.userid === null || data.userid == '') {
-          this.$message.error('userid为空，提交错误');
+          this.$message.error('请先选择施工单位负责人');
           return;
         } 
         if(data.setupId === null || data.setupId === '') {
-          this.$message.error('setupId为空，提交错误');
+          this.$message.error('请先选择设备编号');
           return;
         }
         
@@ -3420,11 +3420,11 @@
       getaddyanshou() {
         var data = this.uploadInfo2
         if(data.userid === null || data.userid == '') {
-          this.$message.error('userid为空，提交错误');
+          this.$message.error('请先选择施工单位负责人');
           return;
         } 
         if(data.setupId === null || data.setupId === '') {
-          this.$message.error('setupId为空，提交错误');
+          this.$message.error('请先选择设备编号');
           return;
         }
         addyanshou(data).then((res) => {
@@ -3455,11 +3455,11 @@
         //     }
         // })
         if(data.userid === null || data.userid == '') {
-          this.$message.error('userid为空，提交错误');
+          this.$message.error('请先选择施工单位负责人');
           return;
         } 
         if(data.setupId === null || data.setupId === '') {
-          this.$message.error('setupId为空，提交错误');
+          this.$message.error('请先选择设备编号');
           return;
         }
         if(data.useId === null || data.useId === '') {
@@ -3509,11 +3509,11 @@
               return false;
             }
           } else {
-            this.$message.error('企业ID不能为空');
+            this.$message.error('请先选择施工单位负责人');
             return false;
           }
         } else {
-          this.$message.error('设备ID不能为空');
+          this.$message.error('请选择设备编号');
           return false;
         }
       },
@@ -3555,11 +3555,11 @@
               return false;
             }
           } else {
-            this.$message.error('企业ID不能为空');
+            this.$message.error('请先选择施工单位负责人');
             return false;
           }
         } else {
-          this.$message.error('设备ID不能为空');
+          this.$message.error('请选择设备编号');
           return false;
         }
 
@@ -3593,11 +3593,11 @@
               return false;
             }
           } else {
-            this.$message.error('企业ID不能为空');
+            this.$message.error('请先选择施工单位负责人');
             return false;
           }
         } else {
-          this.$message.error('设备ID不能为空');
+          this.$message.error('请选择设备编号');
           return false;
         }
       },

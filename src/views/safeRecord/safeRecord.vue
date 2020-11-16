@@ -768,7 +768,7 @@
         selfRecords:['优良','合格','不合格'],
         // 表单参数
         form: {
-          proid: 27467,
+          proid: '',
           addressAll:'',
           evaltime:'',
           progress:'',
@@ -955,10 +955,11 @@
       },
       // 新增按钮的提交
       submitForm(formName){
+        console.log("guid", localStorage.getItem("guid"))
         this.$refs[formName].validate((valid) => {
           if(valid) {
             var p = new Object();
-              p.proid= 27467,
+              p.proid= localStorage.getItem("guid"),
               p.addressAll = this.form.addressAll
               p.evaltime= this.form.evaltime
               p.progress= this.form.progress
@@ -1117,7 +1118,7 @@
       },
       // 表单重置
       reset() {
-        this.form.proid= 27467,
+        this.form.proid= '',
         this.form.addressAll='',
         this.form.evaltime='',
         this.form.progress='',

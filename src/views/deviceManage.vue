@@ -36,31 +36,31 @@
                   <div class="box-title">塔式起重机信息</div>
                   <el-button class="style-btn2" size="mini" @click="gotoHistory">历史数据</el-button>
                   <div class="device-data">
-                    <ul class="device-list">
-                      <li @mouseover="infohover1 = false" @mouseout="infohover1 = true">
+                    <ul class="device-list"  >
+                      <li @mouseover="mouseoverMthd(index)" @mouseout="infohover = true" v-for="(item, index) in taInfoList">
                         <div class="device-detail">
-                          <el-image v-show="infohover1" :src="require('../../src/assets/tower/tadiao1.jpg')" fit="fill" style="height: 80%; " />
-                          <div v-show="!infohover1" class="device-detail-info">
+                          <el-image v-show="hoverIndex !== index" :src="require('../../src/assets/tower/tadiao1.jpg')" fit="fill" style="height: 80%; " />
+                          <div v-show="hoverIndex === index" class="device-detail-info">
                             <table>
                               <tr>
                                 <td><i class="el-icon-office-building" /> 生产厂家:</td>
-                                <td>HAIZHI</td>
+                                <td>{{item.makefactory}}</td>
                               </tr>
                               <tr>
                                 <td><i class="el-icon-s-tools" /> 设备型号:</td>
-                                <td>HZT520-TJ</td>
+                                <td>{{item.deviceType}}</td>
                               </tr>
                               <tr>
-                                <td><i class="el-icon-place" /> 安装位置:</td>
-                                <td>A4栋东南区</td>
+                                <td><i class="el-icon-place" /> 设备编号:</td>
+                                <td>{{item.deviceCode}}</td>
                               </tr>
                               <tr>
                                 <td><i class="el-icon-s-custom" /> 责任人:</td>
-                                <td>张伟</td>
+                                <td>{{item.personInCharge}}</td>
                               </tr>
                               <tr>
-                                <td><i class="el-icon-phone-outline" /> 联系人:</td>
-                                <td>13634532236</td>
+                                <td><i class="el-icon-phone-outline" /> 手机号:</td>
+                                <td>{{item.phone}}</td>
                               </tr>
                             </table>
                           </div>
@@ -68,17 +68,18 @@
                             <el-row>
                               <el-col :span="15">
                                 <div class="device-detail-span">
-                                  {{ '1号塔式起重机' }}&nbsp;
+                                  {{item.devName  }}&nbsp;
                                 </div>
                               </el-col>
                               <el-col :span="9">
-                                <el-tag type="success" effect="dark" style="margin-top: 1.5%; ">在线</el-tag>
+                                <el-tag v-if="item.status === 1" type="success" effect="dark" style="margin-top: 1.5%; ">在线</el-tag>
+                                <el-tag v-else type="danger" effect="dark" style="margin-top: 1.5%; ">离线</el-tag>
                               </el-col>
                             </el-row>
                           </div>
                         </div>
                       </li>
-                      <li @mouseover="infohover2 = false" @mouseout="infohover2 = true">
+                      <!-- <li @mouseover="infohover2 = false" @mouseout="infohover2 = true">
                         <div class="device-detail">
                           <el-image v-show="infohover2" :src="require('../../src/assets/tower/tadiao2.jpg')" fit="fill" style="height: 80%; " />
                           <div v-show="!infohover2" class="device-detail-info">
@@ -446,7 +447,7 @@
                             </el-row>
                           </div>
                         </div>
-                      </li>
+                      </li> -->
                     </ul>
                   </div>
                 </div>
@@ -1000,30 +1001,30 @@
                   <el-button class="style-btn2" size="mini" @click="gotoHistory2">历史数据</el-button>
                   <div class="device-data">
                     <ul class="device-list">
-                      <li @mouseover="infohover1 = false" @mouseout="infohover1 = true">
+                      <li @mouseover="mouseoverMthd2(index)" @mouseout="infohover1 = true" v-for="(item, index) in shigongInfoList">
                         <div class="device-detail">
-                          <el-image v-show="infohover1" :src="require('../../src/assets/tower/tadiao1.jpg')" fit="fill" style="height: 80%; " />
-                          <div v-show="!infohover1" class="device-detail-info">
+                          <el-image v-show="hoverIndex2 !== index" :src="require('../../src/assets/tower/tadiao1.jpg')" fit="fill" style="height: 80%; " />
+                          <div v-show="hoverIndex2 === index" class="device-detail-info">
                             <table>
                               <tr>
                                 <td><i class="el-icon-office-building" /> 生产厂家:</td>
-                                <td>HAIZHI</td>
+                                <td>{{item.makefactory}}</td>
                               </tr>
                               <tr>
                                 <td><i class="el-icon-s-tools" /> 设备型号:</td>
-                                <td>HZT520-TJ</td>
+                                <td>{{item.deviceType}}</td>
                               </tr>
                               <tr>
-                                <td><i class="el-icon-place" /> 安装位置:</td>
-                                <td>A4栋东南区</td>
+                                <td><i class="el-icon-place" /> 设备编号:</td>
+                                <td>{{item.deviceCode}}</td>
                               </tr>
                               <tr>
                                 <td><i class="el-icon-s-custom" /> 责任人:</td>
-                                <td>张伟</td>
+                                 <td>{{item.personInCharge}}</td>
                               </tr>
                               <tr>
-                                <td><i class="el-icon-phone-outline" /> 联系人:</td>
-                                <td>13634532236</td>
+                                <td><i class="el-icon-phone-outline" />手机号:</td>
+                                 <td>{{item.phone}}</td>
                               </tr>
                             </table>
                           </div>
@@ -1031,17 +1032,18 @@
                             <el-row>
                               <el-col :span="15">
                                 <div class="device-detail-span2">
-                                  {{ '1号施工升降机' }}&nbsp;
+                                  {{ item.devName }}&nbsp;
                                 </div>
                               </el-col>
                               <el-col :span="9">
-                                <el-tag type="success" effect="dark" style="margin-top: 1.5%; ">在线</el-tag>
+                                <el-tag v-if="item.status === 1" type="success" effect="dark" style="margin-top: 1.5%; ">在线</el-tag>
+                                <el-tag v-else type="danger" effect="dark" style="margin-top: 1.5%; ">离线</el-tag>
                               </el-col>
                             </el-row>
                           </div>
                         </div>
                       </li>
-                      <li @mouseover="infohover2 = false" @mouseout="infohover2 = true">
+                      <!-- <li @mouseover="infohover2 = false" @mouseout="infohover2 = true">
                         <div class="device-detail">
                           <el-image v-show="infohover2" :src="require('../../src/assets/tower/tadiao2.jpg')" fit="fill" style="height: 80%; " />
                           <div v-show="!infohover2" class="device-detail-info">
@@ -1122,8 +1124,8 @@
                             </el-row>
                           </div>
                         </div>
-                      </li>
-                      <li @mouseover="infohover4 = false" @mouseout="infohover4 = true">
+                      </li> -->
+                      <!-- <li @mouseover="infohover4 = false" @mouseout="infohover4 = true">
                         <div class="device-detail">
                           <el-image v-show="infohover4" :src="require('../../src/assets/tower/tadiao4.jpg')" fit="fill" style="height: 80%; " />
                           <div v-show="!infohover4" class="device-detail-info">
@@ -1409,7 +1411,7 @@
                             </el-row>
                           </div>
                         </div>
-                      </li>
+                      </li> -->
                     </ul>
                   </div>
                 </div>
@@ -1430,17 +1432,18 @@
                   <div class="border-top-left"></div>
                   <div class="box-title">报警类型</div>
                   <div style="margin-left: 80%; ">
-                    <el-dropdown @command="handleCommand">
+                    <el-dropdown @command="handleCommand2">
               <span class="el-dropdown-link">
-                {{ chosen }}<i class="el-icon-arrow-down el-icon--right"></i>
+                {{ chosen2 }}<i class="el-icon-arrow-down el-icon--right"></i>
               </span>
                       <el-dropdown-menu  style="background-color: rgba(255,255,255,0.5)" slot="dropdown">
-                        <el-dropdown-item command="所有设备">所有设备</el-dropdown-item>
+                        <el-dropdown-item v-for="(item, index) in shigongList" :key="index" v-text="item" :command="item"></el-dropdown-item>
+                        <!-- <el-dropdown-item command="所有设备">所有设备</el-dropdown-item>
                         <el-dropdown-item command="1号塔式起重机">1号施工升降机</el-dropdown-item>
                         <el-dropdown-item command="2号塔式起重机">2号施工升降机</el-dropdown-item>
                         <el-dropdown-item command="3号塔式起重机">3号施工升降机</el-dropdown-item>
                         <el-dropdown-item command="4号塔式起重机">4号施工升降机</el-dropdown-item>
-                        <el-dropdown-item command="5号塔式起重机">5号施工升降机</el-dropdown-item>
+                        <el-dropdown-item command="5号塔式起重机">5号施工升降机</el-dropdown-item> -->
                       </el-dropdown-menu>
                     </el-dropdown>
                   </div>
@@ -1482,7 +1485,7 @@
 </template>
 
 <script>
-import { getHistroy, getAllDevName, getCountsByType } from "@/api/deviceManage";
+import { getHistroy, getAllDevName, getCountsByType, getDevInfo } from "@/api/deviceManage";
 import echarts from 'echarts';
 require('echarts/theme/macarons'); // echarts theme
 
@@ -1497,16 +1500,29 @@ export default {
     this.$store.dispatch('changeMsg', '设备管理');
     this.initAlarmType()
     this.initAlarmTrend()
-
+    this.getAllDevInfo()
     this.getDevHistory()
     this.getDevHistory2()
     this.getAllTaDevList()
+    this.getAllShiGongList()
     this.getCounts()
+    this.getCounts3()
 
   },
   data() {
     return {
+      hoverIndex: undefined,
+      hoverIndex2: undefined,
+      taInfoList: [],
+      shigongInfoList: [],
+      armTypes: [],
+      recentWeekList: [],
+      toDayList: [],
+      armTypes3: [],
+      recentWeekList3: [],
+      toDayList3: [],
       taDiaoList: [],
+      shigongList: [],
       siteId: '',
       myChart100: '',
       myChart10: '',
@@ -1605,6 +1621,7 @@ export default {
       },
 
       chosen: '所有设备',
+      chosen2: '所有设备',
       infohover1: true,
       infohover2: true,
       infohover3: true,
@@ -1696,7 +1713,7 @@ export default {
         },
         xAxis: {
           type: 'category',
-          data: ['风速', '角度', '幅度', '高度'],
+          data: this.armTypes,
           splitLine: {
             show: false
           },
@@ -1722,12 +1739,12 @@ export default {
           {
             name: '近一周',
             type: 'bar',
-            data: [310, 270, 110, 105]
+            data: this.recentWeekList
           },
           {
             name: '今天',
             type: 'bar',
-            data: [300, 250, 100, 100]
+            data: this.toDayList
           }
         ]
       }
@@ -1750,7 +1767,7 @@ export default {
         },
         xAxis: {
           type: 'category',
-          data: ['风速', '角度', '幅度', '高度'],
+          data: this.armTypes,
           splitLine: {
             show: false
           },
@@ -1776,12 +1793,12 @@ export default {
           {
             name: '近一周',
             type: 'bar',
-            data: [310, 270, 110, 105]
+            data: this.recentWeekList
           },
           {
             name: '今天',
             type: 'bar',
-            data: [300, 250, 100, 100]
+            data: this.toDayList
           }
         ]
       }
@@ -1804,7 +1821,7 @@ export default {
         },
         xAxis: {
           type: 'category',
-          data: ['风速', '角度', '幅度', '高度'],
+          data: this.armTypes3,
           splitLine: {
             show: false
           },
@@ -1830,12 +1847,12 @@ export default {
           {
             name: '近一周',
             type: 'bar',
-            data: [310, 270, 110, 105]
+            data: this.recentWeekList3
           },
           {
             name: '今天',
             type: 'bar',
-            data: [300, 250, 100, 100]
+            data: this.toDayList3
           }
         ]
       }
@@ -2037,7 +2054,14 @@ export default {
       this.initAlarmTrend();
     },
     handleCommand(command) {
+      console.log("Command:", command)
       this.chosen = command;
+      this.getCounts(command)
+    },
+    handleCommand2(command) {
+      console.log("Command:", command)
+      this.chosen2 = command;
+      this.getCounts3(command)
     },
     handleClick(tab, event) {
       console.log(tab, event);
@@ -2186,8 +2210,17 @@ export default {
         this.taDiaoList = res.data.data
       })
     },
+    getAllShiGongList() {
+      var params = {
+        siteId: this.siteId,
+        deviceType: '施工升降机'
+      }
+      getAllDevName(params).then((res) => {
+        this.shigongList = res.data.data
+      })
+    },
     getCounts(name) {
-      if(name === '全部设备') {
+      if(name === '所有设备') {
         var params = {
           siteId: this.siteId
         }
@@ -2198,10 +2231,88 @@ export default {
         }
       }
       getCountsByType(params).then((res) => {
-        console.log(res.data)
+        console.log(res.data.data)
+        var arr = res.data.data
+        if(arr.recentWeek.length !== 0 ) {
+          this.armTypes = arr.recentWeek.map((item) => {return item.warn_type})
+          this.recentWeekList = arr.recentWeek.map((item) => {return item.counts})
+        }
+        if(arr.today.length !== 0) {
+          this.toDayList = arr.today.map((item) => {return item.counts})
+        }
+        if(arr.recentWeek.length === 0) {
+          this.recentWeekList = []
+        }
+        if(arr.today.length === 0) {
+          this.toDayList = []
+        }
+        this.initAlarmType()
       })
 
+    },
+
+    getCounts3(name) {
+      if(name === '所有设备') {
+        var params = {
+          siteId: this.siteId
+        }
+      } else {
+        var params = {
+          siteId: this.siteId,
+          deviceName: name
+        }
+      }
+      getCountsByType(params).then((res) => {
+        console.log(res.data.data)
+        var arr = res.data.data
+        if(arr.recentWeek.length !== 0 ) {
+          this.armTypes3 = arr.recentWeek.map((item) => {return item.warn_type})
+          this.recentWeekList3= arr.recentWeek.map((item) => {return item.counts})
+        }
+        if(arr.today.length !== 0) {
+          this.toDayList3 = arr.today.map((item) => {return item.counts})
+        }
+        if(arr.recentWeek.length === 0) {
+          this.recentWeekList3 = []
+        }
+        if(arr.today.length === 0) {
+          this.toDayList3 = []
+        }
+        this.initAlarmType3()
+      })
+
+    },
+
+    getAllDevInfo() {
+      
+      var params1 = {
+        deptId: this.siteId,
+        deviceName: '塔式起重机'
+      }
+      getDevInfo(params1).then((res) => {
+        this.taInfoList = res.data.data.devData
+      })
+    
+      var params2 = {
+        deptId: this.siteId,
+        deviceName: '施工升降机'
+      }
+      getDevInfo(params2).then((res) => {
+        this.shigongInfoList = res.data.data.devData
+      })
+    
+      
+     
+    },
+    mouseoverMthd(index) {
+      this.hoverIndex = index
+      
+    },
+    mouseoverMthd2(index) {
+      this.hoverIndex2 = index
+      
     }
+
   }
 }
 </script>

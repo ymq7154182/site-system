@@ -13,8 +13,11 @@
                   <!-- <div style="float:right; margin: 0 10px 0 0; z-index: 999; ">
                     <el-button type="text" style="text-decoration: underline; " @click="gotoCheckRecord">历史数据</el-button>
                   </div> -->
-                  <div id="mychart1"></div>
-                  <div class="saftNum">总数：{{sumNum}}件</div>
+                  <div id="mychart1" v-show="quaFlag1"></div>
+                  <div v-show="!quaFlag1" style="text-align: center;padding-top: 120px">
+                    <span style="font-size: 12px;color: #ffffff;font-weight: bolder;">暂无数据，此数据来源于建工随手拍小程序</span>
+                  </div>
+                  <div v-show="quaFlag1" class="saftNum">总数：{{sumNum}}件</div>
                 </div>
               </el-col>
               <el-col :span="12">
@@ -45,7 +48,10 @@
                   <!--<div id="mychart21">-->
                   <!---->
                   <!--</div>-->
-                  <div id="mychart13"></div>
+                  <div v-show="quaFlag2" id="mychart13"></div>
+                  <div v-show="!quaFlag2" style="text-align: center;padding-top: 120px">
+                    <span style="font-size: 12px;color: #ffffff;font-weight: bolder;">暂无数据，此数据来源于建工随手拍小程序</span>
+                  </div>
                 </div>
               </el-col>
               <el-col :span="12">
@@ -53,7 +59,10 @@
                   <div class="box-txt">
                     重大危险源
                   </div>
-                  <div id="mychart24"></div>
+                  <div v-show="quaFlag3" id="mychart24"></div>
+                  <div v-show="!quaFlag3" style="text-align: center;padding-top: 120px">
+                    <span style="font-size: 12px;color: #ffffff;font-weight: bolder;">暂无数据，此数据来源于建工随手拍小程序</span>
+                  </div>
                 </div>
               </el-col>
               <!--<el-col :span="8">-->
@@ -134,6 +143,9 @@
         name: "index",
       data() {
         return {
+          quaFlag1: true,
+          quaFlag2: true,
+          quaFlag3: true,
           proName:'',
           // 安全检查的总数目
           sumNum:0,
@@ -4303,6 +4315,9 @@
             sitename:this.proName
           }
           getDanger(prames).then((res) => {
+            if(res.data.data.length === 0) {
+              this.quaFlag3 = false
+            }
             let dangerArr = res.data.data.map(item => {
               return{
                 name:item.check_type_offspring,
@@ -4353,6 +4368,9 @@
           }).then((res) => {
             //console.log(res.data.data[0].key)
             // this.sumNum = res.data.data.length
+            if (res.data.data.length === 0){
+              this.quaFlag1 = false
+            }
             for(var i=0;i<res.data.data.length;i++) {
               if(res.data.data[i].key === 1){
                 this.checkKey.push("未处理")
@@ -4366,8 +4384,12 @@
               this.checkValue.push(res.data.data[i].value)
               this.sumNum += res.data.data[i].value
             }
-            //console.log("安全检查",this.checkData)
+            // console.log("安全检查",this.quaFlag1)
+            // if(this.quaFlag1 === true) {
+            //   this.inchart1()
+            // }
             this.inchart1()
+            
           })
         },
         // 获取问题趋势接口
@@ -4404,6 +4426,9 @@
             sitename:this.proName
           }).then((res) => {
             console.log("内外层数据",res.data.data)
+            if(res.data.data.qualityData.length === 0 && res.data.data.safetyData.length === 0) {
+              this.quaFlag2 = false
+            }
             //console.log("安全隐患统计")
             // {value:335,unit:'次', name:'易燃物乱摆放',},
              if(res.data.code === 200){
