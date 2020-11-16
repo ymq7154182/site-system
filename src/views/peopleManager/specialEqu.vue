@@ -211,7 +211,9 @@ export default {
   },
   methods: {
     refreshTable() {
-      retrieveMember().then(response => {
+      retrieveMember({
+        constructionSiteName: localStorage.getItem("siteName")
+      }).then(response => {
         if (response.data.code === 200) {
           this.userList = response.data.rows;
         } else return false;
@@ -249,6 +251,7 @@ export default {
       })
     },
     handleQuery() {
+      this.queryParams.constructionSiteName = localStorage.getItem("siteName")
       retrieveMember(this.queryParams).then(response => {
         if (response.data.code === 200) {
           this.userList = response.data.rows;
