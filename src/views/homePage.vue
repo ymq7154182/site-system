@@ -476,7 +476,7 @@
             dialogVisible: false,
             slowData: [], // 迟缓对象
             showSlow: false,
-            formLabelWidth: '110px',
+            formLabelWidth: '150px',
             option: '', // 完成还是迟缓
             deferReasons: [], // 滞缓原因列表
             active: 0,
