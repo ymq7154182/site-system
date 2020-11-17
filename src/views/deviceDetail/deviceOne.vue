@@ -28,8 +28,8 @@
             <span style="font-size: 0.2rem;margin-left: 0.1rem;color: white">
                设备编号：
             </span>
-           <el-input style="width: 2rem" placeholder="请输入设备编号"></el-input>
-            <el-button type="primary" icon="el-icon-search">查询</el-button>
+           <el-input style="width: 2rem" placeholder="请输入设备编号" v-model="searchValue"></el-input>
+            <el-button type="primary" icon="el-icon-search" @click="searchTable">查询</el-button>
             <div class="titles-style">
               <span>{{titles}}</span>
             </div>
@@ -1298,8 +1298,8 @@
       <el-form>
         <el-row>
           <el-col :span="12">
-           <el-form-item label="ID" prop="id" label-width="120px">
-              <el-input v-model="detail1.id" placeholder="请输入工地编号" readonly='true'/>
+           <el-form-item label="设备编号" prop="devId" label-width="120px">
+              <el-input v-model="detail1.devId" placeholder="请输入工地编号" readonly='true'/>
             </el-form-item>
           </el-col>
           <el-col :span="12">
@@ -2985,6 +2985,7 @@
     name: 'deviceOne',
     data() {
       return {
+        searchValue: '',
         idsList: [],
         siteId: '',
         proId: '',
@@ -3401,7 +3402,7 @@
           if(res.data.code === 200) {
             console.log("测试",this.showUpload)
             this.$message.success(res.data.msg)
-            this.getyanshou()
+            this.getZiJian()
             this.showUpload = false
           } else {
             this.$message.error(res.data.msg)
@@ -3430,7 +3431,7 @@
         addyanshou(data).then((res) => {
           if(res.data.code === 200) {
             this.$message.success(res.data.msg)
-            this.getZiJian()
+            this.getyanshou()
             this.showUpload = false
           } else {
             this.$message.error(res.data.msg)
@@ -3501,7 +3502,7 @@
                   }
                 })
               } else {
-                this.$message.error('设备使用ID不能为空');
+                this.$message.error('请重新选择设备名称');
                 return false;
               }
             } else {
@@ -3547,7 +3548,7 @@
                   }
                 })
               } else {
-                this.$message.error('设备使用ID不能为空');
+                this.$message.error('请重新选择设备名称');
                 return false;
               }
             } else {
@@ -3585,11 +3586,11 @@
                   }
                 })
               } else {
-                this.$message.error('设备使用ID不能为空');
+                this.$message.error('请重新选择设备名称');
                 return false;
               }
             } else {
-              this.$message.error('项目ID不能为空');
+              this.$message.error('请重新选择设备名称');
               return false;
             }
           } else {
@@ -3968,6 +3969,23 @@
           this.uploadInfo6.useId = res.data.data.useId
         })
       },
+
+      searchTable() {
+        console.log("SearchValue", this.searchValue)
+        // if (this.tableShow === 'table1') {
+        //   this.getzijian()
+        // } else if (this.tableShow === 'table2') {
+        //   this.getyanshou()
+        // }else if(this.tableShow === 'table3') {
+        //   this.getadddingsheng()
+        // }else if(this.tableShow === 'table4') {
+        //   this.getaddfuzhuo()
+        // }else if(this.tableShow === 'table5') {
+        //   this.getadddingqi()
+        // }else if(this.tableShow === 'table6') {
+        //   this.getaddweihu()
+        // }
+      }
 
 
 
