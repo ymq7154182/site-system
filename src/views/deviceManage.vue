@@ -36,7 +36,7 @@
                   <div class="box-title">塔式起重机信息</div>
                   <el-button class="style-btn2" size="mini" @click="gotoHistory">历史数据</el-button>
                   <div class="device-data">
-                    <ul class="device-list"  >
+                    <ul :class="moving === true ? 'device-list moving' : 'device-list'  "  >
                       <li @mouseover="mouseoverMthd(index)" @mouseout="infohover = true" v-for="(item, index) in taInfoList">
                         <div class="device-detail">
                           <el-image v-show="hoverIndex !== index" :src="require('../../src/assets/tower/tadiao1.jpg')" fit="fill" style="height: 80%; " />
@@ -1000,7 +1000,7 @@
                   <div class="box-title">施工升降机信息</div>
                   <el-button class="style-btn2" size="mini" @click="gotoHistory2">历史数据</el-button>
                   <div class="device-data">
-                    <ul class="device-list">
+                    <ul :class="moving2 === true ? 'device-list moving' : 'device-list'  ">
                       <li @mouseover="mouseoverMthd2(index)" @mouseout="infohover1 = true" v-for="(item, index) in shigongInfoList">
                         <div class="device-detail">
                           <el-image v-show="hoverIndex2 !== index" :src="require('../../src/assets/tower/tadiao1.jpg')" fit="fill" style="height: 80%; " />
@@ -1511,6 +1511,8 @@ export default {
   },
   data() {
     return {
+      moving: false,
+      moving2: false,
       hoverIndex: undefined,
       hoverIndex2: undefined,
       taInfoList: [],
@@ -2290,7 +2292,14 @@ export default {
         deviceName: '塔式起重机'
       }
       getDevInfo(params1).then((res) => {
+        if(res.data.data.devData.length >= 5) {
+          this.moving = true
+        } else {
+          this.moving = false
+        }
+        
         this.taInfoList = res.data.data.devData
+        
       })
     
       var params2 = {
@@ -2298,6 +2307,11 @@ export default {
         deviceName: '施工升降机'
       }
       getDevInfo(params2).then((res) => {
+        if(res.data.data.devData.lenngth >= 5) {
+          this.moving2 = true
+        } else {
+          this.moving2 = false
+        }
         this.shigongInfoList = res.data.data.devData
       })
     
@@ -2421,8 +2435,11 @@ export default {
   list-style: none;
   padding: 0;
   margin: 0;
-  animation: moving 12s linear infinite;
+  
   width: 35rem;
+}
+.moving {
+  animation: moving 12s linear infinite;
 }
 
 .device-list li {

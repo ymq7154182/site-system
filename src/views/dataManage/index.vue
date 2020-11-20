@@ -307,6 +307,7 @@ export default {
               })
               this.refreshTable();
               this.showUpload = false;
+              this.resetForm('uploadInfo')
             } else {
               this.$message.error(response.data.msg)
             }
@@ -319,6 +320,7 @@ export default {
     },
     resetForm(formName) {
       this.$refs[formName].resetFields();
+      this.uploadInfo.info = ''
     },
     editInfo(index, row) {
       this.currentInfo.constructionSiteId = this.constructionSiteId;

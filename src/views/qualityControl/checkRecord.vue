@@ -97,8 +97,7 @@ export default {
   methods: {
     loadingTable() {
       getCheckInfoBySchedule({
-        sitename: this.constructionSiteName,
-        status: this.checkCode
+        sitename: this.constructionSiteName
       }).then(response => {
         if(response.data.code === 200) {
           this.historyRecord = response.data.rows;
