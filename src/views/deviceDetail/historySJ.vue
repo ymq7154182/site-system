@@ -27,7 +27,7 @@
             <!--<el-table-column prop="name" label="设备名称" align="center" />-->
             <!--<el-table-column prop="type" label="设备编号" width="100" align="center" />-->
             <el-table-column type="selection" width="50" align="center" />
-            <el-table-column prop="guid" label="设备id" />
+            <el-table-column prop="guid" label="设备编号" />
             <el-table-column prop="fsn" label="黑匣子厂商编号" />
             <el-table-column prop="driverName" label="驾驶人员姓名" align="center" />
             <el-table-column prop="driverCertificateNumber" label="驾驶人员作业证编号" width="120"/>
@@ -186,7 +186,7 @@
         <el-form :model="uploadInfo"  ref="uploadInfo" label-width="1.5rem">
           <el-row>
             <el-col :span="12">
-              <el-form-item label="设备id:" prop="guid">
+              <el-form-item label="设备编号:" prop="guid">
                  <el-input v-model="uploadInfo.guid"  readonly='true'/>
               </el-form-item>
             </el-col>

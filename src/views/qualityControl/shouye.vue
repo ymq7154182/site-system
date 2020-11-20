@@ -1710,7 +1710,7 @@
             },
             series: [
               {
-                name:'质量隐患统计',
+                name:'安全隐患统计',
                 type:'pie',
                 selectedMode: 'single',
                 radius: [0, '40%'],
@@ -1731,7 +1731,7 @@
                 data:echartData.inner
               },
               {
-                name:'安全隐患统计',
+                name:'质量隐患统计',
                 type:'pie',
                 radius: ['60%', '80%'],
                 center:["30%","50%"],

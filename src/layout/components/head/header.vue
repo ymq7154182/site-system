@@ -79,7 +79,9 @@
             </li>
           </ul>
         </div>
-        <div class="head-text">{{siteName}}</div>
+        <div class="head-text left13" v-if="left13 === true">{{siteName}}</div>
+        <div class="head-text left30" v-if="left30 === true">{{siteName}}</div>
+        <div class="head-text right30" v-if="right30 === true">{{siteName}}</div>
         <div class="div-tag right-tag" style="padding-right: 0.15rem;">
           <ul class="ul2">
           <li>
@@ -132,7 +134,10 @@
         name: "header",
       data() {
         return {
-          siteName: ''
+          siteName: '',
+          left13: false,
+          left30: false,
+          right30: false
         }
       },
       computed: {
@@ -200,12 +205,28 @@
           // console.log(siteId)
         },
         getsiteName() {
+          
           var siteId = localStorage.getItem('siteId')
+          console.log("aaa", siteId)
           var data = {
             siteId: siteId
           }
           getSite(data).then((res) => {
             localStorage.setItem('siteName', res.data.data.deptName)
+            console.log(res.data.data.deptName.length)
+            if(res.data.data.deptName.length <= 13) {
+              this.left13 = true
+              this.left30 = false
+              this.right30 = false
+            } else if(res.data.data.deptName.length < 30){
+              this.left13 = false
+              this.left30 = true
+              this.right30 = false
+            } else {
+              this.left13 = false
+              this.left30 = false
+              this.right30 = true
+            }
             this.siteName = res.data.data.deptName
           })
 
@@ -340,14 +361,12 @@
   }
   .head-text {
     text-align: center;
-    width: 5rem;
-    height: 0.45rem;
+    
     /* background-size: 100% 100%; */
-    font-size: 0.37rem;
-    font-weight: 700;
+    
     color: rgb(255, 255, 255);
     text-transform: uppercase;
-    line-height: 0.45rem;
+    
     /* -moz-transform: matrix( 1.12300210614388,0,0,1.12300210614388,0,0);
     -webkit-transform: matrix( 1.12300210614388,0,0,1.12300210614388,0,0);
     -ms-transform: matrix( 1.12300210614388,0,0,1.12300210614388,0,0); */
@@ -360,6 +379,27 @@
     transform: translateX(-50%);
     top: 0.4rem;
     /*z-index: 1103;*/
+  }
+  .left13 {
+    width: 5rem;
+    height: 0.45rem;
+    font-size: 0.37rem;
+    font-weight: 700;
+    line-height: 0.45rem;
+  }
+  .left30 {
+    width: 5rem;
+    height: 0.8rem;
+    font-size: 0.3rem;
+    font-weight: 700;
+    line-height: 0.35rem;
+  }
+  .right30 {
+    width: 5rem;
+    height: 0.8rem;
+    font-size: 0.2rem;
+    font-weight: 700;
+    line-height: 0.25rem;
   }
 
 
