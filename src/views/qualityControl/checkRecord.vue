@@ -31,11 +31,13 @@
             :header-row-style="{ color: '#409eff' }"
             :row-style="{ color: 'white' }"
           >
-            <el-table-column prop="id" label="ID" align="center" width="50" />
-            <el-table-column prop="checkTypeOffspring" align="center" label="安全事件" :show-overflow-tooltip="true" />
-            <el-table-column prop="startTime" align="center" label="记录时间" />
-            <el-table-column prop="checkType" align="center" label="安全类型" :show-overflow-tooltip="true" />
+            <el-table-column prop="id" label="序号" align="center" width="60" />
             <el-table-column prop="context" align="center" label="事件详情" :show-overflow-tooltip="true" />
+            <el-table-column prop="checkType" align="center" label="事件类型" :show-overflow-tooltip="true" />
+            <el-table-column prop="checkTypeOffspring" align="center" label="详细类型" :show-overflow-tooltip="true" />
+            <el-table-column prop="startTime" align="center" label="记录时间" />
+            
+            
             <el-table-column align="center" label="图片" width="100">
               <template slot-scope="scope">
                 <a v-if="scope.row.imageUrl" :href="scope.row.imageUrl" target="_blank" class="imageView">查看图片</a>
