@@ -245,4 +245,16 @@ export function getDevInfoByDevId(id) {
   })
 }
 
+export function getQizhongji(id) {
+  return request({
+    url: '/device/craneDevice/getDeviceTowerCrane?proId=' + id,
+    method: 'get'
+  })
+}
 
+export function getShengjiangji(id) {
+  return request({
+    url: '/device/craneDevice/getDeviceElevator?proId=' + id,
+    method: 'get'
+  })
+}
