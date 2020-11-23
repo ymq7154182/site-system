@@ -14,7 +14,7 @@
                       <el-button class="style-btn" size="mini" @click="gotoTD('塔式起重机')">设备使用过程</el-button>
                       <dv-decoration-9 class="tower-data">
                         <ul style="list-style: none; padding: 0; text-align: center; ">
-                          <li>4</li>
+                          <li>{{qizhongjiOnlineNum}}</li>
                           <li style="color: #3FA0C3; font-size: 0.25rem; ">在线数</li>
                         </ul>
                       </dv-decoration-9>
@@ -22,7 +22,7 @@
                     <el-col :span="12">
                       <dv-decoration-9 class="tower-data">
                         <ul style="list-style: none; padding: 0; text-align: center; ">
-                          <li>2</li>
+                          <li>{{qizhongjiDisNum}}</li>
                           <li style="color: #3FA0C3; font-size: 0.25rem; ">离线数</li>
                         </ul>
                       </dv-decoration-9>
@@ -978,7 +978,7 @@
                       <el-button class="style-btn" size="mini" @click="gotoTD('施工升降机')">设备使用过程</el-button>
                       <dv-decoration-9 class="tower-data">
                         <ul style="list-style: none; padding: 0; text-align: center; ">
-                          <li>4</li>
+                          <li>{{shengjiangjiOnlineNum}}</li>
                           <li style="color: #3FA0C3; font-size: 0.25rem; ">在线数</li>
                         </ul>
                       </dv-decoration-9>
@@ -986,7 +986,7 @@
                     <el-col :span="12">
                       <dv-decoration-9 class="tower-data">
                         <ul style="list-style: none; padding: 0; text-align: center; ">
-                          <li>2</li>
+                          <li>{{shengjiangjiDisNum}}</li>
                           <li style="color: #3FA0C3; font-size: 0.25rem; ">离线数</li>
                         </ul>
                       </dv-decoration-9>
@@ -1485,7 +1485,7 @@
 </template>
 
 <script>
-import { getHistroy, getAllDevName, getCountsByType, getDevInfo } from "@/api/deviceManage";
+import { getHistroy, getAllDevName, getCountsByType, getDevInfo, getQizhongji, getShengjiangji } from "@/api/deviceManage";
 import echarts from 'echarts';
 require('echarts/theme/macarons'); // echarts theme
 
@@ -1507,10 +1507,18 @@ export default {
     this.getAllShiGongList()
     this.getCounts()
     this.getCounts3()
+    //this.getQizhongjiNum()
+    //this.getShengjiangjiNum()
 
   },
   data() {
     return {
+      taTotal: 0,
+      shigongTotal: 0,
+      qizhongjiOnlineNum: 0,
+      qizhongjiDisNum: 0,
+      shengjiangjiOnlineNum: 0,
+      shengjiangjiDisNum: 0,
       moving: false,
       moving2: false,
       hoverIndex: undefined,
@@ -2299,6 +2307,8 @@ export default {
         }
         
         this.taInfoList = res.data.data.devData
+        this.taTotal = res.data.data.devData.length
+        this.getQizhongjiNum()
         
       })
     
@@ -2313,6 +2323,8 @@ export default {
           this.moving2 = false
         }
         this.shigongInfoList = res.data.data.devData
+        this.shigongTotal = res.data.data.devData.length
+        this.getShengjiangjiNum()
       })
     
       
@@ -2325,7 +2337,21 @@ export default {
     mouseoverMthd2(index) {
       this.hoverIndex2 = index
       
+    },
+    getQizhongjiNum() {
+      getQizhongji(this.siteId).then(res => {
+        console.log("lixianshu", res)
+        this.qizhongjiOnlineNum = res.data.data.online
+        this.qizhongjiDisNum = this.taTotal - this.qizhongjiOnlineNum 
+      })
+    },
+    getShengjiangjiNum() {
+      getShengjiangji(this.siteId).then(res => {
+        this.shengjiangjiOnlineNum = res.data.data.online
+        this.shengjiangjiDisNum = this.shigongTotal - this.shengjiangjiOnlineNum
+      })
     }
+
 
   }
 }
