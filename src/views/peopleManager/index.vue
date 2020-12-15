@@ -5,20 +5,17 @@
         <el-tab-pane label="人员管理" name="first" class="label_top">
           <shou-ye></shou-ye>
         </el-tab-pane>
-        <el-tab-pane label="历史考勤" name="second" class="label_top">
-          <kq-history></kq-history>
+        <el-tab-pane label="劳务实名制" name="second" class="label_top">
+          <service-real-name></service-real-name>
         </el-tab-pane>
+       
         <el-tab-pane label="特种作业人员" name="third" class="label_top">
           <special-equ> </special-equ>
-          <!-- <span style="color: white">施工升降机</span> -->
         </el-tab-pane>
-<!--        <el-tab-pane label="特种设备" name="fourth">-->
-<!--          -->
-<!--          &lt;!&ndash; <span style="color: white">特种设备</span> &ndash;&gt;-->
-<!--        </el-tab-pane>-->
-        <!--<el-tab-pane label="视频设备" name="five" class="label_top">-->
-          <!--&lt;!&ndash; <span style="color: white">视频设备</span> &ndash;&gt;-->
-        <!--</el-tab-pane>-->
+        <el-tab-pane label="劳务考勤" name="fourth" class="label_top">
+          <service-kq></service-kq>
+        </el-tab-pane>
+
       </el-tabs>
     </div>
 
@@ -30,12 +27,16 @@
 import kqHistory from './kqHistory'
 import shouYe from './shouYe'
 import specialEqu from "./specialEqu";
+import serviceRealName from './serviceRealName';
+import serviceKq from './serviceKq';
 export default {
   name: "peopleManager",
   components: {
     kqHistory,
     shouYe,
-    specialEqu
+    specialEqu,
+    serviceRealName,
+    serviceKq
   },
   data(){
     return{

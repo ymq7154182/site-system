@@ -12,7 +12,7 @@
             <div class="p_chart">
               <div id="chart1" style="width:30vw;height:17vh;"></div>
             </div>
-            <div class="p_picture">
+            <!-- <div class="p_picture">
               <ul class="p_list">
                 <li v-for="(item,index) in items" :key="index" class="p_item">
                   <div >
@@ -36,13 +36,21 @@
                 <span class="p_attention">{{attentionNum}}</span>
                 <span class="p_attention">人，已进行追踪处理</span>
               </div>
-            </div>
+            </div> -->
+            <!-- <div class="col-div4"> -->
+              <div style="color:white; margin-left: 40%;margin-top: 5%;font-size:20px;" v-if="!showDayList">暂无考勤信息</div>
+              <div style="width:100%;height: 3.5rem;position: absolute;top: 40%" v-if="showDayList" >
+                <dv-scroll-board :config="configTable" />
+              </div>
+              
+            <!-- </div> -->
+            
           </div>
 
           <div class="left_bottom">
             <div class="border-top-left"></div>
             <div class="p_title">
-              <span class="title1">现场人员考勤</span>
+              <span class="title1">近7天考勤分布统计</span>
             </div>
             <div class="p_chart">
               <div id="chart2" style="width: 28vw;height:29vh;"></div>
@@ -94,8 +102,19 @@
               <el-col :span="12">
                 <div class="right_top_right">
                   <div class="border-top-left"></div>
-                  <div class="p_title">
+                  <div class="p_title ">
                     <span class="title1">项目负责人</span>
+                  </div>
+                  <div style="float:right; margin: -20px 10px 0 0; ">
+                    <!-- <el-button type="text" style="text-decoration: underline; " @click="gotoCheckRecord">历史数据</el-button> -->
+                    <el-select v-model="responsePeople" placeholder="请选择责任主体" class="item-defer" @change="selectResponsePeople">
+                      <el-option
+                        v-for="(item, index) in responsePeopleList"
+                        :key="index"
+                        :label="item"
+                        :value="item">
+                      </el-option>
+                    </el-select>
                   </div>
                   <div style="margin-top:0.3rem;" class="device-data">
                     <ul class="device-list">
@@ -371,6 +390,7 @@
                       </el-col>
                     </el-row> -->
                   </div>
+                  <div style="color:white;font-size:16px; margin-left:50%;">共计10人，今日出勤4人</div>
                 </div>
               </el-col>
             </el-row>
@@ -380,7 +400,21 @@
             <div class="p_title">
               <span class="title1">单位考勤</span>
             </div>
-            <div class="p_chart">
+           
+            
+            <div style="margin: -15px 10px 0 0; float:right;">
+              
+                <el-button type="primary" size="mini" @click.native="showYear" >年</el-button>
+                <el-button type="primary" size="mini" @click="showMonth">月</el-button>
+                <el-button type="primary" size="mini" @click="showDay">日</el-button>
+                <el-date-picker
+                  v-model="selectDate"
+                  type="date"
+                  placeholder="选择日期">
+                </el-date-picker>
+            </div>
+            
+            <div class="p_chart" style="clear:both;">
               <div id="chart4" style="width: 62vw;height:36vh;"></div>
             </div>
           </div>
@@ -391,7 +425,7 @@
 </template>
 
 <script>
-//import kqHistory from './kqHistory'
+import { listDay, getCount } from '@/api/peopleManager'
 export default {
   name: "shouYe",
   components: {
@@ -399,6 +433,21 @@ export default {
   },
   data(){
     return{
+      selectDate: '',
+      deptId: '',
+      currentDay: '',
+      responsePeople: '',
+      responsePeopleList: ['施工方', '监理方', '建设方'],
+      showDayList: false,
+      configTable: {
+            header: ['考勤时间', '考勤人员', '工种', '考勤类型'],
+            headerHeight: 45,
+            data: [],
+            rowNum: 4,
+            align: ['center', 'center', 'center', 'center'],
+            headerBGC: '',
+            evenRowBGC: ''
+          },
       // 现场工种的legend
       legendData:[],
       // 现场工种的数据
@@ -466,13 +515,25 @@ export default {
       infohover4: true,
       infohover5: true,
       infohover6: true,
+      responsePeopleTotal: [],
+      responsePeopleKq: [],
+      servicePeopleTotal: [],
+      servicePeopleKq: []
+
     }
   },
   mounted() {
+    var date = this.transDate()
+    this.currentDay = date
+    this.deptId = localStorage.getItem('siteId')
+    var type = 3
+    this.getPeopleCount(date, this.deptId, type)
     this.selectType("类型")
     this.$store.dispatch('changeMsg', '人员管理')
     this.drawLine();
-    this.changeType();
+    //this.changeType();
+    this.getListDay()
+    
   },
   methods:{
     selectType(val) {
@@ -545,11 +606,99 @@ export default {
 
       }
     },
+    drawLine4() {
+       let myChart4 = this.$echarts.init(document.getElementById('chart4'))
+       myChart4.setOption({
+        tooltip: {
+            trigger: 'axis',
+            axisPointer: {            // 坐标轴指示器，坐标轴触发有效
+                type: 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
+            }
+        },
+        legend: {
+          textStyle: {
+              color: '#fff',
+          },
+          bottom:'bottom',
+            data: ['项目负责人-总数', '劳务人员总数', '项目负责人-考勤', '劳务人员总数考勤']
+        },
+        grid: {
+            left: '3%',
+            right: '4%',
+            bottom: '12%',
+            containLabel: true
+        },
+        xAxis: {
+            type: 'value',
+            axisLabel: {
+              show: true,
+                textStyle: {
+                  color: '#c3dbff',  //更改坐标轴文字颜色
+                  fontSize : 12      //更改坐标轴文字大小
+                }
+            },
+        },
+        yAxis: {
+            type: 'category',
+            data: ['建设单位', '施工单位', '监理单位'],
+            axisLabel: {
+              show: true,
+                textStyle: {
+                  color: '#c3dbff',  //更改坐标轴文字颜色
+                  fontSize : 12      //更改坐标轴文字大小
+                }
+            },
+        },
+        series: [
+            {
+                name: '项目负责人-总数',
+                type: 'bar',
+                stack: '总数',
+                label: {
+                    show: true,
+                    position: 'insideRight'
+                },
+                data: this.responsePeopleTotal
+            },
+            
+            {
+                name: '项目负责人-考勤',
+                type: 'bar',
+                stack: '考勤',
+                label: {
+                    show: true,
+                    position: 'insideRight'
+                },
+                data: this.responsePeopleKq
+            },
+            {
+                name: '劳务人员总数',
+                type: 'bar',
+                stack: '总数',
+                label: {
+                    show: true,
+                    position: 'insideRight'
+                },
+                data: this.servicePeopleTotal
+            },
+            {
+                name: '劳务人员总数考勤',
+                type: 'bar',
+                stack: '考勤',
+                label: {
+                    show: true,
+                    position: 'insideRight'
+                },
+                data: this.servicePeopleKq
+            }
+        ]
+      })
+    },
     drawLine(){
       let myChart1 = this.$echarts.init(document.getElementById('chart1'))
       let myChart2 = this.$echarts.init(document.getElementById('chart2'))
       let myChart3 = this.$echarts.init(document.getElementById('chart3'))
-      let myChart4 = this.$echarts.init(document.getElementById('chart4'))
+     
       var num1 = 130;
       var num2 = 14;
       var num3 = 116;
@@ -1056,107 +1205,95 @@ export default {
           }
         ]
       });
-      myChart4.setOption({//
-        tooltip: {
-          trigger: 'axis',
-          axisPointer: {
-            type: 'cross',
-            crossStyle: {
-              color: '#999'
-            }
-          }
-        },
 
-        color:['#FFACC1','#6AC0F0','#FFC361'],
-        grid: {
-          left: 50,
-          top: 50,
-          bottom: 10,
-          right: 10,
-          containLabel: true
-        },
-        legend: {
-          data: ['总数', '出勤数', '出勤率'],
-          show: true,
-          top:'top',
-          textStyle: {
-            color: '#6ac0f0' ,
-          },
-        },
-        xAxis: [
-          {
-            type: 'category',
-            data: ['项目部', '亿尚龙', '三建', '中天耀', '中浩建筑', '缘振智建筑','华迅锐建筑','迈贝禾建筑','御捷达','真志祥建筑','其他'],
-            // data: ['项目部', '嘉宇天泽', '明泽瑞达', '中天耀', '顾志润', '劲草园艺','宜民劳动','东悦星','御捷达','碧保','其他'],
-            axisPointer: {
-              type: 'shadow'
-            },
-            axisLine: {
-              lineStyle: {
-                color: '#3FA0C3'
-              }
-            },
-            // axisTick: {
-            //   lineStyle: {
-            //     type:'dashed'
-            //   }
-            // },
-          }
-        ],
-        yAxis: [
-          {
-            type: 'value',
-            name: '人员数量',
-            min: 0,
-            max: 200,
-            interval: 20,
-
-            axisLabel: {
-              formatter: '{value} 人'
-            },
-            axisLine: {
-              lineStyle: {
-                color: '#3FA0C3'
-              }
-            },
-
-          },
-          {
-            type: 'value',
-            name: '百分比',
-            min: 0,
-            max: 1,
-            interval: 0.1,
-            axisLabel: {
-              formatter: '{value} '
-            },
-            axisLine: {
-              lineStyle: {
-                color: '#3FA0C3'
-              }
-            },
-          }
-        ],
-        series: [
-          {
-            name: '总数',
-            type: 'bar',
-            data: [180,160,189,177,168,190,178,180,190,178,190]
-          },
-          {
-            name: '出勤数',
-            type: 'bar',
-            data: [169,150,170,170,159,169,188,168,160,168,188]
-          },
-          {
-            name: '出勤率',
-            type: 'line',
-            yAxisIndex: 1,
-            data: [0.8,0.7,0.9,0.6,0.9,0.5,0.9,0.6,0.7,0.8,0.9]
-          }
-        ]
-      });
+      
+      
     },
+    getListDay() {
+      listDay({
+        constructionSiteId: localStorage.getItem('siteId')
+      }).then((res) => {
+        if(res.data.data.userDay.length === 0) {
+          this.showDayList = false
+        } else {
+          this.showDayList = true
+          var tmparr = res.data.data.userDay
+          var data = []
+          for(var i = 0; i < tmparr.length; i++) {
+            var data1 = []
+            data1.push(tmparr[i].userSignTime)
+            data1.push(tmparr[i].userSignName)
+            data1.push(tmparr[i].userSignKind)
+            if(tmparr[i].userSignType === 1) {
+              data1.push("<span style='color: #3DE7C9'>签到</span>")
+            } else if(tmparr[i].userSignType === 2){
+              data1.push("<span style='color: #eeba2b'>签出</span>")
+            } else {
+              data1.push("<span style='color: #e43c13'>无签到信息</span>")
+            }
+            data.push(data1)
+          }
+          this.configTable = {
+            header: ['考勤时间', '考勤人员', '工种', '考勤类型'],
+            headerHeight: 45,
+            data: data,
+            rowNum: 4,
+            align: ['center', 'center', 'center', 'center'],
+            headerBGC: '',
+            evenRowBGC: ''
+          }
+        }
+        
+
+      })
+    },
+    getPeopleCount(date, id, type) {
+      var params = {
+        datetime: date,
+        id: id,
+        type: type
+      }
+      getCount(params).then((res) => {
+        console.log("Counts", res.data.data)
+        var obj = res.data.data
+        this.responsePeopleTotal = []
+        this.responsePeopleKq = []
+        this.servicePeopleTotal = []
+        this.servicePeopleKq = []
+        for(var i = 0; i < obj.length; i++) {
+
+          var tmp = obj[i]
+          console.log("SSSSS", tmp)
+          this.responsePeopleTotal.push(tmp.leaderTotal)
+          this.responsePeopleKq.push(tmp.leaderAttend)
+          this.servicePeopleTotal.push(tmp.labourTotal)
+          this.servicePeopleKq.push(tmp.labourAttend)
+          console.log("DDDDD", this.responsePeopleTotal)
+        }
+        this.drawLine4()
+      })
+    },
+    transDate() {
+      var date = new Date();
+      return `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`
+    },
+    showYear() {
+      var year = this.currentDay.split('-')[0]
+      
+      this.getPeopleCount(year, this.deptId, 1)
+    },
+    showMonth() {
+      var date = this.currentDay.slice(0, 7)
+      
+      this.getPeopleCount(date, this.deptId, 2)
+    },
+    showDay() {
+      
+      this.getPeopleCount(this.currentDay, this.deptId, 3)
+    },
+    selectResponsePeople() {
+      this.getPeopleCount(this.currentDay, this.deptId, 3)
+    }
   }
 }
 </script>
@@ -1174,11 +1311,19 @@ export default {
 .p_left{
 
 }
+/* .col-div4 {
+    width: 100%;
+    background-image: url("../../assets/boxheader.png");
+    background-size: 100% 100%;
+    position: relative;
+    height: 6.1rem;
+  } */
 .left_top{
   margin-bottom: 1vh;
   width: 100%;
   height: 47vh;
   background-color: rgba(0, 36, 78, 0.5);
+  position: relative;
 }
 
 .p_icon{
@@ -1212,14 +1357,12 @@ export default {
   background-color: rgba(0, 36, 78, 0.5);
 }
 .p_title{
-  /*color: #6ac0f0;*/
-  /*font-size: 14px;*/
-  /*width: 90px;*/
-  /*position: relative;*/
-  /*top:6px;*/
-  /*padding: 4px 6px;*/
-  /*background-color: rgb(17,41,73);*/
-  /*text-align: center;*/
+  
+}
+.box-txt4 {
+
+ 
+  
 }
 .title1{
   color: #fd9f6f;
