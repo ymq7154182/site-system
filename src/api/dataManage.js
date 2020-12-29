@@ -53,4 +53,26 @@ export function toPdfFile(data) {
   })
 }
 
+export function listFolder(proId) {
+  return request({
+    url: `/document/folder/listFolder?proId=${proId}`,
+    method: 'get'
+  })
+}
+
+export function getFolderInfo(siteId, id) {
+  return request({
+    url: `/doc/listFolderContent?siteId=${siteId}&urlId=${id}`,
+    method: 'get'
+  })
+}
+
+export function addFolder(data) {
+  return request({
+    url: "/document/folder",
+    method: 'post',
+    data:data
+  })
+}
+
 
