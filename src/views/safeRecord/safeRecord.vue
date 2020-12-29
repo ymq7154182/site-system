@@ -873,7 +873,6 @@
         console.log(item)
         console.log(item.diccode)
         getTreedict(item.diccode).then((res) => {
-          // console.log(res.data.data)
           if (res.data.code === 200) {
             this.form.monthChild[index].diccode = res.data.data.diccode
             this.form.monthChild[index].firstcode = res.data.data.firstcode

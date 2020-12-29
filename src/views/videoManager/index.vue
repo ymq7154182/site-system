@@ -1,20 +1,23 @@
 <template>
+
     <div class="videoManager">
         <el-row>
             <el-col :span="18">
 
                 <!-- 只有一个视频 -->
                 <div class="videoArea" v-if="videoOne">
+                    <div class="oneArea" id="one" >
 
-
-                    <!-- <dv-border-box-8> -->
-                        <div class="oneArea" id="one" >
-
-                            <img src="../../assets/videoManager/v_3.png" />
-
+                        <img src="../../assets/videoManager/v_3.png" />
+                        <div class="btns"> 
+                            <el-button size="mini" type="primary">关注</el-button>
+                            <el-button size="mini" type="success">放大</el-button>
+                            <el-button size="mini" type="info">回放</el-button>
+                            <el-button size="mini" type="warning">抓拍</el-button>
+                            <el-button size="mini" type="danger">录制</el-button>
                         </div>
-                    <!-- </dv-border-box-8>  -->
 
+                    </div>
                 </div>
 
                 <!-- 两个视频 -->
@@ -22,13 +25,83 @@
                     <!-- <dv-border-box-8> -->
                         <div class="twoArea" id="two1" >
                             <img src="../../assets/videoManager/v_2.png" />
+                            <div class="btns"> 
+                                <el-button size="mini" type="primary">关注</el-button>
+                                <el-button size="mini" type="success">放大</el-button>
+                                <el-button size="mini" type="info">回放</el-button>
+                                <el-button size="mini" type="warning">抓拍</el-button>
+                                <el-button size="mini" type="danger">录制</el-button>
+                            </div>
                         </div>
                     <!-- </dv-border-box-8>
                      <dv-border-box-8> -->
                         <div class="twoArea" id="two2" >
                             <img src="../../assets/videoManager/v_3.png" />
+                            <div class="btns"> 
+                                <el-button size="mini" type="primary">关注</el-button>
+                                <el-button size="mini" type="success">放大</el-button>
+                                <el-button size="mini" type="info">回放</el-button>
+                                <el-button size="mini" type="warning">抓拍</el-button>
+                                <el-button size="mini" type="danger">录制</el-button>
+                            </div>
                         </div>
                     <!-- </dv-border-box-8>  -->
+
+                </div>
+
+                 <!-- 三个视频 -->
+                <div class="fourVideoArea" v-if="videoThree">
+                    <div class="fourVideoArea_1">
+                        
+                            <div class="fourArea" id="four1" >
+                               
+                                <img src="../../assets/videoManager/v_1.png" />
+                                <div class="btns"> 
+                                    <el-button size="mini" type="primary">关注</el-button>
+                                    <el-button size="mini" type="success">放大</el-button>
+                                    <el-button size="mini" type="info">回放</el-button>
+                                    <el-button size="mini" type="warning">抓拍</el-button>
+                                    <el-button size="mini" type="danger">录制</el-button>
+                                </div>
+                            </div>
+                        
+                            <div class="fourArea" id="four2" >
+                                <img src="../../assets/videoManager/v_2.png" />
+                                 <div class="btns">
+                                    <el-button size="mini" type="primary">关注</el-button>
+                                    <el-button size="mini" type="success">放大</el-button>
+                                    <el-button size="mini" type="info">回放</el-button>
+                                    <el-button size="mini" type="warning">抓拍</el-button>
+                                    <el-button size="mini" type="danger">录制</el-button>
+                                </div>
+                            </div>
+                    </div>
+                    <div class="fourVideoArea_1">
+                            <div class="fourArea" id="four3" >
+                                <img src="../../assets/videoManager/v_3.png" />
+                                 <div class="btns">
+                                    <el-button size="mini" type="primary">关注</el-button>
+                                    <el-button size="mini" type="success">放大</el-button>
+                                    <el-button size="mini" type="info">回放</el-button>
+                                    <el-button size="mini" type="warning">抓拍</el-button>
+                                    <el-button size="mini" type="danger">录制</el-button>
+                                </div>
+                            </div>
+                        
+                            <!-- <div class="fourArea" id="four4" >
+                                <img src="../../assets/videoManager/v_4.png" style="width:81%;"/>
+                                 <div class="btns">
+                                    <el-button size="mini" type="primary">关注</el-button>
+                                    <el-button size="mini" type="success">放大</el-button>
+                                    <el-button size="mini" type="info">回放</el-button>
+                                    <el-button size="mini" type="warning">抓拍</el-button>
+                                    <el-button size="mini" type="danger">录制</el-button>
+                                </div>
+                            
+                            </div> -->
+                    </div>
+                   <div class="shengluehao">...</div>
+
 
                 </div>
 
@@ -37,12 +110,27 @@
                     <div class="fourVideoArea_1">
                         <!-- <dv-border-box-8> -->
                             <div class="fourArea" id="four1" >
+                               
                                 <img src="../../assets/videoManager/v_1.png" />
+                                <div class="btns"> 
+                                    <el-button size="mini" type="primary">关注</el-button>
+                                    <el-button size="mini" type="success">放大</el-button>
+                                    <el-button size="mini" type="info">回放</el-button>
+                                    <el-button size="mini" type="warning">抓拍</el-button>
+                                    <el-button size="mini" type="danger">录制</el-button>
+                                </div>
                             </div>
                         <!-- </dv-border-box-8>
                         <dv-border-box-8> -->
                             <div class="fourArea" id="four2" >
-                                <img src="../../assets/videoManager/v_2.png" style="width:81%;"/>
+                                <img src="../../assets/videoManager/v_2.png" />
+                                 <div class="btns">
+                                    <el-button size="mini" type="primary">关注</el-button>
+                                    <el-button size="mini" type="success">放大</el-button>
+                                    <el-button size="mini" type="info">回放</el-button>
+                                    <el-button size="mini" type="warning">抓拍</el-button>
+                                    <el-button size="mini" type="danger">录制</el-button>
+                                </div>
                             </div>
                         <!-- </dv-border-box-8>  -->
                     </div>
@@ -50,13 +138,338 @@
                         <!-- <dv-border-box-8> -->
                             <div class="fourArea" id="four3" >
                                 <img src="../../assets/videoManager/v_3.png" />
+                                 <div class="btns">
+                                    <el-button size="mini" type="primary">关注</el-button>
+                                    <el-button size="mini" type="success">放大</el-button>
+                                    <el-button size="mini" type="info">回放</el-button>
+                                    <el-button size="mini" type="warning">抓拍</el-button>
+                                    <el-button size="mini" type="danger">录制</el-button>
+                                </div>
                             </div>
                         <!-- </dv-border-box-8>
                         <dv-border-box-8> -->
                             <div class="fourArea" id="four4" >
-                                <img src="../../assets/videoManager/v_4.png" style="width:81%;"/>
+                                <img src="../../assets/videoManager/v_4.png" />
+                                 <div class="btns">
+                                    <el-button size="mini" type="primary">关注</el-button>
+                                    <el-button size="mini" type="success">放大</el-button>
+                                    <el-button size="mini" type="info">回放</el-button>
+                                    <el-button size="mini" type="warning">抓拍</el-button>
+                                    <el-button size="mini" type="danger">录制</el-button>
+                                </div>
+                            
                             </div>
                         <!-- </dv-border-box-8>  -->
+                    </div>
+                   <div class="shengluehao">...</div>
+
+
+                </div>
+
+                <!-- 六个视频 -->
+                <div class="sixVideoArea" v-if="videoSix">
+                    <div class="sixVideoArea_1">
+                            <div class="sixArea" id="four1" >
+                               
+                                <img src="../../assets/videoManager/v_1.png" />
+                                <div class="btns"> 
+                                    <el-button size="mini" type="primary">关注</el-button>
+                                    <el-button size="mini" type="success">放大</el-button>
+                                    <el-button size="mini" type="info">回放</el-button>
+                                    <el-button size="mini" type="warning">抓拍</el-button>
+                                    <el-button size="mini" type="danger">录制</el-button>
+                                </div>
+                            </div>
+                       
+                            <div class="sixArea" id="four2" >
+                                <img src="../../assets/videoManager/v_2.png" />
+                                 <div class="btns">
+                                    <el-button size="mini" type="primary">关注</el-button>
+                                    <el-button size="mini" type="success">放大</el-button>
+                                    <el-button size="mini" type="info">回放</el-button>
+                                    <el-button size="mini" type="warning">抓拍</el-button>
+                                    <el-button size="mini" type="danger">录制</el-button>
+                                </div>
+                            </div>
+
+                            <div class="sixArea" id="four5" >
+                               
+                                <img src="../../assets/videoManager/v_1.png" />
+                                <div class="btns"> 
+                                    <el-button size="mini" type="primary">关注</el-button>
+                                    <el-button size="mini" type="success">放大</el-button>
+                                    <el-button size="mini" type="info">回放</el-button>
+                                    <el-button size="mini" type="warning">抓拍</el-button>
+                                    <el-button size="mini" type="danger">录制</el-button>
+                                </div>
+                            </div>
+                       
+                    </div>
+                    <div class="sixVideoArea_1">
+                       
+                            <div class="sixArea" id="four3" >
+                                <img src="../../assets/videoManager/v_3.png" />
+                                 <div class="btns">
+                                    <el-button size="mini" type="primary">关注</el-button>
+                                    <el-button size="mini" type="success">放大</el-button>
+                                    <el-button size="mini" type="info">回放</el-button>
+                                    <el-button size="mini" type="warning">抓拍</el-button>
+                                    <el-button size="mini" type="danger">录制</el-button>
+                                </div>
+                            </div>
+                      
+                            <div class="sixArea" id="four4" >
+                                <img src="../../assets/videoManager/v_4.png" />
+                                 <div class="btns">
+                                    <el-button size="mini" type="primary">关注</el-button>
+                                    <el-button size="mini" type="success">放大</el-button>
+                                    <el-button size="mini" type="info">回放</el-button>
+                                    <el-button size="mini" type="warning">抓拍</el-button>
+                                    <el-button size="mini" type="danger">录制</el-button>
+                                </div>
+                            
+                            </div>
+
+                            <div class="sixArea" id="four6" >
+                               
+                                <img src="../../assets/videoManager/v_1.png" />
+                                <div class="btns"> 
+                                    <el-button size="mini" type="primary">关注</el-button>
+                                    <el-button size="mini" type="success">放大</el-button>
+                                    <el-button size="mini" type="info">回放</el-button>
+                                    <el-button size="mini" type="warning">抓拍</el-button>
+                                    <el-button size="mini" type="danger">录制</el-button>
+                                </div>
+                            </div>
+                        
+                    </div>
+                   <div class="shengluehao">...</div>
+
+
+                </div>
+
+
+                <!-- 八个视频 -->
+                <div class="sixVideoArea" v-if="videoEight">
+                    <div class="sixVideoArea_1">
+                            <div class="sixArea" id="four1" >
+                               
+                                <img src="../../assets/videoManager/v_1.png" />
+                                <div class="btns"> 
+                                    <el-button size="mini" type="primary">关注</el-button>
+                                    <el-button size="mini" type="success">放大</el-button>
+                                    <el-button size="mini" type="info">回放</el-button>
+                                    <el-button size="mini" type="warning">抓拍</el-button>
+                                    <el-button size="mini" type="danger">录制</el-button>
+                                </div>
+                            </div>
+                       
+                            <div class="sixArea" id="four2" >
+                                <img src="../../assets/videoManager/v_2.png" />
+                                 <div class="btns">
+                                    <el-button size="mini" type="primary">关注</el-button>
+                                    <el-button size="mini" type="success">放大</el-button>
+                                    <el-button size="mini" type="info">回放</el-button>
+                                    <el-button size="mini" type="warning">抓拍</el-button>
+                                    <el-button size="mini" type="danger">录制</el-button>
+                                </div>
+                            </div>
+
+                            <div class="sixArea" id="four5" >
+                               
+                                <img src="../../assets/videoManager/v_1.png" />
+                                <div class="btns"> 
+                                    <el-button size="mini" type="primary">关注</el-button>
+                                    <el-button size="mini" type="success">放大</el-button>
+                                    <el-button size="mini" type="info">回放</el-button>
+                                    <el-button size="mini" type="warning">抓拍</el-button>
+                                    <el-button size="mini" type="danger">录制</el-button>
+                                </div>
+                            </div>
+                       
+                    </div>
+                    <div class="sixVideoArea_1">
+                       
+                            <div class="sixArea" id="four3" >
+                                <img src="../../assets/videoManager/v_3.png" />
+                                 <div class="btns">
+                                    <el-button size="mini" type="primary">关注</el-button>
+                                    <el-button size="mini" type="success">放大</el-button>
+                                    <el-button size="mini" type="info">回放</el-button>
+                                    <el-button size="mini" type="warning">抓拍</el-button>
+                                    <el-button size="mini" type="danger">录制</el-button>
+                                </div>
+                            </div>
+                      
+                            <div class="sixArea" id="four4" >
+                                <img src="../../assets/videoManager/v_4.png" />
+                                 <div class="btns">
+                                    <el-button size="mini" type="primary">关注</el-button>
+                                    <el-button size="mini" type="success">放大</el-button>
+                                    <el-button size="mini" type="info">回放</el-button>
+                                    <el-button size="mini" type="warning">抓拍</el-button>
+                                    <el-button size="mini" type="danger">录制</el-button>
+                                </div>
+                            
+                            </div>
+
+                            <div class="sixArea" id="four6" >
+                               
+                                <img src="../../assets/videoManager/v_1.png" />
+                                <div class="btns"> 
+                                    <el-button size="mini" type="primary">关注</el-button>
+                                    <el-button size="mini" type="success">放大</el-button>
+                                    <el-button size="mini" type="info">回放</el-button>
+                                    <el-button size="mini" type="warning">抓拍</el-button>
+                                    <el-button size="mini" type="danger">录制</el-button>
+                                </div>
+                            </div>
+                        
+                    </div>
+                    <div class="sixVideoArea_1">
+                       
+                            <div class="sixArea" id="four3" >
+                                <img src="../../assets/videoManager/v_3.png" />
+                                 <div class="btns">
+                                    <el-button size="mini" type="primary">关注</el-button>
+                                    <el-button size="mini" type="success">放大</el-button>
+                                    <el-button size="mini" type="info">回放</el-button>
+                                    <el-button size="mini" type="warning">抓拍</el-button>
+                                    <el-button size="mini" type="danger">录制</el-button>
+                                </div>
+                            </div>
+                      
+                            <div class="sixArea" id="four4" >
+                                <img src="../../assets/videoManager/v_4.png" />
+                                 <div class="btns">
+                                    <el-button size="mini" type="primary">关注</el-button>
+                                    <el-button size="mini" type="success">放大</el-button>
+                                    <el-button size="mini" type="info">回放</el-button>
+                                    <el-button size="mini" type="warning">抓拍</el-button>
+                                    <el-button size="mini" type="danger">录制</el-button>
+                                </div>
+                            
+                            </div>
+                    </div>
+                   <div class="shengluehao">...</div>
+
+
+                </div>
+               
+
+                <!-- 九个视频 -->
+                <div class="sixVideoArea" v-if="videoNine">
+                    <div class="sixVideoArea_1">
+                            <div class="sixArea" id="four1" >
+                               
+                                <img src="../../assets/videoManager/v_1.png" />
+                                <div class="btns"> 
+                                    <el-button size="mini" type="primary">关注</el-button>
+                                    <el-button size="mini" type="success">放大</el-button>
+                                    <el-button size="mini" type="info">回放</el-button>
+                                    <el-button size="mini" type="warning">抓拍</el-button>
+                                    <el-button size="mini" type="danger">录制</el-button>
+                                </div>
+                            </div>
+                       
+                            <div class="sixArea" id="four2" >
+                                <img src="../../assets/videoManager/v_2.png" />
+                                 <div class="btns">
+                                    <el-button size="mini" type="primary">关注</el-button>
+                                    <el-button size="mini" type="success">放大</el-button>
+                                    <el-button size="mini" type="info">回放</el-button>
+                                    <el-button size="mini" type="warning">抓拍</el-button>
+                                    <el-button size="mini" type="danger">录制</el-button>
+                                </div>
+                            </div>
+
+                            <div class="sixArea" id="four5" >
+                               
+                                <img src="../../assets/videoManager/v_1.png" />
+                                <div class="btns"> 
+                                    <el-button size="mini" type="primary">关注</el-button>
+                                    <el-button size="mini" type="success">放大</el-button>
+                                    <el-button size="mini" type="info">回放</el-button>
+                                    <el-button size="mini" type="warning">抓拍</el-button>
+                                    <el-button size="mini" type="danger">录制</el-button>
+                                </div>
+                            </div>
+                       
+                    </div>
+                    <div class="sixVideoArea_1">
+                       
+                            <div class="sixArea" id="four3" >
+                                <img src="../../assets/videoManager/v_3.png" />
+                                 <div class="btns">
+                                    <el-button size="mini" type="primary">关注</el-button>
+                                    <el-button size="mini" type="success">放大</el-button>
+                                    <el-button size="mini" type="info">回放</el-button>
+                                    <el-button size="mini" type="warning">抓拍</el-button>
+                                    <el-button size="mini" type="danger">录制</el-button>
+                                </div>
+                            </div>
+                      
+                            <div class="sixArea" id="four4" >
+                                <img src="../../assets/videoManager/v_4.png" />
+                                 <div class="btns">
+                                    <el-button size="mini" type="primary">关注</el-button>
+                                    <el-button size="mini" type="success">放大</el-button>
+                                    <el-button size="mini" type="info">回放</el-button>
+                                    <el-button size="mini" type="warning">抓拍</el-button>
+                                    <el-button size="mini" type="danger">录制</el-button>
+                                </div>
+                            
+                            </div>
+
+                            <div class="sixArea" id="four6" >
+                               
+                                <img src="../../assets/videoManager/v_1.png" />
+                                <div class="btns"> 
+                                    <el-button size="mini" type="primary">关注</el-button>
+                                    <el-button size="mini" type="success">放大</el-button>
+                                    <el-button size="mini" type="info">回放</el-button>
+                                    <el-button size="mini" type="warning">抓拍</el-button>
+                                    <el-button size="mini" type="danger">录制</el-button>
+                                </div>
+                            </div>
+                        
+                    </div>
+                    <div class="sixVideoArea_1">
+                       
+                            <div class="sixArea" id="four3" >
+                                <img src="../../assets/videoManager/v_3.png" />
+                                 <div class="btns">
+                                    <el-button size="mini" type="primary">关注</el-button>
+                                    <el-button size="mini" type="success">放大</el-button>
+                                    <el-button size="mini" type="info">回放</el-button>
+                                    <el-button size="mini" type="warning">抓拍</el-button>
+                                    <el-button size="mini" type="danger">录制</el-button>
+                                </div>
+                            </div>
+                      
+                            <div class="sixArea" id="four4" >
+                                <img src="../../assets/videoManager/v_4.png" />
+                                 <div class="btns">
+                                    <el-button size="mini" type="primary">关注</el-button>
+                                    <el-button size="mini" type="success">放大</el-button>
+                                    <el-button size="mini" type="info">回放</el-button>
+                                    <el-button size="mini" type="warning">抓拍</el-button>
+                                    <el-button size="mini" type="danger">录制</el-button>
+                                </div>
+                            
+                            </div>
+
+                            <div class="sixArea" id="four4" >
+                                <img src="../../assets/videoManager/v_4.png" />
+                                 <div class="btns">
+                                    <el-button size="mini" type="primary">关注</el-button>
+                                    <el-button size="mini" type="success">放大</el-button>
+                                    <el-button size="mini" type="info">回放</el-button>
+                                    <el-button size="mini" type="warning">抓拍</el-button>
+                                    <el-button size="mini" type="danger">录制</el-button>
+                                </div>
+                            
+                            </div>
                     </div>
                    <div class="shengluehao">...</div>
 
@@ -81,11 +494,31 @@
                                 <span :class="[!videoTwo? 'sp_2': 'sp_2_select']"></span>
                                 <p>二栏</p>
                             </div>
+                            <div class="twoIcon" @click="selectThree">
+                                <span :class="[!videoThree? 'sp_3': 'sp_3_select']"></span>
+                                <p>三栏</p>
+                            </div>
                             <div class="fourIcon" @click="selectFour">
                                 <span :class="[!videoFour ? 'sp_4': 'sp_4_select']"></span>
                                 <p>四栏</p>
                             </div>
                         </div>
+                        <div class="controllerIcon1">
+                            <div class="oneIcon" @click="selectSix">
+                                <span :class="[!videoSix ? 'sp_6': 'sp_6_select']"></span>
+                                <p>六栏</p>
+                            </div>
+                            <div class="twoIcon" @click="selectEight">
+                                <span :class="[!videoEight? 'sp_8': 'sp_8_select']"></span>
+                                <p>八栏</p>
+                            </div>
+                            <div class="twoIcon" @click="selectNine">
+                                <span :class="[!videoNine? 'sp_9': 'sp_9_select']"></span>
+                                <p>九栏</p>
+                            </div>
+                           
+                        </div>
+                        
                     </div>
                 </el-row>
                 <el-row>
@@ -118,7 +551,11 @@ export default {
         return {
             videoOne: false,
             videoTwo: false,
+            videoThree: false,
             videoFour: true,
+            videoSix: false,
+            videoEight: false,
+            videoNie: false,
             treeData: [{
                 label: '石家庄宝能中心项目二标段',
                 children: [
@@ -194,21 +631,67 @@ export default {
     },
     methods: {
         selectOne() {
-
             this.videoOne = true;
             this.videoTwo = false;
+            this.videoThree = false;
             this.videoFour = false;
-
+            this.videoSix = false;
+            this.videoEight = false;
+            this.videoNine = false;
         },
         selectTwo() {
             this.videoOne = false;
             this.videoTwo = true;
+            this.videoThree = false;
             this.videoFour = false;
+            this.videoSix = false;
+            this.videoEight = false;
+            this.videoNine = false;
+        },
+        selectThree() {
+            this.videoOne = false;
+            this.videoTwo = false;
+            this.videoThree = true;
+            this.videoFour = false;
+            this.videoSix = false;
+            this.videoEight = false;
+            this.videoNine = false;
         },
         selectFour() {
             this.videoOne = false;
             this.videoTwo = false;
+            this.videoThree = false;
             this.videoFour = true;
+            this.videoSix = false;
+            this.videoEight = false;
+            this.videoNine = false;
+        },
+        selectSix() {
+            this.videoOne = false;
+            this.videoTwo = false;
+            this.videoThree = false;
+            this.videoFour = false;
+            this.videoSix = true;
+            this.videoEight = false;
+            this.videoNine = false;
+        },
+        selectEight() {
+            this.videoOne = false;
+            this.videoTwo = false;
+            this.videoThree = false;
+            this.videoFour = false;
+            this.videoSix = false;
+            this.videoEight = true;
+            this.videoNine = false;
+        },
+        selectNine() {
+            this.videoOne = false;
+            this.videoTwo = false;
+            this.videoThree = false;
+            this.videoFour = false;
+            this.videoSix = false;
+            this.videoEight = false;
+            this.videoNine = true;
         },
         handleNodeClick(data) {
             console.log(data);
@@ -251,6 +734,7 @@ export default {
     background-repeat: no-repeat; */
     display: flex;
     justify-content: center;
+    flex-direction: column;
     align-items: center;
    margin: 0 auto;
    margin-right: 0.6rem;
@@ -272,6 +756,7 @@ export default {
     display: flex;
     justify-content: center;
     align-items: center;
+    flex-direction: column;
     height: 80%;
     width: 80%;
     margin: 0 auto;
@@ -281,6 +766,14 @@ export default {
 
 }
 .fourVideoArea {
+    display: flex;
+    flex-wrap: wrap;
+    align-content: space-between;
+
+    height: 9rem;
+    animation: daxiao_1 1s linear;
+}
+.sixVideoArea {
     display: flex;
     flex-wrap: wrap;
     align-content: space-between;
@@ -299,9 +792,16 @@ export default {
     display: flex;
     justify-content: space-between;
 }
+.sixVideoArea_1 {
+    flex-basis: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+
 .fourArea {
     display: flex;
     justify-content: center;
+    flex-direction: column;
     align-items: center;
     height: 80%;
     width: 80%;
@@ -309,6 +809,22 @@ export default {
     margin-right: 0.6rem;
     margin-left: 0.5rem;
     /* border:1px solid rgb(223, 187, 187); */
+}
+.sixArea {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    height: 80%;
+    width: 100%;
+    margin: 0 auto;
+    margin-right: 0.1rem;
+    margin-left: 0.1rem;
+    /* border:1px solid rgb(223, 187, 187); */
+}
+
+.btns {
+    margin-top:10px;
 }
 .fenge {
     background: transparent;
@@ -319,7 +835,7 @@ export default {
     background-image: url("../../assets/videoManager/bg_chang.png");
     background-size:  100% 70%;
     background-repeat: no-repeat;
-    height: 3rem;
+    height: 4.7rem;
 }
 .box-txt {
     color: #ffa454;
@@ -336,7 +852,22 @@ export default {
     color: white;
     text-align: center;
 }
+.controllerIcon1 {
+    display: flex;
+    /* flex: 1; */
+    padding-top:0.4rem;
+    padding-left:0.5rem;
+    color: white;
+    text-align: center;
+}
+
 .controllerIcon span {
+    display: block;
+    width: 38px;
+    height: 38px;
+    margin: 0 auto;
+}
+.controllerIcon1 span {
     display: block;
     width: 38px;
     height: 38px;
@@ -360,8 +891,20 @@ export default {
 .sp_2 {
     background: url("../../assets/videoManager/two.png") no-repeat;
 }
+.sp_3 {
+    background: url("../../assets/videoManager/three.png") no-repeat;
+}
 .sp_4 {
     background: url("../../assets/videoManager/four.png") no-repeat;
+}
+.sp_6 {
+    background: url("../../assets/videoManager/six.png") no-repeat;
+}
+.sp_8 {
+    background: url("../../assets/videoManager/eight.png") no-repeat;
+}
+.sp_9 {
+    background: url("../../assets/videoManager/nine.png") no-repeat;
 }
 .sp_1_select {
     background: url("../../assets/videoManager/one_select.png") no-repeat;
@@ -369,8 +912,20 @@ export default {
 .sp_2_select {
     background: url("../../assets/videoManager/two_select.png") no-repeat;
 }
+.sp_3_select {
+    background: url("../../assets/videoManager/three_select.png") no-repeat;
+}
 .sp_4_select {
     background: url("../../assets/videoManager/four_select.png") no-repeat;
+}
+.sp_6_select {
+    background: url("../../assets/videoManager/six_select.png") no-repeat;
+}
+.sp_8_select {
+    background: url("../../assets/videoManager/eight_select.png") no-repeat;
+}
+.sp_9_select {
+    background: url("../../assets/videoManager/nine_select.png") no-repeat;
 }
 .fenleiController {
     margin-top: -0.5rem;
