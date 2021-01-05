@@ -292,7 +292,7 @@
               <el-form-item label="照片:" >
                 <el-upload
                   class="upload-demo"
-                  action="http://121.36.106.18:38080/system/safe/uploadFile"
+                  action="http://121.36.106.18:36080/system/safe/uploadFile"
                   :limit="1"
                   :on-success="handleSuccess"
                   :file-list="fileList"
@@ -305,7 +305,7 @@
                <el-form-item label="执业资格(岗位)证书:" >
                 <el-upload
                   class="upload-demo"
-                  action="http://121.36.106.18:38080/system/safe/uploadFile"
+                  action="http://121.36.106.18:36080/system/safe/uploadFile"
                   :limit="1"
                   :on-success="handleSuccess"
                   :file-list="fileList"

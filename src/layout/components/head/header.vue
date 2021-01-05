@@ -185,7 +185,7 @@
         gotoSystem() {
           // var url = 'http://121.36.106.18:38088/index'
           // window.open(url,'_self')
-          window.location.href = "http://121.36.106.18:38088/index"
+          window.location.href = "http://121.36.106.18:36088/index"
         },
         gotoDataManage() {
           this.$router.push('/dataManage')

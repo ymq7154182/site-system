@@ -65,28 +65,23 @@
           <div class="box-title">环境数据趋势图</div>
           <div v-show="envFlag" class="environmentTag" >
                 <el-tag :type="buttonType(index)" v-for="(type,index) in environmentType" :key="index"  @click.native="selectType(index)">{{type}}</el-tag>
-<!--                <el-tag  @click.native="selectType('PM2.5')">PM2.5</el-tag>-->
-<!--                <el-tag  @click.native="selectType('PM10')">PM10</el-tag>-->
-<!--                <el-tag  @click.native="selectType('噪音')">噪音</el-tag>-->
-<!--                <el-tag  @click.native="selectType('温度')">温度</el-tag>-->
-<!--                <el-tag  @click.native="selectType('湿度')">湿度</el-tag>-->
+
           </div>
-<!--          <div class="device-data">-->
           <div v-show="envFlag" id="environmentChart" style="height: 31vh" ></div>
           <div v-show="!envFlag" style="text-align: center;padding-top: 120px">
             <span style="font-size: 12px;color: #ffffff;font-weight: bolder;">暂无数据，此数据来源于建工随手拍小程序</span>
           </div>
-<!--          </div>-->
         </div>
       </el-col>
       <el-col :span="6" style="padding: 0 0.5vw; ">
         <div style="background-color: rgba(0, 36, 78, 0.5); height: 40vh; width: 100%;">
           <div class="border-top-left"></div>
           <div class="box-title">用电用水统计</div>
-          <div id="alarmTrend"></div>
-<!--          <div class="solve-view">-->
-<!--            <dv-active-ring-chart :config="configPie" style="width: 3rem; height: 3rem; margin: auto; " />-->
-<!--          </div>-->
+          <div class="addBtn">
+            <el-button type="primary" size="mini" @click="addResume">新增</el-button>
+          </div>
+          <div id="alarmTrend" ></div>
+
         </div>
       </el-col>
     </el-row>
@@ -94,7 +89,7 @@
       <el-col :span="8" style="padding: 0 0.5vw; ">
         <div style="background-color: rgba(0, 36, 78, 0.5); height: 42vh; width: 100%; ">
           <div class="border-top-left"></div>
-          <div class="box-title" @click="refresh">空气质量统计</div>
+          <div class="box-title" @click="refresh">一周空气质量统计</div>
           <div id="alarmType" style="height: 37vh"></div>
         </div>
       </el-col>
@@ -113,18 +108,63 @@
         </div>
       </el-col>
     </el-row>
+
+
+    <el-dialog :visible.sync="showAdd" title="新增用水用电统计" width="40%">
+      <div >
+        <el-form :model="uploadInfo" :rules="rules" ref="uploadInfo" label-width="1.5rem">
+          <el-form-item label="用电量" prop="kwh">
+            <el-input v-model="uploadInfo.kwh" style="width: 50%"></el-input>
+          </el-form-item>
+          <el-form-item label="用水量" prop="mwo">
+            <el-input v-model="uploadInfo.mwo" style="width: 50%"></el-input>
+          </el-form-item>
+          <el-form-item label="日期" prop="collectDate">
+            <el-date-picker v-model="uploadInfo.collectDate" align="right" type="date" placeholder="选择日期"  value-format="yyyy-MM-dd" style="width: 50%; " />
+          </el-form-item>
+          <el-form-item>
+            <el-button type="primary" @click="submitUpload('uploadInfo')">提交</el-button>
+            <el-button @click="resetForm('uploadInfo')">重置</el-button>
+          </el-form-item>
+        </el-form>
+      </div>
+    </el-dialog>
   </div>
 </template>
 
 <script>
   import echarts from 'echarts';
-  import {getGreenInfo,getThreshold} from '@/api/green';
+  import {getGreenInfo, getThreshold, getTypeCount, getRealTimeWeather, consumption, getWeatherOnThe7th, collect} from '@/api/green';
   require('echarts/theme/macarons') // echarts theme
 
   export default {
     name: 'greenConstruction',
     data() {
       return {
+        water:[],
+        power:[],
+        waterDate: [],
+        sevenDays: [],
+        showAdd: false,
+        uploadInfo: {
+          collectDate: '',
+          kwh: '',
+          mwo: '',
+          siteId: '',
+          id: ''
+        },
+        rules: {
+          collectDate: [
+            { required: true, message: '请选择日期', trigger: 'blur' }
+          ],
+          kwh: [
+            { required: true, message: '请输入用电量', trigger: 'change' }
+          ],
+          mwo: [
+            { required: true, message: '请输入用水量', trigger: 'change' } 
+          ]
+          
+        },
         envFlag: true,
         upLine:[],
         downLine:[],
@@ -164,38 +204,15 @@
           evenRowBGC: '',
           columnWidth: [200]
         },
-        config: {radius: '65%',
+        config: {
+          radius: '65%',
           activeRadius: '70%',
-          data: [
-            {
-              name: '风速',
-              value: 55
-            },
-            {
-              name: 'PM2.5',
-              value: 120
-            },
-            {
-              name: 'PM10',
-              value: 78
-            },
-            {
-              name: '噪音',
-              value: 66
-            },
-            {
-              name: '温度',
-              value: 80
-            },
-            {
-              name: '湿度',
-              value: 80
-            }
-          ],
+          data: [],
           lineWidth: 25,
           digitalFlopStyle: {
             fontSize: 20
-          }},
+          }
+          },
         configType: {
           data: [
             {
@@ -238,14 +255,112 @@
       }
     },
     mounted() {
+      this.get7thWrather()
+      this.getWater()
+      this.getArmCount()
       this.getenvironmentData()
       this.$store.dispatch('changeMsg', '绿色施工');
       this.initEnvironment()
-      this.initAlarmType();
-      this.initAlarmTrend();
+      
+      
       // this.initQuality()
     },
     methods: {
+      getWater() {
+         var id = localStorage.getItem('siteId') 
+         collect(id).then((res) => {
+           
+           var arr = res.data.rows
+           for(var i = 0; i < arr.length; i++) {
+             this.power.push(arr[i].kwh)
+             this.water.push(arr[i].mwo)
+             this.waterDate.push(arr[i].collectDate)
+           }
+           this.initAlarmTrend();
+         })
+      },
+      get7thWrather() {
+        var id = localStorage.getItem('siteId')
+        getWeatherOnThe7th(id).then((res) => {
+          console.log("7天的天气", res.data.data.data)
+          var arr = res.data.data.data
+          var tmp = []
+          for(var i = 0; i < arr.length; i++) {
+            var obj = {}
+            obj.value = arr[i].air
+            obj.name = arr[i].week
+            tmp.push(obj)
+          }
+          this.sevenDays = tmp
+          this.initAlarmType();
+        })
+      },
+     addResume() {
+        this.showAdd = true
+        this.uploadInfo.siteId = localStorage.getItem('siteId')
+      },
+      
+      resetForm(formName) {
+      this.$refs[formName].resetFields();
+      this.uploadInfo.collectDate = ''
+      this.uploadInfo.kwh = ''
+      this.uploadInfo.mwo = ''
+    },
+      submitUpload(formName) {
+        
+        
+        this.$refs[formName].validate((valid) => {
+          console.log("提交的信息", this.uploadInfo)
+          if(valid) {
+            consumption(this.uploadInfo).then(response => {
+              if(response.data.code === 200) {
+                this.$message({
+                  type: 'success',
+                  message: '上传数据成功！'
+                })
+                this.showAdd = false;
+                this.resetForm('uploadInfo')
+              } else {
+                this.$message.error(response.data.msg)
+              }
+            })
+          } else {
+            this.$message.error('上传失败')
+            return false
+          }
+        });
+      },
+      // 获取实时天气
+      getWeather() {
+        var siteId = localStorage.getItem('siteId')
+        getRealTimeWeather(siteId).then((res) => {
+          this.win_meter = res.data.win_meter
+          
+        })
+      },
+      getArmCount() {
+        var siteId = localStorage.getItem('siteId')
+        getTypeCount(siteId).then((res) => {
+          var data = res.data.data
+          var arr = []
+          for(var i = 0; i < data.length; i++) {
+            var obj = {}
+            obj.name = data[i].name
+            obj.value = data[i].counts
+            arr.push(obj)
+          }
+          this.config = {
+            radius: '65%',
+          activeRadius: '70%',
+          data: arr,
+          lineWidth: 25,
+          digitalFlopStyle: {
+            fontSize: 20
+          }
+          }
+          console.log("报警类型统计", this.config)
+        })
+      },
       buttonType(index){
         if(this.environmentType[index] === this.currentType){
           return "success"
@@ -423,19 +538,8 @@
       initAlarmType() {
         this.alarmTypeChart = echarts.init(document.getElementById('alarmType'));
         this.alarmTypeChart.setOption({
-          // backgroundColor:"#0B1837",
-          color: ["#EAEA26", "#906BF9", "#FE5656", "#01E17E", "#3DD1F9", "#FFAD05"],
-          // title: {
-          //     text: '网络/安全设备',
-          //     left: '60',
-          //     top: 0,
-          //     textAlign: 'center',
-          //     textStyle: {
-          //         color: '#fff',
-          //         fontSize: 14,
-          //         fontWeight: 0
-          //     }
-          // },
+          color: ["#EAEA26", "#906BF9", "#FE5656", "#01E17E", "#3DD1F9", "#FFAD05", "#a5e7f0"],
+          
           grid: {
             left: -100,
             top: 50,
@@ -443,10 +547,7 @@
             right: 10,
             containLabel: true
           },
-          // tooltip: {
-          //   trigger: 'item',
-          //   formatter: "{b} : {c} ({d}%)"
-          // },
+          
           tooltip: {
               trigger: 'item',
               formatter: "空气质量统计 <br/>{b}: {c} ({d}%)"
@@ -454,10 +555,8 @@
           legend: {
             type: "scroll",
             orient: "vartical",
-            // x: "right",
             top: "center",
             right: "15",
-            // bottom: "0%",
             itemWidth: 12,
             itemHeight: 8,
             itemGap: 12,
@@ -466,7 +565,7 @@
               fontSize: 12,
               fontWeight: 0
             },
-            data: ['优', '良', '轻度污染', '中度污染', '重度污染', '严重污染']
+            data: ['星期一', '星期二', '星期三', '星期四', '星期五', '星期六', '星期日']
           },
           polar: {},
           angleAxis: {
@@ -594,34 +693,11 @@
                 show: false
               }
             },
-            data: [{
-              value: 23,
-              name: '优'
-            },
-              {
-                value: 18,
-                name: '良'
-              },
-              {
-                value: 10,
-                name: '轻度污染'
-              },
-              {
-                value: 5,
-                name: '中度污染'
-              },
-              {
-                value: 3,
-                name: '重度污染'
-              },
-              {
-                value: 2,
-                name: '严重污染'
-              }
-            ]
+           data: this.sevenDays
           }, ]
         })
       },
+     
       initAlarmTrend() {
         this.alarmTrendChart = echarts.init(document.getElementById('alarmTrend'));
         this.alarmTrendChart.setOption({
@@ -637,7 +713,7 @@
           },
           xAxis: {
             type: 'category',
-            data: ['10月5日', '10月6日', '10月7日', '10月8日', '10月9日', '10月10日', '10月11日'],
+            data: this.waterDate,
             axisLine: {
               lineStyle: {
                 color: '#3FA0C3'
@@ -661,12 +737,12 @@
           series: [
             {
               name: '用水情况',
-              data: [300, 450, 901, 700, 1290, 760, 1350],
+              data: this.water,
               type: 'line',
             },
             {
               name: '用电情况',
-              data: [800, 600, 910, 1000, 450, 1310, 1310],
+              data: this.power,
               type: 'line',
             }
           ]
@@ -710,7 +786,11 @@
     line-height: 0.5rem;
     padding-left: 0.25rem;
   }
-
+  .addBtn {
+    float: right;
+    margin-top:-25px;
+   margin-right:15px;
+  }
   .device-list li {
     float: left;
   }
