@@ -3445,7 +3445,7 @@
       },
       getaddweihu() {
         var data = this.uploadInfo6
-        // var url = 'http://121.36.106.18:38080/device/maintenance'
+        // var url = 'http://121.36.106.18:36080/device/maintenance'
         // axios.post(url, data).then((res) =>{
         //     if(res.data.code === 200) {
         //       this.$message.success(res.data.msg)

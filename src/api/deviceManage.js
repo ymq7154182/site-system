@@ -258,3 +258,42 @@ export function getShengjiangji(id) {
     method: 'get'
   })
 }
+
+export function getTree(id) {
+  return request({
+    url: `/dev/catalog/tree?siteId=${id}`,
+    method: 'get'
+  })
+}
+
+export function getAllDevice(data) {
+  return request({
+    url: "/dev/manage/list",
+    method: 'get',
+    params: data
+  })
+}
+
+export function devManage(data) {
+  return request({
+    url: '/dev/manage',
+    method: 'post',
+    data: data
+  })
+}
+
+export function devPutManage(data) {
+  return request({
+    url: '/dev/manage',
+    method: 'put',
+    data: data
+  })
+}
+
+export function devFolder(data) {
+  return request({
+    url: '/dev/catalog',
+    method: 'post',
+    data: data
+  })
+}

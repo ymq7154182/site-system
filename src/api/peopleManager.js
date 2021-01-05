@@ -69,6 +69,39 @@ export function peopleInfo(data) {
   })
 }
 
+export function getTeamTree(id) {
+  return request({
+    url: `/people/teams/tree?siteId=${id}`,
+    method: 'get'
+  })
+}
+
+export function addBanzu(data) {
+  return request({
+    url: `/people/teams`,
+    method: 'post',
+    data: data
+  })
+}
+
+export function addPeople(data) {
+  return request({
+    url: `/people/info`,
+    method: 'post',
+    data: data
+  })
+}
+
+export function putPeople(data) {
+  return request({
+    url: `/people/info`,
+    method: 'put',
+    data: data
+  })
+}
+
+
+
 
 
 

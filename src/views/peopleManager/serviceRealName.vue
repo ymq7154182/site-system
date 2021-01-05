@@ -16,10 +16,8 @@
         <div v-show="showSearch" style="padding: 10px">
           <span style="font-size: 14px;color: white;font-weight: 700;margin-right: 10px">姓名</span><el-input v-model="queryParams.userName" placeholder="请输入姓名" clearable size="small" style="width: 120px;margin-right: 10px" />
           <span style="font-size: 14px;color: white;font-weight: 700;margin-right: 10px">身份证号</span><el-input v-model="queryParams.userCode" placeholder="请输入身份证号" clearable size="small" style="width: 150px;margin-right: 10px"  />
-          <span style="font-size: 14px;color: white;font-weight: 700;margin-right: 10px">班组</span>
-          <el-select v-model="queryParams.userClass" placeholder="请选择班组" clearable size="small" style="width: 120px;margin-right: 10px">
-            <el-option v-for="dict in userClassList" :key="dict.dictValue" :label="dict.dictLabel" :value="dict.dictValue" />
-          </el-select><span style="font-size: 14px;color: white;font-weight: 700;margin-right: 10px">岗位/工种</span>
+          
+          <span style="font-size: 14px;color: white;font-weight: 700;margin-right: 10px">岗位/工种</span>
           <el-select v-model="queryParams.userPost" placeholder="请选择" clearable size="small" style="width: 120px;margin-right: 10px">
             <el-option v-for="dict in userPostList" :key="dict.dictValue" :label="dict.dictLabel" :value="dict.dictValue" />
           </el-select>
@@ -27,6 +25,9 @@
           <el-select v-model="queryParams.userStatus" placeholder="请选择" clearable size="small" style="width: 120px;margin-right: 10px">
             <el-option v-for="dict in userStatusList" :key="dict.value" :label="dict.label" :value="dict.value" />
           </el-select>
+          
+          <span style="font-size: 14px;color: white;font-weight: 700;margin-right: 10px">班组</span>
+          <treeselect v-model="queryParams.userClass" :options="treeData" placeholder="请选择" :clearable="true" :show-count="true"  style="width: 250px;display:inline-block;vertical-align:bottom;" @select="getSelectList" />
           <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
           <el-button type="primary" icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>
         </div>
@@ -34,10 +35,10 @@
 
         <el-row :gutter="10" class="mb8">
           <el-col :span="1.5">
-            <el-button type="primary"  size="mini" @click="addBanzu" >添加班组</el-button>
+            <el-button type="primary"  size="mini" @click="addBanzuBtn" >添加班组</el-button>
           </el-col>
           <el-col :span="1.5">
-            <el-button type="primary"  size="mini" @click="addPeople" >添加人员</el-button>
+            <el-button type="primary"  size="mini" @click="addPeopleBtn" >添加人员</el-button>
           </el-col>
           <el-col :span="1.5">
             <el-button type="primary"  size="mini" @click="downloadModel" >下载模版</el-button>
@@ -96,13 +97,13 @@
     </el-row>
 
     <!-- 添加对话框 -->
-    <el-dialog title="劳务实名制新增页面" :visible.sync="open" width="800px" append-to-body class="addForm">
+    <el-dialog :title="title" :visible.sync="open" width="800px" append-to-body class="addForm">
       <el-form ref="form" :model="form" :rules="rules" label-width="120px">
         <el-row>
           <el-col :span="24">
-            <el-form-item label="选择单位" prop="devFactory">
-              <el-select v-model="form.devType" placeholder="请选择" clearable size="small" style="width: 240px">
-                <el-option v-for="dict in danweiList" :key="dict.dictValue" :label="dict.dictLabel" :value="dict.dictLabel" />
+            <el-form-item label="选择单位" prop="userSignCompanyName">
+              <el-select v-model="form.userSignCompanyName" placeholder="请选择" clearable size="small" style="width: 240px">
+                <el-option v-for="dict in danweiList" :key="dict" :label="dict" :value="dict" />
               </el-select>
             </el-form-item>
           </el-col>
@@ -150,8 +151,20 @@
         </el-row>
         <el-row>
           <el-col :span="12">
+            <el-form-item label="民族" prop="userNationality">
+              <el-input v-model="form.userNationality" placeholder="请输入民族" />
+            </el-form-item>
+          </el-col>
+          <el-col :span="12">
+            <el-form-item label="年龄" prop="userAge">
+              <el-input v-model="form.userAge" placeholder="请输入年龄" />
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <el-row>
+          <el-col :span="12">
             <el-form-item label="班组" prop="userClass">
-              <el-input v-model="form.userClass" placeholder="请输入班组" />
+              <treeselect v-model="form.userClass" :options="treeData3" placeholder="请选择" :clearable="true" :show-count="true"  style="display:inline-block;vertical-align:bottom;" @select="getSelectList3" />
             </el-form-item>
           </el-col>
           <el-col :span="12">
@@ -167,7 +180,7 @@
           <el-col :span="12">
             <el-form-item label="岗位/工种" prop="userPost">
               <el-select v-model="form.userPost" placeholder="请选择" clearable size="small" style="width: 240px">
-                <el-option v-for="dict in postList" :key="dict.value" :label="dict.label" :value="dict.value" />
+                <el-option v-for="dict in postList" :key="dict" :label="dict" :value="dict" />
               </el-select>
             </el-form-item>
           </el-col>
@@ -194,19 +207,22 @@
         <el-row>
 
           <el-col :span="12">
-            <el-col :span="12">
-              <el-form-item label="照片:" >
+            
+              <el-form-item label="照片">
                 <el-upload
                   class="upload-demo"
-                  action="http://121.36.106.18:38080/system/safe/uploadFile"
+                  action="http://121.36.106.18:36080/system/safe/uploadFile"
                   :limit="1"
-                  :on-success="handleSuccess"
-                  :file-list="fileList"
+                  :on-success="handleSuccess2"
+                  accept=".jpg,.png"
+                  style="width: 90%; "
                 >
-                  <el-button slot="trigger" type="text" icon="el-icon-upload" style="text-align: center; font-size: 14px; ">选取文件</el-button>
+                  <el-button slot="trigger" size="small" type="primary" icon="el-icon-plus">选取文件</el-button>
+                  <div slot="tip" class="el-upload__tip">支持上传jpg/png格式图片</div>
                 </el-upload>
               </el-form-item>
-            </el-col>
+              
+            
           </el-col>
         </el-row>
 
@@ -221,21 +237,21 @@
     </el-dialog>
 
    <!-- 班组新增页面 -->
-    <el-dialog :visible.sync="banzuOpen" title="班组新增页面" width="40%" >
+    <el-dialog :visible.sync="banzuOpen" :title="title" width="40%" >
       <div style="height: 55vh; overflow-y: scroll; ">
-        <el-form :model="banzuForm" :rules="banzuRules" ref="uploadInfo" label-width="1.5rem">
+        <el-form :model="banzuForm" :rules="banzuRules" ref="banzuForm" label-width="1.5rem">
           <el-row>
             <div style="font-size:16px;color:red;">班组信息</div>
           </el-row>
           <el-row>
             <el-col :span="12">
-              <el-form-item label="班组名称:" prop="userClass">
-                 <el-input v-model="banzuForm.deviceSn"  />
+              <el-form-item label="班组名称:" prop="label">
+                 <el-input v-model="banzuForm.label"  />
               </el-form-item>
             </el-col>
             <el-col :span="12">
-              <el-form-item label="上级班组:" prop="userClass">
-                <el-input v-model="banzuForm.userClass" />
+              <el-form-item label="上级班组:" prop="parentId">
+                <treeselect v-model="banzuForm.parentId" :options="treeData2" placeholder="请选择" :clearable="true" :show-count="true"  style="display:inline-block;vertical-align:bottom;" @select="getSelectList2" />
               </el-form-item>
             </el-col>
           </el-row>
@@ -245,34 +261,34 @@
           </el-row>
           <el-row>
             <el-col :span="12">
-              <el-form-item label="负责人:" prop="leader">
-                 <el-input v-model="banzuForm.idcard"  />
+              <el-form-item label="负责人:" prop="userName">
+                 <el-input v-model="banzuForm.userName"  />
               </el-form-item>
             </el-col>
             <el-col :span="12">
-              <el-form-item label="身份证号:" prop="operationTime">
-                 <el-input v-model="banzuForm.operationTime"  />
+              <el-form-item label="身份证号:" prop="userCode">
+                 <el-input v-model="banzuForm.userCode"  />
               </el-form-item>
             </el-col>
           </el-row>
 
           <el-row>
             <el-col :span="12">
-              <el-form-item label="性别" prop="status">
-                <el-radio-group v-model="banzuForm.status">
-                    <el-radio :label="0">男</el-radio>
+              <el-form-item label="性别" prop="userSex">
+                <el-radio-group v-model="banzuForm.userSex">
+                    <el-radio :label="2">男</el-radio>
                     <el-radio :label="1">女</el-radio>
                 </el-radio-group>
                </el-form-item>
             </el-col>
             <el-col :span="12">
-               <el-form-item label="学历" prop="userid">
-                <el-select v-model="banzuForm.userid" placeholder="请选择学历" style="width: 50%">
+               <el-form-item label="学历" prop="userEducation">
+                <el-select v-model="banzuForm.userEducation" placeholder="请选择学历" style="width: 50%">
                     <el-option
-                        v-for="item in xueliOptions"
-                        :key="item.guid"
-                        :label="item.pname"
-                        :value="item.guid">
+                        v-for="item in educationList"
+                        :key="item"
+                        :label="item"
+                        :value="item">
                     </el-option>
                 </el-select>
              </el-form-item>
@@ -281,35 +297,35 @@
 
           <el-row>
             <el-col :span="12">
-              <el-form-item label="手机号:" prop="height">
-                 <el-input v-model="banzuForm.height"  />
+              <el-form-item label="手机号:" prop="phone">
+                 <el-input v-model="banzuForm.phone"  />
               </el-form-item>
             </el-col>
             <el-col :span="12">
-              <el-form-item label="职业资格(岗位)证书编号:" prop="amplitude">
-                 <el-input v-model="banzuForm.amplitude"  />
+              <el-form-item label="职业资格(岗位)证书编号:" prop="userVcode">
+                 <el-input v-model="banzuForm.userVcode"  />
               </el-form-item>
             </el-col>
           </el-row>
 
           <el-row>
             <el-col :span="12">
-              <el-form-item label="岗位/工种" prop="userid">
-                <el-select v-model="banzuForm.userid" placeholder="请选择" style="width: 50%">
+              <el-form-item label="岗位/工种" prop="userPost">
+                <el-select v-model="banzuForm.userPost" placeholder="请选择" style="width: 50%">
                     <el-option
-                        v-for="item in gangweiOptions"
-                        :key="item.guid"
-                        :label="item.pname"
-                        :value="item.guid">
+                        v-for="item in postList"
+                        :key="item"
+                        :label="item"
+                        :value="item">
                     </el-option>
                 </el-select>
              </el-form-item>
             </el-col>
             <el-col :span="12">
-              <el-form-item label="状态" prop="status">
-                <el-radio-group v-model="banzuForm.status">
-                    <el-radio :label="0">在职</el-radio>
-                    <el-radio :label="1">离职</el-radio>
+              <el-form-item label="状态" prop="userStatus">
+                <el-radio-group v-model="banzuForm.userStatus">
+                    <el-radio :label="1">在职</el-radio>
+                    <el-radio :label="0">离职</el-radio>
                 </el-radio-group>
                </el-form-item>
             </el-col>
@@ -317,10 +333,10 @@
 
           <el-row>
             <el-col :span="12">
-              <el-form-item label="特种作业人员" prop="status">
-                <el-radio-group v-model="banzuForm.status">
-                    <el-radio :label="0">是</el-radio>
-                    <el-radio :label="1">否</el-radio>
+              <el-form-item label="特种作业人员" prop="flag">
+                <el-radio-group v-model="banzuForm.flag">
+                    <el-radio :label="1">是</el-radio>
+                    <el-radio :label="0">否</el-radio>
                 </el-radio-group>
                </el-form-item>
             </el-col>
@@ -332,7 +348,7 @@
               <el-form-item label="照片:" >
                 <el-upload
                   class="upload-demo"
-                  action="http://121.36.106.18:38080/system/safe/uploadFile"
+                  action="http://121.36.106.18:36080/system/safe/uploadFile"
                   :limit="1"
                   :on-success="handleSuccess"
                   :file-list="fileList"
@@ -345,9 +361,9 @@
                <el-form-item label="执业资格(岗位)证书:" >
                 <el-upload
                   class="upload-demo"
-                  action="http://121.36.106.18:38080/system/safe/uploadFile"
+                  action="http://121.36.106.18:36080/system/safe/uploadFile"
                   :limit="1"
-                  :on-success="handleSuccess"
+                  :on-success="handleSuccess3"
                   :file-list="fileList"
                 >
                   <el-button slot="trigger" type="text" icon="el-icon-upload" style="text-align: center; font-size: 14px; ">选取文件</el-button>
@@ -371,7 +387,7 @@
 
 <script>
 
-import { peopleInfo, getLeftColumn, treeselect,   addDev, updateDev } from '@/api/peopleManager'
+import { peopleInfo, getLeftColumn, treeselect, updateDev, getTeamTree, addBanzu, addPeople, putPeople } from '@/api/peopleManager'
 import Treeselect from "@riophae/vue-treeselect";
 import "@riophae/vue-treeselect/dist/vue-treeselect.css";
 
@@ -385,11 +401,14 @@ export default {
   },
   data() {
     return {
-      postList: [],
+      postList: ['钢筋工', '架子工', '混凝土工', '砌筑工'],
       educationList: ['小学', '初中', '高中', '专科', '本科', '研究生'],
-      danweiList: [],
+      danweiList: ['建设单位', '施工单位', '监理单位'],
       currentSanfang: '',
       userClassList: [],
+      treeData: [],
+      treeData2: [],
+      treeData3: [],
       userPostList: [],
       userStatusList: [
         {
@@ -475,7 +494,7 @@ export default {
         pageSize: 10,
         userName: '',
         userCode: '',
-        userClass: '',
+        userClass: undefined,
         userPost: '',
         userStatus: '',
         constructionSiteId: localStorage.getItem("deptId")
@@ -515,50 +534,36 @@ export default {
         
       },
       banzuRules: {
-        user: [
-          { required: true, message: "产权单位不能为空", trigger: "blur" },
+        label: [
+          { required: true, message: "班组姓名不能为空", trigger: "blur" },
         ],
-        devName: [
-          { required: true, message: "设备名称不能为空", trigger: "blur" },
+        parentId: [
+          { required: true, message: "上级班组不能为空", trigger: "blur" },
         ],
-        repairCycle: [
-          { required: true, message: "维修周期不能为空", trigger: "blur" },
-        ],
-        devModel: [
-          { required: true, message: "设备型号不能为空", trigger: "blur" },
-        ],
-        personInCharge: [
+        userName: [
           { required: true, message: "负责人不能为空", trigger: "blur" },
         ],
-        proTime: [
-          { required: true, message: "进厂时间不能为空", trigger: "blur" },
+        userCode: [
+          { required: true, message: "身份证不能为空", trigger: "blur" },
+        ],
+        userVcode: [
+          { required: true, message: "证书编号不能为空", trigger: "blur" },
+        ],
+        userStatus: [
+          { required: true, message: "状态不能为空", trigger: "blur" },
         ],
 
-        nickName: [
-          { required: true, message: "用户昵称不能为空", trigger: "blur" },
+        phone: [
+          { required: true, message: "联系方式不能为空", trigger: "blur" },
         ],
-        deptId: [
-          { required: true, message: "归属部门不能为空", trigger: "blur" },
+        checkImg: [
+          { required: true, message: "资质证书不能为空", trigger: "blur" },
         ],
-
-        password: [
-          { required: true, message: "用户密码不能为空", trigger: "blur" },
+        userImg: [
+          { required: true, message: "照片不能为空", trigger: "blur" },
         ],
-        email: [
-          { required: true, message: "邮箱地址不能为空", trigger: "blur" },
-          {
-            type: "email",
-            message: "'请输入正确的邮箱地址",
-            trigger: ["blur", "change"],
-          },
-        ],
-        tel: [
-          { required: true, message: "手机号码不能为空", trigger: "blur" },
-          {
-            pattern: /^1[3|4|5|6|7|8|9][0-9]\d{8}$/,
-            message: "请输入正确的手机号码",
-            trigger: "blur",
-          },
+        userSex: [
+          { required: true, message: "性别不能为空", trigger: "blur" },
         ],
       },
     };
@@ -568,19 +573,37 @@ export default {
   },
   created() {
     this.getPeopleInfo()
-    
+    this.getBanzu()
     this.getTreeselect();
-    // this.getDicts("sys_normal_disable").then((response) => {
-    //   this.statusOptions = response.data;
-    // });
-    // this.getDicts("sys_user_sex").then((response) => {
-    //   this.sexOptions = response.data;
-    // });
-    // this.getConfigKey("sys.user.initPassword").then((response) => {
-    //   this.initPassword = response.msg;
-    // });
+   
   },
   methods: {
+    getSelectList(node, instanceId) {
+      // console.log("Index", index)
+      //console.log("Item", node)
+      this.queryParams.userClass = node.id
+      
+    },
+    getSelectList2(node, instanceId) {
+      console.log("node", node)
+      console.log("instanceId", instanceId)
+      this.banzuForm.userClass = node.id
+      
+    },
+    getSelectList3(node, instanceId) {
+      console.log("node", node)
+      console.log("instanceId", instanceId)
+      this.form.userClass = node.id
+      
+    },
+    getBanzu() {
+      var id = localStorage.getItem('siteId')
+      getTeamTree(id).then((res) => {
+        this.treeData = res.data.data
+        this.treeData2 = res.data.data
+        this.treeData3 = res.data.data
+      })
+    },
     getPeopleInfo() {
       var params = {
         constructionSiteId: localStorage.getItem("deptId")
@@ -637,29 +660,64 @@ export default {
     // 取消按钮
     cancel() {
       this.open = false;
-      this.reset();
+      this.resetForm("form");
     },
     cancelPeople() {
       this.banzuOpen = false
       this.resetPeople()
     },
     // 表单重置
-    reset() {
-      this.form = {
-        constructionSiteId:undefined,
-        constructionSiteName:'',
-        devFactory:'',
-        devModel: '',
-        devName: '',
-        devType: '',
-        entryTime: '',
-        personInCharge: '',
-        phone: '',
-        status: 0,
-        type: "环境检测设备",
-
-      };
-      this.resetForm("form");
+    resetForm(formName) {
+      this.$refs[formName].resetFields();
+      this.form.userImg = ''
+      this.form.constructionSiteId = ''
+      this.form.id = ''
+      this.form.userName = ''
+      this.form.userClass = ''
+      this.form.userPost = ''
+      this.form.userCode = ''
+      this.form.userVcode = ''
+      this.form.userSex = ''
+      this.form.phone = ''
+      this.form.userNationality = ''
+      this.form.userAge = ''
+      this.form.userEducation = ''
+      this.form.userSignDeptName = ''
+      this.form.userSignCompanyName = ''
+      this.form.checkImg = ''
+      this.form.leader = ''
+      this.form.flag = ''
+      this.form.userStatus = ''
+      this.form.teamId = ''
+      this.fileList = []
+      
+    },
+    resetForm2(formName) {
+      this.$refs[formName].resetFields();
+      this.banzuForm.userImg = ''
+      this.banzuForm.constructionSiteId = ''
+      this.banzuForm.id = ''
+      this.banzuForm.userName = ''
+      this.banzuForm.userClass = ''
+      this.banzuForm.userPost = ''
+      this.banzuForm.userCode = ''
+      this.banzuForm.userVcode = ''
+      this.banzuForm.userSex = ''
+      this.banzuForm.phone = ''
+      this.banzuForm.userNationality = ''
+      this.banzuForm.userAge = ''
+      this.banzuForm.userEducation = ''
+      this.banzuForm.userSignDeptName = ''
+      this.banzuForm.userSignCompanyName = ''
+      this.banzuForm.checkImg = ''
+      this.banzuForm.leader = ''
+      this.banzuForm.flag = ''
+      this.banzuForm.userStatus = ''
+      this.banzuForm.teamId = ''
+      this.banzuForm.label = ''
+      this.banzuForm.parentId = ''
+      this.fileList = []
+      
     },
     resetPeople() {},
     /** 搜索按钮操作 */
@@ -692,7 +750,7 @@ export default {
       this.single = selection.length != 1;
       this.multiple = !selection.length;
     },
-    addBanzu() {
+    addBanzuBtn() {
         this.banzuOpen = true
     },
     
@@ -700,7 +758,7 @@ export default {
     handleUpdate(row) {
       this.form = row
       this.open = true;
-      this.title = "修改设备";
+      this.title = "修改人员";
       
       console.log(row)
     },
@@ -708,53 +766,85 @@ export default {
     /** 提交按钮 */
     submitForm: function () {
       this.$refs["form"].validate((valid) => {
-
+       
+        
         if (valid) {
-          this.form.type = "环境检测设备"
-          if (this.form.id != undefined) {
-            updateDev(this.form).then((response) => {
-              if (response.code === 200) {
-                this.msgSuccess("修改成功");
-                this.open = false;
-                
-                this.getPeopleInfo()
-              }
-            });
-          } else {
-            addDev(this.form).then((response) => {
-              if (response.code === 200) {
-                this.msgSuccess("新增成功");
+           if(this.form.id === '') {
+             addPeople(this.form).then((response) => {
+              if (response.data.code === 200) {
+              
+                this.$message({
+                  type: 'success',
+                  message: '新增成功！'
+                })
                 this.open = false;
                 this.getPeopleInfo()
+                this.resetForm('form')
               }
             });
+           } else {
+             putPeople(this.form).then((response) => {
+          
+              if (response.data.code === 200) {
+              
+                this.$message({
+                  type: 'success',
+                  message: '更新成功！'
+                })
+                this.open = false;
+                this.getPeopleInfo()
+                this.resetForm('form')
+              }
+            });
+           }
+            
           }
-        }
+       
       });
     },
 
     submitFormPeople: function () {
-      this.$refs["form"].validate((valid) => {
-
+      this.$refs["banzuForm"].validate((valid) => {
         if (valid) {
-          this.form.type = "环境检测设备"
-          if (this.form.id != undefined) {
-            updateDev(this.form).then((response) => {
-              if (response.code === 200) {
-                this.msgSuccess("修改成功");
-                this.open = false;
-                 this.getPeopleInfo()
-              }
-            });
-          } else {
-            addDev(this.form).then((response) => {
-              if (response.code === 200) {
-                this.msgSuccess("新增成功");
-                this.open = false;
-                 this.getPeopleInfo()
-              }
-            });
+          var obj = {
+            siteId: localStorage.getItem('siteId'),
+            label: this.banzuForm.label,
+            parentId: this.banzuForm.parentId
           }
+          var obj2 = {
+            checkImg: this.banzuForm.checkImg,
+            constructionSiteId: localStorage.getItem('siteId'),
+            flag: this.banzuForm.flag,
+            leader: this.banzuForm.leader,
+            phone: this.banzuForm.phone,
+            userCode: this.banzuForm.userCode,
+            userEducation: this.banzuForm.userEducation,
+            userImg: this.banzuForm.userImg,
+            userName: this.banzuForm.userName,
+            userPost: this.banzuForm.userPost,
+            userSex: this.banzuForm.userSex,
+            userStatus: this.banzuForm.userStatus,
+            userVcode: this.banzuForm.userVcode
+          }
+          var tijiaoForm = {
+            siteUserInfo: obj2,
+            teams: obj
+          }
+          console.log("班组提交的信息",tijiaoForm)
+          addBanzu(tijiaoForm).then((response) => {
+            console.log("SASAS",response.data)
+            if (response.data.code === 200) {
+              this.$message({
+                type: 'success',
+                message: '添加成功！'
+              })
+              this.banzuOpen = false;
+              this.getPeopleInfo()
+              this.resetForm2('banzuForm')
+            }
+          });
+          
+          
         }
       });
     },
@@ -769,12 +859,23 @@ export default {
     },
     downloadModel() {},
 
-    addPeople() {
+    addPeopleBtn() {
       this.open = true
+      this.title = '新增人员'
+      this.form.id = ''
+      this.form.constructionSiteId = localStorage.getItem('siteId')
     },
     handleSuccess(response, file, fileList) {
-      this.uploadInfo.checkImg = response.data
-      this.currentInfo.checkImg = response.data
+      this.banzuForm.userImg = response.data
+      
+    },
+    handleSuccess2(response, file, fileList) {
+      this.form.userImg = response.data
+     
+    },
+     handleSuccess3(response, file, fileList) {
+      this.banzuForm.checkImg = response.data
+      
     },
    
 
