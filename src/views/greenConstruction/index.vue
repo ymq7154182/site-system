@@ -320,6 +320,7 @@
                 })
                 this.showAdd = false;
                 this.resetForm('uploadInfo')
+                this.getWater()
               } else {
                 this.$message.error(response.data.msg)
               }

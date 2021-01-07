@@ -6,11 +6,11 @@
           <file-manager></file-manager>
         </el-tab-pane>
         <el-tab-pane label="图纸管理(PDF)" name="second" class="label_top">
-          <service-real-name></service-real-name>
+          <pdf-manager></pdf-manager>
         </el-tab-pane>
        
         <el-tab-pane label="模型管理(CAD+BIM)" name="third" class="label_top">
-          <special-equ> </special-equ>
+          <cad-manager></cad-manager>
         </el-tab-pane>
        
 
@@ -23,18 +23,16 @@
 
 <script>
 import fileManager from './fileManager'
-import shouYe from './index1'
-import specialEqu from "./index1";
-import serviceRealName from './index1';
-import serviceKq from './index1';
+
+import pdfManager from "./pdfManager";
+import cadManager from './cadManager';
+
 export default {
   name: "dataManage",
   components: {
     fileManager,
-    shouYe,
-    specialEqu,
-    serviceRealName,
-    serviceKq
+    pdfManager,
+    cadManager
   },
   data(){
     return{

@@ -75,4 +75,11 @@ export function addFolder(data) {
   })
 }
 
+export function getFolderContent(data) {
+  return request({
+    url: "/doc/getFolderContent",
+    method: 'get',
+    params:data
+  })
+}
 

@@ -15,18 +15,19 @@
       <el-col :span="20" :xs="24">
         <div v-show="showSearch" style="padding: 10px">
           <span style="font-size: 14px;color: white;font-weight: 700;margin-right: 10px">姓名</span><el-input v-model="queryParams.userName" placeholder="请输入姓名" clearable size="small" style="width: 120px;margin-right: 10px" />
-          <span style="font-size: 14px;color: white;font-weight: 700;margin-right: 10px">身份证号</span><el-input v-model="queryParams.userCode" placeholder="请输入身份证号" clearable size="small" style="width: 150px;margin-right: 10px"  />
-          <span style="font-size: 14px;color: white;font-weight: 700;margin-right: 10px">班组</span>
-          <el-select v-model="queryParams.userClass" placeholder="请选择班组" clearable size="small" style="width: 120px;margin-right: 10px">
-            <el-option v-for="dict in userClassList" :key="dict.dictValue" :label="dict.dictLabel" :value="dict.dictValue" />
-          </el-select><span style="font-size: 14px;color: white;font-weight: 700;margin-right: 10px">岗位/工种</span>
+          <span style="font-size: 14px;color: white;font-weight: 700;margin-right: 10px">手机号</span><el-input v-model="queryParams.phone" placeholder="请输入手机号" clearable size="small" style="width: 150px;margin-right: 10px"  />
+          
+          <span style="font-size: 14px;color: white;font-weight: 700;margin-right: 10px">岗位/工种</span>
           <el-select v-model="queryParams.userPost" placeholder="请选择" clearable size="small" style="width: 120px;margin-right: 10px">
-            <el-option v-for="dict in userPostList" :key="dict.dictValue" :label="dict.dictLabel" :value="dict.dictValue" />
+            <el-option v-for="dict in postList" :key="dict.id" :label="dict.professionName" :value="dict.professionName" />
           </el-select>
           <span style="font-size: 14px;color: white;font-weight: 700;margin-right: 10px">状态</span>
           <el-select v-model="queryParams.userStatus" placeholder="请选择" clearable size="small" style="width: 120px;margin-right: 10px">
             <el-option v-for="dict in userStatusList" :key="dict.value" :label="dict.label" :value="dict.value" />
           </el-select>
+          
+          <span style="font-size: 14px;color: white;font-weight: 700;margin-right: 10px">班组</span>
+          <treeselect v-model="queryParams.userClass" :options="treeData" placeholder="请选择" :clearable="true" :show-count="true"  style="width: 250px;display:inline-block;vertical-align:bottom;" @select="getSelectList" />
           <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
           <el-button type="primary" icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>
         </div>
@@ -35,7 +36,7 @@
         <el-row :gutter="10" class="mb8">
           
           <el-col :span="1.5">
-            <el-button type="primary"  size="mini" @click="addPeople" >添加人员</el-button>
+            <el-button type="primary"  size="mini" @click="addPeopleBtn" >添加人员</el-button>
           </el-col>
           <el-col :span="1.5">
             <el-button type="primary"  size="mini" @click="downloadModel" >下载模版</el-button>
@@ -62,9 +63,6 @@
             <el-table-column label="班组" align="center" prop="userClass"  />
             <el-table-column label="岗位/工种" align="center" prop="userPost" />
             <el-table-column label="手机号" align="center" prop="phone"  />
-            <el-table-column label="民族" align="center" prop="userNationality"  />
-            <el-table-column label="年龄" align="center" prop="userAge"  />
-            <el-table-column label="学历" align="center" prop="userEducation"  />
             <el-table-column label="状态" align="center" prop="userStatus" :show-overflow-tooltip="true" >
                 <template slot-scope="scope">
                 <el-tag  v-if="scope.row.userStatus===0" type="danger">离职</el-tag>
@@ -93,80 +91,133 @@
       </el-col>
     </el-row>
 
-    <!-- 添加或修改参数配置对话框 -->
-    <el-dialog title="劳务实名制新增页面" :visible.sync="open" width="800px" append-to-body class="addForm">
+    <!-- 添加人员对话框 -->
+    <el-dialog :title="title" :visible.sync="open" width="800px" append-to-body class="addForm" @close="cancel">
       <el-form ref="form" :model="form" :rules="rules" label-width="120px">
         <el-row>
           <el-col :span="24">
-            <el-form-item label="选择单位" prop="devFactory">
-              <!-- <el-select v-model="form.devType" placeholder="请选择" clearable size="small" style="width: 240px">
-                <el-option v-for="dict in danweiList" :key="dict.dictValue" :label="dict.dictLabel" :value="dict.dictLabel" />
-              </el-select> -->
+            <el-form-item label="选择单位" prop="userSignCompanyName">
+              <el-select v-model="form.userSignCompanyName" placeholder="请选择" clearable size="small" style="width: 240px">
+                <el-option v-for="dict in danweiList" :key="dict" :label="dict" :value="dict" />
+              </el-select>
             </el-form-item>
           </el-col>
         </el-row>
         <el-row>
           <el-col :span="12">
-            <el-form-item label="姓名" prop="devFactory">
-              <el-input v-model="form.devFactory" placeholder="请输入姓名" />
+            <el-form-item label="姓名" prop="userName">
+              <el-input v-model="form.userName" placeholder="请输入姓名" />
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="身份证号"  prop="devName">
-              <el-input v-model="form.devName" placeholder="设备名称"  />
+            <el-form-item label="身份证号"  prop="userCode">
+              <el-input v-model="form.userCode" placeholder="请输入身份证号"  />
             </el-form-item>
           </el-col>
         </el-row>
         <el-row>
           <el-col :span="12">
-            <el-form-item label="设备型号" prop="devModel">
-              <el-input v-model="form.devModel" placeholder="设备型号"  />
-            </el-form-item>
-          </el-col>
-          <el-col :span="12">
-            <el-form-item label="工地名称" >
-               <!-- <el-select v-model="form.constructionSiteId" placeholder="请选择工地名称" clearable size="small" style="width: 240px">
-                <el-option v-for="item in departmentList" :key="item.deptId" :label="item.name" :value="item.deptId" />
-              </el-select> -->
-            </el-form-item>
-          </el-col>
-
-
-        </el-row>
-        <el-row>
-          <el-col :span="12">
-            <el-form-item label="负责人" prop="personInCharge">
-              <el-input v-model="form.personInCharge" placeholder="请输入负责人名称" />
-            </el-form-item>
-          </el-col>
-          <el-col :span="12">
-            <el-form-item label="联系方式" >
-              <el-input v-model="form.phone" placeholder="请输入联系方式" />
-            </el-form-item>
-          </el-col>
-          <el-col :span="12">
-            <el-form-item label="传输状态" prop="status">
-              <el-radio-group v-model="form.status">
-                <el-radio :label="0">未启用</el-radio>
-                <el-radio :label="1">启用</el-radio>
+            <el-form-item label="性别" prop="userSex">
+              <el-radio-group v-model="form.userSex">
+                  <el-radio :label="1">男</el-radio>
+                  <el-radio :label="2">女</el-radio>
               </el-radio-group>
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="进厂时间" >
-              <el-date-picker v-model="form.entryTime" size="small" style="width: 240px" value-format="yyyy-MM-dd" type="date"  placeholder="进厂时间" ></el-date-picker>
+            <el-form-item label="学历" >
+               <el-select v-model="form.userEducation" placeholder="请选择学历" clearable size="small" style="width: 240px">
+                <el-option v-for="item in educationList" :key="item" :label="item" :value="item" />
+              </el-select>
             </el-form-item>
           </el-col>
-
+        </el-row>
+        <el-row>
+          <el-col :span="12">
+            <el-form-item label="手机号" prop="phone">
+              <el-input v-model="form.phone" placeholder="请输入手机号" />
+            </el-form-item>
+          </el-col>
+          <el-col :span="12">
+            <el-form-item label="执业资格(岗位)证书编号" >
+              <el-input v-model="form.userVcode" placeholder="请输入" />
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <el-row>
+          <el-col :span="12">
+            <el-form-item label="民族" prop="userNationality">
+              <el-input v-model="form.userNationality" placeholder="请输入民族" />
+            </el-form-item>
+          </el-col>
+          <el-col :span="12">
+            <el-form-item label="年龄" prop="userAge">
+              <el-input v-model="form.userAge" placeholder="请输入年龄" />
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <el-row>
+          <el-col :span="12">
+            <el-form-item label="班组" prop="teamId">
+              <treeselect v-model="form.teamId" :options="treeData3" placeholder="请选择" :clearable="true" :show-count="true"  style="display:inline-block;vertical-align:bottom;" @select="getSelectList3" />
+            </el-form-item>
+          </el-col>
+          <el-col :span="12">
+            <el-form-item label="班组负责人" prop="leader">
+              <el-radio-group v-model="form.leader">
+                  <el-radio :label="1">是</el-radio>
+                  <el-radio :label="0">否</el-radio>
+              </el-radio-group>
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <el-row>
+          <el-col :span="12">
+            <el-form-item label="岗位/工种" prop="userPost">
+              <el-select v-model="form.userPost" placeholder="请选择" clearable size="small" style="width: 240px">
+                <el-option v-for="dict in postList" :key="dict.id" :label="dict.professionName" :value="dict.professionName" />
+              </el-select>
+            </el-form-item>
+          </el-col>
+          <el-col :span="12">
+            <el-form-item label="状态" prop="userStatus">
+              <el-radio-group v-model="form.userStatus">
+                <el-radio :label="1">在职</el-radio>
+                <el-radio :label="0">离职</el-radio>
+              </el-radio-group>
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <el-row>
+          <el-col :span="12">
+            <el-form-item label="特种作业人员" prop="flag">
+              <el-radio-group v-model="form.flag">
+                <el-radio :label="1">是</el-radio>
+                <el-radio :label="0">否</el-radio>
+              </el-radio-group>
+            </el-form-item>
+          </el-col>
+          
         </el-row>
         <el-row>
 
           <el-col :span="12">
-            <el-form-item label="设备类型" >
-               <!-- <el-select v-model="form.devType" placeholder="请选择设备类型" clearable size="small" style="width: 240px">
-                <el-option v-for="dict in deviceStatusOptions" :key="dict.dictValue" :label="dict.dictLabel" :value="dict.dictLabel" />
-              </el-select> -->
-            </el-form-item>
+            
+              <el-form-item label="照片">
+                <el-upload
+                  class="upload-demo"
+                  action="http://121.36.106.18:36080/system/safe/uploadFile"
+                  :limit="1"
+                  :on-success="handleSuccess2"
+                  accept=".jpg,.png"
+                  style="width: 90%; "
+                >
+                  <el-button slot="trigger" size="small" type="primary" icon="el-icon-plus">选取文件</el-button>
+                  <div slot="tip" class="el-upload__tip">支持上传jpg/png格式图片</div>
+                </el-upload>
+              </el-form-item>
+              
+            
           </el-col>
         </el-row>
 
@@ -179,154 +230,32 @@
         <el-button @click="cancel">取 消</el-button>
       </div>
     </el-dialog>
+    
+    <!--  -->
 
-   <!-- 班组新增页面 -->
-    <el-dialog :visible.sync="banzuOpen" title="班组新增页面" width="40%" >
-      <div style="height: 55vh; overflow-y: scroll; ">
-        <el-form :model="banzuForm" :rules="banzuRules" ref="uploadInfo" label-width="1.5rem">
-          <el-row>
-            <div style="font-size:16px;color:red;">班组信息</div>
-          </el-row>
-          <el-row>
-            <el-col :span="12">
-              <el-form-item label="班组名称:" prop="deviceSn">
-                 <el-input v-model="banzuForm.deviceSn"  />
-              </el-form-item>
-            </el-col>
-            <el-col :span="12">
-              <el-form-item label="上级班组:" prop="maxTorque">
-                <el-input v-model="banzuForm.maxTorque" />
-              </el-form-item>
-            </el-col>
-          </el-row>
-          <el-divider></el-divider> 
-          <el-row>
-            <div style="font-size:16px;color:red;">班组负责人信息</div>
-          </el-row>
-          <el-row>
-            <el-col :span="12">
-              <el-form-item label="负责人:" prop="idcard">
-                 <el-input v-model="banzuForm.idcard"  />
-              </el-form-item>
-            </el-col>
-            <el-col :span="12">
-              <el-form-item label="身份证号:" prop="operationTime">
-                 <el-input v-model="banzuForm.operationTime"  />
-              </el-form-item>
-            </el-col>
-          </el-row>
-
-          <el-row>
-            <el-col :span="12">
-              <el-form-item label="性别" prop="status">
-                <el-radio-group v-model="banzuForm.status">
-                    <el-radio :label="0">男</el-radio>
-                    <el-radio :label="1">女</el-radio>
-                </el-radio-group>
-               </el-form-item>
-            </el-col>
-            <el-col :span="12">
-               <el-form-item label="学历" prop="userid">
-                <el-select v-model="banzuForm.userid" placeholder="请选择学历" style="width: 50%">
-                    <el-option
-                        v-for="item in xueliOptions"
-                        :key="item.guid"
-                        :label="item.pname"
-                        :value="item.guid">
-                    </el-option>
-                </el-select>
-             </el-form-item>
-            </el-col>
-          </el-row>
-
-          <el-row>
-            <el-col :span="12">
-              <el-form-item label="手机号:" prop="height">
-                 <el-input v-model="banzuForm.height"  />
-              </el-form-item>
-            </el-col>
-            <el-col :span="12">
-              <el-form-item label="职业资格(岗位)证书编号:" prop="amplitude">
-                 <el-input v-model="banzuForm.amplitude"  />
-              </el-form-item>
-            </el-col>
-          </el-row>
-
-          <el-row>
-            <el-col :span="12">
-              <el-form-item label="岗位/工种" prop="userid">
-                <el-select v-model="banzuForm.userid" placeholder="请选择" style="width: 50%">
-                    <el-option
-                        v-for="item in gangweiOptions"
-                        :key="item.guid"
-                        :label="item.pname"
-                        :value="item.guid">
-                    </el-option>
-                </el-select>
-             </el-form-item>
-            </el-col>
-            <el-col :span="12">
-              <el-form-item label="状态" prop="status">
-                <el-radio-group v-model="banzuForm.status">
-                    <el-radio :label="0">在职</el-radio>
-                    <el-radio :label="1">离职</el-radio>
-                </el-radio-group>
-               </el-form-item>
-            </el-col>
-          </el-row>
-
-          <el-row>
-            <el-col :span="12">
-              <el-form-item label="特种作业人员" prop="status">
-                <el-radio-group v-model="banzuForm.status">
-                    <el-radio :label="0">是</el-radio>
-                    <el-radio :label="1">否</el-radio>
-                </el-radio-group>
-               </el-form-item>
-            </el-col>
-           
-          </el-row>
-
-          <el-row>
-            <el-col :span="12">
-              <el-form-item label="照片:" >
-                <el-upload
-                  class="upload-demo"
-                  action="http://121.36.106.18:36080/system/safe/uploadFile"
-                  :limit="1"
-                  :on-success="handleSuccess"
-                  :file-list="fileList"
-                >
-                  <el-button slot="trigger" type="text" icon="el-icon-upload" style="text-align: center; font-size: 14px; ">选取文件</el-button>
-                </el-upload>
-              </el-form-item>
-            </el-col>
-            <el-col :span="12">
-               <el-form-item label="执业资格(岗位)证书:" >
-                <el-upload
-                  class="upload-demo"
-                  action="http://121.36.106.18:36080/system/safe/uploadFile"
-                  :limit="1"
-                  :on-success="handleSuccess"
-                  :file-list="fileList"
-                >
-                  <el-button slot="trigger" type="text" icon="el-icon-upload" style="text-align: center; font-size: 14px; ">选取文件</el-button>
-                </el-upload>
-              </el-form-item>
-            </el-col>
-          </el-row>
-          
-          
-          
-
-  
-          
-      
-          </el-form-item>
+    <!-- 导入信息 -->
+    <el-dialog :visible.sync="modelOpen" :title="title" width="30%" @close="cancelModel">
+      <div style="margin:0 auto; ">
+        <el-upload
+          style="margin-left:15%;margin-bottom:10px;"
+          class="upload-demo"
+          action=""
+          accept=".xls,.xlsx"
+          :limit="1"
+          drag
+          :on-change="handleChange"
+          :file-list="fileList12"
+          :auto-upload="false"
+          >
+          <i class="el-icon-upload"></i>
+          <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
+          <div class="el-upload__tip" slot="tip">只能上传.xlsx文件</div>
+        </el-upload>
+        
         </el-form>
          <div slot="footer" class="dialog-footer">
-            <el-button type="primary" @click="submitFormPeople">确 定</el-button>
-            <el-button @click="cancelPeople">取 消</el-button>
+            <el-button type="primary" @click="submitExcel">导入</el-button>
+            <el-button @click="cancelModel">取 消</el-button>
           </div>
       </div>
     </el-dialog>
@@ -336,22 +265,33 @@
 
 <script>
 
-import { peopleInfo, getLeftColumn, treeselect,   addDev, updateDev } from '@/api/peopleManager'
+import { peopleInfo, getLeftColumn, treeselect, updateDev, getTeamTree, addBanzu, addPeople, putPeople, exportExcel, importExcel, profession, broadsideInfo } from '@/api/peopleManager'
 import Treeselect from "@riophae/vue-treeselect";
 import "@riophae/vue-treeselect/dist/vue-treeselect.css";
 
 
 export default {
-  name: "serviceRealName",
+  name: "specialEqu",
   components: { Treeselect },
   
   mounted() {
-      this.username = localStorage.getItem('siteName')
   },
   data() {
     return {
+      queryParamsUserClass: undefined,
+      fileList12: [],
+      file: null,
+      actionUrl: '',
+      modelOpen: false,
+      currentUserSignCompanyName: '',
+      postList: [],
+      educationList: ['小学', '初中', '高中', '专科', '本科', '研究生'],
+      danweiList: ['建设单位', '施工单位', '监理单位'],
       currentSanfang: '',
       userClassList: [],
+      treeData: [],
+      treeData2: [],
+      treeData3: [],
       userPostList: [],
       userStatusList: [
         {
@@ -360,7 +300,7 @@ export default {
         },
         {
           label: '离职',
-          value: 2
+          value: 0
         }
       ],
       banzuForm: {},
@@ -433,110 +373,80 @@ export default {
       },
       // 查询参数
       queryParams: {
-        pageNum: 1,
-        pageSize: 10,
+        
         userName: '',
         userCode: '',
-        userClass: '',
+        userClass: undefined,
         userPost: '',
         userStatus: '',
-        constructionSiteId: localStorage.getItem("deptId")
+        constructionSiteId: localStorage.getItem("siteId")
 
 
       },
       // 表单校验
       rules: {
-        devFactory: [
-          { required: true, message: "产权单位不能为空", trigger: "blur" },
+        userName: [
+          { required: true, message: "名字不能为空", trigger: "blur" },
         ],
-        devName: [
-          { required: true, message: "设备名称不能为空", trigger: "blur" },
+        userCode: [
+          { required: true, message: "身份证号不能为空", trigger: "blur" },
         ],
-        repairCycle: [
-          { required: true, message: "维修周期不能为空", trigger: "blur" },
+        userSex: [
+          { required: true, message: "性别不能为空", trigger: "blur" },
         ],
-        devModel: [
-          { required: true, message: "设备型号不能为空", trigger: "blur" },
-        ],
-        personInCharge: [
-          { required: true, message: "负责人不能为空", trigger: "blur" },
-        ],
-        proTime: [
-          { required: true, message: "进厂时间不能为空", trigger: "blur" },
-        ],
-
-        nickName: [
-          { required: true, message: "用户昵称不能为空", trigger: "blur" },
-        ],
-        deptId: [
-          { required: true, message: "归属部门不能为空", trigger: "blur" },
-        ],
-
-        password: [
-          { required: true, message: "用户密码不能为空", trigger: "blur" },
-        ],
-        email: [
-          { required: true, message: "邮箱地址不能为空", trigger: "blur" },
-          {
-            type: "email",
-            message: "'请输入正确的邮箱地址",
-            trigger: ["blur", "change"],
-          },
-        ],
-        tel: [
+        phone: [
           { required: true, message: "手机号码不能为空", trigger: "blur" },
-          {
-            pattern: /^1[3|4|5|6|7|8|9][0-9]\d{8}$/,
-            message: "请输入正确的手机号码",
-            trigger: "blur",
-          },
         ],
+        userClass: [
+          { required: true, message: "班组不能为空", trigger: "blur" },
+        ],
+        leader: [
+          { required: true, message: "班组负责人不能为空", trigger: "blur" },
+        ],
+        userPost: [
+          { required: true, message: "岗位/工种不能为空", trigger: "blur" },
+        ],
+        userStatus: [
+          { required: true, message: "状态不能为空", trigger: "blur" },
+        ],
+
+        flag: [
+          { required: true, message: "特种作业人员不能为空", trigger: "blur" },
+        ]
+        
       },
+      
       banzuRules: {
-        devFactory: [
-          { required: true, message: "产权单位不能为空", trigger: "blur" },
+        label: [
+          { required: true, message: "班组姓名不能为空", trigger: "blur" },
         ],
-        devName: [
-          { required: true, message: "设备名称不能为空", trigger: "blur" },
+        parentId: [
+          { required: true, message: "上级班组不能为空", trigger: "blur" },
         ],
-        repairCycle: [
-          { required: true, message: "维修周期不能为空", trigger: "blur" },
-        ],
-        devModel: [
-          { required: true, message: "设备型号不能为空", trigger: "blur" },
-        ],
-        personInCharge: [
+        userName: [
           { required: true, message: "负责人不能为空", trigger: "blur" },
         ],
-        proTime: [
-          { required: true, message: "进厂时间不能为空", trigger: "blur" },
+        userCode: [
+          { required: true, message: "身份证不能为空", trigger: "blur" },
+        ],
+        userVcode: [
+          { required: true, message: "证书编号不能为空", trigger: "blur" },
+        ],
+        userStatus: [
+          { required: true, message: "状态不能为空", trigger: "blur" },
         ],
 
-        nickName: [
-          { required: true, message: "用户昵称不能为空", trigger: "blur" },
+        phone: [
+          { required: true, message: "联系方式不能为空", trigger: "blur" },
         ],
-        deptId: [
-          { required: true, message: "归属部门不能为空", trigger: "blur" },
+        checkImg: [
+          { required: true, message: "资质证书不能为空", trigger: "blur" },
         ],
-
-        password: [
-          { required: true, message: "用户密码不能为空", trigger: "blur" },
+        userImg: [
+          { required: true, message: "照片不能为空", trigger: "blur" },
         ],
-        email: [
-          { required: true, message: "邮箱地址不能为空", trigger: "blur" },
-          {
-            type: "email",
-            message: "'请输入正确的邮箱地址",
-            trigger: ["blur", "change"],
-          },
-        ],
-        tel: [
-          { required: true, message: "手机号码不能为空", trigger: "blur" },
-          {
-            pattern: /^1[3|4|5|6|7|8|9][0-9]\d{8}$/,
-            message: "请输入正确的手机号码",
-            trigger: "blur",
-          },
+        userSex: [
+          { required: true, message: "性别不能为空", trigger: "blur" },
         ],
       },
     };
@@ -546,22 +456,53 @@ export default {
   },
   created() {
     this.getPeopleInfo()
-    
+    this.getBanzu()
     this.getTreeselect();
-    // this.getDicts("sys_normal_disable").then((response) => {
-    //   this.statusOptions = response.data;
-    // });
-    // this.getDicts("sys_user_sex").then((response) => {
-    //   this.sexOptions = response.data;
-    // });
-    // this.getConfigKey("sys.user.initPassword").then((response) => {
-    //   this.initPassword = response.msg;
-    // });
+    this.getPofession();
+    this.getBroadsideInfo()
   },
   methods: {
+     getBroadsideInfo() {
+      var id = localStorage.getItem('siteId')
+      broadsideInfo(id).then((res) => {
+        this.deptOptions = res.data.data
+      })
+    },
+    getPofession() {
+      var id = localStorage.getItem('siteId')
+      profession(id).then((res) => {
+        console.log("岗位", res)
+        this.postList = res.data.rows
+      })
+    },
+    getSelectList(node, instanceId) {
+      
+      this.queryParamsUserClass = node.label
+      
+    },
+    getSelectList2(node, instanceId) {
+      // console.log("node", node)
+      // console.log("instanceId", instanceId)
+      this.banzuForm.userClass = node.label
+      
+    },
+    getSelectList3(node, instanceId) {
+      // console.log("node", node)
+      // console.log("instanceId", instanceId)
+      this.form.userClass = node.label
+      
+    },
+    getBanzu() {
+      var id = localStorage.getItem('siteId')
+      getTeamTree(id).then((res) => {
+        this.treeData = res.data.data
+        this.treeData2 = res.data.data
+        this.treeData3 = res.data.data
+      })
+    },
     getPeopleInfo() {
       var params = {
-        constructionSiteId: localStorage.getItem("deptId"),
+        constructionSiteId: localStorage.getItem("siteId"),
         flag: 1
       }
       peopleInfo(params).then((res) => {
@@ -596,15 +537,23 @@ export default {
     },
     // 节点单击事件
     handleNodeClick(data, node, e) {
-      console.log("data",data)
-      console.log(node)
-      console.log(e)
-
-      var params = {
-        constructionSiteId: data.deptId,
-        userSignCompanyName: data.name,
-        flag: 1
+      // console.log("data",data)
+      // console.log(node)
+      // console.log(e)
+      this.currentUserSignCompanyName = data.name
+      if(this.currentUserSignCompanyName.length > 4) {
+        var params = {
+          constructionSiteId: data.deptId,
+          flag: 1
+        }
+      } else {
+        var params = {
+          constructionSiteId: data.deptId,
+          userSignCompanyName: data.name,
+          flag: 1
+        }
       }
+      
       // this.loading = true;
       peopleInfo(params).then(response => {
         this.userList = response.data.rows;
@@ -617,42 +566,100 @@ export default {
     // 取消按钮
     cancel() {
       this.open = false;
-      this.reset();
+      this.resetForm("form");
     },
     cancelPeople() {
       this.banzuOpen = false
-      this.resetPeople()
+      this.resetForm2('banzuForm')
     },
+    cancelModel() {
+      this.modelOpen = false
+    },
+    submitExcel() {
+      var id = localStorage.getItem('siteId')
+      const formData = new FormData()
+      formData.append('file', this.fileList12[0].raw)
+      importExcel(id, formData).then((res) => {
+        console.log("导入的文件res", res)
+        if(res.data.code === 200) {
+          this.fileList12 = []
+          this.modelOpen = false
+          this.getPeopleInfo()
+        }
+      })
+    },
+    handleChange(file, fileList) {
+      this.fileList12 = fileList
+    },
+    
     // 表单重置
-    reset() {
-      this.form = {
-        constructionSiteId:undefined,
-        constructionSiteName:'',
-        devFactory:'',
-        devModel: '',
-        devName: '',
-        devType: '',
-        entryTime: '',
-        personInCharge: '',
-        phone: '',
-        status: 0,
-        type: "环境检测设备",
-
-      };
-      this.resetForm("form");
+    resetForm(formName) {
+      this.$refs[formName].resetFields();
+      this.form.userImg = ''
+      this.form.constructionSiteId = ''
+      this.form.id = ''
+      this.form.userName = ''
+      this.form.userClass = undefined
+      this.form.userPost = ''
+      this.form.userCode = ''
+      this.form.userVcode = ''
+      this.form.userSex = ''
+      this.form.phone = ''
+      this.form.userNationality = ''
+      this.form.userAge = ''
+      this.form.userEducation = ''
+      this.form.userSignDeptName = ''
+      this.form.userSignCompanyName = ''
+      this.form.checkImg = ''
+      this.form.leader = ''
+      this.form.flag = ''
+      this.form.userStatus = ''
+      this.form.teamId = ''
+      this.fileList = []
+      
     },
-    resetPeople() {},
+    resetForm2(formName) {
+      this.$refs[formName].resetFields();
+      this.banzuForm.userImg = ''
+      this.banzuForm.constructionSiteId = ''
+      this.banzuForm.id = ''
+      this.banzuForm.userName = ''
+      this.banzuForm.userClass = undefined
+      this.banzuForm.userPost = ''
+      this.banzuForm.userCode = ''
+      this.banzuForm.userVcode = ''
+      this.banzuForm.userSex = ''
+      this.banzuForm.phone = ''
+      this.banzuForm.userNationality = ''
+      this.banzuForm.userAge = ''
+      this.banzuForm.userEducation = ''
+      this.banzuForm.userSignDeptName = ''
+      this.banzuForm.userSignCompanyName = ''
+      this.banzuForm.checkImg = ''
+      this.banzuForm.leader = ''
+      this.banzuForm.flag = ''
+      this.banzuForm.userStatus = ''
+      this.banzuForm.teamId = ''
+      this.banzuForm.label = ''
+      this.banzuForm.parentId = undefined
+      this.fileList = []
+      
+    },
+    
     /** 搜索按钮操作 */
     handleQuery() {
-      this.queryParams.page = 1;
-      this.queryParams.constructionSiteId = localStorage.getItem("deptId")
+      this.queryParams.constructionSiteId = localStorage.getItem("siteId")
+      this.queryParams.userSignCompanyName = this.currentUserSignCompanyName
       this.queryParams.flag = 1
+      this.queryParams.userClass = this.queryParamsUserClass
+      
      
       this.loading = true;
       peopleInfo(this.queryParams).then(response => {
-        this.userList = response.rows;
+        this.userList = response.data.rows;
         this.total = response.total;
         this.loading = false;
+        this.queryParamsUserclass = undefined
       });
     },
     /** 重置按钮操作 */
@@ -662,9 +669,11 @@ export default {
       this.queryParams.userName = '';
       this.queryParams.userCode = ''
       this.queryParams.userStatus = ''
-      this.queryParams.userClass = '';
+      this.queryParams.userClass = undefined;
       this.queryParams.userPost = ''
-
+      this.queryParams.phone = ''
+      this.queryParams.teamId = undefined
+      this.queryParamsUserClass = ''
       this.getPeopleInfo();
     },
     // 多选框选中数据
@@ -673,87 +682,149 @@ export default {
       this.single = selection.length != 1;
       this.multiple = !selection.length;
     },
-    addBanzu() {
+    addBanzuBtn() {
         this.banzuOpen = true
+        this.title = '新增班组'
+
     },
     
     /** 修改按钮操作 */
     handleUpdate(row) {
       this.form = row
       this.open = true;
-      this.title = "修改设备";
+      this.title = "修改人员";
       
-      console.log(row)
+      // console.log(row)
     },
    
     /** 提交按钮 */
     submitForm: function () {
       this.$refs["form"].validate((valid) => {
-
+       
+        
         if (valid) {
-          this.form.type = "环境检测设备"
-          if (this.form.id != undefined) {
-            updateDev(this.form).then((response) => {
-              if (response.code === 200) {
-                this.msgSuccess("修改成功");
-                this.open = false;
-                
-                this.getPeopleInfo()
-              }
-            });
-          } else {
-            addDev(this.form).then((response) => {
-              if (response.code === 200) {
-                this.msgSuccess("新增成功");
+           if(this.form.id === '') {
+             addPeople(this.form).then((response) => {
+              if (response.data.code === 200) {
+              
+                this.$message({
+                  type: 'success',
+                  message: '新增成功！'
+                })
                 this.open = false;
                 this.getPeopleInfo()
+                this.resetForm('form')
               }
             });
+           } else {
+             putPeople(this.form).then((response) => {
+          
+              if (response.data.code === 200) {
+              
+                this.$message({
+                  type: 'success',
+                  message: '更新成功！'
+                })
+                this.open = false;
+                this.getPeopleInfo()
+                this.resetForm('form')
+              }
+            });
+           }
+            
           }
-        }
+       
       });
     },
 
     submitFormPeople: function () {
-      this.$refs["form"].validate((valid) => {
-
+      this.$refs["banzuForm"].validate((valid) => {
         if (valid) {
-          this.form.type = "环境检测设备"
-          if (this.form.id != undefined) {
-            updateDev(this.form).then((response) => {
-              if (response.code === 200) {
-                this.msgSuccess("修改成功");
-                this.open = false;
-                 this.getPeopleInfo()
-              }
-            });
-          } else {
-            addDev(this.form).then((response) => {
-              if (response.code === 200) {
-                this.msgSuccess("新增成功");
-                this.open = false;
-                 this.getPeopleInfo()
-              }
-            });
+          var obj = {
+            siteId: localStorage.getItem('siteId'),
+            label: this.banzuForm.label,
+            parentId: this.banzuForm.parentId
           }
+          var obj2 = {
+            checkImg: this.banzuForm.checkImg,
+            constructionSiteId: localStorage.getItem('siteId'),
+            flag: this.banzuForm.flag,
+            leader: this.banzuForm.leader,
+            phone: this.banzuForm.phone,
+            userCode: this.banzuForm.userCode,
+            userEducation: this.banzuForm.userEducation,
+            userImg: this.banzuForm.userImg,
+            userName: this.banzuForm.userName,
+            userPost: this.banzuForm.userPost,
+            userSex: this.banzuForm.userSex,
+            userStatus: this.banzuForm.userStatus,
+            userVcode: this.banzuForm.userVcode,
+            userClass: this.banzuForm.label,
+            userNationality: this.banzuForm.userNationality,
+            userAge: this.banzuForm.userAge,
+            userSignCompanyName: this.currentUserSignCompanyName
+          }
+          var tijiaoForm = {
+            siteUserInfo: obj2,
+            teams: obj
+          }
+          // console.log("班组提交的信息",tijiaoForm)
+          addBanzu(tijiaoForm).then((response) => {
+            // console.log("SASAS",response.data)
+            if (response.data.code === 200) {
+              this.$message({
+                type: 'success',
+                message: '添加成功！'
+              })
+              this.banzuOpen = false;
+              this.getPeopleInfo()
+              this.resetForm2('banzuForm')
+            }
+          });
+          
+          
         }
       });
     },
    
     /** 导出按钮操作 */
     handleExport() {
-      
+      var params = {
+        constructionSiteId: localStorage.getItem('siteId'),
+        userSignCompanyName: this.currentUserSignCompanyName
+      }
+      exportExcel(params).then((res) => {
+        // console.log("导出的文件", res.data.msg)
+        window.open(res.data.msg)
+      })
     },
     /** 导入按钮操作 */
     handleImport() {
+      this.modelOpen = true;
+      this.title = "导入文件"
+      this.actionUrl = `http://121.36.106.18:36080/people/info/importData?siteId=${localStorage.getItem('siteId')}`
+    },
+    downloadModel() {
+      window.open('http://121.36.106.18:38082/labor_template.xlsx')
+    },
+
+    addPeopleBtn() {
+      this.open = true
+      this.title = '新增人员'
+      this.form.id = ''
+      this.form.constructionSiteId = localStorage.getItem('siteId')
+    },
+    handleSuccess(response, file, fileList) {
+      this.banzuForm.userImg = response.data
       
     },
-    downloadModel() {},
-
-    addPeople() {},
-    handleSuccess(response, file, fileList) {
-      this.uploadInfo.checkImg = response.data
-      this.currentInfo.checkImg = response.data
+    handleSuccess2(response, file, fileList) {
+      this.form.userImg = response.data
+     
+    },
+     handleSuccess3(response, file, fileList) {
+      this.banzuForm.checkImg = response.data
+      
     },
    
 
@@ -823,6 +894,6 @@ export default {
   background: #1439391c !important;
 }
 .dialog-footer {
-  margin-left:50%;
+  margin-left:30%;
 }
 </style>

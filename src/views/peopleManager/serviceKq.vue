@@ -14,21 +14,20 @@
      
       <el-col :span="20" :xs="24">
         <div v-show="showSearch" style="padding: 10px">
-          <span style="font-size: 14px;color: white;font-weight: 700;margin-right: 10px">姓名</span><el-input v-model="queryParams.name" placeholder="请输入姓名" clearable size="small" style="width: 120px;margin-right: 10px" />
-          <span style="font-size: 14px;color: white;font-weight: 700;margin-right: 10px">身份证号</span><el-input v-model="queryParams.idCard" placeholder="请输入身份证号" clearable size="small" style="width: 150px;margin-right: 10px"  />
+          <span style="font-size: 14px;color: white;font-weight: 700;margin-right: 10px">姓名</span><el-input v-model="queryParams.userSignName" placeholder="请输入姓名" clearable size="small" style="width: 120px;margin-right: 10px" />
+          <span style="font-size: 14px;color: white;font-weight: 700;margin-right: 10px">手机号</span><el-input v-model="queryParams.userSignPhone" placeholder="请输入手机号" clearable size="small" style="width: 150px;margin-right: 10px"  />
           <span style="font-size: 14px;color: white;font-weight: 700;margin-right: 10px">班组</span>
-          <el-select v-model="queryParams.status" placeholder="请选择班组" clearable size="small" style="width: 120px;margin-right: 10px">
-            <el-option v-for="dict in statusOptions" :key="dict.dictValue" :label="dict.dictLabel" :value="dict.dictValue" />
-          </el-select>
-          <span style="font-size: 14px;color: white;font-weight: 700;margin-right: 10px">状态</span>
-          <el-select v-model="queryParams.status" placeholder="请选择" clearable size="small" style="width: 120px;margin-right: 10px">
+          <treeselect v-model="queryParams.userSignClass" :options="treeData" placeholder="请选择" :clearable="true" :show-count="true"  style="width: 250px;display:inline-block;vertical-align:bottom;" @select="getSelectList" />
+          <span style="font-size: 14px;color: white;font-weight: 700;margin-right: 10px">类型</span>
+          <el-select v-model="queryParams.userSignType" placeholder="请选择" clearable size="small" style="width: 120px;margin-right: 10px">
             <el-option v-for="dict in statusOptions" :key="dict.dictValue" :label="dict.dictLabel" :value="dict.dictValue" />
           </el-select>
           <span style="font-size: 14px;color: white;font-weight: 700;margin-right: 10px">时间</span>
           <el-date-picker
-            style="width: 120px;margin-right: 10px"
-            v-model="queryParams.date"
+            style="width: 220px;margin-right: 10px"
+            v-model="timeArry"
             type="daterange"
+            value-format="yyyy-MM-dd"
             range-separator="至"
             start-placeholder="开始日期"
             end-placeholder="结束日期">
@@ -78,8 +77,8 @@
             <el-table-column label="状态" align="center" prop="userSignStatus" :show-overflow-tooltip="true" >
                 <template slot-scope="scope">
                 <el-tag  v-if="scope.row.userSignStatus===0" type="success">正常</el-tag>
-                <el-tag  v-if="scope.row.userSignStatus===1" type="success">未打卡</el-tag>
-                <el-tag  v-if="scope.row.userSignStatus===2" type="success">补打卡</el-tag>
+                <el-tag  v-if="scope.row.userSignStatus===1" type="warning">未打卡</el-tag>
+                <el-tag  v-if="scope.row.userSignStatus===2" type="danger">补打卡</el-tag>
                 </template>
             </el-table-column>
             
@@ -171,34 +170,37 @@
       <el-form ref="form" :model="form" :rules="rules" label-width="120px">
 
         <el-row>
-          <el-col :span="12">
-            <el-form-item label="姓名" prop="userSignName">
-              <treeselect v-model="form.userSignName"  :options="deptOptions" placeholder="请选择姓名" :clearable="true" :show-count="true" :disable-branch-nodes="true" />
-
-              <!-- <el-tree v-model="form.userSignName" :data="deptOptions" :props="defaultProps" placeholder="请选择名字" :expand-on-click-node="true" :filter-node-method="filterNode" ref="tree"  @node-click="handleNodeClick" /> -->
-            </el-form-item>
-          </el-col>
+          
           <el-col :span="12">
             <el-form-item label="时间"  prop="userSignTime">
                <el-date-picker
                     v-model="form.userSignTime"
-                    type="date"
+                    
+                    type="datetime"
+                    @change="getUserSignTime"
+                    value-format="yyyy-MM-dd HH:mm:ss"
                     placeholder="选择日期">
                 </el-date-picker>
             </el-form-item>
           </el-col>
-        </el-row>
-        <el-row>
+
           <el-col :span="12">
             <el-form-item label="考勤类型" prop="userSignType">
-              <el-radio-group v-model="form.userSignType">
+              <el-radio-group v-model="form.userSignType" @change="getType">
                     <el-radio :label="1">签到</el-radio>
                     <el-radio :label="2">签出</el-radio>
                 </el-radio-group>
             </el-form-item>
           </el-col>
-         
-
+        </el-row>
+        <el-row>
+          <el-col :span="12">
+            <el-form-item label="姓名" prop="userSignName">
+              <el-select v-model="form.userSignName" placeholder="请选择人名" clearable size="small">
+                <el-option v-for="dict in nameList" :key="dict" :label="dict" :value="dict" />
+              </el-select>
+            </el-form-item>
+          </el-col>
         </el-row>
         <el-row>
           <el-col :span="24">
@@ -221,6 +223,33 @@
       </div>
     </el-dialog>
 
+
+    <el-dialog :visible.sync="modelOpen" :title="title" width="30%" @close="cancelModel">
+      <div style="margin:0 auto; ">
+        <el-upload
+          style="margin-left:15%;margin-bottom:10px;"
+          class="upload-demo"
+          action=""
+          accept=".xls,.xlsx"
+          :limit="1"
+          drag
+          :on-change="handleChange"
+          :file-list="fileList12"
+          :auto-upload="false"
+          >
+          <i class="el-icon-upload"></i>
+          <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
+          <div class="el-upload__tip" slot="tip">只能上传.xlsx文件</div>
+        </el-upload>
+        
+        </el-form>
+         <div slot="footer" class="dialog-footer">
+            <el-button type="primary" @click="submitExcel">导入</el-button>
+            <el-button @click="cancelModel">取 消</el-button>
+          </div>
+      </div>
+    </el-dialog>
+
   
         
   </div>
@@ -228,20 +257,27 @@
 
 <script>
 
-import { listDay, getLeftColumn, treeselect, listDev, getDev, delDev, addDev, updateDev, exportDev, getDeparament } from '@/api/peopleManager'
+import { listDay, getLeftColumn, treeselect, allPeopleName, addDaKaPeople, exportKaoqinExcel, broadsideInfo, getTeamTree, searchDaka, exportDaka, importDaka } from '@/api/peopleManager'
 import Treeselect from "@riophae/vue-treeselect";
 import "@riophae/vue-treeselect/dist/vue-treeselect.css";
 
 
 export default {
-  name: "serviceRealName",
+  name: "serviceKq",
   components: { Treeselect },
   
-  mounted() {
-      this.username = localStorage.getItem('siteName')
-  },
   data() {
     return {
+      fileList12: [],
+      modelOpen: false,
+      timeArry: [],
+      currentUserSignCompanyName: '',
+      queryParamsUserclass: '',
+      treeData: [],
+        selectTime: '',
+        selectType: '',
+        broadsideList: [],
+        nameList: [],
         viewOpen: false,
         banzuOpen: false,
         
@@ -280,12 +316,12 @@ export default {
         // 状态数据字典
         statusOptions: [
             {
-            dictValue: 0,
-            dictLabel: '未启用'
+            dictValue: 1,
+            dictLabel: '签到'
             },
             {
-            dictValue: 1,
-            dictLabel: '启用'
+            dictValue: 2,
+            dictLabel: '签出'
             }
         ],
       
@@ -300,12 +336,12 @@ export default {
         queryParams: {
             pageNum: 1,
             pageSize: 10,
-            devFactory: '',
-            devName: '',
-            status: undefined,
-            entryTime: '',
-
-
+            userSignPhone: '',
+            userSignName: '',
+            userSignType: '',
+            userSignClass: undefined,
+            startTime: '',
+            endTime: ''
         },
       // 表单校验
       rules: {
@@ -332,96 +368,96 @@ export default {
   },
   created() {
     
-    this.getList();
-    this.getTreeselect();
+    //this.getTreeselect();
    
   },
   mounted() {
       this.getListDay()
+      this.getBanzu()
+      this.getBroadsideInfo()
   },
   methods: {
-    getListDay() {
-      listDay({
-        constructionSiteId: localStorage.getItem('siteId')
-      }).then((res) => {
-          this.userList = res.data.data.userDay
-        // if(res.data.data.userDay.length === 0) {
-        //   this.showDayList = false
-        // } else {
-        //   this.showDayList = true
-        //   var tmparr = res.data.data.userDay
-        //   var data = []
-        //   for(var i = 0; i < tmparr.length; i++) {
-        //     var data1 = []
-        //     data1.push(tmparr[i].userSignTime)
-        //     data1.push(tmparr[i].userSignName)
-        //     data1.push(tmparr[i].userSignKind)
-        //     if(tmparr[i].userSignType === 1) {
-        //       data1.push("<span style='color: #3DE7C9'>签到</span>")
-        //     } else if(tmparr[i].userSignType === 2){
-        //       data1.push("<span style='color: #eeba2b'>签出</span>")
-        //     } else {
-        //       data1.push("<span style='color: #e43c13'>无签到信息</span>")
-        //     }
-        //     data.push(data1)
-        //   }
-        //   this.configTable = {
-        //     header: ['考勤时间', '考勤人员', '工种', '考勤类型'],
-        //     headerHeight: 45,
-        //     data: data,
-        //     rowNum: 4,
-        //     align: ['center', 'center', 'center', 'center'],
-        //     headerBGC: '',
-        //     evenRowBGC: ''
-        //   }
-        // }
-        
-
+    submitExcel() {
+      var id = localStorage.getItem('siteId')
+      const formData = new FormData()
+      formData.append('file', this.fileList12[0].raw)
+      importDaka(id, formData).then((res) => {
+        console.log("导入的文件res", res)
+        if(res.data.code === 200) {
+          this.fileList12 = []
+          this.modelOpen = false
+          this.getListDay()
+        }
       })
     },
-    /** 查询用户列表 */
-    getList() {
-      var deptId = localStorage.getItem("deptId")
-      console.log("deptId", deptId)
+    handleChange(file, fileList) {
+      this.fileList12 = fileList
+    },
+    cancelModel() {
+      this.modelOpen = false
+    },
+    getSelectList(node, instanceId) {
+      this.queryParamsUserclass = node.label
+      this.queryParams.userSignClass = node.label
+    },
+    getBanzu() {
+      var id = localStorage.getItem('siteId')
+      getTeamTree(id).then((res) => {
+        this.treeData = res.data.data
+        
+      })
+    },
+    getUserSignTime(val) {
+      console.log("CurrentTime", val)
+      this.selectTime = val
+      var year = val.split(" ")[0]
+      if(this.selectTime !== '' && this.selectType !== '') {
+        var data = {
+          date: year,
+          siteId: localStorage.getItem('siteId'),
+          userSignType: this.selectType
+        }
+        this.getAllName(data)
+      }
+    },
+    getType(val) {
+      this.selectType = val
+      if(this.selectTime !== '' && this.selectType !== '') {
+        var data = {
+          date: this.selectTime.split(" ")[0],
+          siteId: localStorage.getItem('siteId'),
+          userSignType: this.selectType
+        }
+        this.getAllName(data)
+      }
+    },
+    
+    getBroadsideInfo() {
+      var id = localStorage.getItem('siteId')
+      broadsideInfo(id).then((res) => {
+        this.deptOptions = res.data.data
+      })
+    },
+     /** 查询用户列表 */
+    getListDay() {
       var params = {
-        constructionSiteId: deptId,
-        type: '环境检测设备'
+        constructionSiteId: localStorage.getItem('siteId'),
       }
-      this.loading = true;
-      listDev(params).then(response => {
-        this.userList = response.rows;
-        this.total = response.total;
-        this.loading = false;
-      });
-
-
+      searchDaka(params).then((res) => {
+          this.userList = res.data.rows
+          this.loading = false
+      })
     },
-    /** 查询部门下拉树结构 */
-    getTreeselect() {
-      // console.log(this.username)
-      
-      var data = {
-        username: this.username,
-        status: 3
-      }
-      getLeftColumn(data).then((response) => {
-       // this.deptOptions.push(response.data)
-        this.deptOptions = [
-           {deptId: 101, name: '石家庄宝能中心项目二标段', childs:[
-               {deptId: 101, name: '建设单位'},
-               {deptId: 101, name: '施工单位'},
-               {deptId: 101, name: '监理单位'}
-           ]}
-        ]
-      });
+
+    getAllName(data) {
+      allPeopleName(data).then((res) => {
+        this.nameList = res.data.data
+      })
     },
-    // getTreeselect() {
-    //   // this.deptOptions = [{"id":100,"label":"设备总览","children":[{"id":205,"label":"塔吊"},{"id":101,"label":"起重机"},{"id":102,"label":"升降机"}]}]
-    //   treeselect().then((response) => {
-    //     this.deptOptions = response.data;
-    //   });
-    //
-    // },
+   
+
+   
+    
     // 筛选节点
     filterNode(value, data) {
       if (!value) return true;
@@ -429,105 +465,70 @@ export default {
     },
     // 节点单击事件
     handleNodeClick(data, node, e) {
-      console.log("data",data)
-      console.log(node)
-      console.log(e)
-      if(data.flag === 1) {
-
+      
+      this.currentUserSignCompanyName = data.name
+      if(this.currentUserSignCompanyName.length > 4) {
         var params = {
-          constructionSiteId: data.deptId,
-          devType: data.name,
-          type: '环境检测设备'
-
+          constructionSiteId: data.deptId
         }
-
-      } else{
+      } else {
         var params = {
           constructionSiteId: data.deptId,
-
-          type: '环境检测设备'
-
+          deptName: data.name
         }
       }
-
-
-      this.loading = true;
-      listDev(params).then(response => {
-        this.userList = response.rows;
+      
+      // this.loading = true;
+      searchDaka(params).then(response => {
+        this.userList = response.data.rows;
         this.total = response.total;
         this.loading = false;
       });
 
     },
-    // 用户状态修改
-    handleStatusChange(row) {
-      let text = row.status === "0" ? "启用" : "停用";
-      this.$confirm(
-        '确认要"' + text + '""' + row.userName + '"用户吗?',
-        "警告",
-        {
-          confirmButtonText: "确定",
-          cancelButtonText: "取消",
-          type: "warning",
-        }
-      )
-        .then(function () {
-          return changeUserStatus(row.userId, row.status);
-        })
-        .then(() => {
-          this.msgSuccess(text + "成功");
-        })
-        .catch(function () {
-          row.status = row.status === "0" ? "1" : "0";
-        });
-    },
+    
     // 取消按钮
     cancel() {
       this.open = false;
-      this.reset();
+      this.resetForm();
     },
+    
     cancelView() {
         this.viewOpen = false;
-        this.reset();
+        
     },
     // 表单重置
-    reset() {
-      this.form = {
-        constructionSiteId:undefined,
-        constructionSiteName:'',
-        devFactory:'',
-        devModel: '',
-        devName: '',
-        devType: '',
-        entryTime: '',
-        personInCharge: '',
-        phone: '',
-        status: 0,
-        type: "环境检测设备",
-
-      };
-      this.resetForm("form");
-    },
+   
     /** 搜索按钮操作 */
     handleQuery() {
-      this.queryParams.page = 1;
-      this.queryParams.constructionSiteId = localStorage.getItem("deptId")
-      this.queryParams.type = "环境检测设备"
+      console.log("timeArry", this.timeArry)
+      this.queryParams.startTime = this.timeArry[0]
+      this.queryParams.endTime = this.timeArry[1]
+      this.queryParams.deptName = this.currentUserSignCompanyName
+      this.queryParams.constructionSiteId = localStorage.getItem("siteId")
+      this.queryParams.userSignClass = this.queryParamsUserclass
+      
       this.loading = true;
-      listDev(this.queryParams).then(response => {
-        this.userList = response.rows;
-        this.total = response.total;
-        this.loading = false;
+      searchDaka(this.queryParams).then(response => {
+        this.userList = response.data.rows
+        this.loading = false
+        this.queryParamsUserclass = undefined
       });
     },
     /** 重置按钮操作 */
     resetQuery() {
-      // this.queryParams.entryTime = ''
-      // this.resetForm("queryForm");
-      this.queryParams.devName = '';
-      this.queryParams.devFactory = ''
-      this.queryParams.status = ''
-      this.handleQuery();
+      
+      this.queryParams.userSignName = ''
+      this.queryParams.userSignClass = ''
+      this.queryParams.userSignPhone = ''
+      this.queryParams.userSignType = ''
+      this.queryParams.userSignTime = ''
+      this.queryParamsUserclass = undefined
+      this.queryParams.startTime = ''
+      this.queryParams.endTime = ''
+      this.timeArry = []
+      
+      this.getListDay();
     },
     // 多选框选中数据
     handleSelectionChange(selection) {
@@ -539,38 +540,64 @@ export default {
         this.banzuOpen = true
     },
 
+    resetForm() {
+      this.form.userSignType = ''
+      this.form.userSignTime = ''
+      this.form.reClockingInfo = ''
+      this.form.constructionSiteId = ''
+      this.form.userSignName = ''
+      this.nameList = []
+    },
+
     /** 提交按钮 */
     submitForm: function () {
       this.$refs["form"].validate((valid) => {
 
         if (valid) {
-          this.form.type = "环境检测设备"
-          if (this.form.id != undefined) {
-            updateDev(this.form).then((response) => {
-              if (response.code === 200) {
-                this.msgSuccess("修改成功");
+            var string = this.form.userSignName.split("<")[1]
+            this.form.userSignName = this.form.userSignName.split("<")[0]
+            
+          
+            this.form.userSignPhone = string.slice(0, -1)
+
+            this.form.constructionSiteId = localStorage.getItem("siteId")
+            
+            this.form.userSignStatus = 2
+            addDaKaPeople(this.form).then((response) => {
+              if (response.data.code === 200) {
+                this.$message({
+                  type: 'success',
+                  message: '打卡成功!'
+                })
                 this.open = false;
-                this.getList();
-              }
-            });
-          } else {
-            addDev(this.form).then((response) => {
-              if (response.code === 200) {
-                this.msgSuccess("新增成功");
-                this.open = false;
-                this.getList();
+                this.getListDay();
+                this.resetForm()
               }
             });
           }
-        }
+        
       });
     },
 
     downloadModel() {
-
+      window.open('http://121.36.106.18:38082/attend_template.xlsx')
     },
-    inExport() {},
-    handleExport() {},
+    inExport() {
+      this.modelOpen = true;
+      this.title = "导入文件"
+      this.actionUrl = `http://121.36.106.18:36080/people/info/importData?siteId=${localStorage.getItem('siteId')}`
+    },
+    handleExport() {
+      var params = {
+        constructionSiteId: localStorage.getItem('siteId'),
+        deptName: this.currentUserSignCompanyName
+      }
+      exportDaka(params).then((res) => {
+        // console.log("导出的文件", res.data.msg)
+        window.open(res.data.msg)
+      })
+     
+    },
     daka() {
         this.open = true;
       this.title = "考勤补打卡";

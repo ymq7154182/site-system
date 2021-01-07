@@ -15,11 +15,11 @@
       <el-col :span="20" :xs="24">
         <div v-show="showSearch" style="padding: 10px">
           <span style="font-size: 14px;color: white;font-weight: 700;margin-right: 10px">姓名</span><el-input v-model="queryParams.userName" placeholder="请输入姓名" clearable size="small" style="width: 120px;margin-right: 10px" />
-          <span style="font-size: 14px;color: white;font-weight: 700;margin-right: 10px">身份证号</span><el-input v-model="queryParams.userCode" placeholder="请输入身份证号" clearable size="small" style="width: 150px;margin-right: 10px"  />
+          <span style="font-size: 14px;color: white;font-weight: 700;margin-right: 10px">手机号</span><el-input v-model="queryParams.phone" placeholder="请输入手机号" clearable size="small" style="width: 150px;margin-right: 10px"  />
           
           <span style="font-size: 14px;color: white;font-weight: 700;margin-right: 10px">岗位/工种</span>
           <el-select v-model="queryParams.userPost" placeholder="请选择" clearable size="small" style="width: 120px;margin-right: 10px">
-            <el-option v-for="dict in userPostList" :key="dict.dictValue" :label="dict.dictLabel" :value="dict.dictValue" />
+            <el-option v-for="dict in postList" :key="dict.id" :label="dict.professionName" :value="dict.professionName" />
           </el-select>
           <span style="font-size: 14px;color: white;font-weight: 700;margin-right: 10px">状态</span>
           <el-select v-model="queryParams.userStatus" placeholder="请选择" clearable size="small" style="width: 120px;margin-right: 10px">
@@ -27,7 +27,8 @@
           </el-select>
           
           <span style="font-size: 14px;color: white;font-weight: 700;margin-right: 10px">班组</span>
-          <treeselect v-model="queryParams.userClass" :options="treeData" placeholder="请选择" :clearable="true" :show-count="true"  style="width: 250px;display:inline-block;vertical-align:bottom;" @select="getSelectList" />
+          <treeselect v-model="queryParams.userClass" :options="treeData" placeholder="请选择" :clearable="true" :show-count="true"  style="width: 250px;display:inline-block;vertical-align:bottom;" @select="getSelectList" >
+          </treeselect>
           <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
           <el-button type="primary" icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>
         </div>
@@ -96,8 +97,8 @@
       </el-col>
     </el-row>
 
-    <!-- 添加对话框 -->
-    <el-dialog :title="title" :visible.sync="open" width="800px" append-to-body class="addForm">
+    <!-- 添加人员对话框 -->
+    <el-dialog :title="title" :visible.sync="open" width="800px" append-to-body class="addForm" @close="cancel">
       <el-form ref="form" :model="form" :rules="rules" label-width="120px">
         <el-row>
           <el-col :span="24">
@@ -163,8 +164,8 @@
         </el-row>
         <el-row>
           <el-col :span="12">
-            <el-form-item label="班组" prop="userClass">
-              <treeselect v-model="form.userClass" :options="treeData3" placeholder="请选择" :clearable="true" :show-count="true"  style="display:inline-block;vertical-align:bottom;" @select="getSelectList3" />
+            <el-form-item label="班组" prop="teamId">
+              <treeselect v-model="form.teamId" :options="treeData3" placeholder="请选择" :clearable="true" :show-count="true"  style="display:inline-block;vertical-align:bottom;" @select="getSelectList3" />
             </el-form-item>
           </el-col>
           <el-col :span="12">
@@ -180,7 +181,7 @@
           <el-col :span="12">
             <el-form-item label="岗位/工种" prop="userPost">
               <el-select v-model="form.userPost" placeholder="请选择" clearable size="small" style="width: 240px">
-                <el-option v-for="dict in postList" :key="dict" :label="dict" :value="dict" />
+                <el-option v-for="dict in postList" :key="dict.id" :label="dict.professionName" :value="dict.professionName" />
               </el-select>
             </el-form-item>
           </el-col>
@@ -237,7 +238,7 @@
     </el-dialog>
 
    <!-- 班组新增页面 -->
-    <el-dialog :visible.sync="banzuOpen" :title="title" width="40%" >
+    <el-dialog :visible.sync="banzuOpen" :title="title" width="40%" @close="cancelPeople">
       <div style="height: 55vh; overflow-y: scroll; ">
         <el-form :model="banzuForm" :rules="banzuRules" ref="banzuForm" label-width="1.5rem">
           <el-row>
@@ -271,7 +272,18 @@
               </el-form-item>
             </el-col>
           </el-row>
-
+          <el-row>
+            <el-col :span="12">
+              <el-form-item label="民族" prop="userNationality">
+                <el-input v-model="banzuForm.userNationality" placeholder="请输入民族" />
+              </el-form-item>
+            </el-col>
+            <el-col :span="12">
+              <el-form-item label="年龄" prop="userAge">
+                <el-input v-model="banzuForm.userAge" placeholder="请输入年龄" />
+              </el-form-item>
+            </el-col>
+          </el-row>
           <el-row>
             <el-col :span="12">
               <el-form-item label="性别" prop="userSex">
@@ -314,9 +326,9 @@
                 <el-select v-model="banzuForm.userPost" placeholder="请选择" style="width: 50%">
                     <el-option
                         v-for="item in postList"
-                        :key="item"
-                        :label="item"
-                        :value="item">
+                        :key="item.id"
+                        :label="item.professionName"
+                        :value="item.professionName">
                     </el-option>
                 </el-select>
              </el-form-item>
@@ -381,13 +393,40 @@
     </el-dialog>
     
     <!--  -->
+
+    <!-- 导入信息 -->
+    <el-dialog :visible.sync="modelOpen" :title="title" width="30%" @close="cancelModel">
+      <div style="margin:0 auto; ">
+        <el-upload
+          style="margin-left:15%;margin-bottom:10px;"
+          class="upload-demo"
+          action=""
+          accept=".xls,.xlsx"
+          :limit="1"
+          drag
+          :on-change="handleChange"
+          :file-list="fileList12"
+          :auto-upload="false"
+          >
+          <i class="el-icon-upload"></i>
+          <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
+          <div class="el-upload__tip" slot="tip">只能上传.xlsx文件</div>
+        </el-upload>
+        
+        </el-form>
+         <div slot="footer" class="dialog-footer">
+            <el-button type="primary" @click="submitExcel">导入</el-button>
+            <el-button @click="cancelModel">取 消</el-button>
+          </div>
+      </div>
+    </el-dialog>
         
   </div>
 </template>
 
 <script>
 
-import { peopleInfo, getLeftColumn, treeselect, updateDev, getTeamTree, addBanzu, addPeople, putPeople } from '@/api/peopleManager'
+import { peopleInfo, getLeftColumn, treeselect, updateDev, getTeamTree, addBanzu, addPeople, putPeople, exportExcel, importExcel, profession, broadsideInfo } from '@/api/peopleManager'
 import Treeselect from "@riophae/vue-treeselect";
 import "@riophae/vue-treeselect/dist/vue-treeselect.css";
 
@@ -401,7 +440,14 @@ export default {
   },
   data() {
     return {
-      postList: ['钢筋工', '架子工', '混凝土工', '砌筑工'],
+      
+      queryParamsUserclass: '',
+      fileList12: [],
+      file: null,
+      actionUrl: '',
+      modelOpen: false,
+      currentUserSignCompanyName: '',
+      postList: [],
       educationList: ['小学', '初中', '高中', '专科', '本科', '研究生'],
       danweiList: ['建设单位', '施工单位', '监理单位'],
       currentSanfang: '',
@@ -417,7 +463,7 @@ export default {
         },
         {
           label: '离职',
-          value: 2
+          value: 0
         }
       ],
       banzuForm: {},
@@ -490,14 +536,13 @@ export default {
       },
       // 查询参数
       queryParams: {
-        pageNum: 1,
-        pageSize: 10,
+        
         userName: '',
         userCode: '',
         userClass: undefined,
         userPost: '',
         userStatus: '',
-        constructionSiteId: localStorage.getItem("deptId")
+        constructionSiteId: localStorage.getItem("siteId")
 
 
       },
@@ -533,6 +578,7 @@ export default {
         ]
         
       },
+      
       banzuRules: {
         label: [
           { required: true, message: "班组姓名不能为空", trigger: "blur" },
@@ -574,26 +620,40 @@ export default {
   created() {
     this.getPeopleInfo()
     this.getBanzu()
-    this.getTreeselect();
-   
+   // this.getTreeselect();
+    this.getPofession();
+    this.getBroadsideInfo()
   },
   methods: {
+    
+    getBroadsideInfo() {
+      var id = localStorage.getItem('siteId')
+      broadsideInfo(id).then((res) => {
+        this.deptOptions = res.data.data
+      })
+    },
+    getPofession() {
+      var id = localStorage.getItem('siteId')
+      profession(id).then((res) => {
+        console.log("岗位", res)
+        this.postList = res.data.rows
+      })
+    },
     getSelectList(node, instanceId) {
-      // console.log("Index", index)
-      //console.log("Item", node)
-      this.queryParams.userClass = node.id
-      
+      this.queryParamsUserclass = node.label
+      this.queryParams.userClass = node.label
     },
     getSelectList2(node, instanceId) {
-      console.log("node", node)
-      console.log("instanceId", instanceId)
-      this.banzuForm.userClass = node.id
+      // console.log("node", node)
+      // console.log("instanceId", instanceId)
+      this.banzuForm.userClass = node.label
+
       
     },
     getSelectList3(node, instanceId) {
-      console.log("node", node)
-      console.log("instanceId", instanceId)
-      this.form.userClass = node.id
+      // console.log("node", node)
+      // console.log("instanceId", instanceId)
+      this.form.userClass = node.label
       
     },
     getBanzu() {
@@ -606,7 +666,7 @@ export default {
     },
     getPeopleInfo() {
       var params = {
-        constructionSiteId: localStorage.getItem("deptId")
+        constructionSiteId: localStorage.getItem("siteId")
       }
       peopleInfo(params).then((res) => {
         this.userList = res.data.rows
@@ -616,22 +676,22 @@ export default {
     },
    
     /** 查询部门下拉树结构 */
-    getTreeselect() {
-      var data = {
-        // username: this.username,
-        // status: 3
-      }
-      getLeftColumn(data).then((response) => {
-       // this.deptOptions.push(response.data)
-        this.deptOptions = [
-           {deptId: 101, name: '石家庄宝能中心项目二标段', childs:[
-               {deptId: 101, name: '建设单位'},
-               {deptId: 101, name: '施工单位'},
-               {deptId: 101, name: '监理单位'}
-           ]}
-        ]
-      });
-    },
+    // getTreeselect() {
+    //   var data = {
+    //     // username: this.username,
+    //     // status: 3
+    //   }
+    //   getLeftColumn(data).then((response) => {
+    //    // this.deptOptions.push(response.data)
+    //     this.deptOptions = [
+    //        {deptId: 101, name: '石家庄宝能中心项目二标段', childs:[
+    //            {deptId: 101, name: '建设单位'},
+    //            {deptId: 101, name: '施工单位'},
+    //            {deptId: 101, name: '监理单位'}
+    //        ]}
+    //     ]
+    //   });
+    // },
  
     // 筛选节点
     filterNode(value, data) {
@@ -640,14 +700,21 @@ export default {
     },
     // 节点单击事件
     handleNodeClick(data, node, e) {
-      console.log("data",data)
-      console.log(node)
-      console.log(e)
-
-      var params = {
-        constructionSiteId: data.deptId,
-        userSignCompanyName: data.name
+      // console.log("data",data)
+      // console.log(node)
+      // console.log(e)
+      this.currentUserSignCompanyName = data.name
+      if(this.currentUserSignCompanyName.length > 4) {
+        var params = {
+          constructionSiteId: data.deptId,
+        }
+      } else {
+        var params = {
+          constructionSiteId: data.deptId,
+          userSignCompanyName: data.name
+        }
       }
+      
       // this.loading = true;
       peopleInfo(params).then(response => {
         this.userList = response.data.rows;
@@ -664,8 +731,28 @@ export default {
     },
     cancelPeople() {
       this.banzuOpen = false
-      this.resetPeople()
+      this.resetForm2('banzuForm')
     },
+    cancelModel() {
+      this.modelOpen = false
+    },
+    submitExcel() {
+      var id = localStorage.getItem('siteId')
+      const formData = new FormData()
+      formData.append('file', this.fileList12[0].raw)
+      importExcel(id, formData).then((res) => {
+        console.log("导入的文件res", res)
+        if(res.data.code === 200) {
+          this.fileList12 = []
+          this.modelOpen = false
+          this.getPeopleInfo()
+        }
+      })
+    },
+    handleChange(file, fileList) {
+      this.fileList12 = fileList
+    },
+    
     // 表单重置
     resetForm(formName) {
       this.$refs[formName].resetFields();
@@ -673,7 +760,8 @@ export default {
       this.form.constructionSiteId = ''
       this.form.id = ''
       this.form.userName = ''
-      this.form.userClass = ''
+      this.form.userClass = undefined
+      this.form.teamId = undefined
       this.form.userPost = ''
       this.form.userCode = ''
       this.form.userVcode = ''
@@ -698,7 +786,8 @@ export default {
       this.banzuForm.constructionSiteId = ''
       this.banzuForm.id = ''
       this.banzuForm.userName = ''
-      this.banzuForm.userClass = ''
+      this.banzuForm.userClass = undefined
+      this.form.teamId = undefined
       this.banzuForm.userPost = ''
       this.banzuForm.userCode = ''
       this.banzuForm.userVcode = ''
@@ -715,33 +804,37 @@ export default {
       this.banzuForm.userStatus = ''
       this.banzuForm.teamId = ''
       this.banzuForm.label = ''
-      this.banzuForm.parentId = ''
+      this.banzuForm.parentId = undefined
       this.fileList = []
       
     },
-    resetPeople() {},
+    
     /** 搜索按钮操作 */
     handleQuery() {
-      this.queryParams.page = 1;
-      this.queryParams.constructionSiteId = localStorage.getItem("deptId")
-     
+      
+      this.queryParams.constructionSiteId = localStorage.getItem("siteId")
+      this.queryParams.userSignCompanyName = this.currentUserSignCompanyName
+      this.queryParams.userClass = this.queryParamsUserclass
       this.loading = true;
       peopleInfo(this.queryParams).then(response => {
-        this.userList = response.rows;
+        this.userList = response.data.rows;
         this.total = response.total;
         this.loading = false;
+        this.queryParamsUserclass = undefined
       });
+    
     },
     /** 重置按钮操作 */
     resetQuery() {
       // this.queryParams.entryTime = ''
       // this.resetForm("queryForm");
       this.queryParams.userName = '';
-      this.queryParams.userCode = ''
+      this.queryParams.phone = ''
       this.queryParams.userStatus = ''
-      this.queryParams.userClass = '';
+      this.queryParams.userClass = undefined;
       this.queryParams.userPost = ''
-
+      this.queryParamsUserClass = ''
+      this.queryParams.teamId = undefined
       this.getPeopleInfo();
     },
     // 多选框选中数据
@@ -752,6 +845,8 @@ export default {
     },
     addBanzuBtn() {
         this.banzuOpen = true
+        this.title = '新增班组'
+
     },
     
     /** 修改按钮操作 */
@@ -760,7 +855,7 @@ export default {
       this.open = true;
       this.title = "修改人员";
       
-      console.log(row)
+      // console.log(row)
     },
    
     /** 提交按钮 */
@@ -824,15 +919,19 @@ export default {
             userPost: this.banzuForm.userPost,
             userSex: this.banzuForm.userSex,
             userStatus: this.banzuForm.userStatus,
-            userVcode: this.banzuForm.userVcode
+            userVcode: this.banzuForm.userVcode,
+            userClass: this.banzuForm.label,
+            userNationality: this.banzuForm.userNationality,
+            userAge: this.banzuForm.userAge,
+            userSignCompanyName: this.currentUserSignCompanyName
           }
           var tijiaoForm = {
             siteUserInfo: obj2,
             teams: obj
           }
-          console.log("班组提交的信息",tijiaoForm)
+          // console.log("班组提交的信息",tijiaoForm)
           addBanzu(tijiaoForm).then((response) => {
-            console.log("SASAS",response.data)
+            // console.log("SASAS",response.data)
             if (response.data.code === 200) {
               this.$message({
                 type: 'success',
@@ -851,13 +950,24 @@ export default {
    
     /** 导出按钮操作 */
     handleExport() {
-      
+      var params = {
+        constructionSiteId: localStorage.getItem('siteId'),
+        userSignCompanyName: this.currentUserSignCompanyName
+      }
+      exportExcel(params).then((res) => {
+        // console.log("导出的文件", res.data.msg)
+        window.open(res.data.msg)
+      })
     },
     /** 导入按钮操作 */
     handleImport() {
-      
+      this.modelOpen = true;
+      this.title = "导入文件"
+      this.actionUrl = `http://121.36.106.18:36080/people/info/importData?siteId=${localStorage.getItem('siteId')}`
     },
-    downloadModel() {},
+    downloadModel() {
+      window.open('http://121.36.106.18:38082/labor_template.xlsx')
+    },
 
     addPeopleBtn() {
       this.open = true
@@ -945,6 +1055,6 @@ export default {
   background: #1439391c !important;
 }
 .dialog-footer {
-  margin-left:50%;
+  margin-left:30%;
 }
 </style>
