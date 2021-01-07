@@ -12,34 +12,9 @@
             <div class="p_chart">
               <div id="chart1" style="width:30vw;height:17vh;"></div>
             </div>
-            <!-- <div class="p_picture">
-              <ul class="p_list">
-                <li v-for="(item,index) in items" :key="index" class="p_item">
-                  <div >
-                    <img class="yicun" :src="item.url" alt="">
-                    <div>{{item.name}}</div>
-                    <div>{{item.position}}</div>
-                    <div class="p_temperature">{{item.temperature}}℃</div>
-                  </div>
-                </li>
-                <li v-for="(item1,index) in items" :key="index + '-only'" class="p_item">
-                  <div >
-                    <img class="yicun" :src="item1.url" alt="">
-                    <div>{{item1.name}}</div>
-                    <div>{{item1.position}}</div>
-                    <div class="p_temperature">{{item1.temperature}}℃</div>
-                  </div>
-                </li>
-              </ul>
-              <div class="p_num">
-                <span class="p_attention">发烧人数：</span>
-                <span class="p_attention">{{attentionNum}}</span>
-                <span class="p_attention">人，已进行追踪处理</span>
-              </div>
-            </div> -->
-            <!-- <div class="col-div4"> -->
+            
               <div style="color:white; margin-left: 40%;margin-top: 5%;font-size:20px;" v-if="!showDayList">暂无考勤信息</div>
-              <div style="width:100%;height: 3.5rem;position: absolute;top: 40%" v-if="showDayList" >
+              <div style="width:100%;height: 3.2rem;position: absolute;top: 40%" v-if="showDayList" >
                 <dv-scroll-board :config="configTable" />
               </div>
               
@@ -117,46 +92,58 @@
                     </el-select>
                   </div>
                   <div style="margin-top:0.3rem;" class="device-data">
-                    <ul class="device-list">
-                      <li @mouseover="infohover1 = false" @mouseout="infohover1 = true">
+                    <ul class="device-list" >
+                     
+                      <li @mouseover="infohover1 = false" @mouseout="infohover1 = true" v-for="(item, index) in leadersList">
                         <div class="device-detail">
-                          <el-image v-show="infohover1" :src="require('../../assets/peopleManager/fuze3.jpg')" fit="fill" style="height: 80%; " />
-                          <div v-show="!infohover1" class="device-detail-info">
+                          <div v-if="item.userImg !== null" style="height:80%;">
+                            <el-image v-show="infohover1"  :src="item.userImg" fit="fill" style="height: 100%; " />
+                          </div>
+                          <div v-else style="height:80%;">
+                            <el-image v-show="infohover1"  :src="require('../../assets/peopleManager/wu.jpg')" fit="fill" style="height: 100%; " />
+                          </div>
+                          <div v-show="!infohover1" class="device-detail-info" v-if="item.userImg !== null">
                             <table>
                               <tr>
                                 <td>姓名:</td>
-                                <td>王琪</td>
+                                <td>{{item.userSignName}}</td>
                               </tr>
                               <tr>
-                                <td>角色:</td>
-                                <td>监理方项目经理</td>
+                                <td>单位:</td>
+                                <td>{{item.deptName}}</td>
                               </tr>
                               <tr>
                                 <td>手机号:</td>
-                                <td>18227447739</td>
+                                <td>{{item.userSignPhone}}</td>
                               </tr>
                               <tr>
-                                <td>体温:</td>
-                                <td>36.5</td>
+                                <td>岗位:</td>
+                                <td>{{item.userSignKind}}</td>
                               </tr>
                             </table>
                           </div>
+                          <div v-else style="height:80%;margin-top:-110%;" @click="updateInfo" v-show="!infohover1">
+                            <el-image  :src="require('../../assets/peopleManager/upload.jpg')" fit="fill" style="height: 100%; " />
+                          </div>
+                          
                           <div style="height: 18%; width: 100%; ">
                             <el-row>
                               <el-col :span="15">
                                 <div class="device-detail-span">
-                                  {{ '王琪' }}&nbsp;
+                                  {{ item.userSignName }}&nbsp;
                                 </div>
                               </el-col>
                               <el-col :span="9">
-                                <el-tag type="success" effect="dark" style="margin-top: 1.6%; ">到岗</el-tag>
+                                <el-tag type="success" effect="dark" v-if="item.userSignStatus === 0" style="margin-top: 1.6%; ">到岗</el-tag>
+                                <el-tag type="warninng" effect="dark" v-if="item.userSignStatus === 1" style="margin-top: 1.6%; ">未打卡</el-tag>
+                                <el-tag type="danger" effect="dark" v-if="item.userSignStatus === 2" style="margin-top: 1.6%; ">补打卡</el-tag>
                               </el-col>
                             </el-row>
                           </div>
                         </div>
                       </li>
 
-                      <li @mouseover="infohover2 = false" @mouseout="infohover2 = true">
+                      <!-- <li @mouseover="infohover2 = false" @mouseout="infohover2 = true">
                         <div class="device-detail">
                           <el-image v-show="infohover2" :src="require('../../assets/peopleManager/fuze2.jpg')" fit="fill" style="height: 80%; " />
                           <div v-show="!infohover2" class="device-detail-info">
@@ -344,53 +331,13 @@
                             </el-row>
                           </div>
                         </div>
-                      </li>
+                      </li> -->
 
 
                     </ul>
-                    <!-- <el-row>
-                      <el-col :span="8">
-                        <div class="headman">
-                          <el-image :src="require('../../assets/peopleManager/fuze3.jpg')" fit="fill" style="height: 75%; width: 100%; " />
-                          <div style="height: 18%; width: 100%; ">
-                            <el-row>
-                              建设方负责人&nbsp;&nbsp;&nbsp;史扬
-                            </el-row>
-                            <el-row>
-                              龙湖地产有限公司
-                            </el-row>
-                          </div>
-                        </div>
-                      </el-col>
-                      <el-col :span="8">
-                        <div class="headman">
-                          <el-image :src="require('../../assets/peopleManager/fuze2.jpg')" fit="fill" style="height: 75%; width: 100%; " />
-                          <div style="height: 18%; width: 100%; ">
-                            <el-row>
-                              监理方负责人&nbsp;&nbsp;&nbsp;王琦
-                            </el-row>
-                            <el-row>
-                              北京铁城建设监理有限公司
-                            </el-row>
-                          </div>
-                        </div>
-                      </el-col>
-                      <el-col :span="8">
-                        <div class="headman">
-                          <el-image :src="require('../../assets/peopleManager/fuze1.jpg')" fit="fill" style="height: 75%; width: 100%; " />
-                          <div style="height: 18%; width: 100%; ">
-                            <el-row>
-                              施工方负责人&nbsp;&nbsp;&nbsp;赵军何
-                            </el-row>
-                            <el-row>
-                              北京城建集团
-                            </el-row>
-                          </div>
-                        </div>
-                      </el-col>
-                    </el-row> -->
+                    
                   </div>
-                  <div style="color:white;font-size:16px; margin-left:50%;">共计10人，今日出勤4人</div>
+                  <div style="color:white;font-size:16px; margin-left:50%;">共计{{leaderTotalCount}}人，今日出勤{{attendLeaderCount}}人</div>
                 </div>
               </el-col>
             </el-row>
@@ -425,7 +372,7 @@
 </template>
 
 <script>
-import { listDay, getCount } from '@/api/peopleManager'
+import { listDay, getCount, leaderList, leaderCount } from '@/api/peopleManager'
 export default {
   name: "shouYe",
   components: {
@@ -433,6 +380,9 @@ export default {
   },
   data(){
     return{
+      leaderTotalCount: '',
+      attendLeaderCount: '',
+      leadersList: [],
       selectDate: '',
       deptId: '',
       currentDay: '',
@@ -533,9 +483,22 @@ export default {
     this.drawLine();
     //this.changeType();
     this.getListDay()
+    this.getLeaderList()
+    this.getLeaderCount()
     
   },
   methods:{
+    getLeaderCount() {
+      var id = localStorage.getItem("siteId")
+      leaderCount(id).then((res) => {
+        console.log("aaaaaasasasa", res.data)
+        this.leaderTotalCount = res.data.data.leaderCount
+        this.attendLeaderCount = res.data.data.attendLeaderCount
+      })
+    },
+    updateInfo() {
+      alert(123)
+    },
     selectType(val) {
       console.log("123")
       console.log("类型改变",val)
@@ -1235,7 +1198,7 @@ export default {
           }
           this.configTable = {
             header: ['考勤时间', '考勤人员', '工种', '考勤类型'],
-            headerHeight: 45,
+            headerHeight: 30,
             data: data,
             rowNum: 4,
             align: ['center', 'center', 'center', 'center'],
@@ -1247,12 +1210,21 @@ export default {
 
       })
     },
+    getLeaderList() {
+      var id = localStorage.getItem('siteId')
+      leaderList(id).then((res) => {
+        console.log("领导", res.data)
+        this.leadersList = res.data.rows
+        console.log("qwert", this.leadersList)
+      })
+    },
     getPeopleCount(date, id, type) {
       var params = {
         datetime: date,
         id: id,
         type: type
       }
+      console.log("count", params)
       getCount(params).then((res) => {
         console.log("Counts", res.data.data)
         var obj = res.data.data
@@ -1275,7 +1247,18 @@ export default {
     },
     transDate() {
       var date = new Date();
-      return `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`
+      var seperator1 = "-";
+      var year = date.getFullYear();
+      var month = date.getMonth() + 1;
+      var strDate = date.getDate();
+      if (month >= 1 && month <= 9) {
+        month = "0" + month;
+      }
+      if (strDate >= 0 && strDate <= 9) {
+          strDate = "0" + strDate;
+      }
+      var currentdate = year + seperator1 + month + seperator1 + strDate;
+      return currentdate;
     },
     showYear() {
       var year = this.currentDay.split('-')[0]
@@ -1454,8 +1437,18 @@ export default {
   background-color: rgba(0, 0, 0, 0.05);
   color: #E8FEFF;
   font-size: 0.18rem;
+  margin-top:-25vh;
 }
+/* .device-detail-info-btn {
+  float: top;
+  height: 20%;
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0.05);
+  color: #E8FEFF;
+  font-size: 0.18rem;
 
+  margin-left:20%;
+} */
 .device-detail-info table {
   height: 90%;
   margin: 3px 4px;

@@ -22,7 +22,7 @@
             <el-button type="primary" @click="uploadFile"> 新增设备</el-button>
             <el-button type="primary" @click="createFile"> 新增设备种类</el-button>
             <div style="float:right;margin-right:20px;">
-                <el-input placeholder="请输入要查找的文件" v-model="searchFile" style="width:300px;margin-right:10px;"></el-input><el-button type="primary" @click="searchFileByName">搜索</el-button>
+                <el-input placeholder="请输入要查找的文件" v-model="searchFile" style="width:300px;margin-right:10px;"></el-input><el-button type="primary" @click="searchFileByName" >搜索</el-button><el-button type="primary" style="margin-left:5px;" @click="resetAll" >重置</el-button>
             </div>
           </div>
           <div style="margin:10px;margin-left:20px;">
@@ -524,9 +524,27 @@ export default {
         })
     },
     
+    resetAll() {
+      this.searchFile = ''
+      var data = {
+        siteId: localStorage.getItem('siteId')
+        
+      }
+      getAllDevice(data).then((res) => {
+            this.fileTable = res.data.rows
+            this.tableLength = res.data.total
+        })
+    },
 
     searchFileByName() {
-
+      var data = {
+        siteId: localStorage.getItem('siteId'),
+        name: this.searchFile
+      }
+      getAllDevice(data).then((res) => {
+            this.fileTable = res.data.rows
+            this.tableLength = res.data.total
+        })
     },
     
     createFile() {

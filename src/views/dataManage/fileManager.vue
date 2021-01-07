@@ -7,11 +7,6 @@
           <div class="dm-title">文件位置</div>
           <div class="type-list">
               <el-tree :data="treeData" :props="defaultProps" default-expand-all  @node-click="handleNodeClick"></el-tree>
-            <!-- <ul>
-              <li :class="{active: isActive1}" @click="nowActiveOne()"><i class="el-icon-document type-icon" />文档</li>
-              <li :class="{active: isActive2}" @click="nowActiveTwo()"><i class="el-icon-picture-outline type-icon" />图片</li>
-              <li :class="{active: isActive3}" @click="nowActiveThree()"><i class="el-icon-video-camera-solid type-icon" />视频</li>
-            </ul> -->
           </div>
         </div>
       </el-col>
@@ -22,7 +17,7 @@
             <el-button type="primary" @click="uploadFile"> 上传文件</el-button>
             <el-button type="primary" @click="createFile"> 新建文件夹</el-button>
             <div style="float:right;margin-right:20px;">
-                <el-input placeholder="请输入要查找的文件" v-model="searchFile" style="width:300px;margin-right:10px;"></el-input><el-button type="primary" @click="searchFileByName">搜索</el-button>
+                <el-input placeholder="请输入要查找的文件" v-model="searchFile" style="width:300px;margin-right:10px;"></el-input><el-button type="primary" @click="searchFileByName">搜索</el-button><el-button type="primary" style="margi-left:5px;" @click="resetAll">重置</el-button>
             </div>
           </div>
           <div style="margin:10px;margin-left:20px;">
@@ -257,7 +252,7 @@
 <script>
 import Treeselect from '@riophae/vue-treeselect'
 import '@riophae/vue-treeselect/dist/vue-treeselect.css'
-import {changeDoc, docType, findDoc, getSite, insertDoc, toPdfFile, listFolder, getFolderInfo, addFolder} from "../../api/dataManage";
+import {changeDoc, docType, findDoc, getSite, insertDoc, toPdfFile, listFolder, getFolderInfo, addFolder, getFolderContent } from "../../api/dataManage";
 
 export default {
   components: { Treeselect },
@@ -405,6 +400,7 @@ export default {
     submitUpload(formName) {
       this.$refs[formName].validate((valid) => {
         console.log("提交的信息", this.uploadInfo)
+        this.uploadInfo.userName = localStorage.getItem('userName')
         if(!valid) {
           insertDoc(this.uploadInfo).then(response => {
             if(response.data.code === 200) {
@@ -591,12 +587,7 @@ export default {
       this.currentInfo.lookUrl = response.data
     },
     refreshTable() {
-      findDoc({
-        constructionSiteId: this.constructionSiteId
-      }).then(response => {
-        this.alldoc = response.data
-        this.fileTable = this.alldoc.word
-      });
+      this.getFolderList(this.currentNodeId)
     },
     getConstructionSiteName(id) {
       getSite({
@@ -621,11 +612,22 @@ export default {
             this.treeData4 = res.data.data
             // console.log("初始ID", this.treeData[0].id)
             var id = this.treeData[0].id
+            this.currentNodeId = id
             this.getFolderList(id)
         })
     },
     searchFileByName() {
-
+      var params = {
+        fileName: this.searchFile,
+        siteId: localStorage.getItem('siteId')
+      }
+      getFolderContent(params).then((res) => {
+         this.fileTable = res.data.data
+      })
+    },
+    resetAll() {
+      this.searchFile = '',
+      this.getListFolder()
     },
     
     createFile() {

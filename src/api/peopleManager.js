@@ -100,6 +100,101 @@ export function putPeople(data) {
   })
 }
 
+export function exportExcel(data) {
+  return request({
+    url: `/people/info/export`,
+    method: 'get',
+    params: data
+  })
+}
+
+export function importExcel(id, file) {
+  return request({
+    url: `/people/info/importData?siteId=${id}`,
+    method: 'post',
+    data: file
+  })
+}
+
+export function profession(id) {
+  return request({
+    url: `/people/profession/list?siteId=${id}`,
+    method: 'get'
+  })
+}
+
+export function allPeopleName(data) {
+  return request({
+    url: `/attendance/people/people-name-tel`,
+    method: 'get',
+    params: data
+  })
+}
+
+export function addDaKaPeople(data) {
+  return request({
+    url: `/attendance/people/add`,
+    method: 'post',
+    data: data
+  })
+}
+
+export function exportKaoqinExcel(data) {
+  return request({
+    url: `/attendance/people/export`,
+    method: 'get',
+    params: data
+  })
+}
+
+export function broadsideInfo(id) {
+  return request({
+    url: `/people/info/broadside-info?siteId=${id}`,
+    method: 'get'
+  })
+}
+
+export function leaderList(id) {
+  return request({
+    url: `/attendance/people/list?constructionSiteId=${id}&leader=1`,
+    method: 'get'
+  })
+}
+
+export function searchDaka(data) {
+  return request({
+    url: `/attendance/people/list`,
+    method: 'get',
+    params:data
+  })
+}
+
+export function exportDaka(data) {
+  return request({
+    url: `/attendance/people/export`,
+    method: 'get',
+    params:data
+  })
+}
+
+export function importDaka(id, file) {
+  return request({
+    url: `/attendance/people/importData?siteId=${id}`,
+    method: 'post',
+    data: file
+  })
+}
+
+
+export function leaderCount(id) {
+  return request({
+    url: `/attendance/people/leader-attend-count?siteId=${id}`,
+    method: 'post'
+  })
+}
+
+
+
 
 
 
