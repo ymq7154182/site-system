@@ -96,33 +96,33 @@
                      
                       <li @mouseover="infohover1 = false" @mouseout="infohover1 = true" v-for="(item, index) in leadersList">
                         <div class="device-detail">
-                          <div v-if="item.userImg !== null" style="height:80%;">
+                          <div v-if="item.userImg !== ''" style="height:80%;">
                             <el-image v-show="infohover1"  :src="item.userImg" fit="fill" style="height: 100%; " />
                           </div>
                           <div v-else style="height:80%;">
                             <el-image v-show="infohover1"  :src="require('../../assets/peopleManager/wu.jpg')" fit="fill" style="height: 100%; " />
                           </div>
-                          <div v-show="!infohover1" class="device-detail-info" v-if="item.userImg !== null">
+                          <div v-show="!infohover1" class="device-detail-info" v-if="item.userImg !== ''">
                             <table>
                               <tr>
                                 <td>姓名:</td>
-                                <td>{{item.userSignName}}</td>
+                                <td>{{item.userName}}</td>
                               </tr>
                               <tr>
                                 <td>单位:</td>
-                                <td>{{item.deptName}}</td>
+                                <td>{{item.userSignCompanyName}}</td>
                               </tr>
                               <tr>
                                 <td>手机号:</td>
-                                <td>{{item.userSignPhone}}</td>
+                                <td>{{item.phone}}</td>
                               </tr>
                               <tr>
                                 <td>岗位:</td>
-                                <td>{{item.userSignKind}}</td>
+                                <td>{{item.userClass}}</td>
                               </tr>
                             </table>
                           </div>
-                          <div v-else style="height:80%;margin-top:-110%;" @click="updateInfo" v-show="!infohover1">
+                          <div v-else style="height:80%;margin-top:-110%;" @click="updateInfo(index, item)" v-show="!infohover1">
                             <el-image  :src="require('../../assets/peopleManager/upload.jpg')" fit="fill" style="height: 100%; " />
                           </div>
                           
@@ -130,13 +130,13 @@
                             <el-row>
                               <el-col :span="15">
                                 <div class="device-detail-span">
-                                  {{ item.userSignName }}&nbsp;
+                                  {{ item.userName }}&nbsp;
                                 </div>
                               </el-col>
                               <el-col :span="9">
-                                <el-tag type="success" effect="dark" v-if="item.userSignStatus === 0" style="margin-top: 1.6%; ">到岗</el-tag>
-                                <el-tag type="warninng" effect="dark" v-if="item.userSignStatus === 1" style="margin-top: 1.6%; ">未打卡</el-tag>
-                                <el-tag type="danger" effect="dark" v-if="item.userSignStatus === 2" style="margin-top: 1.6%; ">补打卡</el-tag>
+                                <el-tag type="success" effect="dark" v-if="item.status === 0" style="margin-top: 1.6%; ">到岗</el-tag>
+                                <el-tag type="warninng" effect="dark" v-if="item.status === 1" style="margin-top: 1.6%; ">未打卡</el-tag>
+                                <el-tag type="danger" effect="dark" v-if="item.status === 2" style="margin-top: 1.6%; ">补打卡</el-tag>
                               </el-col>
                             </el-row>
                           </div>
@@ -368,11 +368,61 @@
         </div>
       </el-col>
     </el-row>
+
+
+     <el-dialog title="修改信息" :visible.sync="open" width="800px" append-to-body class="addForm" @close="cancel">
+      <el-form ref="form" :model="form" :rules="rules" label-width="120px">
+        <el-row>
+          <el-col :span="12">
+            <el-form-item label="姓名" prop="userName">
+              <el-input v-model="form.userName" placeholder="请输入姓名" disabled="true"/>
+            </el-form-item>
+          </el-col>
+          <el-col :span="12">
+            <el-form-item label="单位主体"  prop="userSignCompanyName">
+              <el-input v-model="form.userSignCompanyName" placeholder="请输入单位主体"  disabled="true"/>
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <el-col :span="12">
+            <el-form-item label="手机号" prop="phone">
+              <el-input v-model="form.phone" placeholder="请输入手机号" disabled="true"/>
+            </el-form-item>
+          </el-col>
+          <el-col :span="12">
+            <el-form-item label="年龄"  prop="userAge">
+              <el-input v-model="form.userAge" placeholder="请输入年龄" disabled="true" />
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <el-row>
+          <el-col :span="12">
+              <el-form-item label="照片">
+                <el-upload
+                  class="upload-demo"
+                  action="http://121.36.106.18:36080/system/safe/uploadFile"
+                  :limit="1"
+                  :on-success="handleSuccess2"
+                  accept=".jpg,.png"
+                  style="width: 90%; "
+                >
+                  <el-button slot="trigger" size="small" type="primary" icon="el-icon-plus">选取文件</el-button>
+                  <div slot="tip" class="el-upload__tip">支持上传jpg/png格式图片</div>
+                </el-upload>
+              </el-form-item>
+          </el-col>
+        </el-row>
+      </el-form>
+      <div slot="footer" class="dialog-footer">
+        <el-button type="primary" @click="submitForm">确 定</el-button>
+        <el-button @click="cancel">取 消</el-button>
+      </div>
+    </el-dialog>
   </div>
 </template>
 
 <script>
-import { listDay, getCount, leaderList, leaderCount } from '@/api/peopleManager'
+import { listDay, getCount, leaderList, leaderCount, peopleInfo, putPeople } from '@/api/peopleManager'
 export default {
   name: "shouYe",
   components: {
@@ -380,6 +430,61 @@ export default {
   },
   data(){
     return{
+      open: false,
+      form: {
+        projectLeader: '',
+        userImg: '',
+        constructionSiteId: '',
+        id : '',
+        userName: '',
+        userClass : null,
+        teamId: null,
+        userPost : '',
+        userCode : '',
+        userVcode : '',
+        userSex : '',
+        phone : '',
+        userNationality : '',
+        userAge : '',
+        userEducation : '',
+        userSignDeptName : '',
+        userSignCompanyName : '',
+        checkImg : '',
+        leader :'',
+        flag :'',
+        userStatus: ''
+      },
+      rules: {
+        userName: [
+          { required: true, message: "名字不能为空", trigger: "blur" },
+        ],
+        userCode: [
+          { required: true, message: "身份证号不能为空", trigger: "blur" },
+        ],
+        userSex: [
+          { required: true, message: "性别不能为空", trigger: "blur" },
+        ],
+        phone: [
+          { required: true, message: "手机号码不能为空", trigger: "blur" },
+        ],
+        userClass: [
+          { required: true, message: "班组不能为空", trigger: "blur" },
+        ],
+        leader: [
+          { required: true, message: "班组负责人不能为空", trigger: "blur" },
+        ],
+        userPost: [
+          { required: true, message: "岗位/工种不能为空", trigger: "blur" },
+        ],
+        userStatus: [
+          { required: true, message: "状态不能为空", trigger: "blur" },
+        ],
+
+        flag: [
+          { required: true, message: "特种作业人员不能为空", trigger: "blur" },
+        ]
+        
+      },
       leaderTotalCount: '',
       attendLeaderCount: '',
       leadersList: [],
@@ -387,7 +492,7 @@ export default {
       deptId: '',
       currentDay: '',
       responsePeople: '',
-      responsePeopleList: ['施工方', '监理方', '建设方'],
+      responsePeopleList: ['全部', '施工单位', '监理单位', '建设单位'],
       showDayList: false,
       configTable: {
             header: ['考勤时间', '考勤人员', '工种', '考勤类型'],
@@ -488,20 +593,57 @@ export default {
     
   },
   methods:{
+    handleSuccess2(response, file, fileList) {
+      this.form.userImg = response.data
+     
+    },
+    cancel() {
+      this.open = false;
+    },
+    submitForm: function () {
+      this.$refs["form"].validate((valid) => {
+       
+        
+        if (valid) {
+           
+             putPeople(this.form).then((response) => {
+          
+              if (response.data.code === 200) {
+              
+                this.$message({
+                  type: 'success',
+                  message: '更新成功！'
+                })
+                this.open = false;
+                this.getLeaderList()
+                this.resetForm('form')
+              }
+            });
+           
+            
+          }
+       
+      });
+    },
     getLeaderCount() {
       var id = localStorage.getItem("siteId")
       leaderCount(id).then((res) => {
-        console.log("aaaaaasasasa", res.data)
+        // console.log("aaaaaasasasa", res.data)
         this.leaderTotalCount = res.data.data.leaderCount
         this.attendLeaderCount = res.data.data.attendLeaderCount
+        
       })
     },
-    updateInfo() {
-      alert(123)
+    updateInfo(index, item) {
+      // alert(index)
+      this.form = item
+      console.log("更新信息", this.form)
+      this.open = true
+
     },
     selectType(val) {
-      console.log("123")
-      console.log("类型改变",val)
+      // console.log("123")
+      // console.log("类型改变",val)
       if(val === "类型"){
         this.legendData = ['施工员', '质量员', '安全员', '标准员', '材料员','机械员', '劳务员', '资料员'],
         this.gongzhongData = [
@@ -559,7 +701,7 @@ export default {
     changeType(){
       let labelItem = document.querySelectorAll('.p_temperature')
       for (let j = 0; j < this.items.length; j++) {
-        console.log(this.items[j].temperature)
+        // console.log(this.items[j].temperature)
         if(this.items[j].temperature >= 37){
           labelItem[j].className = 'p_temperature changeRed'
           this.attentionNum++
@@ -1212,10 +1354,14 @@ export default {
     },
     getLeaderList() {
       var id = localStorage.getItem('siteId')
-      leaderList(id).then((res) => {
-        console.log("领导", res.data)
+      var params = {
+        constructionSiteId: id,
+        projectLeader: 1
+      }
+      peopleInfo(params).then((res) => {
+        // console.log("领导", res.data)
         this.leadersList = res.data.rows
-        console.log("qwert", this.leadersList)
+        // console.log("qwert", this.leadersList)
       })
     },
     getPeopleCount(date, id, type) {
@@ -1224,9 +1370,9 @@ export default {
         id: id,
         type: type
       }
-      console.log("count", params)
+      // console.log("count", params)
       getCount(params).then((res) => {
-        console.log("Counts", res.data.data)
+        // console.log("Counts", res.data.data)
         var obj = res.data.data
         this.responsePeopleTotal = []
         this.responsePeopleKq = []
@@ -1235,12 +1381,12 @@ export default {
         for(var i = 0; i < obj.length; i++) {
 
           var tmp = obj[i]
-          console.log("SSSSS", tmp)
+          // console.log("SSSSS", tmp)
           this.responsePeopleTotal.push(tmp.leaderTotal)
           this.responsePeopleKq.push(tmp.leaderAttend)
           this.servicePeopleTotal.push(tmp.labourTotal)
           this.servicePeopleKq.push(tmp.labourAttend)
-          console.log("DDDDD", this.responsePeopleTotal)
+          // console.log("DDDDD", this.responsePeopleTotal)
         }
         this.drawLine4()
       })
@@ -1274,8 +1420,22 @@ export default {
       
       this.getPeopleCount(this.currentDay, this.deptId, 3)
     },
-    selectResponsePeople() {
-      this.getPeopleCount(this.currentDay, this.deptId, 3)
+    selectResponsePeople(val) {
+      if(val !== '全部') {
+        var id = localStorage.getItem('siteId')
+        var params = {
+          constructionSiteId: id,
+          userSignCompanyName: val,
+          projectLeader: 1
+        }
+        peopleInfo(params).then((res) => {
+          this.leadersList = res.data.rows
+        })
+      } else {
+        this.getLeaderList()
+      }
+      
+  
     }
   }
 }

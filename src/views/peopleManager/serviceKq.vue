@@ -55,7 +55,7 @@
         </el-row>
         <div class="dataTable">
             <el-table v-loading="loading" 
-            :data="userList"  
+            :data="userList.slice((currentPage-1)*pagesize,currentPage*pagesize)"  
             style="font-size: 0.22rem;"
             stripe
             :header-row-style="{ color: '#409eff' }"
@@ -89,16 +89,16 @@
             </el-table-column>
             </el-table>
         </div>
-        <!-- <div class="block">
+        <div class="block">
           <el-pagination
             :current-page="currentPage"
-            :page-size="pageSize"
+            :page-size="pagesize"
             :total="userList.length"
             @current-change="handleCurrentChange"
             layout="total, prev, pager, next"
             background
           />
-        </div> -->
+        </div>
       </el-col>
     </el-row>
 
@@ -257,7 +257,7 @@
 
 <script>
 
-import { listDay, getLeftColumn, treeselect, allPeopleName, addDaKaPeople, exportKaoqinExcel, broadsideInfo, getTeamTree, searchDaka, exportDaka, importDaka } from '@/api/peopleManager'
+import { listDay, getLeftColumn, treeselect, allPeopleName, addDaKaPeople, exportKaoqinExcel, broadsideInfo, getTeamTree, searchDaka, exportDaka, importDaka, listByTime } from '@/api/peopleManager'
 import Treeselect from "@riophae/vue-treeselect";
 import "@riophae/vue-treeselect/dist/vue-treeselect.css";
 
@@ -268,6 +268,8 @@ export default {
   
   data() {
     return {
+      pagesize:10,
+      currentPage:1,
       fileList12: [],
       modelOpen: false,
       timeArry: [],
@@ -334,8 +336,7 @@ export default {
       
         // 查询参数
         queryParams: {
-            pageNum: 1,
-            pageSize: 10,
+            
             userSignPhone: '',
             userSignName: '',
             userSignType: '',
@@ -455,7 +456,10 @@ export default {
       })
     },
    
-
+   handleCurrentChange: function(currentPage){
+      this.currentPage = currentPage;
+      console.log(this.currentPage)  //点击第几页
+    },
    
     
     // 筛选节点
@@ -509,7 +513,7 @@ export default {
       this.queryParams.userSignClass = this.queryParamsUserclass
       
       this.loading = true;
-      searchDaka(this.queryParams).then(response => {
+      listByTime(this.queryParams).then(response => {
         this.userList = response.data.rows
         this.loading = false
         this.queryParamsUserclass = undefined

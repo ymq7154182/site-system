@@ -27,7 +27,7 @@
           </el-select>
           
           <span style="font-size: 14px;color: white;font-weight: 700;margin-right: 10px">班组</span>
-          <treeselect v-model="queryParams.userClass" :options="treeData" placeholder="请选择" :clearable="true" :show-count="true"  style="width: 250px;display:inline-block;vertical-align:bottom;" @select="getSelectList" />
+          <treeselect v-model="queryParams.teamId" :options="treeData" placeholder="请选择" :clearable="true" :show-count="true"  style="width: 250px;display:inline-block;vertical-align:bottom;" @select="getSelectList" />
           <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
           <el-button type="primary" icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>
         </div>
@@ -51,7 +51,7 @@
         </el-row>
         <div class="dataTable">
             <el-table v-loading="loading" 
-            :data="userList"  
+            :data="userList.slice((currentPage-1)*pagesize,currentPage*pagesize)"  
             style="font-size: 0.22rem;"
             stripe
             :header-row-style="{ color: '#409eff' }"
@@ -78,16 +78,17 @@
             </el-table-column>
             </el-table>
         </div>
-        <!-- <div class="block">
+        
+        <div class="block">
           <el-pagination
             :current-page="currentPage"
-            :page-size="pageSize"
-            :total="historyRecord.length"
+            :page-size="pagesize"
+            :total="userList.length"
             @current-change="handleCurrentChange"
             layout="total, prev, pager, next"
             background
           />
-        </div> -->
+        </div>
       </el-col>
     </el-row>
 
@@ -278,6 +279,8 @@ export default {
   },
   data() {
     return {
+      pagesize:10,
+      currentPage:1,
       queryParamsUserClass: undefined,
       fileList12: [],
       file: null,
@@ -351,7 +354,29 @@ export default {
       // 角色选项
       roleOptions: [],
       // 表单参数
-      form: {},
+      form: {
+        projectLeader: '',
+        userImg: '',
+        constructionSiteId: '',
+        id : '',
+        userName: '',
+        userClass : null,
+        teamId: null,
+        userPost : '',
+        userCode : '',
+        userVcode : '',
+        userSex : '',
+        phone : '',
+        userNationality : '',
+        userAge : '',
+        userEducation : '',
+        userSignDeptName : '',
+        userSignCompanyName : '',
+        checkImg : '',
+        leader :'',
+        flag :'',
+        userStatus: ''
+      },
       defaultProps: {
         children: "childs",
         label: "name",
@@ -376,7 +401,8 @@ export default {
         
         userName: '',
         userCode: '',
-        userClass: undefined,
+        userClass: null,
+        teamId: null,
         userPost: '',
         userStatus: '',
         constructionSiteId: localStorage.getItem("siteId")
@@ -462,6 +488,10 @@ export default {
     this.getBroadsideInfo()
   },
   methods: {
+    handleCurrentChange: function(currentPage){
+      this.currentPage = currentPage;
+      console.log(this.currentPage)  //点击第几页
+    },
      getBroadsideInfo() {
       var id = localStorage.getItem('siteId')
       broadsideInfo(id).then((res) => {
@@ -477,20 +507,21 @@ export default {
     },
     getSelectList(node, instanceId) {
       
-      this.queryParamsUserClass = node.label
-      
+      this.queryParamsUserclass = node.label
+      this.queryParams.userClass = node.label
+      this.queryParams.teamId = node.id
     },
     getSelectList2(node, instanceId) {
       // console.log("node", node)
       // console.log("instanceId", instanceId)
       this.banzuForm.userClass = node.label
-      
+      this.banzuForm.teamId = node.id
     },
     getSelectList3(node, instanceId) {
       // console.log("node", node)
       // console.log("instanceId", instanceId)
       this.form.userClass = node.label
-      
+      this.form.teamId = node.id
     },
     getBanzu() {
       var id = localStorage.getItem('siteId')
@@ -566,12 +597,10 @@ export default {
     // 取消按钮
     cancel() {
       this.open = false;
-      this.resetForm("form");
+      
+      
     },
-    cancelPeople() {
-      this.banzuOpen = false
-      this.resetForm2('banzuForm')
-    },
+    
     cancelModel() {
       this.modelOpen = false
     },
@@ -599,7 +628,8 @@ export default {
       this.form.constructionSiteId = ''
       this.form.id = ''
       this.form.userName = ''
-      this.form.userClass = undefined
+      this.form.userClass = null
+      this.form.teamId = null
       this.form.userPost = ''
       this.form.userCode = ''
       this.form.userVcode = ''
@@ -614,7 +644,7 @@ export default {
       this.form.leader = ''
       this.form.flag = ''
       this.form.userStatus = ''
-      this.form.teamId = ''
+     
       this.fileList = []
       
     },
@@ -624,7 +654,8 @@ export default {
       this.banzuForm.constructionSiteId = ''
       this.banzuForm.id = ''
       this.banzuForm.userName = ''
-      this.banzuForm.userClass = undefined
+      this.banzuForm.userClass = null
+      this.banzuForm.teamId = null
       this.banzuForm.userPost = ''
       this.banzuForm.userCode = ''
       this.banzuForm.userVcode = ''
@@ -651,7 +682,7 @@ export default {
       this.queryParams.constructionSiteId = localStorage.getItem("siteId")
       this.queryParams.userSignCompanyName = this.currentUserSignCompanyName
       this.queryParams.flag = 1
-      this.queryParams.userClass = this.queryParamsUserClass
+      
       
      
       this.loading = true;
@@ -659,7 +690,6 @@ export default {
         this.userList = response.data.rows;
         this.total = response.total;
         this.loading = false;
-        this.queryParamsUserclass = undefined
       });
     },
     /** 重置按钮操作 */
@@ -669,10 +699,10 @@ export default {
       this.queryParams.userName = '';
       this.queryParams.userCode = ''
       this.queryParams.userStatus = ''
-      this.queryParams.userClass = undefined;
+      this.queryParams.userClass = null;
       this.queryParams.userPost = ''
       this.queryParams.phone = ''
-      this.queryParams.teamId = undefined
+      this.queryParams.teamId = null
       this.queryParamsUserClass = ''
       this.getPeopleInfo();
     },
@@ -813,6 +843,7 @@ export default {
       this.title = '新增人员'
       this.form.id = ''
       this.form.constructionSiteId = localStorage.getItem('siteId')
+      this.resetForm("form");
     },
     handleSuccess(response, file, fileList) {
       this.banzuForm.userImg = response.data
