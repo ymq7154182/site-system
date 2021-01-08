@@ -120,7 +120,7 @@
             <el-input v-model="uploadInfo.mwo" style="width: 50%"></el-input>
           </el-form-item>
           <el-form-item label="日期" prop="collectDate">
-            <el-date-picker v-model="uploadInfo.collectDate" align="right" type="date" placeholder="选择日期"  value-format="yyyy-MM-dd" style="width: 50%; " />
+            <el-date-picker v-model="uploadInfo.collectDate" align="right" type="date" placeholder="选择日期"   style="width: 50%; " />
           </el-form-item>
           <el-form-item>
             <el-button type="primary" @click="submitUpload('uploadInfo')">提交</el-button>
@@ -267,6 +267,9 @@
     },
     methods: {
       getWater() {
+        this.power = []
+        this.water = []
+        this.waterDate = []
          var id = localStorage.getItem('siteId') 
          collect(id).then((res) => {
            

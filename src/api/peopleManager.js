@@ -154,10 +154,19 @@ export function broadsideInfo(id) {
   })
 }
 
-export function leaderList(id) {
+export function leaderList(id, data) {
   return request({
-    url: `/attendance/people/list?constructionSiteId=${id}&leader=1`,
-    method: 'get'
+    url: `/people/info/attend-list?constructionSiteId=${id}`,
+    method: 'get',
+    params: data
+  })
+}
+
+export function listByTime(data) {
+  return request({
+    url: `/attendance/people/listByTime`,
+    method: 'get',
+    params:data
   })
 }
 
