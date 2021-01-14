@@ -1,16 +1,16 @@
 <template>
   <div>
     <div style="padding: 0.11rem">
-      <el-tabs v-model="activeName" class="tabs" @click="handleTabs" addable>
+      <el-tabs v-model="activeName" class="tabs" @tab-click="handleTabs" addable>
         <el-tab-pane label="文件管理" name="first" class="label_top">
-          <file-manager></file-manager>
+          <file-manager v-if="fileFlag"></file-manager>
         </el-tab-pane>
         <el-tab-pane label="图纸管理(PDF)" name="second" class="label_top">
-          <pdf-manager></pdf-manager>
+          <pdf-manager v-if="pdfFlag"></pdf-manager>
         </el-tab-pane>
        
         <el-tab-pane label="模型管理(CAD+BIM)" name="third" class="label_top">
-          <cad-manager></cad-manager>
+          <cad-manager v-if="cadFlag"></cad-manager>
         </el-tab-pane>
        
 
@@ -37,6 +37,9 @@ export default {
   data(){
     return{
       activeName: 'first',
+      fileFlag: true,
+      pdfFlag: false,
+      cadFlag: false
     }
 
   },
@@ -47,6 +50,20 @@ export default {
   methods:{
     handleTabs(tab, event) {
        console.log(tab, event);
+       if(tab.name === 'first') {
+         this.fileFlag = true
+         this.pdfFlag = false
+         this.cadFlag = false
+         
+       } else if(tab.name === 'second') {
+         this.fileFlag = false
+         this.pdfFlag = true
+         this.cadFlag = false
+       } else {
+         this.fileFlag = false
+         this.pdfFlag = false
+         this.cadFlag = true
+       } 
     },
   }
 

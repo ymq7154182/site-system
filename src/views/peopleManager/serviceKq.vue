@@ -17,10 +17,14 @@
           <span style="font-size: 14px;color: white;font-weight: 700;margin-right: 10px">姓名</span><el-input v-model="queryParams.userSignName" placeholder="请输入姓名" clearable size="small" style="width: 120px;margin-right: 10px" />
           <span style="font-size: 14px;color: white;font-weight: 700;margin-right: 10px">手机号</span><el-input v-model="queryParams.userSignPhone" placeholder="请输入手机号" clearable size="small" style="width: 150px;margin-right: 10px"  />
           <span style="font-size: 14px;color: white;font-weight: 700;margin-right: 10px">班组</span>
-          <treeselect v-model="queryParams.userSignClass" :options="treeData" placeholder="请选择" :clearable="true" :show-count="true"  style="width: 250px;display:inline-block;vertical-align:bottom;" @select="getSelectList" />
+          <treeselect v-model="queryParams.teamId" :options="treeData" placeholder="请选择" :clearable="true" :show-count="true"  style="width: 250px;display:inline-block;vertical-align:bottom;" @select="getSelectList" />
           <span style="font-size: 14px;color: white;font-weight: 700;margin-right: 10px">类型</span>
           <el-select v-model="queryParams.userSignType" placeholder="请选择" clearable size="small" style="width: 120px;margin-right: 10px">
             <el-option v-for="dict in statusOptions" :key="dict.dictValue" :label="dict.dictLabel" :value="dict.dictValue" />
+          </el-select>
+          <span style="font-size: 14px;color: white;font-weight: 700;margin-right: 10px">状态</span>
+          <el-select v-model="queryParams.userSignStatus" placeholder="请选择" clearable size="small" style="width: 120px;margin-right: 10px">
+            <el-option v-for="dict in signOptions" :key="dict.dictValue" :label="dict.dictLabel" :value="dict.dictValue" />
           </el-select>
           <span style="font-size: 14px;color: white;font-weight: 700;margin-right: 10px">时间</span>
           <el-date-picker
@@ -70,7 +74,7 @@
             <el-table-column label="考勤时间" align="center" width="200" prop="userSignTime"  />
             <el-table-column label="类型" align="center" prop="userSignType" :show-overflow-tooltip="true" >
                 <template slot-scope="scope">
-                <el-tag  v-if="scope.row.userSignType===1" type="danger">签到</el-tag>
+                <el-tag  v-if="scope.row.userSignType===1" >签到</el-tag>
                 <el-tag  v-if="scope.row.userSignType===2" type="success">签出</el-tag>
                 </template>
             </el-table-column>
@@ -326,6 +330,20 @@ export default {
             dictLabel: '签出'
             }
         ],
+        signOptions: [
+          {
+            dictValue: 0,
+            dictLabel: '正常'
+            },
+            {
+            dictValue: 1,
+            dictLabel: '未打卡'
+            },
+            {
+            dictValue: 2,
+            dictLabel: '补打卡'
+            }
+        ],
       
         // 表单参数
         form: {},
@@ -400,6 +418,7 @@ export default {
     getSelectList(node, instanceId) {
       this.queryParamsUserclass = node.label
       this.queryParams.userSignClass = node.label
+      this.queryParams.teamId = node.id
     },
     getBanzu() {
       var id = localStorage.getItem('siteId')
@@ -444,7 +463,7 @@ export default {
       var params = {
         constructionSiteId: localStorage.getItem('siteId'),
       }
-      searchDaka(params).then((res) => {
+      listByTime(params).then((res) => {
           this.userList = res.data.rows
           this.loading = false
       })
@@ -508,7 +527,19 @@ export default {
       console.log("timeArry", this.timeArry)
       this.queryParams.startTime = this.timeArry[0]
       this.queryParams.endTime = this.timeArry[1]
-      this.queryParams.deptName = this.currentUserSignCompanyName
+      if(this.queryParams.startTime !== null && this.queryParams.startTime === this.queryParams.endTime) {
+        this.$message({
+          type: 'error',
+          message: '请选择一个范围时间段!'
+        })
+        return;
+      }
+   
+      if(this.currentUserSignCompanyName.length > 4) {
+        this.queryParams.deptName = ''
+      } else {
+        this.queryParams.deptName = this.currentUserSignCompanyName
+      }
       this.queryParams.constructionSiteId = localStorage.getItem("siteId")
       this.queryParams.userSignClass = this.queryParamsUserclass
       
@@ -521,7 +552,7 @@ export default {
     },
     /** 重置按钮操作 */
     resetQuery() {
-      
+      this.queryParams.userSignStatus = ''
       this.queryParams.userSignName = ''
       this.queryParams.userSignClass = ''
       this.queryParams.userSignPhone = ''

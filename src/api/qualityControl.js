@@ -149,3 +149,19 @@ export function getInfoByWarnType(data) {
     params: data
   })
 }
+
+export function educationList(data) {
+  return request({
+    url: '/SafetyAndQuality/education/list',
+    method: 'get',
+    params: data
+  })
+}
+
+export function addEducation(data) {
+  return request({
+    url: '/SafetyAndQuality/education',
+    method: 'post',
+    data: data
+  })
+}

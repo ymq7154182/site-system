@@ -297,3 +297,28 @@ export function devFolder(data) {
     data: data
   })
 }
+
+export function maintain(data) {
+  return request({
+    url: '/device/maintain/maintain',
+    method: 'get',
+    params: data
+  })
+}
+
+
+export function devName(data) {
+  return request({
+    url: '/device/maintain/dev-name',
+    method: 'get',
+    params: data
+  })
+}
+
+export function updateMaintain(data) {
+  return request({
+    url: '/device/maintain',
+    method: 'put',
+    data: data
+  })
+}

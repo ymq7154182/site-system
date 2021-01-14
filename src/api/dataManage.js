@@ -83,3 +83,10 @@ export function getFolderContent(data) {
   })
 }
 
+export function delFile(id) {
+  return request({
+    url: `/doc/deleteDocManagement?fileId=${id}`,
+    method: 'delete'
+  })
+}
+

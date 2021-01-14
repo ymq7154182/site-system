@@ -45,6 +45,7 @@
               <el-table-column label="操作" align="center"  fixed="right">
                 <template slot-scope="scope">
                   <el-button type="primary" size="mini"  @click="editInfo(scope.$index, scope.row)" >重命名</el-button>
+                  <el-button type="info" size="mini"  @click="delInfo(scope.$index, scope.row)" >删除</el-button>
                   <el-button type="success" size="mini"  @click="downloadFile(scope.row.url)" >下载</el-button>
                   <el-button type="danger" size="mini"  @click="moveFile(scope.$index, scope.row)" >移动</el-button>
                   <el-button type="warning" size="mini"  @click="downloadFile(scope.row.url)" >分享</el-button>
@@ -127,7 +128,7 @@
               <div slot="tip" class="el-upload__tip">支持上传avi/mp4格式视频</div>
             </el-upload>
             <div v-else>
-              <el-button size="small" type="primary" icon="el-icon-plus" disabled>选取文件</el-button>
+              <el-button size="small" type="primary" icon="el-icon-plus">选取文件</el-button>
               <span style="color: #f56c6c; ">&nbsp;请先选择文件类型</span>
             </div>
           </el-form-item>
@@ -252,7 +253,7 @@
 <script>
 import Treeselect from '@riophae/vue-treeselect'
 import '@riophae/vue-treeselect/dist/vue-treeselect.css'
-import {changeDoc, docType, findDoc, getSite, insertDoc, toPdfFile, listFolder, getFolderInfo, addFolder, getFolderContent } from "../../api/dataManage";
+import {changeDoc, docType, findDoc, getSite, insertDoc, toPdfFile, listFolder, getFolderInfo, addFolder, getFolderContent, delFile } from "../../api/dataManage";
 
 export default {
   components: { Treeselect },
@@ -475,6 +476,24 @@ export default {
       }]
       // this.currentIndex = index;
       this.showEdit = true;
+    },
+    delInfo(index, row) {
+      
+      delFile(row.id).then((res) => {
+        console.log("删除文件",res.data.code)
+        if(res.data.code === 200) {
+          this.$message({
+            type: 'success',
+            message: '删除成功！'
+          })
+          this.getListFolder()
+        } else {
+          this.$message({
+            type: 'success',
+            message: '删除失败！'
+          })
+        }
+      })
     },
     moveFile(index, row) {
       console.log("MoveInfo", row)

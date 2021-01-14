@@ -337,7 +337,11 @@
                     </ul>
                     
                   </div>
-                  <div style="color:white;font-size:16px; margin-left:50%;">共计{{leaderTotalCount}}人，今日出勤{{attendLeaderCount}}人</div>
+                  <div style="color:white;font-size:16px; margin-left:50%;" v-if="selectDeptName === '施工单位'">施工单位共计{{leaderTotalCount}}人，今日出勤{{attendLeaderCount}}人</div>
+                  <div style="color:white;font-size:16px; margin-left:50%;" v-else-if="selectDeptName === '建设单位'">建设单位共计{{leaderTotalCount}}人，今日出勤{{attendLeaderCount}}人</div>
+                  <div style="color:white;font-size:16px; margin-left:50%;" v-else-if="selectDeptName === '监理单位'">监理单位共计{{leaderTotalCount}}人，今日出勤{{attendLeaderCount}}人</div>
+                  <div style="color:white;font-size:16px; margin-left:50%;" v-else>共计{{leaderTotalCount}}人，今日出勤{{attendLeaderCount}}人</div>
+
                 </div>
               </el-col>
             </el-row>
@@ -422,7 +426,7 @@
 </template>
 
 <script>
-import { listDay, getCount, leaderList, leaderCount, peopleInfo, putPeople } from '@/api/peopleManager'
+import { listDay, getCount, leaderList, leaderCount, peopleInfo, putPeople, todayAttend, lastWeekCount, typeCount } from '@/api/peopleManager'
 export default {
   name: "shouYe",
   components: {
@@ -430,6 +434,10 @@ export default {
   },
   data(){
     return{
+      selectDeptName: '',
+      todayAttendTotal: 0,
+      todayAttend: 0,
+      todayAbsent: 0,
       open: false,
       form: {
         projectLeader: '',
@@ -589,10 +597,91 @@ export default {
     //this.changeType();
     this.getListDay()
     this.getLeaderList()
-    this.getLeaderCount()
-    
+   
+    this.getTodayAttend()
+    this.getLastWeek()
   },
   methods:{
+    
+    getLastWeek() {
+      var id = localStorage.getItem("siteId")
+       var lastWeek = []
+      lastWeekCount(id).then((res) => {
+        console.log("7天信息", res.data.data)
+        var arr = res.data.data
+       
+        var key = ''
+        var nameValue = []
+        var value = []
+        for(var i = 0; i < arr.length; i++) {
+          console.log("arr[i]", arr[i])
+          
+          for(var item in arr[i]) {
+            key = item
+            value = arr[i][item]
+          }
+          nameValue.push(key)
+          var obj = {
+            type: 'bar',
+            data: value,
+            coordinateSystem: 'polar',
+            name: key,
+            stack: 'a'
+          }
+          console.log("obj", obj)
+          lastWeek.push(obj)
+        }
+        console.log("lastWeek", lastWeek)
+        let myChart2 = this.$echarts.init(document.getElementById('chart2'))
+        myChart2.setOption({
+
+        color:['#FF9DB0','#FFC361', '#EED898', '#6ECB99', '#75FFFF','#6AC0F0', '#6495ED', '#98FB98'] ,
+
+        angleAxis: {
+          type: 'category',
+          data: ['周日','周一', '周二', '周三', '周四', '周五', '周六'],
+          axisLine: { //极坐标轴颜色
+            lineStyle:{
+              color:'#6ac0f0',
+            }
+          },
+
+        },
+        radiusAxis: { //极坐标的径向轴
+          //show:false,
+          axisLine: {
+            //show:false,
+            lineStyle:{
+              color:'#FFEDA7',
+            },
+
+          },
+          axisTick:{
+            lineStyle:{
+              color:'#6ac0f0',
+              //show:false,
+            }
+          }
+        },
+        polar: { //极坐标位置
+          center:['45%','50%'],
+        },
+        series: lastWeek,
+       
+        legend: {
+          itemWidth: 13 ,
+          show: true,
+          right:'right',
+          data: nameValue,
+          textStyle: {
+            fontSize:10,
+            color: '#6ac0f0' ,
+          },
+        },
+
+      });
+      })
+    },
     handleSuccess2(response, file, fileList) {
       this.form.userImg = response.data
      
@@ -625,14 +714,38 @@ export default {
        
       });
     },
+    getTodayAttend() {
+      var id = localStorage.getItem("siteId")
+      todayAttend(id).then((res) => {
+        console.log("今日出勤人数", res.data.data[0])
+        this.todayAttendTotal = res.data.data[0].total
+        this.todayAttend = res.data.data[0].attend
+        this.todayAbsent = res.data.data[0].absent
+      })
+    },
     getLeaderCount() {
       var id = localStorage.getItem("siteId")
-      leaderCount(id).then((res) => {
-        // console.log("aaaaaasasasa", res.data)
-        this.leaderTotalCount = res.data.data.leaderCount
-        this.attendLeaderCount = res.data.data.attendLeaderCount
-        
-      })
+      if(this.selectDeptName === '' || this.selectDeptName === '全部') {
+        leaderCount(id).then((res) => {
+          
+          this.leaderTotalCount = res.data.data.leaderCount
+          this.attendLeaderCount = res.data.data.attendLeaderCount
+          
+        })
+      } else {
+        var params = {
+          deptName: this.selectDeptName
+        }
+        leaderCount(id, params).then((res) => {
+          
+          this.leaderTotalCount = res.data.data.leaderCount
+          this.attendLeaderCount = res.data.data.attendLeaderCount
+          
+        })
+      }
+
+    
+      
     },
     updateInfo(index, item) {
       // alert(index)
@@ -641,53 +754,129 @@ export default {
       this.open = true
 
     },
+    
     selectType(val) {
-      // console.log("123")
-      // console.log("类型改变",val)
+      console.log("123")
+      console.log("类型改变",val)
       if(val === "类型"){
-        this.legendData = ['施工员', '质量员', '安全员', '标准员', '材料员','机械员', '劳务员', '资料员'],
-        this.gongzhongData = [
-          {value: 35, name: '施工员'},
-          {value: 18, name: '质量员'},
-          {value: 19, name: '安全员'},
-          {value: 7, name: '标准员'},
-          {value: 48, name: '材料员'},
-          {value: 52, name: '机械员'},
-          {value: 60, name: '劳务员'},
-          {value: 26, name: '资料员'}
-        ]
+        var params = {
+          siteId: localStorage.getItem('siteId'),
+          type: 1
+        }
+        typeCount(params).then((res) => {
+          var arr = res.data.data
+          var names = []
+          for(var i = 0; i< arr.length; i++) {
+            names.push(arr[i].name)
+          }
+          this.legendData = names
+          this.gongzhongData = arr
+          this.drawChart3Gongzhong()
+        })
+        
       } else if(val === "年龄") {
-        this.legendData = ['25-30', '30-35', '36-40', '41-45', '41-45','46-50','51-55'],
-        this.gongzhongData = [
-          {value: 3, name: '25-30'},
-          {value: 36, name: '30-35'},
-          {value: 46, name: '36-40'},
-          {value: 16, name: '41-45'},
-          {value: 8, name: '46-50'},
-          {value: 1, name: '51-55'}
-        ]
+         var params = {
+          siteId: localStorage.getItem('siteId'),
+          type: 2
+        }
+        typeCount(params).then((res) => {
+          var arr = res.data.data
+          var names = []
+          for(var i = 0; i< arr.length; i++) {
+            names.push(arr[i].name)
+          }
+           this.legendData = names
+           this.gongzhongData = arr
+           this.drawChart3Gongzhong()
+        })
+       
+        
       }else if(val === "学历") {
-        this.legendData = ['博士', '研究生', '本科', '专科','其他'],
-        this.gongzhongData = [
-          {value: 3, name: '博士'},
-          {value: 12, name: '研究生'},
-          {value: 30, name: '本科'},
-          {value: 5, name: '专科'},
-          {value: 60, name: '其他'}
-        ]
+        var params = {
+          siteId: localStorage.getItem('siteId'),
+          type: 3
+        }
+        typeCount(params).then((res) => {
+          var arr = res.data.data
+          var names = []
+          for(var i = 0; i< arr.length; i++) {
+            names.push(arr[i].name)
+          }
+          this.legendData = names
+          this.gongzhongData = arr
+          this.drawChart3Gongzhong()
+        })
+        
+        
       }else if(val === "民族") {
-        this.legendData = [ '回族', '满族', '土家族','壮族','苗族','汉族'],
-        this.gongzhongData = [
-
-          {value: 2, name: '回族'},
-          {value: 4, name: '满族'},
-          {value: 5, name: '土家族'},
-          {value: 1, name: '壮族'},
-          {value: 4, name: '苗族'},
-          {value: 56, name: '汉族'},
-        ]
+        var params = {
+          siteId: localStorage.getItem('siteId'),
+          type: 4
+        }
+        typeCount(params).then((res) => {
+          var arr = res.data.data
+          var names = []
+          for(var i = 0; i< arr.length; i++) {
+            names.push(arr[i].name)
+          }
+          this.legendData = names
+          this.gongzhongData = arr
+          this.drawChart3Gongzhong()
+        })
+        
+      
       }
-      this.drawLine()
+      
+       
+      
+    },
+    drawChart3Gongzhong() {
+      let myChart3 = this.$echarts.init(document.getElementById('chart3'))
+      myChart3.setOption({
+        color:['#FF9DB0','#FFC361', '#EED898', '#6ECB99', '#75FFFF','#6AC0F0'] ,
+
+        tooltip: {
+          trigger: 'item',
+          formatter: '{a} <br/>{b}: {c} ({d}%)'
+        },
+
+        legend: {
+          itemWidth: 15 ,
+          orient: 'vertical',
+          top:10,
+          left:10,
+
+          data: this.legendData,
+          textStyle: {
+            color: '#6ac0f0' ,
+            fontSize: 14,
+          },
+        },
+        series: [
+          {
+            name: '现场工种',
+            type: 'pie',
+            radius: ['60%', '80%'],
+            avoidLabelOverlap: false,
+            emphasis: {
+              label: {
+                show: true,
+                // fontSize: '15',
+                fontWeight: 'bold'
+              }
+            },
+            labelLine: {
+              // lineStyle: {
+              //   color: 'rgba(255, 255, 255, 0.3)'
+              // },
+              smooth: 0,
+              length: 10,
+              length2: 20
+            },
+            data: this.gongzhongData
+          }
+        ]
+      });
     },
     selectAge() {
       console.log("Type")
@@ -799,14 +988,15 @@ export default {
         ]
       })
     },
+    draw7Days() {},
     drawLine(){
       let myChart1 = this.$echarts.init(document.getElementById('chart1'))
-      let myChart2 = this.$echarts.init(document.getElementById('chart2'))
-      let myChart3 = this.$echarts.init(document.getElementById('chart3'))
+      // let myChart2 = this.$echarts.init(document.getElementById('chart2'))
+      // let myChart3 = this.$echarts.init(document.getElementById('chart3'))
      
-      var num1 = 130;
-      var num2 = 14;
-      var num3 = 116;
+      var num1 = this.todayAttendTotal;
+      var num2 = this.todayAbsent;
+      var num3 = this.todayAttend;
       myChart1.setOption({
 
         title: [{
@@ -821,7 +1011,7 @@ export default {
             textAlign: 'center',
           },
         },{
-          text: '14',
+          text: this.todayAbsent,
           left: '49%',
           top: '30%',
           textAlign: 'center',
@@ -843,7 +1033,7 @@ export default {
             textAlign: 'center',
           },
         },{
-          text: '130',
+          text: this.todayAttendTotal,
           left: '19.5%',
           top: '30%',
           textAlign: 'center',
@@ -865,7 +1055,7 @@ export default {
             textAlign: 'center',
           },
         },{
-          text: '116',
+          text: this.todayAttend,
           left: '79%',
           top: '30%',
           textAlign: 'center',
@@ -896,7 +1086,7 @@ export default {
             center: ['20%', '50%'],
             data: [{
               hoverOffset: 1,
-              value: num1,
+              value: this.todayAttendTotal,
               name: '虚拟主机',
               itemStyle: {
                 color: 'rgba(232, 85, 63, 1)',
@@ -926,7 +1116,7 @@ export default {
                     }
                   }
                 },
-                value: 130-num1,
+                value: 0,
                 hoverAnimation: false,
                 itemStyle: {
                   color: 'rgba(232, 85, 63, .2)',
@@ -950,7 +1140,7 @@ export default {
                   }
                 }
               },
-              value: 100 - num2,
+              value: this.todayAttendTotal ,
               hoverAnimation: false,
               itemStyle: {
                 color: 'rgba(63, 66, 73, .3)',
@@ -973,7 +1163,7 @@ export default {
                   }
                 }
               },
-              value: 100 - num3,
+              value: this.todayAttendTotal,
               hoverAnimation: false,
               itemStyle: {
                 color: 'rgba(63, 66, 73, .3)',
@@ -987,7 +1177,7 @@ export default {
             center: ['50%', '50%'],
             data: [{
               hoverOffset: 1,
-              value: num2,
+              value: this.todayAbsent,
               name: '虚拟主机',
               itemStyle: {
                 color: 'rgba(251, 200, 79, 1)',
@@ -1017,7 +1207,7 @@ export default {
                     }
                   }
                 },
-                value: 130 - num2,
+                value: this.todayAttendTotal - this.todayAbsent,
                 hoverAnimation: false,
                 itemStyle: {
                   color: 'rgba(251, 200, 79, .2)',
@@ -1041,7 +1231,7 @@ export default {
                   }
                 }
               },
-              value: 100 - num1,
+              value: 100 - this.todayAttendTotal,
               hoverAnimation: false,
               itemStyle: {
                 color: 'rgba(63, 66, 73, .3)',
@@ -1064,7 +1254,7 @@ export default {
                   }
                 }
               },
-              value: 100 - num1,
+              value: 100 - this.todayAttendTotal,
               hoverAnimation: false,
               itemStyle: {
                 color: 'rgba(63, 66, 73, .3)',
@@ -1078,7 +1268,7 @@ export default {
             center: ['80%', '50%'],
             data: [{
               hoverOffset: 1,
-              value: num3,
+              value: this.todayAttend,
               name: '虚拟主机',
               itemStyle: {
                 color: 'rgb(106,192,240)',
@@ -1108,7 +1298,7 @@ export default {
                     }
                   }
                 },
-                value: 130 - num3,
+                value: this.todayAttendTotal - this.todayAttend,
                 hoverAnimation: false,
                 itemStyle: {
                   color: 'rgba(251, 200, 79, .2)',
@@ -1132,7 +1322,7 @@ export default {
                   }
                 }
               },
-              value: 100 - num1,
+              value: 100 - this.todayAttendTotal,
               hoverAnimation: false,
               itemStyle: {
                 color: 'rgba(63, 66, 73, .3)',
@@ -1155,7 +1345,7 @@ export default {
                   }
                 }
               },
-              value: 100 - num1,
+              value: 100 - this.todayAttendTotal,
               hoverAnimation: false,
               itemStyle: {
                 color: 'rgba(63, 66, 73, .3)',
@@ -1165,151 +1355,104 @@ export default {
         ]
 
       });
-      myChart2.setOption({
+      // myChart2.setOption({
 
-        color:['#FF9DB0','#FFC361', '#EED898', '#6ECB99', '#75FFFF','#6AC0F0', '#6495ED', '#98FB98'] ,
+      //   color:['#FF9DB0','#FFC361', '#EED898', '#6ECB99', '#75FFFF','#6AC0F0', '#6495ED', '#98FB98'] ,
 
-        angleAxis: {
-          type: 'category',
-          data: ['周一', '周二', '周三', '周四', '周五', '周六', '周日'],
-          axisLine: { //极坐标轴颜色
-            lineStyle:{
-              color:'#6ac0f0',
-            }
-          },
+      //   angleAxis: {
+      //     type: 'category',
+      //     data: ['周一', '周二', '周三', '周四', '周五', '周六', '周日'],
+      //     axisLine: { //极坐标轴颜色
+      //       lineStyle:{
+      //         color:'#6ac0f0',
+      //       }
+      //     },
 
-        },
-        radiusAxis: { //极坐标的径向轴
-          //show:false,
-          axisLine: {
-            //show:false,
-            lineStyle:{
-              color:'#FFEDA7',
-            },
+      //   },
+      //   radiusAxis: { //极坐标的径向轴
+      //     //show:false,
+      //     axisLine: {
+      //       //show:false,
+      //       lineStyle:{
+      //         color:'#FFEDA7',
+      //       },
 
-          },
-          axisTick:{
-            lineStyle:{
-              color:'#6ac0f0',
-              //show:false,
-            }
-          }
-        },
-        polar: { //极坐标位置
-          center:['45%','50%'],
-        },
-        series: [{
-          type: 'bar',
-          data: [1, 2, 3, 4, 3, 5, 1],
-          coordinateSystem: 'polar',
-          name: '施工员',
-          stack: 'a'
-        }, {
-          type: 'bar',
-          data: [2, 4, 9, 1, 0, 2, 1],
-          coordinateSystem: 'polar',
-          name: '质量员',
-          stack: 'a'
-        },{
-          type: 'bar',
-          data: [2, 3, 6, 6, 3, 2, 1],
-          coordinateSystem: 'polar',
-          name: '安全员',
-          stack: 'a'
-        },{
-          type: 'bar',
-          data: [2, 4, 6, 1, 1, 5, 1],
-          coordinateSystem: 'polar',
-          name: '标准员',
-          stack: 'a'
-        },{
-          type: 'bar',
-          data: [2, 8, 6, 8, 3, 2, 3],
-          coordinateSystem: 'polar',
-          name: '材料员',
-          stack: 'a'
-        }, {
-          type: 'bar',
-          data: [1, 2, 7, 4, 4, 2, 8],
-          coordinateSystem: 'polar',
-          name: '机械员',
-          stack: 'a'
-        },{
-          type: 'bar',
-          data: [1, 3, 5, 4, 2, 6, 8],
-          coordinateSystem: 'polar',
-          name: '劳务员',
-          stack: 'a'
-        },{
-          type: 'bar',
-          data: [4, 2, 5, 6, 2, 1, 7],
-          coordinateSystem: 'polar',
-          name: '资料员',
-          stack: 'a'
-        }],
-        // radar: {
-        //   center: ['0', '40%'],
-        //   textStyle: {
-        //     color: '#6ac0f0' ,
-        //   },
-        // },
-        legend: {
-          itemWidth: 13 ,
-          show: true,
-          right:'right',
-          data: ['施工员', '质量员', '安全员','标准员','材料员','机械员', '劳务员', '资料员'],
-          textStyle: {
-            fontSize:10,
-            color: '#6ac0f0' ,
-          },
-        },
+      //     },
+      //     axisTick:{
+      //       lineStyle:{
+      //         color:'#6ac0f0',
+      //         //show:false,
+      //       }
+      //     }
+      //   },
+      //   polar: { //极坐标位置
+      //     center:['45%','50%'],
+      //   },
+      //   series: [{
+      //     type: 'bar',
+      //     data: [1, 2, 3, 4, 3, 5, 1],
+      //     coordinateSystem: 'polar',
+      //     name: '施工员',
+      //     stack: 'a'
+      //   }, ],
+       
+      //   legend: {
+      //     itemWidth: 13 ,
+      //     show: true,
+      //     right:'right',
+      //     data: ['施工员', '质量员', '安全员','标准员','材料员','机械员', '劳务员', '资料员'],
+      //     textStyle: {
+      //       fontSize:10,
+      //       color: '#6ac0f0' ,
+      //     },
+      //   },
 
-      });
-      myChart3.setOption({
-        color:['#FF9DB0','#FFC361', '#EED898', '#6ECB99', '#75FFFF','#6AC0F0'] ,
+      // });
+      // myChart3.setOption({
+      //   color:['#FF9DB0','#FFC361', '#EED898', '#6ECB99', '#75FFFF','#6AC0F0'] ,
 
-        tooltip: {
-          trigger: 'item',
-          formatter: '{a} <br/>{b}: {c} ({d}%)'
-        },
+      //   tooltip: {
+      //     trigger: 'item',
+      //     formatter: '{a} <br/>{b}: {c} ({d}%)'
+      //   },
 
-        legend: {
-          itemWidth: 15 ,
-          orient: 'vertical',
-          top:10,
-          left:10,
+      //   legend: {
+      //     itemWidth: 15 ,
+      //     orient: 'vertical',
+      //     top:10,
+      //     left:10,
 
-          data: this.legendData,
-          textStyle: {
-            color: '#6ac0f0' ,
-            fontSize: 14,
-          },
-        },
-        series: [
-          {
-            name: '现场工种',
-            type: 'pie',
-            radius: ['60%', '80%'],
-            avoidLabelOverlap: false,
-            emphasis: {
-              label: {
-                show: true,
-                // fontSize: '15',
-                fontWeight: 'bold'
-              }
-            },
-            labelLine: {
-              // lineStyle: {
-              //   color: 'rgba(255, 255, 255, 0.3)'
-              // },
-              smooth: 0,
-              length: 10,
-              length2: 20
-            },
-            data: this.gongzhongData
-          }
-        ]
-      });
+      //     data: this.legendData,
+      //     textStyle: {
+      //       color: '#6ac0f0' ,
+      //       fontSize: 14,
+      //     },
+      //   },
+      //   series: [
+      //     {
+      //       name: '现场工种',
+      //       type: 'pie',
+      //       radius: ['60%', '80%'],
+      //       avoidLabelOverlap: false,
+      //       emphasis: {
+      //         label: {
+      //           show: true,
+      //           // fontSize: '15',
+      //           fontWeight: 'bold'
+      //         }
+      //       },
+      //       labelLine: {
+      //         // lineStyle: {
+      //         //   color: 'rgba(255, 255, 255, 0.3)'
+      //         // },
+      //         smooth: 0,
+      //         length: 10,
+      //         length2: 20
+      //       },
+      //       data: this.gongzhongData
+      //     }
+      //   ]
+      // });
 
       
       
@@ -1363,6 +1506,7 @@ export default {
         this.leadersList = res.data.rows
         // console.log("qwert", this.leadersList)
       })
+      this.getLeaderCount()
     },
     getPeopleCount(date, id, type) {
       var params = {
@@ -1421,6 +1565,7 @@ export default {
       this.getPeopleCount(this.currentDay, this.deptId, 3)
     },
     selectResponsePeople(val) {
+      this.selectDeptName = val
       if(val !== '全部') {
         var id = localStorage.getItem('siteId')
         var params = {
@@ -1431,6 +1576,7 @@ export default {
         peopleInfo(params).then((res) => {
           this.leadersList = res.data.rows
         })
+        this.getLeaderCount()
       } else {
         this.getLeaderList()
       }
