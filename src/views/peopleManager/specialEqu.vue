@@ -217,6 +217,12 @@
                   <div slot="tip" class="el-upload__tip">支持上传jpg/png格式图片</div>
                 </el-upload>
               </el-form-item>
+              <el-image
+                style="margin-left:30px;"
+                v-if="title === '修改人员'"
+                :src="form.userImg"
+                :fit="fit">
+              </el-image>
               
             
           </el-col>
@@ -680,7 +686,11 @@ export default {
     /** 搜索按钮操作 */
     handleQuery() {
       this.queryParams.constructionSiteId = localStorage.getItem("siteId")
-      this.queryParams.userSignCompanyName = this.currentUserSignCompanyName
+      if(this.currentUserSignCompanyName.length > 4) {
+        this.queryParams.userSignCompanyName = ''
+      } else {
+        this.queryParams.userSignCompanyName = this.currentUserSignCompanyName
+      }
       this.queryParams.flag = 1
       
       
@@ -704,6 +714,7 @@ export default {
       this.queryParams.phone = ''
       this.queryParams.teamId = null
       this.queryParamsUserClass = ''
+      this.currentUserSignCompanyName = ''
       this.getPeopleInfo();
     },
     // 多选框选中数据
@@ -720,6 +731,7 @@ export default {
     
     /** 修改按钮操作 */
     handleUpdate(row) {
+      console.log("AAA", row)
       this.form = row
       this.open = true;
       this.title = "修改人员";

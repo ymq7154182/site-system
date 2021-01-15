@@ -105,7 +105,10 @@
               <div class="box-txt">
                 质安教育培训
               </div>
-              <div>
+              <div class="addBtn">
+                <el-button type="primary" size="mini" @click="addResume">新增</el-button>
+              </div>
+              <div style="clear:both;margin-top:-10px;">
                 <el-row>
                   <el-col :span="6">
                     <div id="mychart41"></div>
@@ -133,16 +136,66 @@
           </el-col>
         </el-row>
       </div>
+
+      <el-dialog :visible.sync="showAdd" title="更新数据" width="40%">
+      <div >
+        <el-form :model="uploadInfo" :rules="rules" ref="uploadInfo" label-width="1.5rem">
+          <el-form-item label="举办次数" prop="holdCount">
+            <el-input v-model="uploadInfo.holdCount" type="number" style="width: 50%"></el-input>
+          </el-form-item>
+          <el-form-item label="参与人数" prop="joinCount">
+            <el-input v-model="uploadInfo.joinCount" type="number" style="width: 50%"></el-input>
+          </el-form-item>
+          <el-form-item label="视频数目" prop="videoCount">
+            <el-input v-model="uploadInfo.videoCount" type="number" style="width: 50%"></el-input>
+          </el-form-item>
+          <el-form-item label="文件数目" prop="fileCount">
+            <el-input v-model="uploadInfo.fileCount" type="number" style="width: 50%"></el-input>
+          </el-form-item>
+         
+            <el-button type="primary" @click="submitUpload('uploadInfo')">提交</el-button>
+            <el-button @click="resetForm('uploadInfo')">重置</el-button>
+          </el-form-item>
+        </el-form>
+      </div>
+    </el-dialog>
     </div>
 </template>
 
 <script>
   import echarts from 'echarts';
-  import {getSysProData,getSafetyRecord,getDanger,getRectification,getSafetyCheck,getProblem,getSafetyTrouble} from '@/api/qualityControl';
+  import {getSysProData,getSafetyRecord,getDanger,getRectification,getSafetyCheck,getProblem,getSafetyTrouble, educationList, addEducation} from '@/api/qualityControl';
     export default {
         name: "index",
       data() {
         return {
+          rules: {
+            holdCount: [
+              { required: true, message: '请输入举办次数', trigger: 'blur' }
+            ],
+            joinCount: [
+              { required: true, message: '请输入参加次数', trigger: 'change' }
+            ],
+            fileCount: [
+              { required: true, message: '请输入文件数目', trigger: 'change' } 
+            ],
+            videoCount: [
+              { required: true, message: '请输入视频数目', trigger: 'change' } 
+            ]
+          },
+          uploadInfo: {
+            holdCount: undefined,
+            joinCount: undefined,
+            videoCount: undefined,
+            fileCount: undefined,
+            siteId: '',
+            id: ''
+          },
+          showAdd: false,
+          videoCount: 0,
+          fileCount: 0,
+          holdCount: 0,
+          joinCount: 0,
           quaFlag1: true,
           quaFlag2: true,
           quaFlag3: true,
@@ -272,10 +325,7 @@
         this.inchart24()
         this.inchart32()
         this.inchart12()
-        this.inchart41()
-        this.inchart42()
-        this.inchart43()
-        this.inchart44()
+        
         setInterval(function () {
           _this.draw()
         },100)
@@ -302,9 +352,59 @@
         this.chart24Res()
         this.chart13Res()
         this.chart32Res()
-
+        this.getEducationList()
       },
       methods: {
+        addResume() {
+          this.showAdd = true
+          this.uploadInfo.siteId = localStorage.getItem('siteId')
+        },
+        resetForm(formName) {
+          this.$refs[formName].resetFields();
+          this.uploadInfo.holdCount = undefined
+          this.uploadInfo.joinCount = undefined
+          this.uploadInfo.fileCount = undefined
+          this.uploadInfo.videoCount = undefined
+        },
+        submitUpload(formName) {
+          this.$refs[formName].validate((valid) => {
+            console.log("提交的信息", this.uploadInfo)
+            if(valid) {
+              addEducation(this.uploadInfo).then(response => {
+                if(response.data.code === 200) {
+                  this.$message({
+                    type: 'success',
+                    message: '上传数据成功！'
+                  })
+                  this.showAdd = false;
+                  this.resetForm('uploadInfo')
+                  this.getEducationList()
+                } else {
+                  this.$message.error(response.data.msg)
+                }
+              })
+            } else {
+              this.$message.error('上传失败')
+              return false
+            }
+          });
+        },
+        getEducationList() {
+          var params = {
+            siteId: localStorage.getItem('siteId')
+          }
+          educationList(params).then((res) => {
+           console.log("教育list", res.data)
+            this.joinCount = res.data.rows[0].joinCount
+            this.videoCount = res.data.rows[0].videoCount
+            this.fileCount = res.data.rows[0].fileCount
+            this.holdCount = res.data.rows[0].holdCount
+            this.inchart41(this.holdCount)
+            this.inchart42(this.joinCount)
+            this.inchart43(this.videoCount)
+            this.inchart44(this.fileCount)
+          })
+        },
         changeColor(){
 
         },
@@ -2601,11 +2701,11 @@
           }
           this.myChart32.setOption(option)
         },
-        inchart41() {
+        inchart41(requestValue) {
           this.myChart41 = this.$echarts.init(document.getElementById('mychart41'));
           var _this = this
           //角度，用来做简单的动画效果的
-          let value = 55;
+          let value = requestValue;
           var option = {
             // backgroundColor:"#061740",
             title: [{
@@ -2894,11 +2994,11 @@
           }
           _this.option4 = option
         },
-        inchart42() {
+        inchart42(requestValue) {
           this.myChart42 = this.$echarts.init(document.getElementById('mychart42'));
           var _this = this
           //角度，用来做简单的动画效果的
-          let value = 67;
+          let value = requestValue;
           var option = {
             // backgroundColor:"#061740",
             title: [{
@@ -3187,11 +3287,11 @@
           }
           _this.option5 = option
         },
-        inchart43() {
+        inchart43(requestValue) {
           this.myChart43 = this.$echarts.init(document.getElementById('mychart43'));
           var _this = this
           //角度，用来做简单的动画效果的
-          let value = 45;
+          let value = requestValue;
           var option = {
             // backgroundColor:"#061740",
             title: [{
@@ -3480,11 +3580,11 @@
           }
           _this.option6 = option
         },
-        inchart44() {
+        inchart44(requestValue) {
           this.myChart44 = this.$echarts.init(document.getElementById('mychart44'));
           var _this = this
           //角度，用来做简单的动画效果的
-          let value = 35;
+          let value = requestValue;
           var option = {
             // backgroundColor:"#061740",
             title: [{
@@ -4661,5 +4761,10 @@
     left: 40%;
     bottom: 10px;
     letter-spacing: 2px;
+  }
+  .addBtn {
+    float: right;
+    margin-top:15px; 
+    margin-right:15px;
   }
 </style>

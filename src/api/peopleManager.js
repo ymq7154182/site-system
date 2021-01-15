@@ -194,14 +194,36 @@ export function importDaka(id, file) {
   })
 }
 
-
-export function leaderCount(id) {
+export function leaderCount(id, data) {
   return request({
     url: `/attendance/people/leader-attend-count?siteId=${id}`,
-    method: 'post'
+    method: 'post',
+    params: data
   })
 }
 
+
+export function todayAttend(id) {
+  return request({
+    url: `/attendance/people/today-attend?siteId=${id}`,
+    method: 'get'
+  })
+}
+
+export function lastWeekCount(id) {
+  return request({
+    url: `/attendance/people/lastWeek-count?siteId=${id}`,
+    method: 'get'
+  })
+}
+
+export function typeCount(data) {
+  return request({
+    url: `/people/info/type-count`,
+    method: 'get',
+    params: data
+  })
+}
 
 
 

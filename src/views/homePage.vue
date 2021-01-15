@@ -58,7 +58,7 @@
                   <span style="color: #9ddfef;height: 0.33rem;line-height: 0.33rem">项目登记人数</span>
                 </div>
                 <div style="text-align: center;height: 0.44rem">
-                  <span style="color: #ffc000;font-size: 0.3rem">4522</span>
+                  <span style="color: #ffc000;font-size: 0.3rem">{{dengjiPeople}}</span>
                 </div>
               </div>
               <div class="peple_item">
@@ -66,7 +66,7 @@
                   <span style="color: #9ddfef;height: 0.33rem;line-height: 0.33rem">今日出勤人数</span>
                 </div>
                 <div style="text-align: center;height: 0.44rem">
-                  <span style="color: #ffc000;font-size: 0.3rem">4102</span>
+                  <span style="color: #ffc000;font-size: 0.3rem">{{attendPeople}}</span>
                 </div>
               </div>
             </div>
@@ -403,6 +403,7 @@
 <script>
   import {getDeferReasons, getDeferInfo, submitDeferInfo, getOneSchedules, getTwoSchedules, finishSmallSchedule, getErrorInfo} from '@/api/scheduleManage'
   import { getSite } from '@/api/dataManage'
+  import { peopleInfo, typeCount } from '@/api/peopleManager'
   import { getGongDiNameById,screenName } from '@/api/projectOverview'
   import { getSafeOrQualityChartData,getProjectDetails,getProjectTimeInformation } from '@/api/projectOverview.js'
   import axios from 'axios'
@@ -415,6 +416,7 @@
       mounted() {
         this.$store.dispatch('changeMsg', '项目概览')
         // this.getUrl()
+        this.getPeopleTotal()
         this.getOneSchedules() // 获取所有一级进度
         this.getDeferReasons() // 获取滞缓原因
 
@@ -448,6 +450,8 @@
       },
       data(){
           return{
+            dengjiPeople: 0,
+            attendPeople: 0,
             safeFlag: true,
             quaFlag: true,
             showComplete: false, // 选择完成时间框
@@ -503,6 +507,22 @@
           }
       },
       methods:{
+        getPeopleTotal() {
+          var params = {
+            constructionSiteId: localStorage.getItem("siteId")
+          }
+          peopleInfo(params).then((res) => {
+            this.dengjiPeople = res.data.total
+          })
+        },
+        getAttendPeople() {
+          var params = {
+            constructionSiteId: localStorage.getItem('siteId')
+          }
+          listByTime(params).then((res) => {
+            this.attendPeople = res.data.total
+          })
+        },
         requestData: function(){
           this.dialogVisible = false
           console.log('重新获取信息')
@@ -1326,104 +1346,57 @@
             this.myChart22.setOption(option)
           },200)
         },
-        inchart21() {
-          this.myChart21 = this.$echarts.init(document.getElementById('mychart21'));
-          var option = {
-            // backgroundColor: "#0f375f",
-            // legend: {
-            //   orient: 'vertical',
-            //   top: "bottom",
-            //   right: "5%",
-            //   data: ['安全管理', '文明施工', '脚手架', '基坑支护安全', '模板工程安全', '施工用电', '物料提升机'],
-            //   textStyle: {
-            //     color: "#fff",
-            //     fontSize: 16
-            //   }
-            // },
+        drawChart3Gongzhong() {
+          let myChart3 = this.$echarts.init(document.getElementById('mychart21'))
+          myChart3.setOption({
+            color:['#FF9DB0','#FFC361', '#EED898', '#6ECB99', '#75FFFF','#6AC0F0'] ,
+
             tooltip: {
               trigger: 'item',
-              formatter: '{b} : {c} ({d}%)'
+              formatter: '{a} <br/>{b}: {c} ({d}%)'
             },
-            series: [{
-              name: '人员管理',
-              type: 'pie',
-              radius: ['30%', '60%'],
-              center: ['50%', '50%'],
-              roseType: 'radius',
-              tooltip: {
-                trigger: 'item',
-                formatter: "{a} <br/>{b}: {c} ({d}%)"
-              },
-              label: {
-                // show: true,
-                normal: {
-                  position: 'outside',
-                  fontSize: 14
-                }
-              },
-              labelLine: {
-                length: 1,
-                length2: 20,
-                smooth: true
-              },
-              data: [{
-                value: 5,
-                name: '监督员',
-                itemStyle: {
-                  color: "#FEDF00",
-                  borderColor: "#FEDF00",
-                  borderWidth: 3
-                }
-              },
-                {
-                  value: 5,
-                  name: '项目负责人',
-                  itemStyle: {
-                    color: "#01FFFF",
-                    borderColor: "#01FFFF",
-                    borderWidth: 3
+
+            
+            series: [
+              {
+                name: '现场工种',
+                type: 'pie',
+                radius: ['55%', '62%'],
+                avoidLabelOverlap: false,
+                emphasis: {
+                  label: {
+                    show: true,
+                    // fontSize: '15',
+                    fontWeight: 'bold'
                   }
                 },
-                {
-                  value: 4,
-                  name: '材料员',
-                  itemStyle: {
-                    color: "#3769F4",
-                    borderColor: "#3769F4",
-                    borderWidth: 3
-                  }
+                labelLine: {
+                  
+                  smooth: 0,
+                  length: 8,
+                  length2: 12
                 },
-                {
-                  value: 80,
-                  name: '施工员',
-                  itemStyle: {
-                    color: "#6978F2",
-                    borderColor: "#6978F2",
-                    borderWidth: 3
-                  }
-                },
-                {
-                  value: 10,
-                  name: '质量员',
-                  itemStyle: {
-                    color: "#55D5B5",
-                    borderColor: "#55D5B5",
-                    borderWidth: 3
-                  }
-                },
-                {
-                  value: 6,
-                  name: '安全员',
-                  itemStyle: {
-                    color: "#F87D7C",
-                    borderColor: "#F87D7C",
-                    borderWidth: 3
-                  }
-                }
-              ]
-            }]
+                data: this.gongzhongData
+              }
+            ]
+          });
+        },
+        inchart21() {
+          var params = {
+            siteId: localStorage.getItem('siteId'),
+            type: 1
           }
-          this.myChart21.setOption(option)
+          typeCount(params).then((res) => {
+            var arr = res.data.data
+            var names = []
+            for(var i = 0; i< arr.length; i++) {
+              names.push(arr[i].name)
+            }
+            this.legendData = names
+            this.gongzhongData = arr
+            this.drawChart3Gongzhong()
+          })
+         
         },
         chart21Res() {
           let _this = this;

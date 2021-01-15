@@ -231,7 +231,13 @@
                   <div slot="tip" class="el-upload__tip">支持上传jpg/png格式图片</div>
                 </el-upload>
               </el-form-item>
-              
+              <el-image
+                style="margin-left:30px;"
+                v-if="showPic === true"
+                :src="form.userImg"
+                :fit="fit">
+              </el-image>
+
             
           </el-col>
         </el-row>
@@ -449,6 +455,7 @@ export default {
   },
   data() {
     return {
+      showPic: false,
       pagesize:10,
       currentPage:1,
       queryParamsUserclass: '',
@@ -857,7 +864,12 @@ export default {
     handleQuery() {
       
       this.queryParams.constructionSiteId = localStorage.getItem("siteId")
-      this.queryParams.userSignCompanyName = this.currentUserSignCompanyName
+      if(this.currentUserSignCompanyName.length > 4) {
+        this.queryParams.userSignCompanyName = ''
+      } else {
+        this.queryParams.userSignCompanyName = this.currentUserSignCompanyName
+      }
+      
       // this.queryParams.userClass = this.queryParamsUserclass
       this.queryParams.userClass = null
       this.loading = true;
@@ -883,6 +895,7 @@ export default {
       this.queryParams.userPost = ''
       this.queryParamsUserClass = ''
       this.queryParams.teamId = null
+      this.currentUserSignCompanyName = ''
       this.getPeopleInfo();
     },
     // 多选框选中数据
@@ -903,6 +916,11 @@ export default {
       this.form = row
       this.open = true;
       this.title = "修改人员";
+      if(this.form.userImg !== null) {
+        this.showPic = true
+      } else {
+        this.showPic = false
+      }
       
       // console.log(row)
     },

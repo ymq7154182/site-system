@@ -1,19 +1,23 @@
 <template>
   <div>
     <div style="padding: 0.11rem">
-      <el-tabs v-model="activeName" class="tabs" @click="handleTabs" >
-        <el-tab-pane label="人员管理" name="first" class="label_top">
-          <shou-ye></shou-ye>
+      <el-tabs v-model="activeName" class="tabs" @tab-click="handleTabs" >
+        <el-tab-pane label="人员管理" name="first" :key="'first'" class="label_top">
+          <shou-ye v-if="shouye"></shou-ye>
+           <!-- <shou-ye ></shou-ye> -->
         </el-tab-pane>
-        <el-tab-pane label="劳务实名制" name="second" class="label_top">
-          <service-real-name></service-real-name>
+        <el-tab-pane label="劳务实名制" name="second" :key="'second'" class="label_top">
+          <service-real-name v-if="service"></service-real-name>
+           <!-- <service-real-name ></service-real-name> -->
         </el-tab-pane>
        
-        <el-tab-pane label="特种作业人员" name="third" class="label_top">
-          <special-equ> </special-equ>
+        <el-tab-pane label="特种作业人员" name="third" :key="'third'" class="label_top">
+          <special-equ v-if="equPeople"> </special-equ>
+          <!-- <special-equ> </special-equ> -->
         </el-tab-pane>
-        <el-tab-pane label="劳务考勤" name="fourth" class="label_top">
-          <service-kq></service-kq>
+        <el-tab-pane label="劳务考勤" name="fourth" :key="'fourth'" class="label_top">
+          <service-kq v-if="serviceKq"></service-kq>
+           <!-- <service-kq></service-kq> -->
         </el-tab-pane>
 
       </el-tabs>
@@ -41,6 +45,10 @@ export default {
   data(){
     return{
       activeName: 'first',
+      shouye: true,
+      service: false,
+      equPeople: false,
+      serviceKq: false
     }
 
   },
@@ -50,7 +58,28 @@ export default {
   },
   methods:{
     handleTabs(tab, event) {
-       console.log(tab, event);
+      console.log("TAB", tab)
+       if(tab.name === 'first') {
+         this.shouye = true
+         this.service = false
+         this.equPeople = false
+         this.serviceKq = false
+       } else if(tab.name === 'second') {
+         this.shouye = false
+         this.service = true
+         this.equPeople = false
+         this.serviceKq = false
+       } else if(tab.name === 'third') {
+         this.shouye = false
+         this.service = false
+         this.equPeople = true
+         this.serviceKq = false
+       } else {
+         this.shouye = false
+         this.service = false
+         this.equPeople = false
+         this.serviceKq = true
+       }
     },
   }
 

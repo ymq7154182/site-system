@@ -4,7 +4,7 @@
       <el-col :span="4">
         <div class="dm-aside">
           <div class="border-top-left"></div>
-          <div class="dm-title">文件位置</div>
+          <div class="dm-title">设备管理</div>
           <div class="type-list">
               <el-tree :data="treeData" :props="defaultProps" default-expand-all  @node-click="handleNodeClick"></el-tree>
             <!-- <ul>
@@ -323,9 +323,16 @@ export default {
         
       },
       folderRles: {
-        name: [
-          { required: true, message: '请输入文件名称', trigger: 'blur' }
-        ]
+        label: [
+          { required: true, message: '请输入设备类型名称', trigger: 'blur' }
+        ],
+        parentId: [
+          { required: true, message: '请选择类型', trigger: 'blur' }
+        ],
+        sort: [
+          { required: true, message: '请选择排序', trigger: 'blur' }
+        ],
+
       },
       moveRule: {
         urlId: [

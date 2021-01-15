@@ -79,375 +79,7 @@
                           </div>
                         </div>
                       </li>
-                      <!-- <li @mouseover="infohover2 = false" @mouseout="infohover2 = true">
-                        <div class="device-detail">
-                          <el-image v-show="infohover2" :src="require('../../src/assets/tower/tadiao2.jpg')" fit="fill" style="height: 80%; " />
-                          <div v-show="!infohover2" class="device-detail-info">
-                            <table>
-                              <tr>
-                                <td><i class="el-icon-office-building" /> 生产厂家:</td>
-                                <td>HAIZHI</td>
-                              </tr>
-                              <tr>
-                                <td><i class="el-icon-s-tools" /> 设备型号:</td>
-                                <td>HZTJ582-124</td>
-                              </tr>
-                              <tr>
-                                <td><i class="el-icon-place" /> 安装位置:</td>
-                                <td>A6栋门口</td>
-                              </tr>
-                              <tr>
-                                <td><i class="el-icon-s-custom" /> 责任人:</td>
-                                <td>张伟</td>
-                              </tr>
-                              <tr>
-                                <td><i class="el-icon-phone-outline" /> 联系人:</td>
-                                <td>13634532236</td>
-                              </tr>
-                            </table>
-                          </div>
-                          <div style="height: 18%; width: 100%; ">
-                            <el-row>
-                              <el-col :span="15">
-                                <div class="device-detail-span">
-                                  {{ '2号塔式起重机' }}&nbsp;
-                                </div>
-                              </el-col>
-                              <el-col :span="9">
-                                <el-tag type="danger" effect="dark" style="margin-top: 1.5%; ">离线</el-tag>
-                              </el-col>
-                            </el-row>
-                          </div>
-                        </div>
-                      </li>
-                      <li @mouseover="infohover3 = false" @mouseout="infohover3 = true">
-                        <div class="device-detail">
-                          <el-image v-show="infohover3" :src="require('../../src/assets/tower/tadiao3.jpg')" fit="fill" style="height: 80%; " />
-                          <div v-show="!infohover3" class="device-detail-info">
-                            <table>
-                              <tr>
-                                <td><i class="el-icon-office-building" /> 生产厂家:</td>
-                                <td>三一重工</td>
-                              </tr>
-                              <tr>
-                                <td><i class="el-icon-s-tools" /> 设备型号:</td>
-                                <td>CZ-6910</td>
-                              </tr>
-                              <tr>
-                                <td><i class="el-icon-place" /> 安装位置:</td>
-                                <td>施工区</td>
-                              </tr>
-                              <tr>
-                                <td><i class="el-icon-s-custom" /> 责任人:</td>
-                                <td>王刚</td>
-                              </tr>
-                              <tr>
-                                <td><i class="el-icon-phone-outline" /> 联系人:</td>
-                                <td>13634532236</td>
-                              </tr>
-                            </table>
-                          </div>
-                          <div style="height: 18%; width: 100%; ">
-                            <el-row>
-                              <el-col :span="15">
-                                <div class="device-detail-span">
-                                  {{ '3号塔式起重机' }}&nbsp;
-                                </div>
-                              </el-col>
-                              <el-col :span="9">
-                                <el-tag type="success" effect="dark" style="margin-top: 1.5%; ">在线</el-tag>
-                              </el-col>
-                            </el-row>
-                          </div>
-                        </div>
-                      </li>
-                      <li @mouseover="infohover4 = false" @mouseout="infohover4 = true">
-                        <div class="device-detail">
-                          <el-image v-show="infohover4" :src="require('../../src/assets/tower/tadiao4.jpg')" fit="fill" style="height: 80%; " />
-                          <div v-show="!infohover4" class="device-detail-info">
-                            <table>
-                              <tr>
-                                <td><i class="el-icon-office-building" /> 生产厂家:</td>
-                                <td>HAIZHI</td>
-                              </tr>
-                              <tr>
-                                <td><i class="el-icon-s-tools" /> 设备型号:</td>
-                                <td>HZYJ582-124</td>
-                              </tr>
-                              <tr>
-                                <td><i class="el-icon-place" /> 安装位置:</td>
-                                <td>A4栋</td>
-                              </tr>
-                              <tr>
-                                <td><i class="el-icon-s-custom" /> 责任人:</td>
-                                <td>张洲</td>
-                              </tr>
-                              <tr>
-                                <td><i class="el-icon-phone-outline" /> 联系人:</td>
-                                <td>13634532236</td>
-                              </tr>
-                            </table>
-                          </div>
-                          <div style="height: 18%; width: 100%; ">
-                            <el-row>
-                              <el-col :span="15">
-                                <div class="device-detail-span">
-                                  {{ '4号塔式起重机' }}&nbsp;
-                                </div>
-                              </el-col>
-                              <el-col :span="9">
-                                <el-tag type="success" effect="dark" style="margin-top: 1.5%; ">在线</el-tag>
-                              </el-col>
-                            </el-row>
-                          </div>
-                        </div>
-                      </li>
-                      <li @mouseover="infohover5 = false" @mouseout="infohover5 = true">
-                        <div class="device-detail">
-                          <el-image v-show="infohover5" :src="require('../../src/assets/tower/tadiao5.jpg')" fit="fill" style="height: 80%; " />
-                          <div v-show="!infohover5" class="device-detail-info">
-                            <table>
-                              <tr>
-                                <td><i class="el-icon-office-building" /> 生产厂家:</td>
-                                <td>HAIZHI</td>
-                              </tr>
-                              <tr>
-                                <td><i class="el-icon-s-tools" /> 设备型号:</td>
-                                <td>HZYJ582-124</td>
-                              </tr>
-                              <tr>
-                                <td><i class="el-icon-place" /> 安装位置:</td>
-                                <td>A5栋</td>
-                              </tr>
-                              <tr>
-                                <td><i class="el-icon-s-custom" /> 责任人:</td>
-                                <td>李华</td>
-                              </tr>
-                              <tr>
-                                <td><i class="el-icon-phone-outline" /> 联系人:</td>
-                                <td>13634532236</td>
-                              </tr>
-                            </table>
-                          </div>
-                          <div style="height: 18%; width: 100%; ">
-                            <el-row>
-                              <el-col :span="15">
-                                <div class="device-detail-span">
-                                  {{ '5号塔式起重机' }}&nbsp;
-                                </div>
-                              </el-col>
-                              <el-col :span="9">
-                                <el-tag type="danger" effect="dark" style="margin-top: 1.5%; ">离线</el-tag>
-                              </el-col>
-                            </el-row>
-                          </div>
-                        </div>
-                      </li>
-                      <li @mouseover="infohover6 = false" @mouseout="infohover6 = true">
-                        <div class="device-detail">
-                          <el-image v-show="infohover6" :src="require('../../src/assets/tower/tadiao1.jpg')" fit="fill" style="height: 80%; " />
-                          <div v-show="!infohover6" class="device-detail-info">
-                            <table>
-                              <tr>
-                                <td><i class="el-icon-office-building" /> 生产厂家:</td>
-                                <td>HAIZHI</td>
-                              </tr>
-                              <tr>
-                                <td><i class="el-icon-s-tools" /> 设备型号:</td>
-                                <td>HZT520-TJ</td>
-                              </tr>
-                              <tr>
-                                <td><i class="el-icon-place" /> 安装位置:</td>
-                                <td>A4栋东南区</td>
-                              </tr>
-                              <tr>
-                                <td><i class="el-icon-s-custom" /> 责任人:</td>
-                                <td>张伟</td>
-                              </tr>
-                              <tr>
-                                <td><i class="el-icon-phone-outline" /> 联系人:</td>
-                                <td>13634532236</td>
-                              </tr>
-                            </table>
-                          </div>
-                          <div style="height: 18%; width: 100%; ">
-                            <el-row>
-                              <el-col :span="15">
-                                <div class="device-detail-span">
-                                  {{ '1号塔式起重机' }}&nbsp;
-                                </div>
-                              </el-col>
-                              <el-col :span="9">
-                                <el-tag type="success" effect="dark" style="margin-top: 1.5%; ">在线</el-tag>
-                              </el-col>
-                            </el-row>
-                          </div>
-                        </div>
-                      </li>
-                      <li @mouseover="infohover7 = false" @mouseout="infohover7 = true">
-                        <div class="device-detail">
-                          <el-image v-show="infohover7" :src="require('../../src/assets/tower/tadiao2.jpg')" fit="fill" style="height: 80%; " />
-                          <div v-show="!infohover7" class="device-detail-info">
-                            <table>
-                              <tr>
-                                <td><i class="el-icon-office-building" /> 生产厂家:</td>
-                                <td>HAIZHI</td>
-                              </tr>
-                              <tr>
-                                <td><i class="el-icon-s-tools" /> 设备型号:</td>
-                                <td>HZTJ582-124</td>
-                              </tr>
-                              <tr>
-                                <td><i class="el-icon-place" /> 安装位置:</td>
-                                <td>A6栋门口</td>
-                              </tr>
-                              <tr>
-                                <td><i class="el-icon-s-custom" /> 责任人:</td>
-                                <td>张伟</td>
-                              </tr>
-                              <tr>
-                                <td><i class="el-icon-phone-outline" /> 联系人:</td>
-                                <td>13634532236</td>
-                              </tr>
-                            </table>
-                          </div>
-                          <div style="height: 18%; width: 100%; ">
-                            <el-row>
-                              <el-col :span="15">
-                                <div class="device-detail-span">
-                                  {{ '2号塔式起重机' }}&nbsp;
-                                </div>
-                              </el-col>
-                              <el-col :span="9">
-                                <el-tag type="danger" effect="dark" style="margin-top: 1.5%; ">离线</el-tag>
-                              </el-col>
-                            </el-row>
-                          </div>
-                        </div>
-                      </li>
-                      <li @mouseover="infohover8 = false" @mouseout="infohover8 = true">
-                        <div class="device-detail">
-                          <el-image v-show="infohover8" :src="require('../../src/assets/tower/tadiao3.jpg')" fit="fill" style="height: 80%; " />
-                          <div v-show="!infohover8" class="device-detail-info">
-                            <table>
-                              <tr>
-                                <td><i class="el-icon-office-building" /> 生产厂家:</td>
-                                <td>三一重工</td>
-                              </tr>
-                              <tr>
-                                <td><i class="el-icon-s-tools" /> 设备型号:</td>
-                                <td>CZ-6910</td>
-                              </tr>
-                              <tr>
-                                <td><i class="el-icon-place" /> 安装位置:</td>
-                                <td>施工区</td>
-                              </tr>
-                              <tr>
-                                <td><i class="el-icon-s-custom" /> 责任人:</td>
-                                <td>王刚</td>
-                              </tr>
-                              <tr>
-                                <td><i class="el-icon-phone-outline" /> 联系人:</td>
-                                <td>13634532236</td>
-                              </tr>
-                            </table>
-                          </div>
-                          <div style="height: 18%; width: 100%; ">
-                            <el-row>
-                              <el-col :span="15">
-                                <div class="device-detail-span">
-                                  {{ '3号塔式起重机' }}&nbsp;
-                                </div>
-                              </el-col>
-                              <el-col :span="9">
-                                <el-tag type="success" effect="dark" style="margin-top: 1.5%; ">在线</el-tag>
-                              </el-col>
-                            </el-row>
-                          </div>
-                        </div>
-                      </li>
-                      <li @mouseover="infohover9 = false" @mouseout="infohover9 = true">
-                        <div class="device-detail">
-                          <el-image v-show="infohover9" :src="require('../../src/assets/tower/tadiao4.jpg')" fit="fill" style="height: 80%; " />
-                          <div v-show="!infohover9" class="device-detail-info">
-                            <table>
-                              <tr>
-                                <td><i class="el-icon-office-building" /> 生产厂家:</td>
-                                <td>HAIZHI</td>
-                              </tr>
-                              <tr>
-                                <td><i class="el-icon-s-tools" /> 设备型号:</td>
-                                <td>HZYJ582-124</td>
-                              </tr>
-                              <tr>
-                                <td><i class="el-icon-place" /> 安装位置:</td>
-                                <td>A4栋</td>
-                              </tr>
-                              <tr>
-                                <td><i class="el-icon-s-custom" /> 责任人:</td>
-                                <td>张洲</td>
-                              </tr>
-                              <tr>
-                                <td><i class="el-icon-phone-outline" /> 联系人:</td>
-                                <td>13634532236</td>
-                              </tr>
-                            </table>
-                          </div>
-                          <div style="height: 18%; width: 100%; ">
-                            <el-row>
-                              <el-col :span="15">
-                                <div class="device-detail-span">
-                                  {{ '4号塔式起重机' }}&nbsp;
-                                </div>
-                              </el-col>
-                              <el-col :span="9">
-                                <el-tag type="success" effect="dark" style="margin-top: 1.5%; ">在线</el-tag>
-                              </el-col>
-                            </el-row>
-                          </div>
-                        </div>
-                      </li>
-                      <li @mouseover="infohover10 = false" @mouseout="infohover10 = true">
-                        <div class="device-detail">
-                          <el-image v-show="infohover10" :src="require('../../src/assets/tower/tadiao5.jpg')" fit="fill" style="height: 80%; " />
-                          <div v-show="!infohover10" class="device-detail-info">
-                            <table>
-                              <tr>
-                                <td><i class="el-icon-office-building" /> 生产厂家:</td>
-                                <td>HAIZHI</td>
-                              </tr>
-                              <tr>
-                                <td><i class="el-icon-s-tools" /> 设备型号:</td>
-                                <td>HZYJ582-124</td>
-                              </tr>
-                              <tr>
-                                <td><i class="el-icon-place" /> 安装位置:</td>
-                                <td>A5栋</td>
-                              </tr>
-                              <tr>
-                                <td><i class="el-icon-s-custom" /> 责任人:</td>
-                                <td>李华</td>
-                              </tr>
-                              <tr>
-                                <td><i class="el-icon-phone-outline" /> 联系人:</td>
-                                <td>13634532236</td>
-                              </tr>
-                            </table>
-                          </div>
-                          <div style="height: 18%; width: 100%; ">
-                            <el-row>
-                              <el-col :span="15">
-                                <div class="device-detail-span">
-                                  {{ '5号塔式起重机' }}&nbsp;
-                                </div>
-                              </el-col>
-                              <el-col :span="9">
-                                <el-tag type="danger" effect="dark" style="margin-top: 1.5%; ">离线</el-tag>
-                              </el-col>
-                            </el-row>
-                          </div>
-                        </div>
-                      </li> -->
+                      
                     </ul>
                   </div>
                 </div>
@@ -475,12 +107,7 @@
                       </span>
                         <el-dropdown-menu  style="background-color: rgba(255,255,255,0.5)" slot="dropdown">
                           <el-dropdown-item v-for="(item, index) in taDiaoList" :key="index" v-text="item" :command="item"></el-dropdown-item>
-                          <!-- <el-dropdown-item command="所有设备">所有设备</el-dropdown-item>
-                          <el-dropdown-item command="1号塔式起重机">1号塔式起重机</el-dropdown-item>
-                          <el-dropdown-item command="2号塔式起重机">2号塔式起重机</el-dropdown-item>
-                          <el-dropdown-item command="3号塔式起重机">3号塔式起重机</el-dropdown-item>
-                          <el-dropdown-item command="4号塔式起重机">4号塔式起重机</el-dropdown-item>
-                          <el-dropdown-item command="5号塔式起重机">5号塔式起重机</el-dropdown-item> -->
+                          
                         </el-dropdown-menu>
                       </el-dropdown>
                     </div>
@@ -492,6 +119,9 @@
                 <div style="background-color: rgba(0, 36, 78, 0.5); height: 53vh; width: 100%; ">
                   <div class="border-top-left"></div>
                   <div class="box-title">设备维护统计</div>
+                  <div class="addBtn">
+                    <el-button type="primary" size="mini" @click="addResume">更新</el-button>
+                  </div>
                   <div id="alarmTrend" class="alarm-trend"></div>
                 </div>
               </el-col>
@@ -992,6 +622,9 @@
                 <div style="background-color: rgba(0, 36, 78, 0.5); height: 53vh; width: 100%; ">
                   <div class="border-top-left"></div>
                   <div class="box-title">设备维护统计</div>
+                  <div class="addBtn">
+                    <el-button type="primary" size="mini" @click="addResume2">更新</el-button>
+                  </div>
                   <div id="alarmTrend3" class="alarm-trend"></div>
                 </div>
               </el-col>
@@ -1013,6 +646,60 @@
           <other-device></other-device>
         </el-tab-pane>
       </el-tabs>
+
+
+      <el-dialog :visible.sync="showAdd" title="更新数据" width="40%">
+      <div >
+        <el-form :model="uploadInfo" :rules="rules" ref="uploadInfo" label-width="2rem">
+          <el-form-item label="设备名称" prop="devName">
+            <el-select v-model="uploadInfo.devName" placeholder="请选择名称" >
+              <el-option
+                v-for="item in taList"
+                :key="item"
+                :label="item"
+                :value="item">
+              </el-option>
+            </el-select>
+          </el-form-item>
+          <el-form-item label="下次维修时间" prop="nextDay">
+            <el-input v-model="uploadInfo.nextDay" type="number" style="width: 50%"></el-input>
+          </el-form-item>
+          <el-form-item label="租聘到期时间" prop="hireDay">
+            <el-input v-model="uploadInfo.hireDay" type="number" style="width: 50%"></el-input>
+          </el-form-item>
+            <el-button type="primary" @click="submitUpload('uploadInfo')">提交</el-button>
+            <el-button @click="resetForm('uploadInfo')">重置</el-button>
+          </el-form-item>
+        </el-form>
+      </div>
+    </el-dialog>
+
+
+     <el-dialog :visible.sync="showAdd2" title="更新数据" width="40%">
+      <div >
+        <el-form :model="uploadInfo2" :rules="rules" ref="uploadInfo2" label-width="2rem">
+          <el-form-item label="设备名称" prop="devName">
+            <el-select v-model="uploadInfo2.devName" placeholder="请选择名称" >
+              <el-option
+                v-for="item in shiList"
+                :key="item"
+                :label="item"
+                :value="item">
+              </el-option>
+            </el-select>
+          </el-form-item>
+          <el-form-item label="下次维修时间" prop="nextDay">
+            <el-input v-model="uploadInfo2.nextDay" type="number" style="width: 50%"></el-input>
+          </el-form-item>
+          <el-form-item label="租聘到期时间" prop="hireDay">
+            <el-input v-model="uploadInfo2.hireDay" type="number" style="width: 50%"></el-input>
+          </el-form-item>
+            <el-button type="primary" @click="submitUpload2('uploadInfo2')">提交</el-button>
+            <el-button @click="resetForm2('uploadInfo2')">重置</el-button>
+          </el-form-item>
+        </el-form>
+      </div>
+    </el-dialog>
     </div>
 
 
@@ -1021,7 +708,7 @@
 </template>
 
 <script>
-import { getHistroy, getAllDevName, getCountsByType, getDevInfo, getQizhongji, getShengjiangji } from "@/api/deviceManage";
+import { getHistroy, getAllDevName, getCountsByType, getDevInfo, getQizhongji, getShengjiangji, maintain, devName, updateMaintain } from "@/api/deviceManage";
 import echarts from 'echarts';
 import otherDevice from '@/views/otherDevice.vue';
 require('echarts/theme/macarons'); // echarts theme
@@ -1039,7 +726,7 @@ export default {
     this.siteId = localStorage.getItem('siteId')
     this.$store.dispatch('changeMsg', '设备管理');
     this.initAlarmType()
-    this.initAlarmTrend()
+    this.getTaMaintain()
     this.getAllDevInfo()
     this.getDevHistory()
     this.getDevHistory2()
@@ -1053,6 +740,37 @@ export default {
   },
   data() {
     return {
+      rules: {
+        devName: [
+          { required: true, message: '请选择项目名称', trigger: 'blur' }
+        ],
+        nextDay: [
+          { required: true, message: '请输入时间天数', trigger: 'change' }
+        ],
+        hireDay: [
+          { required: true, message: '请输入时间天数', trigger: 'change' } 
+        ]
+      },
+      uploadInfo: {
+          devName: undefined,
+          nextDay: undefined,
+          hireDay: undefined,
+          siteId: '',
+        },
+        uploadInfo2: {
+          devName: undefined,
+          nextDay: undefined,
+          hireDay: undefined,
+          siteId: '',
+        },
+      showAdd2: false,
+      showAdd: false,
+      shiweixiuList: [],
+      shizulinList: [],
+      shiList: [],
+      taweixiuList: [],
+      tazulinList: [],
+      taList: [],
       taTotal: 0,
       shigongTotal: 0,
       qizhongjiOnlineNum: 0,
@@ -1186,6 +904,61 @@ export default {
     }
   },
   methods: {
+    submitUpload(formName) {
+      this.$refs[formName].validate((valid) => {
+        console.log("提交的信息", this.uploadInfo)
+        if(valid) {
+          updateMaintain(this.uploadInfo).then(response => {
+            if(response.data.code === 200) {
+              this.$message({
+                type: 'success',
+                message: '上传数据成功！'
+              })
+              this.showAdd = false;
+              this.resetForm('uploadInfo')
+              this.getTaMaintain()
+            } else {
+              this.$message.error(response.data.msg)
+            }
+          })
+        } else {
+          this.$message.error('上传失败')
+          return false
+        }
+      });
+    },
+    submitUpload2(formName) {
+      this.$refs[formName].validate((valid) => {
+        console.log("提交的信息", this.uploadInfo2)
+        if(valid) {
+          updateMaintain(this.uploadInfo2).then(response => {
+            if(response.data.code === 200) {
+              this.$message({
+                type: 'success',
+                message: '上传数据成功！'
+              })
+              this.showAdd2 = false;
+              this.resetForm('uploadInfo')
+              this.getShiMaintain()
+            } else {
+              this.$message.error(response.data.msg)
+            }
+          })
+        } else {
+          this.$message.error('上传失败')
+          return false
+        }
+      });
+    },
+    addResume() {
+      this.showAdd = true
+      this.uploadInfo.siteId = localStorage.getItem('siteId')
+    },
+    addResume2() {
+      this.showAdd2 = true
+      this.uploadInfo2.siteId = localStorage.getItem('siteId')
+    },
+    
     inchart100() {
       this.myChart100 = this.$echarts.init(document.getElementById('mychart100'),'macarons')
       var option = {
@@ -1408,6 +1181,36 @@ export default {
       }
       this.alarmTypeChart3.setOption(option)
     },
+
+    resetForm(formName) {
+     
+      this.uploadInfo.hireDay = undefined
+      this.uploadInfo.nextDay = undefined
+      this.uploadInfo.devName = undefined
+     
+    },
+    resetForm2(formName) {
+      
+      this.uploadInfo2.hireDay = undefined
+      this.uploadInfo2.nextDay = undefined
+      this.uploadInfo2.devName = undefined
+     
+    },
+
+    getTaMaintain() {
+      var params = {
+        siteId: localStorage.getItem('siteId'),
+        type: '塔式起重机'
+      }
+      maintain(params).then((res) => {
+        this.taweixiuList = res.data.data[0].data
+        this.tazulinList = res.data.data[1].data
+        devName(params).then((res) => {
+          this.taList = res.data.data
+          this.initAlarmTrend()
+        })
+      })
+    },
     initAlarmTrend() {
       this.alarmTrendChart = echarts.init(document.getElementById('alarmTrend'));
       this.alarmTrendChart.setOption({
@@ -1444,7 +1247,7 @@ export default {
         },
         yAxis: {
           type: 'category',
-          data: ['一号塔式起重机', '二号塔式起重机', '三号塔式起重机', '四号塔式起重机', '五号塔式起重机'],
+          data: this.taList,
           splitLine: {
             show: false
           },
@@ -1458,12 +1261,12 @@ export default {
         {
             name: '距离下次维修时间（天）',
             type: 'bar',
-            data: [20, 18, 15, 10,12]
+            data: this.taweixiuList
         },
         {
             name: '距离租赁到期时间（天）',
             type: 'bar',
-            data: [180, 201, 167, 138,154]
+            data: this.tazulinList
         }
         ]
 
@@ -1534,6 +1337,20 @@ export default {
 
       });
     },
+    getShiMaintain() {
+      var params = {
+        siteId: localStorage.getItem('siteId'),
+        type: '施工升降机'
+      }
+      maintain(params).then((res) => {
+        this.shiweixiuList = res.data.data[0].data
+        this.shizulinList = res.data.data[1].data
+        devName(params).then((res) => {
+          this.shiList = res.data.data
+          this.initAlarmTrend3()
+        })
+      })
+    },
     initAlarmTrend3() {
       this.alarmTrendChart3 = echarts.init(document.getElementById('alarmTrend3'));
       this.alarmTrendChart3.setOption({
@@ -1570,7 +1387,7 @@ export default {
         },
         yAxis: {
           type: 'category',
-          data: ['一号施工升降机', '二号施工升降机', '三号施工升降机', '四号施工升降机','五号施工升降机'],
+          data: this.shiList,
           splitLine: {
             show: false
           },
@@ -1584,12 +1401,12 @@ export default {
           {
             name: '距离下次维修时间（天）',
             type: 'bar',
-            data: [20, 18, 15, 10,12]
+            data: this.shiweixiuList
           },
           {
             name: '距离租赁到期时间（天）',
             type: 'bar',
-            data: [180, 201, 167, 138,143]
+            data: this.shizulinList
           }
         ]
 
@@ -1601,7 +1418,7 @@ export default {
       this.alarmTypeChart.dispose();
       this.alarmTrendChart.dispose();
       this.initAlarmType();
-      this.initAlarmTrend();
+      this.getTaMaintain();
     },
     handleCommand(command) {
       console.log("Command:", command)
@@ -1618,7 +1435,7 @@ export default {
       if(this.activeName === 'first') {
         this.$nextTick(() => {
           this.initAlarmType();
-          this.initAlarmTrend();
+          this.getTaMaintain();
         })
 
       }else if(this.activeName === 'second') {
@@ -1629,7 +1446,7 @@ export default {
       } else if (this.activeName === 'third') {
         this.$nextTick(() => {
           this.initAlarmType3()
-          this.initAlarmTrend3()
+          this.getShiMaintain()
         })
       }
 
@@ -2071,5 +1888,11 @@ export default {
     top: 6%;
     background-color: rgba(33,146,163,0.3);
     color: white;
+  }
+
+  .addBtn {
+    float: right;
+    margin-top:-15px; 
+    margin-right:15px;
   }
 </style>
