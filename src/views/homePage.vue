@@ -404,7 +404,7 @@
   import {getDeferReasons, getDeferInfo, submitDeferInfo, getOneSchedules, getTwoSchedules, finishSmallSchedule, getErrorInfo} from '@/api/scheduleManage'
   import { getSite } from '@/api/dataManage'
   import { peopleInfo, typeCount } from '@/api/peopleManager'
-  import { getGongDiNameById,screenName } from '@/api/projectOverview'
+  import { getGongDiNameById,screenName, devCount } from '@/api/projectOverview'
   import { getSafeOrQualityChartData,getProjectDetails,getProjectTimeInformation } from '@/api/projectOverview.js'
   import axios from 'axios'
   require('echarts/theme/macarons')
@@ -423,7 +423,7 @@
         // this.getTwoSchedules() // 获取所有二级进度
         // this.inchart13()
         this.chart13Res()
-        this.inchart24()
+        this.getDevCount()
         this.chart24Res()
         // this.inchart22()
         this.chart22Res()
@@ -450,6 +450,9 @@
       },
       data(){
           return{
+            devList: [],
+            normalList: [],
+            noNormalList: [],
             dengjiPeople: 0,
             attendPeople: 0,
             safeFlag: true,
@@ -952,6 +955,18 @@
             this.myChart13.setOption(option)
           },600)
         },
+        getDevCount() {
+          var id = localStorage.getItem('siteId')
+          devCount(id).then((res) => {
+            var arr = res.data.data
+            for(var i = 0; i < arr.length; i++) {
+              this.devList.push(arr[i].name)
+              this.normalList.push(arr[i].total)
+              this.noNormalList.push(arr[i].abnormal)
+            }
+            this.inchart24()
+          })
+        },
         inchart24() {
           this.myChart24 = this.$echarts.init(document.getElementById('mychart24'),'macarons')
           var option = {
@@ -961,7 +976,7 @@
             // },
             angleAxis: {
               type: 'category',
-              data: ['塔式起重机', '物料提升机', '施工升降机', '特种设备', '视频设备'],
+              data: this.devList,
               textStyle:{
                 fontSize:16,
                 color:'#544bfc'
@@ -987,7 +1002,7 @@
               radius: ['20%', '70%'],
               center: ["20%", "20%"],
               type: 'bar',
-              data: [1, 2, 3, 4, 3, 5, 1],
+              data: this.noNormalList,
               coordinateSystem: 'polar',
               name: '异常',
               stack: 'a',
@@ -995,7 +1010,7 @@
               radius: ['20%', '70%'],
               center: ["90%", "90%"],
               type: 'bar',
-              data: [15, 24, 16, 33, 23, 22, 21],
+              data: this.normalList,
               coordinateSystem: 'polar',
               name: '总数',
               stack: 'a'
