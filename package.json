@@ -15,9 +15,14 @@
     "axios": "^0.20.0",
     "echarts": "^4.9.0",
     "element-ui": "^2.13.2",
+    "highcharts": "^8.2.2",
     "vue": "^2.5.2",
+    "vue-gantt-schedule-timeline-calendar": "^3.0.44",
     "vue-router": "^3.0.1",
-    "vuex": "^3.5.1"
+    "vuex": "^3.5.1",
+    "vxe-table": "^3.1.2",
+    "wl-gantt": "^1.0.5",
+    "xe-utils": "^3.1.6"
   },
   "devDependencies": {
     "autoprefixer": "^7.1.2",
@@ -35,6 +40,7 @@
     "extract-text-webpack-plugin": "^3.0.0",
     "file-loader": "^1.1.4",
     "friendly-errors-webpack-plugin": "^1.6.1",
+    "gantt-schedule-timeline-calendar": "^3.6.6",
     "html-webpack-plugin": "^2.30.1",
     "node-notifier": "^5.1.2",
     "optimize-css-assets-webpack-plugin": "^3.2.0",

@@ -95,13 +95,13 @@ const routes = [
     ]
   },
   {
-    path: '/scheduleManage',
+    path: '/progressController',
     component: Layout,
-    name: 'scheduleManage',
+    name: 'progressController',
     children: [
       {
-        path: '/scheduleManage',
-        component: () => import('@/views/scheduleManage/index'),
+        path: '/progressController',
+        component: () => import('@/views/progressManager/index'),
       }
     ]
   },
