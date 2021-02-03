@@ -642,7 +642,7 @@ export default {
             center: ['20%', '50%'],
             data: [{
               hoverOffset: 1,
-              value: num1,
+              value: 1,
               name: '虚拟主机',
               itemStyle: {
                 color: 'rgba(232, 85, 63, 1)',
@@ -672,7 +672,7 @@ export default {
                     }
                   }
                 },
-                value: 130-num1,
+                value: 2,
                 hoverAnimation: false,
                 itemStyle: {
                   color: 'rgba(232, 85, 63, .2)',
@@ -696,7 +696,7 @@ export default {
                   }
                 }
               },
-              value: 100 - num2,
+              value: 1,
               hoverAnimation: false,
               itemStyle: {
                 color: 'rgba(63, 66, 73, .3)',
@@ -719,7 +719,7 @@ export default {
                   }
                 }
               },
-              value: 100 - num3,
+            
               hoverAnimation: false,
               itemStyle: {
                 color: 'rgba(63, 66, 73, .3)',

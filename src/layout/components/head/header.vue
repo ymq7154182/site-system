@@ -177,7 +177,7 @@
           this.$router.push('/greenConstruction')
         },
         gotoPress () {
-          this.$router.push('/scheduleManage')
+          this.$router.push('/progressController')
         },
         gotosafeRecord() {
           this.$router.push('/safeRecord')

@@ -67,6 +67,13 @@ export function getFolderInfo(siteId, id) {
   })
 }
 
+export function getFolderInfoTask(siteId, id, taskId) {
+  return request({
+    url: `/doc/listFolderContent?siteId=${siteId}&urlId=${id}&taskId=${taskId}`,
+    method: 'get'
+  })
+}
+
 export function addFolder(data) {
   return request({
     url: "/document/folder",

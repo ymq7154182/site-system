@@ -44,3 +44,10 @@ export function getProjectTimeInformation (parems) {
     params: parems
   })
 }
+
+export function devCount (id) {
+  return request({
+    url: `/device/maintain/dev-count?siteId=${id}`,
+    method: 'get'
+  })
+}

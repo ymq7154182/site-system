@@ -593,7 +593,7 @@ export default {
     this.getPeopleCount(date, this.deptId, type)
     this.selectType("类型")
     this.$store.dispatch('changeMsg', '人员管理')
-    this.drawLine();
+    // this.drawLine();
     //this.changeType();
     this.getListDay()
     this.getLeaderList()
@@ -721,6 +721,8 @@ export default {
         this.todayAttendTotal = res.data.data[0].total
         this.todayAttend = res.data.data[0].attend
         this.todayAbsent = res.data.data[0].absent
+        //console.log("今日出勤总数", typeof this.todayAttendTotal)
+        this.drawLine()
       })
     },
     getLeaderCount() {
@@ -994,9 +996,9 @@ export default {
       // let myChart2 = this.$echarts.init(document.getElementById('chart2'))
       // let myChart3 = this.$echarts.init(document.getElementById('chart3'))
      
-      var num1 = this.todayAttendTotal;
-      var num2 = this.todayAbsent;
-      var num3 = this.todayAttend;
+      // var num1 = this.todayAttendTotal;
+      // var num2 = this.todayAbsent;
+      // var num3 = this.todayAttend;
       myChart1.setOption({
 
         title: [{
@@ -1011,7 +1013,7 @@ export default {
             textAlign: 'center',
           },
         },{
-          text: this.todayAbsent,
+          text: this.todayAbsent.toString(),
           left: '49%',
           top: '30%',
           textAlign: 'center',
@@ -1033,7 +1035,7 @@ export default {
             textAlign: 'center',
           },
         },{
-          text: this.todayAttendTotal,
+          text: this.todayAttendTotal.toString(),
           left: '19.5%',
           top: '30%',
           textAlign: 'center',
@@ -1055,7 +1057,7 @@ export default {
             textAlign: 'center',
           },
         },{
-          text: this.todayAttend,
+          text: this.todayAttend.toString(),
           left: '79%',
           top: '30%',
           textAlign: 'center',
@@ -1140,7 +1142,7 @@ export default {
                   }
                 }
               },
-              value: this.todayAttendTotal ,
+              value: 0,
               hoverAnimation: false,
               itemStyle: {
                 color: 'rgba(63, 66, 73, .3)',
@@ -1163,7 +1165,7 @@ export default {
                   }
                 }
               },
-              value: this.todayAttendTotal,
+              value: 0,
               hoverAnimation: false,
               itemStyle: {
                 color: 'rgba(63, 66, 73, .3)',
@@ -1231,7 +1233,7 @@ export default {
                   }
                 }
               },
-              value: 100 - this.todayAttendTotal,
+              value:  this.todayAttendTotal - this.todayAttend,
               hoverAnimation: false,
               itemStyle: {
                 color: 'rgba(63, 66, 73, .3)',
