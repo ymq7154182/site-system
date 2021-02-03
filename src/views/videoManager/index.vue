@@ -111,7 +111,8 @@
                         <!-- <dv-border-box-8> -->
                             <div class="fourArea" id="four1" >
                                
-                                <img src="../../assets/videoManager/v_1.png" />
+                                <!-- <img src="../../assets/videoManager/v_1.png" /> -->
+                                <video style="width:100%; height:100%; object-fit: fill" controls autoplay muted id="video1" src=""></video>
                                 <div class="btns"> 
                                     <el-button size="mini" type="primary">关注</el-button>
                                     <el-button size="mini" type="success">放大</el-button>
@@ -123,7 +124,8 @@
                         <!-- </dv-border-box-8>
                         <dv-border-box-8> -->
                             <div class="fourArea" id="four2" >
-                                <img src="../../assets/videoManager/v_2.png" />
+                                <!-- <img src="../../assets/videoManager/v_2.png" /> -->
+                                <video style="width:100%; height:100%; object-fit: fill" controls autoplay muted id="video2" src=""></video>
                                  <div class="btns">
                                     <el-button size="mini" type="primary">关注</el-button>
                                     <el-button size="mini" type="success">放大</el-button>
@@ -137,7 +139,8 @@
                     <div class="fourVideoArea_1">
                         <!-- <dv-border-box-8> -->
                             <div class="fourArea" id="four3" >
-                                <img src="../../assets/videoManager/v_3.png" />
+                                <!-- <img src="../../assets/videoManager/v_3.png" /> -->
+                                 <video style="width:100%; height:100%; object-fit: fill" controls autoplay muted id="video3" src=""></video>
                                  <div class="btns">
                                     <el-button size="mini" type="primary">关注</el-button>
                                     <el-button size="mini" type="success">放大</el-button>
@@ -149,7 +152,8 @@
                         <!-- </dv-border-box-8>
                         <dv-border-box-8> -->
                             <div class="fourArea" id="four4" >
-                                <img src="../../assets/videoManager/v_4.png" />
+                                <!-- <img src="../../assets/videoManager/v_4.png" /> -->
+                                 <video style="width:100%; height:100%; object-fit: fill" controls autoplay muted id="video4" src=""></video>
                                  <div class="btns">
                                     <el-button size="mini" type="primary">关注</el-button>
                                     <el-button size="mini" type="success">放大</el-button>
@@ -549,6 +553,14 @@ export default {
     name: "videoManager",
     data() {
         return {
+            video1: null,
+            hls1: null,
+            video2: null,
+            hls2: null,
+            video3: null,
+            hls3: null,
+            video4: null,
+            hls4: null,
             videoOne: false,
             videoTwo: false,
             videoThree: false,
@@ -628,8 +640,92 @@ export default {
     },
     mounted() {
         this.$store.dispatch('changeMsg', '视频管理')
+        this.playVideo1('http://218.11.12.60:30001/live/1616.m3u8')
+        this.playVideo2('http://218.11.12.60:30001/live/1617.m3u8')
+        this.playVideo3('http://218.11.12.60:30001/live/1618.m3u8')
+        this.playVideo4('http://218.11.12.60:30001/live/1619.m3u8')
+        
+// 218.11.12.60:30001/live/1909.m3u8
+// 218.11.12.60:30001/live/1895.m3u8
+// 218.11.12.60:30001/live/1894.m3u8
     },
     methods: {
+        playVideo1(videoUrl) {
+            var video = document.getElementById('video1');
+            this.video1 = video
+            var Hls = window.Hls
+            if (Hls.isSupported()) {
+                var hls = new Hls()
+                this.hls1 = hls
+                hls.loadSource(videoUrl)
+                hls.attachMedia(video)
+                hls.on(Hls.Events.MANIFEST_PARSED, function () {
+                video.play()
+                })
+            } else if (video.canPlayType('application/vnd.apple.mpegurl')) {
+                video.src = videoUrl
+                video.addEventListener('loadedmetadata', function () {
+                video.play()
+                })
+            }
+        },
+        playVideo2(videoUrl) {
+            var video = document.getElementById('video2');
+            this.video2 = video
+            var Hls = window.Hls
+            if (Hls.isSupported()) {
+                var hls = new Hls()
+                this.hls2 = hls
+                hls.loadSource(videoUrl)
+                hls.attachMedia(video)
+                hls.on(Hls.Events.MANIFEST_PARSED, function () {
+                video.play()
+                })
+            } else if (video.canPlayType('application/vnd.apple.mpegurl')) {
+                video.src = videoUrl
+                video.addEventListener('loadedmetadata', function () {
+                video.play()
+                })
+            }
+        },
+        playVideo3(videoUrl) {
+            var video = document.getElementById('video3');
+            this.video3 = video
+            var Hls = window.Hls
+            if (Hls.isSupported()) {
+                var hls = new Hls()
+                this.hls3 = hls
+                hls.loadSource(videoUrl)
+                hls.attachMedia(video)
+                hls.on(Hls.Events.MANIFEST_PARSED, function () {
+                video.play()
+                })
+            } else if (video.canPlayType('application/vnd.apple.mpegurl')) {
+                video.src = videoUrl
+                video.addEventListener('loadedmetadata', function () {
+                video.play()
+                })
+            }
+        },
+        playVideo4(videoUrl) {
+            var video = document.getElementById('video4');
+            this.video4 = video
+            var Hls = window.Hls
+            if (Hls.isSupported()) {
+                var hls = new Hls()
+                this.hls4 = hls
+                hls.loadSource(videoUrl)
+                hls.attachMedia(video)
+                hls.on(Hls.Events.MANIFEST_PARSED, function () {
+                video.play()
+                })
+            } else if (video.canPlayType('application/vnd.apple.mpegurl')) {
+                video.src = videoUrl
+                video.addEventListener('loadedmetadata', function () {
+                video.play()
+                })
+            }
+        },
         selectOne() {
             this.videoOne = true;
             this.videoTwo = false;
