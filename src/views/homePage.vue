@@ -83,7 +83,7 @@
               <div class="process_content">
 
                 <span>项目进度</span>
-                <div style="">
+                <div style="" v-if="haveData">
                    <div class="scrolling-container">
                     <el-row style="margin-bottom:5px;">
                       <el-col :span="22">
@@ -147,6 +147,9 @@
                           </wlGantt>
                         </div>
                     </div>
+                </div>
+                <div v-else class="noHaveData">
+                  <el-button type="primary" @click="gotoSchedule">请添加任务并编辑节点</el-button>
                 </div>
 
               </div>
@@ -362,6 +365,7 @@
       },
       data(){
           return{
+            haveData: false,
             selectTaskId: null,
             taList: [],
             treeData: [],
@@ -455,7 +459,13 @@
           }
           scheduleInfo(params).then((res) => {
             console.log("甘特图", res.data.data.actual)
-            this.taList = res.data.data.actual
+            if(res.data.data.actual.length === 0) {
+              this.haveData = false
+            } else {
+              this.haveData = true
+              this.taList = res.data.data.actual
+            }
+            
             
           })
         },
@@ -1732,5 +1742,10 @@
   .cardUl {
     max-height: 160px;
     overflow-y: scroll;
+  }
+  .noHaveData {
+    min-height: 200px;
+    text-align: center;
+    line-height: 180px;
   }
 </style>
