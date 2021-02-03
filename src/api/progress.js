@@ -60,6 +60,16 @@ export function getDelayNum(id) {
   })
 }
 
+export function treeTask(id) {
+  return request({
+    url: `/schedule/task/board-tree?siteId=${id}`,
+    method: 'get'
+  })
+}
+
+
+
+
 
 
 

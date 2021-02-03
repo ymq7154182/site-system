@@ -83,69 +83,18 @@
               <div class="process_content">
 
                 <span>项目进度</span>
-                <div style="">
+                <div style="margin-top: 3vh;">
                    <div class="scrolling-container">
-                    <el-row style="margin-bottom:5px;">
-                      <el-col :span="22">
-                       
-                      <treeselect v-model="selectTaskId" :options="treeData" placeholder="请选择任务" :clearable="true" :show-count="true" style="width: 350px" @select="getSelectTask" />
+                    <el-row>
+                      <el-col :span="18">
+                        
                       </el-col>
-                      <el-col :span="2">
-                        <el-button type="primary" size="mini" @click="gotoSchedule">更多</el-button>
+                      <el-col :span="6">
+                        <el-button type="primary" size="mini" @click="gotoSchedule"></el-button>
                       </el-col>
                     </el-row>
-                   
-                        <div class="wl-gantt-demo">
-                          <wlGantt
-                            class="cardUl"
-                            ref="wl-gantt-demo"
-                            
-                            use-real-time
-                            
-                            endDate="2023-12-31"
-                            startDate="2020-01-01"
-                            date-type="monthAndDay"
-                            :edit="false"
-                            :data="taList"
-                            :columns="columns"
-                            :contextMenuOptions="contextMenuOptions"
-                            
-                          >
-                            <template slot="">
-                              <el-table-column fixed type="state" width="65" label="状态">
-                                <template slot-scope="scope">
-                                  <el-tag type="info" v-if="scope.row.state === '未开工' ">未开工</el-tag>
-                                  <el-tag type="danger" v-if="scope.row.state === '进行中' ">已开工</el-tag>
-                                  <el-tag type="success" v-if="scope.row.state === '已完工' ">已完工</el-tag>
-                                </template>
-                              </el-table-column>
-                            </template>
-                            <template #info-card="{ row }">
-                              <ul class="hoverCard">
-                                <li>
-                                  <label for="name">名称：</label><span id="name">{{ row.name }}</span>
-                                </li>
-                                <li>
-                                  <label for="startDate">开始日期：</label><span id="startDate">{{ row.startDate }}</span>
-                                </li>
-                                <li>
-                                  <label for="endDate">结束日期：</label><span id="endDate">{{ row.endDate }}</span>
-                                </li>
-                                <li>
-                                  <label for="realStartDate">实际开始日期：</label><span id="realStartDate">{{ row.realStartDate }}</span>
-                                </li>
-                                <li>
-                                  <label for="realEndDate">实际结束日期：</label><span id="realEndDate">{{ row.realEndDate }}</span>
-                                </li>
-                                <!-- <li>
-                                  <label for="state">状态</label><span id="state" v-if="row.state === 0 ">未开工</span>
-                                  <span id="state" v-if="row.state === 1 ">已开工</span>
-                                  <span id="state" v-if="row.state === 2 ">已完工</span>
-                                </li> -->
-                              </ul>
-                            </template>
-                          </wlGantt>
-                        </div>
+                    <div id="container"></div>
+
                     </div>
                 </div>
 
@@ -309,17 +258,14 @@
 <script>
   import {getDeferReasons, getDeferInfo, submitDeferInfo, getOneSchedules, getTwoSchedules, finishSmallSchedule, getErrorInfo} from '@/api/scheduleManage'
   import { getSite } from '@/api/dataManage'
-  import { scheduleInfo, treeTask } from '@/api/progress'
+  import { scheduleInfo } from '@/api/progress'
   import { peopleInfo, typeCount } from '@/api/peopleManager'
   import { getGongDiNameById,screenName, devCount } from '@/api/projectOverview'
   import { getSafeOrQualityChartData,getProjectDetails,getProjectTimeInformation } from '@/api/projectOverview.js'
-  import Treeselect from '@riophae/vue-treeselect'
-  import '@riophae/vue-treeselect/dist/vue-treeselect.css'
   import axios from 'axios'
   require('echarts/theme/macarons')
     export default {
         name: "homePage",
-        components: { Treeselect },
       beforeMount(){
         // this.getProDetails()
       },
@@ -328,7 +274,6 @@
         // this.getUrl()
         this.getPeopleTotal()
         this.getScheduleInfo()
-        this.getTreeTask()
         this.getOneSchedules() // 获取所有一级进度
         this.getDeferReasons() // 获取滞缓原因
 
@@ -362,9 +307,7 @@
       },
       data(){
           return{
-            selectTaskId: null,
-            taList: [],
-            treeData: [],
+            scheduleNameList: [],
             scheduleList: [],
             devList: [],
             normalList: [],
@@ -426,40 +369,138 @@
           }
       },
       methods:{
-        gotoSchedule() {
-          this.$router.push('/progressController')
-        },
-        getTreeTask() {
-          var id = localStorage.getItem('siteId')
-          treeTask(id).then((res) => {
-            console.log("123", res.data)
-            this.treeData = res.data.data
-          })
-        },
-        getSelectTask(node, instanceId) {
-          console.log("instanceId", instanceId)
-          console.log("node", node)
-          this.selectTaskId = node.id
-          var params = {
-            taskId: this.selectTaskId
-          }
-          scheduleInfo(params).then((res) => {
-            console.log("甘特图", res.data.data.actual)
-            this.taList = res.data.data.actual
-            
-          })
-        },
         getScheduleInfo() {
           var params = {
             siteId: localStorage.getItem('siteId')
           }
           scheduleInfo(params).then((res) => {
             console.log("甘特图", res.data.data.actual)
-            this.taList = res.data.data.actual
-            
+            this.scheduleList = res.data.data.actual
+            var arr = res.data.data.actual
+            for(var i = 0; i < arr.length; i++) {
+              this.scheduleNameList.push(arr[i].name)
+            }
+            this.initGantt()
           })
         },
+        initGantt() {
+          Highcharts.chart('container', {
+    chart: {
+        type: 'xrange'
+    },
+    xAxis: {
+        type: 'datetime',
+        dateTimeLabelFormats: {
+            week: '%Y/%m/%d'
+        }
+    },
+    yAxis: {
+        title: {
+            text: ''
+        },
+        categories: this.scheduleNameList,
+        reversed: true
+    },
+    tooltip: {
+        dateTimeLabelFormats: {
+            day: '%Y/%m/%d'
+        }
+    },
+    series: [{
+        name: '任务',
+        // pointPadding: 0,
+        // groupPadding: 0,
+        borderColor: 'gray',
+        pointWidth: 20,
        
+        data: [{
+            x: Date.UTC(2014, 10, 21),
+            x2: Date.UTC(2014, 11, 2),
+            y: 0,
+            partialFill: 0.25
+        }, {
+            x: Date.UTC(2014, 11, 2),
+            x2: Date.UTC(2014, 11, 5),
+            y: 1
+        }, {
+            x: Date.UTC(2014, 11, 8),
+            x2: Date.UTC(2014, 11, 9),
+            y: 2
+        }, {
+            x: Date.UTC(2014, 11, 9),
+            x2: Date.UTC(2014, 11, 19),
+            y: 1
+        }, {
+            x: Date.UTC(2014, 11, 10),
+            x2: Date.UTC(2014, 11, 23),
+            y: 2
+        }],
+        dataLabels: {
+            enabled: true
+        }
+    }]
+});
+          // Highcharts.ganttChart('container', {
+          //   xAxis: {
+          //     tickPixelInterval: 10,
+          //     currentDateIndicator: true
+          //   },
+          //   // yAxis: {
+          //   //   type: 'category',
+          //   //   grid: {
+          //   //     borderColor: 'rgba(0,0,0,0.3)',
+          //   //     borderWidth: 1,
+          //   //     columns: [{
+          //   //       title: {
+          //   //         text: 'Project'
+          //   //       },
+          //   //       labels: {
+          //   //         format: '{point.name}'
+          //   //       }
+          //   //     }, {
+          //   //       title: {
+          //   //         text: 'Assignee'
+          //   //       },
+          //   //       labels: {
+          //   //         format: '{point.assignee}'
+          //   //       }
+          //   //     }, {
+          //   //       title: {
+          //   //         text: 'Est. days'
+          //   //       },
+          //   //       labels: {
+          //   //       }
+          //   //     }, {
+          //   //       labels: {
+          //   //         format: '{point.start:%e. %b}'
+          //   //       },
+          //   //       title: {
+          //   //         text: 'Start date'
+          //   //       }
+          //   //     }, {
+          //   //       title: {
+          //   //         text: 'End date'
+          //   //       },
+          //   //       offset: 30,
+          //   //       labels: {
+          //   //         format: '{point.end:%e. %b}'
+          //   //       }
+          //   //     }]
+          //   //   }
+          //   // },
+          //   tooltip: {
+          //     xDateFormat: '%e %b %Y, %H:%M'
+          //   },
+          //   series: [{
+            
+          //     data: this.scheduleList
+              
+          //   }],
+          //   exporting: {
+          //     sourceWidth: 1000
+          //   }
+          // });
+        },
         getPeopleTotal() {
           var params = {
             constructionSiteId: localStorage.getItem("siteId")
@@ -1729,8 +1770,5 @@
   .homePage_dialog .home_second .el-dialog__title{
     color: white;
   }
-  .cardUl {
-    max-height: 160px;
-    overflow-y: scroll;
-  }
+ 
 </style>
