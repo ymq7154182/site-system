@@ -51,3 +51,11 @@ export function devCount (id) {
     method: 'get'
   })
 }
+
+export function getInfoByName (name) {
+  return request({
+    url: `/getDeptId?username=${name}`,
+    method: 'get'
+  })
+}
+

@@ -97,3 +97,9 @@ export function delFile(id) {
   })
 }
 
+export function homeImg(id) {
+  return request({
+    url: `/doc/home-img?siteId=${id}`,
+    method: 'get'
+  })
+}

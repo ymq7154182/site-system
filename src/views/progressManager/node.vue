@@ -409,11 +409,11 @@ export default {
           teamId: '',
         },
         viewFormRules: {
-          actualEndTime: [
-            { required: true, message: "实际结束时间不能为空", trigger: "blur" },
+          planStartTime: [
+            { required: true, message: "计划开始时间不能为空", trigger: "blur" },
           ],
-          labactualStartTimeel: [
-            { required: true, message: "实际结束时间不能为空", trigger: "blur" },
+          planEndTime: [
+            { required: true, message: "计划结束时间不能为空", trigger: "blur" },
           ]
         },
         nodeForm: {

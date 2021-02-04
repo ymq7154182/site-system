@@ -127,8 +127,10 @@
 </template>
 
 <script>
+  import Cookies from 'js-cookie'
   import { getSite } from '@/api/dataManage'
   import {getSysProData} from '@/api/qualityControl';
+  import { getInfoByName } from '@/api/projectOverview'
 
     export default {
         name: "header",
@@ -149,7 +151,7 @@
         // this.textStyle = this.$store.state.textStyle
         // this.siteName = localStorage.getItem('siteName')
         this.getUrl()
-        this.getsiteName()
+        
       },
       methods: {
         gotoPage() {
@@ -193,13 +195,26 @@
         getUrl() {
           // var url = ''
           // url = window.location.href
-          var str = window.location.search
-          if(str === '') {
-            console.log('str为空')
-          }else {
-            var siteId = str.split('=')[1]
-            localStorage.setItem('siteId', siteId)
-          }
+          // var str = window.location.search
+          // if(str === '') {
+          //   console.log('str为空')
+          // }else {
+          //   var siteId = str.split('=')[1]
+          //   localStorage.setItem('siteId', siteId)
+          // }
+          var projectName = Cookies.get('username')
+          
+          getInfoByName(projectName).then((res) => {
+            
+            if(res.data.code === 200) {
+              localStorage.setItem('siteId', res.data.site_id)
+              this.getsiteName()
+            } else {
+              this.$message.error('获取工地信息失败')
+            }
+            
+          })
+
 
           // console.log(url)
           // console.log(siteId)

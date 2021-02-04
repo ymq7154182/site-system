@@ -131,6 +131,13 @@ export function importNode(id, file) {
   })
 }
 
+export function getProjectInfo(data) {
+  return request({
+    url: `/schedule/task/back-total`,
+    method: 'get',
+    params: data
+  })
+}
 
 
 

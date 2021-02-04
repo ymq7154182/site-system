@@ -26,7 +26,8 @@
 
         <el-row :gutter="10" class="mb8" style="margin-top:5px;margin-bottom: 6px;">
           <el-col :span="1.5" style="color:white;">
-           共计单位工程{{projectTotal}}个，未开始{{noStart}}个，进行中{{doing}}个，已完成{{complete}}个
+           <!-- 共计单位工程{{projectTotal}}个，未开始{{noStart}}个，进行中{{doing}}个，已完成{{complete}}个 -->
+           {{totalInfo}}
           </el-col>
         </el-row>
 
@@ -53,8 +54,9 @@
             
             <el-table-column label="状态" align="center" prop="state" :show-overflow-tooltip="true" >
               <template slot-scope="scope">
-                  <el-tag  v-if="scope.row.state=== 0 " type="success">正常</el-tag>
-                  <el-tag  v-if="scope.row.state=== 1 " type="warning">延期</el-tag>
+                  <el-tag  v-if="scope.row.state===0" type="success">正常</el-tag>
+                  <el-tag  v-if="scope.row.state===1" type="warning">正常延期</el-tag>
+                  <el-tag  v-if="scope.row.state===2" type="danger">异常延期</el-tag>
               </template>
             </el-table-column>
             
@@ -175,16 +177,7 @@
               </el-radio-group>
             </el-form-item>
           </el-col>
-          <el-col :span="12">
-            <el-form-item label="实际结束时间"  prop="actualEndTime">
-               <el-date-picker
-                    v-model="form.actualEndTime"
-                    type="date"
-                    value-format="yyyy-MM-dd"
-                    placeholder="选择日期">
-                </el-date-picker>
-            </el-form-item>
-          </el-col>
+          
         </el-row>
         <el-row>
             <el-col :span="24">
@@ -226,7 +219,7 @@
 <script>
 
 
-import { taskList, addTask } from "@/api/processback";
+import { taskList, addTask, getProjectInfo } from "@/api/processback";
 import Treeselect from "@riophae/vue-treeselect";
 import "@riophae/vue-treeselect/dist/vue-treeselect.css";
 import { mapState } from 'vuex'
@@ -260,7 +253,7 @@ export default {
         doing: 1,
         complete: 1,
         currentDeptName: '',
-
+        totalInfo: '',
 
 
 
@@ -386,10 +379,20 @@ export default {
   created() {
    
     this.getTaskList()
-    
+    this.getInfo()
   },
   methods: {
-  
+    getInfo() {
+      var params = {
+        siteId: localStorage.getItem('siteId'),
+        parentId: this.$store.state.nodeStateId
+      }
+      getProjectInfo(params).then((res) => {
+        // console.log("一句话", res.data)
+        this.totalInfo = res.data.data
+      })
+    },
+    
     getTaskList() {
       // console.log("task", this.selectNodeId)
       // console.log("selectNodeId", localStorage.getItem("selectNodeId"))
