@@ -53,9 +53,8 @@
             
             <el-table-column label="状态" align="center" prop="state" :show-overflow-tooltip="true" >
               <template slot-scope="scope">
-                  <el-tag  v-if="scope.row.state===0" type="success">正常</el-tag>
-                  <el-tag  v-if="scope.row.state===1" type="warning">正常延期</el-tag>
-                  <el-tag  v-if="scope.row.state===2" type="danger">异常延期</el-tag>
+                  <el-tag  v-if="scope.row.state=== 0 " type="success">正常</el-tag>
+                  <el-tag  v-if="scope.row.state=== 1 " type="warning">延期</el-tag>
               </template>
             </el-table-column>
             
@@ -366,6 +365,9 @@ export default {
         ],
         contactInformation: [
           { required: true, message: "联系方式不能为空", trigger: "blur" },
+        ],
+        planStartTime: [
+          { required: true, message: "计划开始时间不能为空", trigger: "blur" },
         ]
       },
     };
@@ -539,7 +541,7 @@ export default {
       this.upload.isUploading = false;
       this.$refs.upload.clearFiles();
       this.$alert(response.msg, "导入结果", { dangerouslyUseHTMLString: true });
-      this.getList();
+      
     },
     // 提交上传文件
     submitFileForm() {

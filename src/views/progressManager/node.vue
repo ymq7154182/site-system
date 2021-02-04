@@ -62,9 +62,9 @@
 
             <el-table-column label="状态" align="center" prop="state" :show-overflow-tooltip="true" >
               <template slot-scope="scope">
-                  <el-tag  v-if="scope.row.state===0" type="success">正常</el-tag>
-                  <el-tag  v-if="scope.row.state===1" type="warning">正常延期</el-tag>
-                  <el-tag  v-if="scope.row.state===2" type="danger">异常延期</el-tag>
+                  <el-tag  v-if="scope.row.state=== 0" type="success">正常</el-tag>
+                  <el-tag  v-if="scope.row.state=== 1" type="warning">延期</el-tag>
+                  
               </template>
             </el-table-column>
             
@@ -260,8 +260,8 @@
           <el-table-column label="结束时间" align="center" prop="endTime"  />
           <el-table-column label="状态" align="center" prop="state" >
             <template slot-scope="scope">
-                <el-tag  v-if="scope.row.state===0" type="danger">异常延期</el-tag>
-                <el-tag  v-if="scope.row.state===1" type="success">正常延期</el-tag>
+                <el-tag  v-if="scope.row.state=== 0 " type="danger">异常延期</el-tag>
+                <el-tag  v-if="scope.row.state=== 1 " type="success">正常延期</el-tag>
             </template>
           </el-table-column>
           
@@ -318,7 +318,7 @@
      
       <div slot="footer" class="dialog-footer">
         <el-button type="primary" @click="submitDelayForm">确 定</el-button>
-        <el-button @click="cancelView">取 消</el-button>
+        <el-button @click="cancelDelay">取 消</el-button>
       </div>
     </el-dialog>
 
@@ -460,12 +460,8 @@ export default {
           },
           {
             value: 1,
-            label: '正常延期'
-          },
-          {
-            value: 2,
-            label: '异常延期'
-          },
+            label: '延期'
+          }
         ],
         nodePlan: false,
         tableData: [
@@ -869,6 +865,10 @@ export default {
     },
     cancelView() {
       this.viewDialog = false;
+      
+    },
+    cancelDelay() {
+      this.addDelayOpen = false
       
     },
     // 表单重置
