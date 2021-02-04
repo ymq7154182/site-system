@@ -459,6 +459,9 @@ export default {
         ],
         contactInformation: [
           { required: true, message: "联系方式不能为空", trigger: "blur" },
+        ],
+        planStartTime: [
+          { required: true, message: "计划开始时间不能为空", trigger: "blur" },
         ]
       }
 

@@ -51,7 +51,7 @@
             ref="wl-gantt-demo"
             
             use-real-time
-            
+            :default-expand-all="true"
             endDate="2023-12-31"
             startDate="2020-01-01"
             date-type="monthAndDay"
@@ -478,8 +478,11 @@ export default {
   overflow-y: scroll;
   /* -webkit-overflow-scrolling: touch; */
 }
+.wl-gantt-demo {
+  height: 500px;
+}
 .cardUl {
-  max-height: 600px;
+  max-height: 500px;
   overflow-y: scroll;
 }
 .totalDayClass {
