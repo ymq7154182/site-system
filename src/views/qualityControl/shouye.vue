@@ -106,7 +106,7 @@
                 质安教育培训
               </div>
               <div class="addBtn">
-                <el-button type="primary" size="mini" @click="addResume">新增</el-button>
+                <el-button type="primary" size="mini" @click="addResume">更新数据</el-button>
               </div>
               <div style="clear:both;margin-top:-10px;">
                 <el-row>
@@ -138,7 +138,12 @@
       </div>
 
       <el-dialog :visible.sync="showAdd" title="更新数据" width="40%">
+        <div style="margin-left:40px;margin-top:-30px;margin-bottom:10px;">
+          <el-tag type="danger" >更新数据操作是对原数据进行累加</el-tag>
+        </div>
+        
       <div >
+        
         <el-form :model="uploadInfo" :rules="rules" ref="uploadInfo" label-width="1.5rem">
           <el-form-item label="举办次数" prop="holdCount">
             <el-input v-model="uploadInfo.holdCount" type="number" style="width: 50%"></el-input>

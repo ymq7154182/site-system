@@ -77,7 +77,11 @@
         <el-col :span="12" class="homePage_dialog">
           <div style="padding-left: 0.3rem;margin-right: 0.3rem">
             <div class="video_container">
-              <el-image :src="require('../assets/homepage/button.png')" fill="contain" style="height: 0.4rem; width: 4rem; margin: 0.17rem 0 0 0.17rem; " />
+              <el-carousel>
+                <el-carousel-item v-for="item in homeImgs" :key="item" >
+                  <img :src="item"  style="height: 100%; width: 100%; disply:block; " />
+                </el-carousel-item>
+              </el-carousel>
             </div>
             <div class="process">
               <div class="process_content">
@@ -311,7 +315,7 @@
 
 <script>
   import {getDeferReasons, getDeferInfo, submitDeferInfo, getOneSchedules, getTwoSchedules, finishSmallSchedule, getErrorInfo} from '@/api/scheduleManage'
-  import { getSite } from '@/api/dataManage'
+  import { getSite, homeImg } from '@/api/dataManage'
   import { scheduleInfo, treeTask } from '@/api/progress'
   import { peopleInfo, typeCount } from '@/api/peopleManager'
   import { getGongDiNameById,screenName, devCount } from '@/api/projectOverview'
@@ -329,6 +333,7 @@
       mounted() {
         this.$store.dispatch('changeMsg', '项目概览')
         // this.getUrl()
+        this.getHomeImg()
         this.getPeopleTotal()
         this.getScheduleInfo()
         this.getTreeTask()
@@ -365,6 +370,16 @@
       },
       data(){
           return{
+            homeImgs: [],
+            contextMenuOptions: [
+              { label: "任务名称", prop: "name" },
+              { label: "开始时间", prop: "startDate" },
+              { label: "结束时间", prop: "endDate" },
+              { label: "实际开始时间", prop: "realStartDate" },
+              { label: "实际结束时间", prop: "realEndDate" },
+              { label: "状态", prop: "state" },
+            ],
+            columns: [{ type: "name", maxWidth: 200, colType: "expand" }], 
             haveData: false,
             selectTaskId: null,
             taList: [],
@@ -430,6 +445,13 @@
           }
       },
       methods:{
+        getHomeImg() {
+          var id = localStorage.getItem('siteId')
+          homeImg(id).then((res) => {
+            // console.log("轮播图", res.data.data)
+            this.homeImgs = res.data.data
+          })
+        },
         gotoSchedule() {
           this.$router.push('/progressController')
         },
@@ -445,6 +467,7 @@
           console.log("node", node)
           this.selectTaskId = node.id
           var params = {
+            siteId: localStorage.getItem('siteId'),
             taskId: this.selectTaskId
           }
           scheduleInfo(params).then((res) => {
@@ -1561,9 +1584,12 @@
   }
   .video_container {
     width: 100%;
-    height: 5.961rem;
-    background-image: url("../assets/homepage/video_bg.png");
-    background-size:contain
+    height: 5 .961rem;
+    /* background-image: url("../assets/homepage/video_bg.png");
+    background-size:contain */
+  }
+  .video_container >>> .el-carousel__container {
+    height: 5.95rem;
   }
   .process {
     margin-top: 0.15rem;
