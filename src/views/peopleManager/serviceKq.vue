@@ -463,8 +463,8 @@ export default {
       var params = {
         constructionSiteId: localStorage.getItem('siteId'),
       }
-      listByTime(params).then((res) => {
-          this.userList = res.data.rows
+      listDay(params).then((res) => {
+          this.userList = res.data.data.userDay
           this.loading = false
       })
     },
@@ -514,11 +514,12 @@ export default {
     cancel() {
       this.open = false;
       this.resetForm();
+      this.getListDay()
     },
     
     cancelView() {
         this.viewOpen = false;
-        
+        this.getListDay()
     },
     // 表单重置
    

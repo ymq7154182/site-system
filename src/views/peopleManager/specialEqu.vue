@@ -603,12 +603,13 @@ export default {
     // 取消按钮
     cancel() {
       this.open = false;
-      
+      this.getPeopleInfo()
       
     },
     
     cancelModel() {
       this.modelOpen = false
+     
     },
     submitExcel() {
       var id = localStorage.getItem('siteId')

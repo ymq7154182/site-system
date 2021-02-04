@@ -442,7 +442,15 @@ export default {
         console.log("总空间", res.data)
         this.totalDays = res.data.data.total_plan_days
         this.actualDay = res.data.data.construction_days
-        this.nodeTimeList = res.data.data.time_node
+        var arr = res.data.data.time_node
+        
+        for(var i = 0; i < arr.length; i++) {
+          var obj = {}
+          obj.label = arr[i].label
+          obj.value = arr[i].value.split('T')[0]
+          this.nodeTimeList.push(obj)
+        }
+        //this.nodeTimeList = res.data.data.time_node
         this.dayPercentage = Math.round((this.actualDay / this.totalDays) * 100)
       })
     },

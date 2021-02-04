@@ -23,13 +23,19 @@
               <el-option v-for="dict in stateList" :key="dict.value" :label="dict.label" :value="dict.label" ></el-option>
           </el-select>
            <br />
-          <span style="font-size: 14px;color:white;margin-right: 10px">处理结果</span> <el-select v-model="queryParams.processResult" placeholder="请选择" clearable  style="width: 200px;margin-right: 10px">
+          <span style="font-size: 14px;color:white;margin-right: 10px">处理状态</span> <el-select v-model="queryParams.processResult" placeholder="请选择" clearable  style="width: 200px;margin-right: 10px">
               <el-option v-for="dict in state2List" :key="dict.value" :label="dict.label" :value="dict.label" ></el-option>
           </el-select>
           <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
           <el-button type="primary" icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>
         </div>
-       
+
+       <el-row :gutter="10" class="mb8" style="margin-top:15px;clear:both;margin-bottom:10px;">
+          <el-col :span="1.5">
+            <el-button type="primary"  size="mini" @click="handleAdd" >新增自检记录</el-button>
+          </el-col>
+          
+        </el-row>
 
         
 
@@ -604,6 +610,7 @@ export default {
       };
       this.resetForm("form");
     },
+    
     /** 搜索按钮操作 */
     handleQuery() {
 
@@ -642,11 +649,7 @@ export default {
     },
     /** 新增按钮操作 */
     handleAdd() {
-        this.open = true;
-        this.title = "设置节点计划";
-        console.log(this.form)
-        // this.reset()
-        // this.form.siteId = localStorage.getItem("deptId")
+        
 
     },
     addNodePlan() {

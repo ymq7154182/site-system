@@ -777,7 +777,7 @@ export default {
     // 取消按钮
     cancel() {
       this.open = false;
-      
+      this.getPeopleInfo()
       
     },
     cancelPeople() {
@@ -875,6 +875,7 @@ export default {
       this.loading = true;
       console.log("查询", this.queryParams)
       peopleInfo(this.queryParams).then(response => {
+        console.log("查询的数据", response.data)
         this.userList = response.data.rows;
         this.total = response.total;
         this.loading = false;
