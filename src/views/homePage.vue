@@ -317,7 +317,7 @@
   import {getDeferReasons, getDeferInfo, submitDeferInfo, getOneSchedules, getTwoSchedules, finishSmallSchedule, getErrorInfo} from '@/api/scheduleManage'
   import { getSite, homeImg } from '@/api/dataManage'
   import { scheduleInfo, treeTask } from '@/api/progress'
-  import { peopleInfo, typeCount } from '@/api/peopleManager'
+  import {  typeCount, todayAttend } from '@/api/peopleManager'
   import { getGongDiNameById,screenName, devCount } from '@/api/projectOverview'
   import { getSafeOrQualityChartData,getProjectDetails,getProjectTimeInformation } from '@/api/projectOverview.js'
   import Treeselect from '@riophae/vue-treeselect'
@@ -335,6 +335,7 @@
         // this.getUrl()
         this.getHomeImg()
         this.getPeopleTotal()
+        // this.getAttendPeople()
         this.getScheduleInfo()
         this.getTreeTask()
         this.getOneSchedules() // 获取所有一级进度
@@ -497,15 +498,27 @@
           var params = {
             constructionSiteId: localStorage.getItem("siteId")
           }
-          peopleInfo(params).then((res) => {
-            this.dengjiPeople = res.data.total
+          var id = localStorage.getItem("siteId")
+          todayAttend(id).then((res) => {
+            if(res.data.data[0].total === null) {
+              this.dengjiPeople = 0
+            } else {
+              this.dengjiPeople = res.data.data[0].total
+            }
+
+            if(res.data.data[0].absent === null) {
+              this.attendPeople = 0
+            } else {
+              this.attendPeople = res.data.data[0].absent
+            }
+            
           })
         },
         getAttendPeople() {
           var params = {
             constructionSiteId: localStorage.getItem('siteId')
           }
-          listByTime(params).then((res) => {
+          todayAttend(params).then((res) => {
             this.attendPeople = res.data.total
           })
         },

@@ -436,8 +436,8 @@ export default {
     return{
       selectDeptName: '',
       todayAttendTotal: 0,
-      todayAttend: 0,
-      todayAbsent: 0,
+      todayAttendNum: 0,
+      todayAbsentNum: 0,
       open: false,
       form: {
         projectLeader: '',
@@ -600,8 +600,18 @@ export default {
    
     this.getTodayAttend()
     this.getLastWeek()
+    // this.getPeopleTotal()
   },
   methods:{
+    // getPeopleTotal() {
+    //   var params = {
+    //     constructionSiteId: localStorage.getItem("siteId")
+    //   }
+    //   peopleInfo(params).then((res) => {
+    //     console.log("项目登记人数", res.data)
+    //     this.todayAttendTotal = res.data.total
+    //   })
+    // },
     
     getLastWeek() {
       var id = localStorage.getItem("siteId")
@@ -718,9 +728,19 @@ export default {
       var id = localStorage.getItem("siteId")
       todayAttend(id).then((res) => {
         console.log("今日出勤人数", res.data.data[0])
-        this.todayAttendTotal = res.data.data[0].total
-        this.todayAttend = res.data.data[0].attend
-        this.todayAbsent = res.data.data[0].absent
+        if(res.data.data[0].total === null) {
+          this.todayAttendTotal = 0
+        } else {
+          this.todayAttendTotal = res.data.data[0].total
+        }
+        
+        if(res.data.data[0].absent === null) {
+          this.todayAttendNum = 0
+        } else {
+          this.todayAttendNum = res.data.data[0].absent
+        }
+        
+        this.todayAbsentNum = this.todayAttendTotal - this.todayAttendNum
         //console.log("今日出勤总数", typeof this.todayAttendTotal)
         this.drawLine()
       })
@@ -997,8 +1017,8 @@ export default {
       // let myChart3 = this.$echarts.init(document.getElementById('chart3'))
      
       // var num1 = this.todayAttendTotal;
-      // var num2 = this.todayAbsent;
-      // var num3 = this.todayAttend;
+      // var num2 = this.todayAbsentNum;
+      // var num3 = this.todayAttendNum;
       myChart1.setOption({
 
         title: [{
@@ -1013,7 +1033,7 @@ export default {
             textAlign: 'center',
           },
         },{
-          text: this.todayAbsent.toString(),
+          text: this.todayAbsentNum.toString(),
           left: '49%',
           top: '30%',
           textAlign: 'center',
@@ -1057,7 +1077,7 @@ export default {
             textAlign: 'center',
           },
         },{
-          text: this.todayAttend.toString(),
+          text: this.todayAttendNum.toString(),
           left: '79%',
           top: '30%',
           textAlign: 'center',
@@ -1179,7 +1199,7 @@ export default {
             center: ['50%', '50%'],
             data: [{
               hoverOffset: 1,
-              value: this.todayAbsent,
+              value: this.todayAbsentNum,
               name: '虚拟主机',
               itemStyle: {
                 color: 'rgba(251, 200, 79, 1)',
@@ -1209,7 +1229,7 @@ export default {
                     }
                   }
                 },
-                value: this.todayAttendTotal - this.todayAbsent,
+                value: this.todayAttendTotal - this.todayAbsentNum,
                 hoverAnimation: false,
                 itemStyle: {
                   color: 'rgba(251, 200, 79, .2)',
@@ -1233,7 +1253,7 @@ export default {
                   }
                 }
               },
-              value:  this.todayAttendTotal - this.todayAttend,
+              value:  this.todayAttendTotal - this.todayAttendNum,
               hoverAnimation: false,
               itemStyle: {
                 color: 'rgba(63, 66, 73, .3)',
@@ -1270,7 +1290,7 @@ export default {
             center: ['80%', '50%'],
             data: [{
               hoverOffset: 1,
-              value: this.todayAttend,
+              value: this.todayAttendNum,
               name: '虚拟主机',
               itemStyle: {
                 color: 'rgb(106,192,240)',
@@ -1300,7 +1320,7 @@ export default {
                     }
                   }
                 },
-                value: this.todayAttendTotal - this.todayAttend,
+                value: this.todayAttendTotal - this.todayAttendNum,
                 hoverAnimation: false,
                 itemStyle: {
                   color: 'rgba(251, 200, 79, .2)',

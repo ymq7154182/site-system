@@ -118,7 +118,7 @@ export function importExcel(id, file) {
 
 export function profession(id) {
   return request({
-    url: `/people/profession/list?siteId=${id}`,
+    url: `/people/profession/prelist?siteId=${id}`,
     method: 'get'
   })
 }

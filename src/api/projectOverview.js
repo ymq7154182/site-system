@@ -39,7 +39,7 @@ export function getProjectDetails (parems) {
 // 获取项目时间信息
 export function getProjectTimeInformation (parems) {
   return request({
-    url: '/schedule/getScheduleTime',
+    url: '/schedule/getPreScheduleTime',
     method: 'get',
     params: parems
   })

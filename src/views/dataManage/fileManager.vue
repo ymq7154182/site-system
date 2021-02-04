@@ -34,7 +34,7 @@
             >
               <el-table-column label="文件名称" align="center" prop="name">
               </el-table-column>
-              <el-table-column prop="userName" label="更新者" width="200" align="center" />
+              <!-- <el-table-column prop="userName" label="更新者" width="200" align="center" /> -->
               <el-table-column label="首页轮播" align="center"  width="150" >
                 <template slot-scope="scope">
                     <el-switch v-model="scope.row.statuss" active-value="1" inactive-value="0" disabled></el-switch>
