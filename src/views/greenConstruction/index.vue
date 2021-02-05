@@ -18,42 +18,42 @@
                 <td><span>风速</span></td>
                 <td>m/s</td>
                 <td><span style="font-weight: bold">6</span></td>
-                <td><span style="font-weight: bold; color: #67C23A; ">0</span></td>
+                <td><span style="font-weight: bold; color: #67C23A; ">2</span></td>
               </tr>
               <tr>
                 <td><i class="iconfont iconwumai" style="color: rgb(106, 193, 241); "></i></td>
                 <td><span>PM2.5</span></td>
                 <td>ug/m<sup>3</sup></td>
-                <td><span style="font-weight: bold">100</span></td>
-                <td><span style="font-weight: bold; color: #67C23A; ">39</span></td>
+                <td><span style="font-weight: bold">70</span></td>
+                <td><span style="font-weight: bold; color: #67C23A; ">68</span></td>
               </tr>
               <tr>
                 <td><i class="iconfont iconzaoyin1" style="color: rgb(238, 216, 152); "></i></td>
                 <td><span>PM10</span></td>
                 <td>ug/m<sup>3</sup></td>
-                <td><span style="font-weight: bold">200</span></td>
-                <td><span style="font-weight: bold; color: #F56C6C; ">201</span></td>
+                <td><span style="font-weight: bold">50</span></td>
+                <td><span style="font-weight: bold; color: #F56C6C; ">52</span></td>
               </tr>
               <tr>
                 <td><i class="iconfont iconPM" style="color: rgb(255, 179, 88); "></i></td>
                 <td><span>噪音</span></td>
                 <td>dB</td>
                 <td><span style="font-weight: bold">85</span></td>
-                <td><span style="font-weight: bold; color: #67C23A; ">47.5</span></td>
+                <td><span style="font-weight: bold; color: #67C23A; ">50</span></td>
               </tr>
               <tr>
                 <td><i class="iconfont iconwendu" style="color: rgb(255, 143, 161); "></i></td>
                 <td><span>温度</span></td>
                 <td>℃</td>
-                <td><span style="font-weight: bold">40</span></td>
-                <td><span style="font-weight: bold; color: #67C23A; ">6.6</span></td>
+                <td><span style="font-weight: bold">38</span></td>
+                <td><span style="font-weight: bold; color: #67C23A; ">6</span></td>
               </tr>
               <tr>
                 <td><i class="iconfont iconshidu" style="color: rgb(235, 108, 177); "></i></td>
                 <td><span>湿度</span></td>
                 <td>%</td>
-                <td><span style="font-weight: bold">25</span></td>
-                <td><span style="font-weight: bold; color: #F56C6C; ">99.9</span></td>
+                <td><span style="font-weight: bold">60</span></td>
+                <td><span style="font-weight: bold; color: #F56C6C; ">65</span></td>
               </tr>
             </table>
           </div>
