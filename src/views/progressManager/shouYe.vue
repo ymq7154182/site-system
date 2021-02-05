@@ -87,11 +87,11 @@
                 <li>
                   <label for="realEndDate">实际结束日期：</label><span id="realEndDate">{{ row.realEndDate }}</span>
                 </li>
-                <li>
+                <!-- <li>
                   <label for="state">状态</label><span id="state" v-if="row.state === '0' ">未开工</span>
                   <span id="state" v-if="row.state === '1' ">已开工</span>
                   <span id="state" v-if="row.state === '2' ">已完工</span>
-                </li>
+                </li> -->
               </ul>
             </template>
           </wlGantt>
@@ -341,8 +341,7 @@ export default {
         { label: "开始时间", prop: "startDate" },
         { label: "结束时间", prop: "endDate" },
         { label: "实际开始时间", prop: "realStartDate" },
-        { label: "实际结束时间", prop: "realEndDate" },
-        { label: "状态", prop: "state" },
+        { label: "实际结束时间", prop: "realEndDate" }
       ],
       columns: [{ type: "name", maxWidth: 200, colType: "expand" }], 
     }
@@ -410,7 +409,23 @@ export default {
       this.open = false;
       this.resetForm()
     },
-    queryValue() {},
+    queryValue() {
+      // var params = {
+      //   name: this.searchValue,
+      //   siteId: localStorage.getItem('siteId')
+      // }
+      // scheduleList(params).then((res) => {
+      //   console.log("打印",res.data.rows)
+      //   this.data = res.data.rows
+        
+      //   this.siteName = res.data.rows[0].name
+      //   this.currentTaskId = res.data.rows[0].id
+      //   this.totalStartTime = res.data.rows[0].startDate
+      //   this.totalEndTime = res.data.rows[0].endDate
+      //   console.log("siteName", this.siteName)
+        
+      // })
+    },
     clearValue() {},
     getScheduleList() {
       var params = {

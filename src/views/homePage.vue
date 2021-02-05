@@ -314,11 +314,12 @@
 </template>
 
 <script>
+  import Cookies from 'js-cookie'
   import {getDeferReasons, getDeferInfo, submitDeferInfo, getOneSchedules, getTwoSchedules, finishSmallSchedule, getErrorInfo} from '@/api/scheduleManage'
   import { getSite, homeImg } from '@/api/dataManage'
   import { scheduleInfo, treeTask } from '@/api/progress'
   import {  typeCount, todayAttend } from '@/api/peopleManager'
-  import { getGongDiNameById,screenName, devCount } from '@/api/projectOverview'
+  import { getGongDiNameById,screenName, devCount, getInfoByName } from '@/api/projectOverview'
   import { getSafeOrQualityChartData,getProjectDetails,getProjectTimeInformation } from '@/api/projectOverview.js'
   import Treeselect from '@riophae/vue-treeselect'
   import '@riophae/vue-treeselect/dist/vue-treeselect.css'
@@ -327,47 +328,15 @@
     export default {
         name: "homePage",
         components: { Treeselect },
-      beforeMount(){
+      created(){
         // this.getProDetails()
+       
       },
       mounted() {
         this.$store.dispatch('changeMsg', '项目概览')
-        // this.getUrl()
-        this.getHomeImg()
-        this.getPeopleTotal()
-        // this.getAttendPeople()
-        this.getScheduleInfo()
-        this.getTreeTask()
-        this.getOneSchedules() // 获取所有一级进度
-        this.getDeferReasons() // 获取滞缓原因
-
-        // this.getTwoSchedules() // 获取所有二级进度
-        // this.inchart13()
-        this.chart13Res()
-        this.getDevCount()
-        this.chart24Res()
-        // this.inchart22()
-        this.chart22Res()
-        this.inchart21()
-        this.chart21Res()
-        this.getWeatherData()
-
-        this.getProDetails()
-        // this.getsiteName()
-        this.getProjectName()
-        this.getProjectTime()
-        // setTimeout(()=>{
-        //   this.verifyProjectName()
-        // },100)
-        setTimeout(()=>{
-          this.inchart13()
-        },300)
-        setTimeout(()=>{
-          this.inchart22()
-        },300)
-        // window.onload = function () {
-        //
-        // }
+       
+        this.getUrl()
+        
       },
       data(){
           return{
@@ -1468,6 +1437,55 @@
               _this.myChart24.resize(resize);
             },100)
           })
+        },
+        getUrl() {
+          
+          var projectName = Cookies.get('username')
+          
+          getInfoByName(projectName).then((res) => {
+            
+            if(res.data.code === 200) {
+              localStorage.setItem('siteId', res.data.site_id)
+              this.getHomeImg()
+        this.getPeopleTotal()
+        this.getScheduleInfo()
+        this.getTreeTask()
+        this.getOneSchedules() // 获取所有一级进度
+        this.getDeferReasons() // 获取滞缓原因
+        this.chart13Res()
+        this.getDevCount()
+        this.chart24Res()
+        // this.inchart22()
+        this.chart22Res()
+        this.inchart21()
+        this.chart21Res()
+        this.getWeatherData()
+
+        this.getProDetails()
+        // this.getsiteName()
+        this.getProjectName()
+        this.getProjectTime()
+        // setTimeout(()=>{
+        //   this.verifyProjectName()
+        // },100)
+        setTimeout(()=>{
+          this.inchart13()
+        },300)
+        setTimeout(()=>{
+          this.inchart22()
+        },300)
+        // window.onload = function () {
+        //
+        // }
+            } else {
+              this.$message.error('获取工地信息失败')
+            }
+            
+          })
+
+
+          // console.log(url)
+          // console.log(siteId)
         },
         // getUrl() {
         //   // var url = ''

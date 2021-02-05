@@ -60,7 +60,7 @@
             :header-row-style="{ color: '#409eff' }"
             :row-style="{ color: 'white' }"
              @selection-change="handleSelectionChange">
-            <el-table-column type="selection" width="50" align="center" />
+            <!-- <el-table-column type="selection" width="50" align="center" /> -->
             <el-table-column label="序号" width="80" type="index" align="center"/>
             <el-table-column label="姓名" align="center" prop="userName" />
             <el-table-column label="班组" align="center" prop="userClass"  />

@@ -147,10 +147,13 @@
           return this.$store.state.textStyle
         }
       },
+      created() {
+        this.getUrl()
+      },
       mounted() {
         // this.textStyle = this.$store.state.textStyle
         // this.siteName = localStorage.getItem('siteName')
-        this.getUrl()
+        
         
       },
       methods: {
@@ -193,15 +196,7 @@
           this.$router.push('/dataManage')
         },
         getUrl() {
-          // var url = ''
-          // url = window.location.href
-          // var str = window.location.search
-          // if(str === '') {
-          //   console.log('str为空')
-          // }else {
-          //   var siteId = str.split('=')[1]
-          //   localStorage.setItem('siteId', siteId)
-          // }
+          
           var projectName = Cookies.get('username')
           
           getInfoByName(projectName).then((res) => {
