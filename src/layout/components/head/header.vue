@@ -198,8 +198,9 @@
         getUrl() {
           
           var projectName = Cookies.get('username')
+          console.log("123", projectName)
           
-          getInfoByName(projectName).then((res) => {
+          getInfoByName(encodeURIComponent(projectName)).then((res) => {
             
             if(res.data.code === 200) {
               localStorage.setItem('siteId', res.data.site_id)

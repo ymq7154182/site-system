@@ -148,7 +148,7 @@
         <el-button type="primary" size="mini" @click="handleAdd">新增任务</el-button>
       </el-col>
       <el-col :span="4">
-        <el-select v-model="selectSortMthd" clearable="true" placeholder="请选择排序方式" @change="selectchange">
+        <el-select v-model="selectSortMthd" :clearable="true" placeholder="请选择排序方式" @change="selectchange">
               <el-option
                 v-for="(item, index) in taList"
                 :key="index"
@@ -218,18 +218,27 @@
             </el-col>
              <el-col :span="12">
                 <el-form-item  label="编号" prop="serialNumber">
-                    <el-input v-model="form.serialNumber" placeholder="请输入任务编号" style="width:250px;"/>
+                    <el-input v-model="form.serialNumber" placeholder="请输入任务编号,例如2021年2月第一件事" style="width:270px;"/>
                 </el-form-item>
             </el-col>
             
         </el-row>
         <el-row>
           <el-col :span="12">
-            <el-form-item label="施工单位">
+            <!-- <el-form-item label="施工单位">
                 <el-select v-model="form.constructionUnit" placeholder="请选择施工单位" style="width:250px;">
                     <el-option v-for="dict in constructionUnitList" :key="dict" :label="dict" :value="dict" ></el-option>
                 </el-select>
+            </el-form-item> -->
+
+            <el-form-item label="选择单位" >
+              <el-select v-model="selectValue" placeholder="请选择" clearable size="small" style="width: 250px" ref="selectTree">
+                <el-option style="height: auto;" :value="optionValue" :label="optionValue">
+                  <el-tree :data="deptOptions" :props="defaultProps" :expand-on-click-node="false" :filter-node-method="filterNode" ref="tree2" @node-click="handleNodeClick2" />
+                </el-option>
+              </el-select>
             </el-form-item>
+           
           </el-col>
           <el-col :span="12">
             <el-form-item label="合同款项">
@@ -326,6 +335,7 @@
 <script>
 
 import { getTaksNum, getNodeNum, getDelayNum, scheduleList } from '@/api/progress'
+import { broadsideInfo } from '@/api/peopleManager'
 import { taskList, addTask } from "@/api/processback";
 import Treeselect from "@riophae/vue-treeselect";
 import "@riophae/vue-treeselect/dist/vue-treeselect.css";
@@ -344,6 +354,9 @@ export default {
   },
   data() {
     return {
+      selectValue: undefined,
+      optionValue: undefined,
+      
       selectSortMthd: '',
       taList: [
         {
@@ -405,7 +418,7 @@ export default {
       // 状态数据字典
       statusOptions: [],
       
-      constructionUnitList:["建设方", "监理方", "施工方"],
+      constructionUnitList:[],
       // 性别状态字典
       sexOptions: [],
       // 岗位选项
@@ -417,7 +430,7 @@ export default {
           actualDays: '',
           actualEndTime: '',
           actualStartTime: '',
-          constructionUnit: '',
+          constructionUnit: null,
           contactInformation: '',
           contractPayment: '',
           id: '',
@@ -506,6 +519,37 @@ export default {
    
   },
   methods: {
+
+    handleNodeClick2(data, node, nodeData){
+     console.log("打印data", data)
+     console.log("打印node", node)
+     console.log("打印nodeData", nodeData)
+     this.selectValue = data
+     this.optionValue = data.name
+      setTimeout(() => {
+          this.$refs.selectTree.blur()
+      }, 50)
+   },
+
+  filterNode(value, data) {
+      if (!value) return true;
+      return data.label.indexOf(value) !== -1;
+    },
+  
+    getBroadsideInfo() {
+      var id = localStorage.getItem('siteId')
+      broadsideInfo(id).then((res) => {
+        console.log("打印deptOptions", res.data.data)
+        this.deptOptions = res.data.data
+        var arr = res.data.data[0].childs
+        var tmp = []
+        for(let i = 0; i < arr.length; i++) {
+          tmp.push(arr[i].name)
+        }
+        this.constructionUnitList = [...new Set(tmp)]
+        
+      })
+    },
     selectchange(val) {
       console.log("选择的值", val)
       var params = {
@@ -614,7 +658,7 @@ export default {
           actualDays: '',
           actualEndTime: '',
           actualStartTime: '',
-          constructionUnit: '',
+          constructionUnit: null,
           contactInformation: '',
           contractPayment: '',
           id: '',
@@ -637,11 +681,13 @@ export default {
       console.log(this.form)
       this.reset()
       this.form.siteId = localStorage.getItem("siteId")
+      this.getBroadsideInfo()
     },
     submitForm: function () {
       this.$refs["form"].validate((valid) => {
         if (valid) {
           this.form.parentId = this.currentTaskId
+          this.form.constructionUnit = this.optionValue
             addTask(this.form).then((response) => {
               console.log("返回的数据", response.data)
               if (response.data.code === 200) {

@@ -106,6 +106,12 @@ export function importNodeList(data) {
   })
 }
 
+export function getPicInfo(id) {
+  return request({
+    url: `/system/safe/getCheckInfoById?id=${id}`,
+    method: 'get'
+  })
+}
 
 
 

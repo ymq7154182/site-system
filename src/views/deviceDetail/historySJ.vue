@@ -8,9 +8,9 @@
         <!--<el-button type="success" @click="showUpload = true" size="mini"><i class="el-icon-edit" /> 修改</el-button>-->
         <!--<el-button type="danger" @click="showUpload = true" size="mini"><i class="el-icon-delete" /> 删除</el-button>-->
         <el-button type="warning" @click="extadiao" size="mini"><i class="el-icon-download" /> 导出</el-button>
-        <span class="input-label">设备编号：</span><el-input placeholder="请输入设备编号" v-model="uploadInfo.guid" class="input-style"></el-input>
-        <span class="input-label">驾驶人姓名：</span><el-input placeholder="请输入驾驶人姓名" v-model="uploadInfo.driverName" class="input-style"></el-input>
-        <span class="input-label">设备运行状态：</span><el-input placeholder="请输入设备运行状态" v-model="uploadInfo.windState" class="input-style"></el-input>
+        <span class="input-label">设备编号：</span><el-input placeholder="请输入设备编号" v-model="searchForm.guid" class="input-style"></el-input>
+        <span class="input-label">驾驶人姓名：</span><el-input placeholder="请输入驾驶人姓名" v-model="searchForm.driverName" class="input-style"></el-input>
+        <span class="input-label">设备运行状态：</span><el-input placeholder="请输入设备运行状态" v-model="searchForm.windState" class="input-style"></el-input>
         <el-button type="primary" icon="el-icon-search" style="margin-left: 0.2rem" @click="getShengjiang">查询</el-button>
         <el-button type="danger" icon="el-icon-refresh" plain @click="resetSumbit">重置</el-button>
         <div class="titleTable">{{'施工升降机历史记录'}}</div>
@@ -435,6 +435,11 @@
   export default {
     data() {
       return {
+        searchForm: {
+          guid: '',
+          driverName: '',
+          windState: ''
+        },
         fileTable: [],
         numberValidateForm: {
           age: ''
@@ -544,7 +549,7 @@
         })
       },
       getShengjiang() {
-        shengjiang(this.uploadInfo).then((res) => {
+        shengjiang(this.searchForm).then((res) => {
           if (res.data.code === 200) {
             this.fileTable = res.data.rows
             console.log(this.fileTable)
@@ -552,9 +557,9 @@
         })
       },
       resetSumbit() {
-        this.uploadInfo.guid = ''
-        this.uploadInfo.driverName = ''
-        this.uploadInfo.windState = ''
+        this.searchForm.guid = ''
+        this.searchForm.driverName = ''
+        this.searchForm.windState = ''
         this.getShengjiang()
       },
       extadiao() {

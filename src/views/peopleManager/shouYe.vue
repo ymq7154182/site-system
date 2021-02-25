@@ -82,12 +82,18 @@
                   </div>
                   <div style="float:right; margin: -20px 10px 0 0; ">
                     <!-- <el-button type="text" style="text-decoration: underline; " @click="gotoCheckRecord">历史数据</el-button> -->
-                    <el-select v-model="responsePeople" placeholder="请选择责任主体" class="item-defer" @change="selectResponsePeople">
+                    <!-- <el-select v-model="responsePeople" placeholder="请选择责任主体" class="item-defer" @change="selectResponsePeople">
                       <el-option
                         v-for="(item, index) in responsePeopleList"
                         :key="index"
                         :label="item"
                         :value="item">
+                      </el-option>
+                    </el-select> -->
+
+                    <el-select v-model="selectValue" placeholder="请选择责任主体" class="item-defer" ref="selectTree" style="width:250px;">
+                      <el-option style="height: auto;" :value="optionValue" :label="optionValue">
+                        <el-tree :data="deptOptions" :props="defaultProps" :expand-on-click-node="false" :filter-node-method="filterNode" ref="tree2" @node-click="handleNodeClick2" />
                       </el-option>
                     </el-select>
                   </div>
@@ -426,7 +432,7 @@
 </template>
 
 <script>
-import { listDay, getCount, leaderList, leaderCount, peopleInfo, putPeople, todayAttend, lastWeekCount, typeCount } from '@/api/peopleManager'
+import { listDay, getCount, leaderList, leaderCount, peopleInfo, putPeople, todayAttend, lastWeekCount, typeCount, broadsideInfo } from '@/api/peopleManager'
 export default {
   name: "shouYe",
   components: {
@@ -434,6 +440,13 @@ export default {
   },
   data(){
     return{
+      deptOptions: [],
+      defaultProps: {
+        children: "childs",
+        label: "name",
+      },
+      selectValue: undefined,
+      optionValue: undefined,
       selectDeptName: '',
       todayAttendTotal: 0,
       todayAttendNum: 0,
@@ -600,6 +613,7 @@ export default {
    
     this.getTodayAttend()
     this.getLastWeek()
+    this.getBroadsideInfo()
     // this.getPeopleTotal()
   },
   methods:{
@@ -612,7 +626,32 @@ export default {
     //     this.todayAttendTotal = res.data.total
     //   })
     // },
+
+    getBroadsideInfo() {
+      var id = localStorage.getItem('siteId')
+      broadsideInfo(id).then((res) => {
+        console.log("打印deptOptions", res.data.data)
+        this.deptOptions = res.data.data
+        
+      })
+    },
     
+
+    handleNodeClick2(data, node, nodeData){
+     console.log("打印data", data)
+     console.log("打印node", node)
+     console.log("打印nodeData", nodeData)
+     this.selectValue = data
+     this.optionValue = data.name
+      setTimeout(() => {
+          this.$refs.selectTree.blur()
+      }, 50)
+      this.selectResponsePeople(this.optionValue)
+   },
+   filterNode(value, data) {
+      if (!value) return true;
+      return data.label.indexOf(value) !== -1;
+    },
     getLastWeek() {
       var id = localStorage.getItem("siteId")
        var lastWeek = []
@@ -956,7 +995,7 @@ export default {
         },
         yAxis: {
             type: 'category',
-            data: ['建设单位', '施工单位', '监理单位'],
+            data: ['监理单位', '施工单位', '建设单位'],
             axisLabel: {
               show: true,
                 textStyle: {

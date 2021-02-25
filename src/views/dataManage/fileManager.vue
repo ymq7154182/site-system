@@ -67,7 +67,7 @@
         </div>
       </el-col>
     </el-row>
-    <el-dialog :visible.sync="showUpload" title="上传文件" width="40%">
+    <el-dialog :visible.sync="showUpload" title="上传文件" width="40%" @close="closeDialog">
       <div style="height: 55vh; overflow-y: scroll; ">
         <el-form :model="uploadInfo" :rules="rules" ref="uploadInfo" label-width="1.5rem">
           <el-form-item label="文件名称" prop="name">
@@ -75,6 +75,9 @@
           </el-form-item>
           <el-form-item label="文件路径" prop="urlId">
             <treeselect v-model="uploadInfo.urlId" :options="treeData2" placeholder="请选择" :clearable="true" :show-count="true" :disable-branch-nodes="true"  style="width: 350px" @select="getSelectList" />
+          </el-form-item>
+          <el-form-item label="进度绑定" prop="taskId">
+              <treeselect v-model="uploadInfo.taskId" :options="progressTreeData" placeholder="请选择进度" :clearable="true" :show-count="true" style="width: 350px" @select="getSelectTask" />
           </el-form-item>
           <el-form-item label="文件描述" prop="remark">
             <el-switch
@@ -254,11 +257,14 @@
 import Treeselect from '@riophae/vue-treeselect'
 import '@riophae/vue-treeselect/dist/vue-treeselect.css'
 import {changeDoc, docType, findDoc, getSite, insertDoc, toPdfFile, listFolder, getFolderInfo, addFolder, getFolderContent, delFile } from "../../api/dataManage";
+import { scheduleInfo, treeTask } from '@/api/progress'
 
 export default {
   components: { Treeselect },
   data() {
     return {
+      selectTaskId: undefined,
+        progressTreeData: [],
         currentFolder: undefined,
         disbaled: true,
         fileType: '',
@@ -287,7 +293,8 @@ export default {
         name: '',
         url: '',
         lookUrl: '',
-        orders:''
+        orders:'',
+        taskId: undefined
       },
       rules: {
         name: [
@@ -389,6 +396,26 @@ export default {
     })
   },
   methods: {
+
+    closeDialog() {
+      this.resetForm('uploadInfo')
+    },
+
+    getTreeTask() {
+      var id = localStorage.getItem('siteId')
+      treeTask(id).then((res) => {
+        console.log("123", res.data)
+        this.progressTreeData = res.data.data
+      })
+    },
+
+    getSelectTask(node, instanceId) {
+      console.log("instanceId", instanceId)
+      console.log("node", node)
+      this.selectTaskId = node.id
+      
+  
+    },
     handleCurrentChange(val) {
       this.currentPage = val
     },
@@ -397,11 +424,13 @@ export default {
       this.uploadInfo.constructionSiteId = this.constructionSiteId;
       this.uploadInfo.constructionSiteName = this.constructionSiteName;
       this.showUpload = true
+      this.getTreeTask()
     },
     submitUpload(formName) {
       this.$refs[formName].validate((valid) => {
         console.log("提交的信息", this.uploadInfo)
         this.uploadInfo.userName = localStorage.getItem('userName')
+        this.uploadInfo.taskId = this.selectTaskId
         if(!valid) {
           insertDoc(this.uploadInfo).then(response => {
             if(response.data.code === 200) {
