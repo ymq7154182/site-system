@@ -15,14 +15,16 @@
             start-placeholder="开始日期"
             end-placeholder="结束日期">
           </el-date-picker>
-          <span style="font-size: 14px;color:white;margin-right: 10px">类型</span><el-select v-model="queryParams.from" placeholder="请选择" clearable  style="width: 200px;margin-right: 10px">
+          <!-- <span style="font-size: 14px;color:white;margin-right: 10px">类型</span><el-select v-model="queryParams.from" placeholder="请选择" clearable  style="width: 200px;margin-right: 10px">
               <el-option v-for="dict in progressList" :key="dict.value" :label="dict.label" :value="dict.label" ></el-option>
-          </el-select>
+          </el-select> -->
          
-         <span style="font-size: 14px;color:white;margin-right: 10px">检查结果</span> <el-select v-model="queryParams.result" placeholder="请选择" clearable  style="width: 200px;margin-right: 10px">
-              <el-option v-for="dict in stateList" :key="dict.value" :label="dict.label" :value="dict.label" ></el-option>
+         <span style="font-size: 14px;color:white;margin-right: 10px">检查结果</span>
+          <!-- <el-select v-model="queryParams.result" placeholder="请选择" clearable  style="width: 200px;margin-right: 10px"> -->
+              <!-- <el-option v-for="dict in stateList" :key="dict.value" :label="dict.label" :value="dict.label" ></el-option> -->
+              <el-input v-model="queryParams.result" placeholder="请输入关键字" clearable size="small" style="width: 200px;margin-right: 10px"/>
           </el-select>
-           <br />
+           <!-- <br /> -->
           <span style="font-size: 14px;color:white;margin-right: 10px">处理状态</span> <el-select v-model="queryParams.processResult" placeholder="请选择" clearable  style="width: 200px;margin-right: 10px">
               <el-option v-for="dict in state2List" :key="dict.value" :label="dict.label" :value="dict.label" ></el-option>
           </el-select>
@@ -31,9 +33,9 @@
         </div>
 
        <el-row :gutter="10" class="mb8" style="margin-top:15px;clear:both;margin-bottom:10px;">
-          <el-col :span="1.5">
+          <!-- <el-col :span="1.5">
             <el-button type="primary"  size="mini" @click="handleAdd" >新增自检记录</el-button>
-          </el-col>
+          </el-col> -->
           
         </el-row>
 
@@ -80,7 +82,7 @@
     </el-row>
 
     <!-- 添加或修改参数配置对话框 -->
-    <el-dialog title="查看详情" :visible.sync="open" width="1000px"  append-to-body>
+    <!-- <el-dialog title="查看详情" :visible.sync="open" width="1000px"  append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="160px" >
           <el-row>
               <el-col :span="12">
@@ -103,7 +105,7 @@
               </el-col>
               <el-col :span="12">
                   <el-form-item  label="检查结果" prop="result">
-                    <el-input v-model="form.result" placeholder="请输计划工期" :disabled="true"/>
+                    <el-input v-model="form.result" placeholder="请输入检查结果" :disabled="true"/>
                   </el-form-item>
               </el-col>
           </el-row>
@@ -124,12 +126,12 @@
           <el-row>
               <el-col :span="12">
                   <el-form-item  label="处理结果" prop="processResult">
-                      <el-input v-model="form.processResult" placeholder="请输入节点名称" :disabled="true"/>
+                      <el-input v-model="form.processResult" placeholder="暂无处理结果" :disabled="true"/>
                   </el-form-item>
               </el-col>
               <el-col :span="12">
                   <el-form-item  label="处理时间" prop="processTime">
-                    <el-input v-model="form.processTime" placeholder="请输计划工期" :disabled="true"/>
+                    <el-input v-model="form.processTime" placeholder="暂未处理" :disabled="true"/>
                   </el-form-item>
               </el-col>
           </el-row>
@@ -139,6 +141,122 @@
       <div slot="footer" class="dialog-footer">
         
         <el-button @click="cancel">取 消</el-button>
+      </div>
+    </el-dialog> -->
+
+    <el-dialog :visible.sync="open" title="详细信息" width="60%">
+      <div class="divDialog" style="height: 55vh; overflow-y: scroll;">
+
+        <el-form :model="uploadInfo2"  ref="uploadInfo2" label-width="1.5rem">
+          <el-row>
+            <el-col :span="12">
+              <el-form-item label="发起人:" prop="fromUser">
+                 <el-input v-model="uploadInfo2.fromUser"  :readonly='true'/>
+              </el-form-item>
+            </el-col>
+            <el-col :span="12">
+              <el-form-item label="接收人:" prop="toUser">
+                 <el-input v-model="uploadInfo2.toUser"  :readonly='true'/>
+              </el-form-item>
+            </el-col>
+          </el-row>
+
+          <el-row>
+            <el-col :span="12">
+              <el-form-item label="抄送人:" prop="ccPeople">
+                 <el-input v-model="uploadInfo2.ccPeople"  :readonly='true'/>
+              </el-form-item>
+            </el-col>
+            <el-col :span="12">
+              <el-form-item label="事件类型:" prop="checkType">
+                 <el-input v-model="uploadInfo2.checkType"  :readonly='true'/>
+              </el-form-item>
+            </el-col>
+          </el-row>
+          <el-row>
+            <el-col :span="12">
+              <el-form-item label="详细类型:" prop="checkTypeOffspring">
+                 <el-input v-model="uploadInfo2.checkTypeOffspring"  :readonly='true'/>
+              </el-form-item>
+            </el-col>
+            <el-col :span="12">
+              <el-form-item label="记录时间:" prop="startTime">
+                 <el-input v-model="uploadInfo2.startTime"  :readonly='true'/>
+              </el-form-item>
+            </el-col>
+          </el-row>
+
+          <el-row>
+            <el-col :span="12">
+              <el-form-item label="一级进度:" prop="planName">
+                 <el-input v-model="uploadInfo2.planName"  :readonly='true'/>
+              </el-form-item>
+            </el-col>
+            <el-col :span="12">
+              <el-form-item label="二级进度:" prop="sectionName">
+                 <el-input v-model="uploadInfo2.sectionName"  :readonly='true'/>
+              </el-form-item>
+            </el-col>
+          </el-row>
+
+          <el-row>
+            <el-col :span="24">
+              <el-form-item label="事件详情:" prop="context">
+                 <el-input type="textarea" v-model="uploadInfo2.context"  :readonly='true'/>
+              </el-form-item>
+            </el-col>
+          </el-row>
+
+          <el-row>
+            <el-col :span="24">
+              <el-form-item label="发起问题照片:" prop="imageUrl">
+                 <el-image
+                :src="uploadInfo2.imageUrl"
+                >
+              </el-image>
+              </el-form-item>
+            </el-col>
+            
+          </el-row>
+
+          <el-divider></el-divider>
+
+          <el-row>
+            <el-col :span="12">
+              <el-form-item label="处理时间:" prop="endTime">
+                 <el-input v-model="dealDatail.endTime"  :readonly='true'/>
+              </el-form-item>
+            </el-col>
+           
+          </el-row>
+
+           <el-row>
+            
+            <el-col :span="24">
+              <el-form-item label="处理结果:" prop="tiltPercentageOne">
+                 <el-input type="textarea" v-model="dealDatail.context"  :readonly='true'/>
+              </el-form-item>
+            </el-col>
+          </el-row>
+         
+
+          <el-row>
+            <el-col :span="24">
+              <el-form-item label="处理结果照片:" prop="safetyAndQualityProcessList">
+                 <el-image
+                :src="dealDatail.imageUrl"
+                >
+              </el-image>
+              </el-form-item>
+            </el-col>
+           
+          </el-row>
+
+         
+
+         
+
+        </el-form>
       </div>
     </el-dialog>
 
@@ -151,7 +269,7 @@
 <script>
 
 
-import { getList, nodeList, nodeTemplate, getTeamTree, broadsideInfo } from "@/api/selfCheck";
+import { getList, nodeList, nodeTemplate, getTeamTree, broadsideInfo, getPicInfo } from "@/api/selfCheck";
 import Treeselect from "@riophae/vue-treeselect";
 import "@riophae/vue-treeselect/dist/vue-treeselect.css";
 import { mapState } from 'vuex'
@@ -177,6 +295,25 @@ export default {
     
   data() {
     return {
+      dealDatail : {
+        context: '',
+        endTime: '',
+        imageUrl: ''
+      },
+      uploadInfo2: {
+        ccPeople: '',
+        checkType: '',
+        checkTypeOffspring: '',
+        context: '',
+        flag: '',
+        fromUser: '',
+        handingTime:'',
+        imageUrl: '',
+        toUser: '',
+        processStatus: '',
+        planName: '',
+        sectionName: ''
+      },
         currentPage:1, //初始页
         pagesize:10, 
         nodeForm: {
@@ -216,16 +353,20 @@ export default {
         ],
         state2List: [
           {
-            value: 0,
+            value: 1,
             label: '未处理'
           },
           {
-            value: 1,
-            label: '处理中'
+            value: 2,
+            label: '正在处理'
           },
           {
-             value: 2,
+             value: 3,
             label: '已处理'
+          },
+          {
+             value: 4,
+            label: '预警'
           }
         ],
         nodePlan: false,
@@ -639,7 +780,7 @@ export default {
       this.timeArry = []
       this.queryParams.startTime = ''
       this.queryParams.endTime = ''
-      this.handleQuery();
+      this.getSelfList();
     },
     // 多选框选中数据
     handleSelectionChange(selection) {
@@ -663,7 +804,17 @@ export default {
     handleUpdate(row) {
       console.log(row)
       this.open = true
-      this.form = row
+      this.getSuiShouPaiInfoById(row.id)
+    },
+    getSuiShouPaiInfoById(id) {
+      getPicInfo(id).then((res) => {
+        console.log("随手拍的数据", res)
+        var resData = res.data.data
+        if(resData.safetyAndQualityProcessList.length !== 0) {
+        this.dealDatail = resData.safetyAndQualityProcessList[0]
+      }
+      this.uploadInfo2 = resData
+      })
     },
     /** 重置密码按钮操作 */
 

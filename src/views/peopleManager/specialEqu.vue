@@ -2,7 +2,7 @@
   <div class="app-container">
     <el-row :gutter="20">
 
-      <el-col :span="4" :xs="24">
+      <!-- <el-col :span="4" :xs="24">
           <div class="dm-aside">
               <div class="border-top-left"></div>
             <div class="head-container header_tree">
@@ -10,12 +10,12 @@
             </div>
           </div>
        
-      </el-col>
+      </el-col> -->
      
-      <el-col :span="20" :xs="24">
+      <el-col :span="24" :xs="24">
         <div v-show="showSearch" style="padding: 10px">
           <span style="font-size: 14px;color: white;font-weight: 700;margin-right: 10px">姓名</span><el-input v-model="queryParams.userName" placeholder="请输入姓名" clearable size="small" style="width: 120px;margin-right: 10px" />
-          <span style="font-size: 14px;color: white;font-weight: 700;margin-right: 10px">手机号</span><el-input v-model="queryParams.phone" placeholder="请输入手机号" clearable size="small" style="width: 150px;margin-right: 10px"  />
+          <span style="font-size: 14px;color: white;font-weight: 700;margin-right: 10px">身份证号</span><el-input v-model="queryParams.userCode" placeholder="请输入身份证号" clearable size="small" style="width: 190px;margin-right: 10px"  />
           
           <span style="font-size: 14px;color: white;font-weight: 700;margin-right: 10px">岗位/工种</span>
           <el-select v-model="queryParams.userPost" placeholder="请选择" clearable size="small" style="width: 120px;margin-right: 10px">
@@ -62,7 +62,7 @@
             <el-table-column label="姓名" align="center" prop="userName" />
             <el-table-column label="班组" align="center" prop="userClass"  />
             <el-table-column label="岗位/工种" align="center" prop="userPost" />
-            <el-table-column label="手机号" align="center" prop="phone"  />
+            <el-table-column label="身份证号" align="center" prop="userCode"  />
             <el-table-column label="状态" align="center" prop="userStatus" :show-overflow-tooltip="true" >
                 <template slot-scope="scope">
                 <el-tag  v-if="scope.row.userStatus===0" type="danger">离职</el-tag>
@@ -96,14 +96,17 @@
     <el-dialog :title="title" :visible.sync="open" width="800px" append-to-body class="addForm" @close="cancel">
       <el-form ref="form" :model="form" :rules="rules" label-width="120px">
         <el-row>
-          <el-col :span="24">
+          <!-- <el-col :span="24">
+
             <el-form-item label="选择单位" prop="userSignCompanyName">
-              <el-select v-model="form.userSignCompanyName" placeholder="请选择" clearable size="small" style="width: 240px">
-                <el-option v-for="dict in danweiList" :key="dict" :label="dict" :value="dict" />
+              <el-select v-model="selectValue" placeholder="请选择" clearable size="small" style="width: 240px" ref="selectTree">
+                <el-option style="height: auto;" :value="optionValue" :label="optionValue">
+                  <el-tree :data="deptOptions" :props="defaultProps" :expand-on-click-node="false" :filter-node-method="filterNode" ref="tree2" @node-click="handleNodeClick2" />
+                </el-option>
               </el-select>
             </el-form-item>
-          </el-col>
-        </el-row>
+          </el-col> -->
+        </el-row> 
         <el-row>
           <el-col :span="12">
             <el-form-item label="姓名" prop="userName">
@@ -120,8 +123,8 @@
           <el-col :span="12">
             <el-form-item label="性别" prop="userSex">
               <el-radio-group v-model="form.userSex">
-                  <el-radio :label="1">男</el-radio>
-                  <el-radio :label="2">女</el-radio>
+                  <el-radio label="1">男</el-radio>
+                  <el-radio label="2">女</el-radio>
               </el-radio-group>
             </el-form-item>
           </el-col>
@@ -166,8 +169,8 @@
           <el-col :span="12">
             <el-form-item label="班组负责人" prop="leader">
               <el-radio-group v-model="form.leader">
-                  <el-radio :label="1">是</el-radio>
-                  <el-radio :label="0">否</el-radio>
+                  <el-radio label="1">是</el-radio>
+                  <el-radio label="0">否</el-radio>
               </el-radio-group>
             </el-form-item>
           </el-col>
@@ -193,8 +196,8 @@
           <el-col :span="12">
             <el-form-item label="特种作业人员" prop="flag">
               <el-radio-group v-model="form.flag">
-                <el-radio :label="1">是</el-radio>
-                <el-radio :label="0">否</el-radio>
+                <el-radio label="1">是</el-radio>
+                <el-radio label="0">否</el-radio>
               </el-radio-group>
             </el-form-item>
           </el-col>
@@ -221,7 +224,7 @@
                 style="margin-left:30px;"
                 v-if="title === '修改人员'"
                 :src="form.userImg"
-                :fit="fit">
+                >
               </el-image>
               
             
@@ -285,6 +288,8 @@ export default {
   },
   data() {
     return {
+      selectValue: undefined,
+      optionValue: undefined,
       pagesize:10,
       currentPage:1,
       queryParamsUserClass: undefined,
@@ -494,6 +499,17 @@ export default {
     this.getBroadsideInfo()
   },
   methods: {
+
+    handleNodeClick2(data, node, nodeData){
+     console.log("打印data", data)
+     console.log("打印node", node)
+     console.log("打印nodeData", nodeData)
+     this.selectValue = data
+     this.optionValue = data.name
+      setTimeout(() => {
+          this.$refs.selectTree.blur()
+      }, 50)
+   },
     handleCurrentChange: function(currentPage){
       this.currentPage = currentPage;
       console.log(this.currentPage)  //点击第几页
@@ -502,6 +518,12 @@ export default {
       var id = localStorage.getItem('siteId')
       broadsideInfo(id).then((res) => {
         this.deptOptions = res.data.data
+        var arr = res.data.data[0].childs
+        var tmp = []
+        for(let i = 0; i < arr.length; i++) {
+          tmp.push(arr[i].name)
+        }
+        this.danweiList = [...new Set(tmp)]
       })
     },
     getPofession() {
@@ -733,6 +755,11 @@ export default {
     /** 修改按钮操作 */
     handleUpdate(row) {
       console.log("AAA", row)
+      // this.optionValue = row.userSignCompanyName
+      // this.selectValue = {
+      //   deptId: row.constructionSiteId,
+      //   name: row.userSignCompanyName
+      // }
       this.form = row
       this.open = true;
       this.title = "修改人员";
@@ -743,7 +770,8 @@ export default {
     /** 提交按钮 */
     submitForm: function () {
       this.$refs["form"].validate((valid) => {
-       
+      //  this.form.userSignCompanyName = this.optionValue
+       this.form.userStatus = parseInt(this.form.userStatusStr)
         
         if (valid) {
            if(this.form.id === '') {
@@ -939,5 +967,8 @@ export default {
 }
 .dialog-footer {
   margin-left:30%;
+}
+.block >>> .el-pagination__total {
+  color: white;
 }
 </style>

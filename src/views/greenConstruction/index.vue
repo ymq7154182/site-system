@@ -104,6 +104,9 @@
         <div style="background-color: rgba(0, 36, 78, 0.5); height: 42vh; width: 100%; ">
           <div class="border-top-left"></div>
           <div class="box-title">报警记录</div>
+          <div style="float:right;margin-top: -32px; margin-right:10px;">
+            <el-button type="text" style="text-decoration: underline; " @click="gotoCheckRecord">历史数据</el-button>
+          </div>
           <dv-scroll-board :config="configTable" style="width: 98%; height: calc(42vh - 10px - 0.7rem);margin-left: 50%;transform: translateX(-50%);padding-top: 0.1rem" />
         </div>
       </el-col>
@@ -266,6 +269,11 @@
       // this.initQuality()
     },
     methods: {
+      gotoCheckRecord() {
+        this.$router.push({
+          name: 'greenHistory',
+        });
+      },
       getWater() {
         this.power = []
         this.water = []

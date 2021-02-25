@@ -52,6 +52,11 @@
                 <span v-else style="color: rgb(232,85,63); ">逾期</span>
               </template>
             </el-table-column>
+            <el-table-column label="操作" align="center" width="200" class-name="small-padding fixed-width">
+              <template slot-scope="scope">
+                <el-button  type="text" icon="el-icon-view" @click="showDetails(scope.row)" >详情</el-button>
+              </template>
+            </el-table-column>
           </el-table>
         </div>
       </li>
@@ -68,7 +73,129 @@
         </div>
       </li>
     </ul>
+
+
+  <el-dialog :visible.sync="showUpload" title="详细信息" width="60%">
+      <div class="divDialog" style="height: 55vh; overflow-y: scroll;">
+
+        <el-form :model="uploadInfo2"  ref="uploadInfo2" label-width="1.5rem">
+          <el-row>
+            <el-col :span="12">
+              <el-form-item label="发起人:" prop="fromUser">
+                 <el-input v-model="uploadInfo2.fromUser"  :readonly='true'/>
+              </el-form-item>
+            </el-col>
+            <el-col :span="12">
+              <el-form-item label="接收人:" prop="toUser">
+                 <el-input v-model="uploadInfo2.toUser"  :readonly='true'/>
+              </el-form-item>
+            </el-col>
+          </el-row>
+
+          <el-row>
+            <el-col :span="12">
+              <el-form-item label="抄送人:" prop="ccPeople">
+                 <el-input v-model="uploadInfo2.ccPeople"  :readonly='true'/>
+              </el-form-item>
+            </el-col>
+            <el-col :span="12">
+              <el-form-item label="事件类型:" prop="checkType">
+                 <el-input v-model="uploadInfo2.checkType"  :readonly='true'/>
+              </el-form-item>
+            </el-col>
+          </el-row>
+          <el-row>
+            <el-col :span="12">
+              <el-form-item label="详细类型:" prop="checkTypeOffspring">
+                 <el-input v-model="uploadInfo2.checkTypeOffspring"  :readonly='true'/>
+              </el-form-item>
+            </el-col>
+            <el-col :span="12">
+              <el-form-item label="记录时间:" prop="startTime">
+                 <el-input v-model="uploadInfo2.startTime"  :readonly='true'/>
+              </el-form-item>
+            </el-col>
+          </el-row>
+
+          <el-row>
+            <el-col :span="12">
+              <el-form-item label="一级进度:" prop="planName">
+                 <el-input v-model="uploadInfo2.planName"  :readonly='true'/>
+              </el-form-item>
+            </el-col>
+            <el-col :span="12">
+              <el-form-item label="二级进度:" prop="sectionName">
+                 <el-input v-model="uploadInfo2.sectionName"  :readonly='true'/>
+              </el-form-item>
+            </el-col>
+          </el-row>
+
+          <el-row>
+            <el-col :span="24">
+              <el-form-item label="事件详情:" prop="context">
+                 <el-input type="textarea" v-model="uploadInfo2.context"  :readonly='true'/>
+              </el-form-item>
+            </el-col>
+          </el-row>
+
+          <el-row>
+            <el-col :span="24">
+              <el-form-item label="发起问题照片:" prop="imageUrl">
+                 <el-image
+                :src="uploadInfo2.imageUrl"
+                >
+              </el-image>
+              </el-form-item>
+            </el-col>
+            
+          </el-row>
+
+          <el-divider></el-divider>
+
+          <el-row>
+            <el-col :span="12">
+              <el-form-item label="处理时间:" prop="endTime">
+                 <el-input v-model="dealDatail.endTime"  :readonly='true'/>
+              </el-form-item>
+            </el-col>
+           
+          </el-row>
+
+           <el-row>
+            
+            <el-col :span="24">
+              <el-form-item label="处理结果:" prop="tiltPercentageOne">
+                 <el-input type="textarea" v-model="dealDatail.context"  :readonly='true'/>
+              </el-form-item>
+            </el-col>
+          </el-row>
+         
+
+          <el-row>
+            <el-col :span="24">
+              <el-form-item label="处理结果照片:" prop="safetyAndQualityProcessList">
+                 <el-image
+                :src="dealDatail.imageUrl"
+                >
+              </el-image>
+              </el-form-item>
+            </el-col>
+           
+          </el-row>
+
+         
+
+         
+
+        </el-form>
+      </div>
+    </el-dialog>
+
+
   </div>
+
+
+  
 </template>
 
 <script>
@@ -85,6 +212,26 @@ export default {
   },
   data() {
     return {
+      dealDatail : {
+        context: '',
+        endTime: '',
+        imageUrl: ''
+      },
+      uploadInfo2: {
+        ccPeople: '',
+        checkType: '',
+        checkTypeOffspring: '',
+        context: '',
+        flag: '',
+        fromUser: '',
+        handingTime:'',
+        imageUrl: '',
+        toUser: '',
+        processStatus: '',
+        planName: '',
+        sectionName: ''
+      },
+      showUpload: false,
       constructionSiteId: 1,
       constructionSiteName: '',
       checkCode: null,
@@ -97,6 +244,17 @@ export default {
     }
   },
   methods: {
+
+    showDetails(row) {
+      console.log("查看详情", row)
+      this.showUpload = true
+      if(row.safetyAndQualityProcessList.length !== 0) {
+        this.dealDatail = row.safetyAndQualityProcessList[0]
+      }
+      this.uploadInfo2 = row
+
+      
+    },
     loadingTable() {
       getCheckInfoBySchedule({
         sitename: this.constructionSiteName
@@ -216,5 +374,8 @@ export default {
 
 .imageView:hover {
   color: #79bbff;
+}
+.divDialog >>> .el-form-item__label{
+  color: black;
 }
 </style>

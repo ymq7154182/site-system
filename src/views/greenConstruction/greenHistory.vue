@@ -5,7 +5,7 @@
         <div>
           <el-button type="danger" icon="el-icon-back" @click="goBack">返回</el-button>
           <div style="float: right; ">
-            <el-form :model="form" ref="form" label-width="80px" :inline="true" style="color: white;">
+            <el-form :model="form" ref="form" label-width="80px" :inline="true">
               <el-form-item label="报警类型" >
                 <el-select v-model="selectWarnType" placeholder="请选择" clearable @change="getType">
                   <el-option label="风速预警" value="风速预警"></el-option>
@@ -57,7 +57,7 @@
     </ul>
 
   
-    <el-dialog :visible.sync="showUpload" title="详细信息" width="40%"  @close="closeUpload">
+    <el-dialog :visible.sync="showUpload" title="详细信息" width="40%" >
       <div style="height: 55vh; overflow-y: scroll; ">
 
         <!-- <el-form :model="uploadInfo"  ref="uploadInfo" label-width="1.5rem">
@@ -187,17 +187,17 @@
           <el-row>
             <!-- <el-col :span="12">
               <el-form-item label="设备id:" prop="guid">
-                 <el-input v-model="uploadInfo.guid"  :readonly='true'/>
+                 <el-input v-model="uploadInfo.guid"  readonly='true'/>
               </el-form-item>
             </el-col> -->
             <el-col :span="12">
               <el-form-item label="设备编号:" prop="deviceSn">
-                 <el-input v-model="uploadInfo.deviceSn"  :readonly='true'/>
+                 <el-input v-model="uploadInfo.deviceSn"  readonly='true'/>
               </el-form-item>
             </el-col>
             <el-col :span="12">
               <el-form-item label="最大力矩:" prop="maxTorque">
-                 <el-input v-model="uploadInfo.maxTorque"  :readonly='true'/>
+                 <el-input v-model="uploadInfo.maxTorque"  readonly='true'/>
               </el-form-item>
             </el-col>
           </el-row>
@@ -205,12 +205,12 @@
           <el-row>
             <el-col :span="12">
               <el-form-item label="司机工号:" prop="idcard">
-                 <el-input v-model="uploadInfo.idcard"  :readonly='true'/>
+                 <el-input v-model="uploadInfo.idcard"  readonly='true'/>
               </el-form-item>
             </el-col>
             <el-col :span="12">
               <el-form-item label="操作时间:" prop="operationTime">
-                 <el-input v-model="uploadInfo.operationTime"  :readonly='true'/>
+                 <el-input v-model="uploadInfo.operationTime"  readonly='true'/>
               </el-form-item>
             </el-col>
           </el-row>
@@ -218,12 +218,12 @@
           <el-row>
             <el-col :span="12">
               <el-form-item label="经度:" prop="lon">
-                 <el-input v-model="uploadInfo.lon"  :readonly='true'/>
+                 <el-input v-model="uploadInfo.lon"  readonly='true'/>
               </el-form-item>
             </el-col>
             <el-col :span="12">
               <el-form-item label="纬度:" prop="lat">
-                 <el-input v-model="uploadInfo.lat"  :readonly='true'/>
+                 <el-input v-model="uploadInfo.lat"  readonly='true'/>
               </el-form-item>
             </el-col>
           </el-row>
@@ -231,12 +231,12 @@
           <el-row>
             <el-col :span="12">
               <el-form-item label="高度(单位米):" prop="height">
-                 <el-input v-model="uploadInfo.height"  :readonly='true'/>
+                 <el-input v-model="uploadInfo.height"  readonly='true'/>
               </el-form-item>
             </el-col>
             <el-col :span="12">
               <el-form-item label="幅度(单位米):" prop="amplitude">
-                 <el-input v-model="uploadInfo.amplitude"  :readonly='true'/>
+                 <el-input v-model="uploadInfo.amplitude"  readonly='true'/>
               </el-form-item>
             </el-col>
           </el-row>
@@ -244,12 +244,12 @@
           <el-row>
             <el-col :span="12">
               <el-form-item label="回转(单位度):" prop="rotary">
-                 <el-input v-model="uploadInfo.rotary"  :readonly='true'/>
+                 <el-input v-model="uploadInfo.rotary"  readonly='true'/>
               </el-form-item>
             </el-col>
             <el-col :span="12">
               <el-form-item label="重量(单位吨):" prop="heavy">
-                 <el-input v-model="uploadInfo.heavy"  :readonly='true'/>
+                 <el-input v-model="uploadInfo.heavy"  readonly='true'/>
               </el-form-item>
             </el-col>
           </el-row>
@@ -257,12 +257,12 @@
           <el-row>
             <el-col :span="12">
               <el-form-item label="风速(单位 m/s):" prop="windspeed">
-                 <el-input v-model="uploadInfo.windspeed"  :readonly='true'/>
+                 <el-input v-model="uploadInfo.windspeed"  readonly='true'/>
               </el-form-item>
             </el-col>
             <el-col :span="12">
               <el-form-item label="倾角 X(单位度):" prop="anglex">
-                 <el-input v-model="uploadInfo.anglex"  :readonly='true'/>
+                 <el-input v-model="uploadInfo.anglex"  readonly='true'/>
               </el-form-item>
             </el-col>
           </el-row>
@@ -270,12 +270,12 @@
           <el-row>
             <el-col :span="12">
               <el-form-item label="额定力矩(单位焦耳):" prop="safetorque">
-                 <el-input v-model="uploadInfo.safetorque"  :readonly='true'/>
+                 <el-input v-model="uploadInfo.safetorque"  readonly='true'/>
               </el-form-item>
             </el-col>
             <el-col :span="12">
               <el-form-item label="倾角 Y(单位度):" prop="angley">
-                 <el-input v-model="uploadInfo.angley"  :readonly='true'/>
+                 <el-input v-model="uploadInfo.angley"  readonly='true'/>
               </el-form-item>
             </el-col>
           </el-row>
@@ -283,12 +283,12 @@
           <el-row>
             <el-col :span="12">
               <el-form-item label="GPRS 信号质量:" prop="gprssignal">
-                 <el-input v-model="uploadInfo.gprssignal"  :readonly='true'/>
+                 <el-input v-model="uploadInfo.gprssignal"  readonly='true'/>
               </el-form-item>
             </el-col>
             <el-col :span="12">
               <el-form-item label="控制状态:" prop="powerstatu">
-                 <el-input v-model="uploadInfo.powerstatu"  :readonly='true'/>
+                 <el-input v-model="uploadInfo.powerstatu"  readonly='true'/>
               </el-form-item>
             </el-col>
           </el-row>
@@ -296,12 +296,12 @@
           <el-row>
             <el-col :span="12">
               <el-form-item label="传感器状态:" prop="sensorstatus">
-                 <el-input v-model="uploadInfo.sensorstatus"  :readonly='true'/>
+                 <el-input v-model="uploadInfo.sensorstatus"  readonly='true'/>
               </el-form-item>
             </el-col>
             <el-col :span="12">
               <el-form-item label="预警告码:" prop="warntype">
-                 <el-input v-model="uploadInfo.warntype"  :readonly='true'/>
+                 <el-input v-model="uploadInfo.warntype"  readonly='true'/>
               </el-form-item>
             </el-col>
           </el-row>
@@ -309,12 +309,12 @@
           <el-row>
             <el-col :span="12">
               <el-form-item label="报警告码:" prop="alertflag">
-                 <el-input v-model="uploadInfo.alertflag"  :readonly='true'/>
+                 <el-input v-model="uploadInfo.alertflag"  readonly='true'/>
               </el-form-item>
             </el-col>
             <el-col :span="12">
               <el-form-item label="备案编号:" prop="deviceRegisterSn">
-                 <el-input v-model="uploadInfo.deviceRegisterSn"  :readonly='true'/>
+                 <el-input v-model="uploadInfo.deviceRegisterSn"  readonly='true'/>
               </el-form-item>
             </el-col>
           </el-row>
@@ -322,12 +322,12 @@
           <el-row>
             <el-col :span="12">
               <el-form-item label="倾角:" prop="angle">
-                 <el-input v-model="uploadInfo.angle"  :readonly='true'/>
+                 <el-input v-model="uploadInfo.angle"  readonly='true'/>
               </el-form-item>
             </el-col>
             <el-col :span="12">
               <el-form-item label="有无执法意见:" prop="islawopinion">
-                 <el-input v-model="uploadInfo.islawopinion"  :readonly='true'/>
+                 <el-input v-model="uploadInfo.islawopinion"  readonly='true'/>
               </el-form-item>
             </el-col>
           </el-row>
@@ -335,12 +335,12 @@
            <el-row>
             <el-col :span="12">
               <el-form-item label="驾驶人员姓名:" prop="uname">
-                 <el-input v-model="uploadInfo.uname"  :readonly='true'/>
+                 <el-input v-model="uploadInfo.uname"  readonly='true'/>
               </el-form-item>
             </el-col>
             <el-col :span="12">
               <el-form-item label="驾驶员身份证号码:" prop="uIdcardNo">
-                 <el-input v-model="uploadInfo.uIdcardNo"  :readonly='true'/>
+                 <el-input v-model="uploadInfo.uIdcardNo"  readonly='true'/>
               </el-form-item>
             </el-col>
           </el-row>
@@ -348,12 +348,12 @@
           <el-row>
             <el-col :span="12">
               <el-form-item label="风级:" prop="windlevel">
-                 <el-input v-model="uploadInfo.windlevel"  :readonly='true'/>
+                 <el-input v-model="uploadInfo.windlevel"  readonly='true'/>
               </el-form-item>
             </el-col>
             <el-col :span="12">
               <el-form-item label="塔机高度:" prop="devheight">
-                 <el-input v-model="uploadInfo.devheight"  :readonly='true'/>
+                 <el-input v-model="uploadInfo.devheight"  readonly='true'/>
               </el-form-item>
             </el-col>
           </el-row>
@@ -361,12 +361,12 @@
           <el-row>
             <el-col :span="12">
               <el-form-item label="吊钩高:" prop="dgheight">
-                 <el-input v-model="uploadInfo.dgheight"  :readonly='true'/>
+                 <el-input v-model="uploadInfo.dgheight"  readonly='true'/>
               </el-form-item>
             </el-col>
             <el-col :span="12">
               <el-form-item label="平衡臂长:" prop="balanceArmLength">
-                 <el-input v-model="uploadInfo.balanceArmLength"  :readonly='true'/>
+                 <el-input v-model="uploadInfo.balanceArmLength"  readonly='true'/>
               </el-form-item>
             </el-col>
           </el-row>
@@ -374,12 +374,12 @@
           <el-row>
             <el-col :span="12">
               <el-form-item label="臂长:" prop="armLength">
-                 <el-input v-model="uploadInfo.armLength"  :readonly='true'/>
+                 <el-input v-model="uploadInfo.armLength"  readonly='true'/>
               </el-form-item>
             </el-col>
             <el-col :span="12">
               <el-form-item label="当前力矩:" prop="currentTorque">
-                 <el-input v-model="uploadInfo.currentTorque"  :readonly='true'/>
+                 <el-input v-model="uploadInfo.currentTorque"  readonly='true'/>
               </el-form-item>
             </el-col>
           </el-row>
@@ -387,7 +387,7 @@
           <!-- <el-row>
             <el-col :span="24">
               <el-form-item label="最大力矩:" prop="maxTorque">
-                 <el-input v-model="uploadInfo.maxTorque"  :readonly='true'/>
+                 <el-input v-model="uploadInfo.maxTorque"  readonly='true'/>
               </el-form-item>
             </el-col>
             
@@ -403,7 +403,7 @@
 
 
 
-    <el-dialog :visible.sync="showUpload2" title="详细信息" width="40%"  @close="closeUpload2">
+    <el-dialog :visible.sync="showUpload2" title="详细信息" width="40%">
       <div style="height: 55vh; overflow-y: scroll; ">
 
                 
@@ -413,12 +413,12 @@
           <el-row>
             <el-col :span="12">
               <el-form-item label="设备id:" prop="guid">
-                 <el-input v-model="uploadInfo2.guid"  :readonly='true'/>
+                 <el-input v-model="uploadInfo2.guid"  readonly='true'/>
               </el-form-item>
             </el-col>
             <el-col :span="12">
               <el-form-item label="黑匣子厂商编号:" prop="fsn">
-                 <el-input v-model="uploadInfo2.fsn"  :readonly='true'/>
+                 <el-input v-model="uploadInfo2.fsn"  readonly='true'/>
               </el-form-item>
             </el-col>
           </el-row>
@@ -426,12 +426,12 @@
           <el-row>
             <el-col :span="12">
               <el-form-item label="接口请求key:" prop="reqkey">
-                 <el-input v-model="uploadInfo2.reqkey"  :readonly='true'/>
+                 <el-input v-model="uploadInfo2.reqkey"  readonly='true'/>
               </el-form-item>
             </el-col>
             <el-col :span="12">
               <el-form-item label="黑匣子出厂编号:" prop="hoistBoxId">
-                 <el-input v-model="uploadInfo2.hoistBoxId"  :readonly='true'/>
+                 <el-input v-model="uploadInfo2.hoistBoxId"  readonly='true'/>
               </el-form-item>
             </el-col>
           </el-row>
@@ -439,12 +439,12 @@
           <el-row>
             <el-col :span="12">
               <el-form-item label="黑匣子备案编号:" prop="recordNumber">
-                 <el-input v-model="uploadInfo2.recordNumber"  :readonly='true'/>
+                 <el-input v-model="uploadInfo2.recordNumber"  readonly='true'/>
               </el-form-item>
             </el-col>
             <el-col :span="12">
               <el-form-item label="轿厢后门门锁状态:" prop="beforeLockState">
-                 <el-input v-model="uploadInfo2.beforeLockState"  :readonly='true'/>
+                 <el-input v-model="uploadInfo2.beforeLockState"  readonly='true'/>
               </el-form-item>
             </el-col>
           </el-row>
@@ -452,12 +452,12 @@
           <el-row>
             <el-col :span="12">
               <el-form-item label="轿厢后门门锁状态:" prop="afterLockState">
-                 <el-input v-model="uploadInfo2.afterLockState"  :readonly='true'/>
+                 <el-input v-model="uploadInfo2.afterLockState"  readonly='true'/>
               </el-form-item>
             </el-col>
             <el-col :span="12">
               <el-form-item label="倾角1（倾斜度1）:" prop="realTimeGradientOne">
-                 <el-input v-model="uploadInfo2.realTimeGradientOne"  :readonly='true'/>
+                 <el-input v-model="uploadInfo2.realTimeGradientOne"  readonly='true'/>
               </el-form-item>
             </el-col>
           </el-row>
@@ -465,12 +465,12 @@
           <el-row>
             <el-col :span="12">
               <el-form-item label="倾角2（倾斜度2）:" prop="realTimeGradientTwo">
-                 <el-input v-model="uploadInfo2.realTimeGradientTwo"  :readonly='true'/>
+                 <el-input v-model="uploadInfo2.realTimeGradientTwo"  readonly='true'/>
               </el-form-item>
             </el-col>
             <el-col :span="12">
               <el-form-item label="倾角1（倾斜百分比1）:" prop="tiltPercentageOne">
-                 <el-input v-model="uploadInfo2.tiltPercentageOne"  :readonly='true'/>
+                 <el-input v-model="uploadInfo2.tiltPercentageOne"  readonly='true'/>
               </el-form-item>
             </el-col>
           </el-row>
@@ -478,12 +478,12 @@
           <el-row>
             <el-col :span="12">
               <el-form-item label="倾角2（倾斜百分比1）:" prop="tiltPercentageTne">
-                 <el-input v-model="uploadInfo2.tiltPercentageTne"  :readonly='true'/>
+                 <el-input v-model="uploadInfo2.tiltPercentageTne"  readonly='true'/>
               </el-form-item>
             </el-col>
             <el-col :span="12">
               <el-form-item label="设备运行轿厢内人数:" prop="realTimeNumberOfPeople">
-                 <el-input v-model="uploadInfo2.realTimeNumberOfPeople"  :readonly='true'/>
+                 <el-input v-model="uploadInfo2.realTimeNumberOfPeople"  readonly='true'/>
               </el-form-item>
             </el-col>
           </el-row>
@@ -491,12 +491,12 @@
           <el-row>
             <el-col :span="12">
               <el-form-item label="运行速度:" prop="windSpeed">
-                 <el-input v-model="uploadInfo2.windSpeed"  :readonly='true'/>
+                 <el-input v-model="uploadInfo2.windSpeed"  readonly='true'/>
               </el-form-item>
             </el-col>
             <el-col :span="12">
               <el-form-item label="运行方向:" prop="realTimeSpeedDirection">
-                 <el-input v-model="uploadInfo2.realTimeSpeedDirection"  :readonly='true'/>
+                 <el-input v-model="uploadInfo2.realTimeSpeedDirection"  readonly='true'/>
               </el-form-item>
             </el-col>
           </el-row>
@@ -504,12 +504,12 @@
           <el-row>
             <el-col :span="12">
               <el-form-item label="实时数据产生时间:" prop="happenTime">
-                 <el-input v-model="uploadInfo2.happenTime"  :readonly='true'/>
+                 <el-input v-model="uploadInfo2.happenTime"  readonly='true'/>
               </el-form-item>
             </el-col>
             <el-col :span="12">
               <el-form-item label="轿厢运行高度（m）:" prop="realTimeHeight">
-                 <el-input v-model="uploadInfo2.realTimeHeight"  :readonly='true'/>
+                 <el-input v-model="uploadInfo2.realTimeHeight"  readonly='true'/>
               </el-form-item>
             </el-col>
           </el-row>
@@ -517,12 +517,12 @@
           <el-row>
             <el-col :span="12">
               <el-form-item label="轿厢运行高度百分比（%）:" prop="heightPercentage">
-                 <el-input v-model="uploadInfo2.heightPercentage"  :readonly='true'/>
+                 <el-input v-model="uploadInfo2.heightPercentage"  readonly='true'/>
               </el-form-item>
             </el-col>
             <el-col :span="12">
               <el-form-item label="轿厢当前运行重量百分比（%）:" prop="weightPercentage">
-                 <el-input v-model="uploadInfo2.weightPercentage"  :readonly='true'/>
+                 <el-input v-model="uploadInfo2.weightPercentage"  readonly='true'/>
               </el-form-item>
             </el-col>
           </el-row>
@@ -530,12 +530,12 @@
           <el-row>
             <el-col :span="12">
               <el-form-item label="轿厢当前运行重量（t）:" prop="realTimeLiftingWeight">
-                 <el-input v-model="uploadInfo2.realTimeLiftingWeight"  :readonly='true'/>
+                 <el-input v-model="uploadInfo2.realTimeLiftingWeight"  readonly='true'/>
               </el-form-item>
             </el-col>
             <el-col :span="12">
               <el-form-item label="设备运行状态:" prop="windState">
-                 <el-input v-model="uploadInfo2.windState"  :readonly='true'/>
+                 <el-input v-model="uploadInfo2.windState"  readonly='true'/>
               </el-form-item>
             </el-col>
           </el-row>
@@ -543,12 +543,12 @@
           <el-row>
             <el-col :span="12">
               <el-form-item label="报警原因:" prop="hoistAlarmReason">
-                 <el-input v-model="uploadInfo2.hoistAlarmReason"  :readonly='true'/>
+                 <el-input v-model="uploadInfo2.hoistAlarmReason"  readonly='true'/>
               </el-form-item>
             </el-col>
             <el-col :span="12">
               <el-form-item label="报警级别:" prop="hoistLevel">
-                 <el-input v-model="uploadInfo2.hoistLevel"  :readonly='true'/>
+                 <el-input v-model="uploadInfo2.hoistLevel"  readonly='true'/>
               </el-form-item>
             </el-col>
           </el-row>
@@ -556,12 +556,12 @@
           <el-row>
             <el-col :span="12">
               <el-form-item label="驾驶人员姓名:" prop="driverName">
-                 <el-input v-model="uploadInfo2.driverName"  :readonly='true'/>
+                 <el-input v-model="uploadInfo2.driverName"  readonly='true'/>
               </el-form-item>
             </el-col>
             <el-col :span="12">
               <el-form-item label="驾驶人员公民身份号码:" prop="driverIdcard">
-                 <el-input v-model="uploadInfo2.driverIdcard"  :readonly='true'/>
+                 <el-input v-model="uploadInfo2.driverIdcard"  readonly='true'/>
               </el-form-item>
             </el-col>
           </el-row>
@@ -569,12 +569,12 @@
           <el-row>
             <el-col :span="12">
               <el-form-item label="驾驶人员作业证编号:" prop="driverCertificateNumber">
-                 <el-input v-model="uploadInfo2.driverCertificateNumber"  :readonly='true'/>
+                 <el-input v-model="uploadInfo2.driverCertificateNumber"  readonly='true'/>
               </el-form-item>
             </el-col>
             <el-col :span="12">
               <el-form-item label="驾驶人员身份认证结果:" prop="driverIdentificationState">
-                 <el-input v-model="uploadInfo2.driverIdentificationState"  :readonly='true'/>
+                 <el-input v-model="uploadInfo2.driverIdentificationState"  readonly='true'/>
               </el-form-item>
             </el-col>
           </el-row>
@@ -582,12 +582,12 @@
           <el-row>
             <el-col :span="12">
               <el-form-item label="驾驶人员作业证编号:" prop="driverCertificateNumber">
-                 <el-input v-model="uploadInfo2.driverCertificateNumber"  :readonly='true'/>
+                 <el-input v-model="uploadInfo2.driverCertificateNumber"  readonly='true'/>
               </el-form-item>
             </el-col>
             <el-col :span="12">
               <el-form-item label="驾驶人员身份认证结果:" prop="driverIdentificationState">
-                 <el-input v-model="uploadInfo2.driverIdentificationState"  :readonly='true'/>
+                 <el-input v-model="uploadInfo2.driverIdentificationState"  readonly='true'/>
               </el-form-item>
             </el-col>
           </el-row>
@@ -595,12 +595,12 @@
           <el-row>
             <el-col :span="12">
               <el-form-item label="本次作业时间区间段:" prop="thisJobtime">
-                 <el-input v-model="uploadInfo2.thisJobtime"  :readonly='true'/>
+                 <el-input v-model="uploadInfo2.thisJobtime"  readonly='true'/>
               </el-form-item>
             </el-col>
             <el-col :span="12">
               <el-form-item label="抓拍图片的URL:" prop="takeAPhotoUrl">
-                 <el-input v-model="uploadInfo2.takeAPhotoUrl"  :readonly='true'/>
+                 <el-input v-model="uploadInfo2.takeAPhotoUrl"  readonly='true'/>
               </el-form-item>
             </el-col>
           </el-row>
@@ -608,12 +608,12 @@
           <el-row>
             <el-col :span="12">
               <el-form-item label="本次作业时间区间段:" prop="thisJobtime">
-                 <el-input v-model="uploadInfo2.thisJobtime"  :readonly='true'/>
+                 <el-input v-model="uploadInfo2.thisJobtime"  readonly='true'/>
               </el-form-item>
             </el-col>
             <el-col :span="12">
               <el-form-item label="抓拍图片的URL:" prop="takeAPhotoUrl">
-                 <el-input v-model="uploadInfo2.takeAPhotoUrl"  :readonly='true'/>
+                 <el-input v-model="uploadInfo2.takeAPhotoUrl"  readonly='true'/>
               </el-form-item>
             </el-col>
           </el-row>
@@ -633,7 +633,7 @@ import {getSite} from "../../api/dataManage";
 import { getHistroy, getCheckDetailById } from "@/api/deviceManage";
 
 export default {
-  name: 'deviceHistory',
+  name: 'greenHistory',
   mounted() {
     this.siteId = localStorage.getItem('siteId')
     this.devName = this.$route.params.devName
@@ -735,12 +735,6 @@ export default {
     }
   },
   methods: {
-    closeUpload() {
-      this.showUpload = false
-    },
-    closeUpload2() {
-      this.showUpload2 = false
-    },
     loadingTable() {
       getInfoByWarnType({
         warnType: this.selectWarnType

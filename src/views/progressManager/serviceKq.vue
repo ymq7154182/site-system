@@ -510,12 +510,14 @@ export default {
       this.currentUserSignCompanyName = data.name
       if(this.currentUserSignCompanyName.length > 4) {
         var params = {
-          constructionSiteId: data.deptId
+          constructionSiteId: data.deptId,
+          taskId: this.$store.state.nodeStateId
         }
       } else {
         var params = {
           constructionSiteId: data.deptId,
-          deptName: data.name
+          deptName: data.name,
+          taskId: this.$store.state.nodeStateId
         }
       }
       
@@ -746,5 +748,9 @@ export default {
   }
 .header_tree .el-tree >>> .el-tree--highlight-current .el-tree-node.is-current>.el-tree-node__content {
     background-color: #66b1ff87;
+  }
+
+  .block >>> .el-pagination__total {
+    color: white;
   }
 </style>

@@ -22,6 +22,11 @@
           <el-select v-model="queryParams.userSignType" placeholder="请选择" clearable size="small" style="width: 120px;margin-right: 10px">
             <el-option v-for="dict in statusOptions" :key="dict.dictValue" :label="dict.dictLabel" :value="dict.dictValue" />
           </el-select>
+          <!-- <br /> -->
+          <span style="font-size: 14px;color: white;font-weight: 700;margin-right: 10px">岗位/工种</span>
+          <el-select v-model="queryParams.userPost" placeholder="请选择" clearable size="small" style="width: 120px;margin-right: 10px">
+            <el-option v-for="dict in postList" :key="dict.id" :label="dict.professionName" :value="dict.professionName" />
+          </el-select>
           <span style="font-size: 14px;color: white;font-weight: 700;margin-right: 10px">状态</span>
           <el-select v-model="queryParams.userSignStatus" placeholder="请选择" clearable size="small" style="width: 120px;margin-right: 10px">
             <el-option v-for="dict in signOptions" :key="dict.dictValue" :label="dict.dictLabel" :value="dict.dictValue" />
@@ -261,7 +266,7 @@
 
 <script>
 
-import { listDay, getLeftColumn, treeselect, allPeopleName, addDaKaPeople, exportKaoqinExcel, broadsideInfo, getTeamTree, searchDaka, exportDaka, importDaka, listByTime } from '@/api/peopleManager'
+import { listDay, getLeftColumn, treeselect, allPeopleName, addDaKaPeople, exportKaoqinExcel, broadsideInfo, getTeamTree, searchDaka, exportDaka, importDaka, listByTime,  profession} from '@/api/peopleManager'
 import Treeselect from "@riophae/vue-treeselect";
 import "@riophae/vue-treeselect/dist/vue-treeselect.css";
 
@@ -272,6 +277,7 @@ export default {
   
   data() {
     return {
+      postList: [],
       pagesize:10,
       currentPage:1,
       fileList12: [],
@@ -354,7 +360,7 @@ export default {
       
         // 查询参数
         queryParams: {
-            
+            userPost: '',
             userSignPhone: '',
             userSignName: '',
             userSignType: '',
@@ -394,8 +400,16 @@ export default {
       this.getListDay()
       this.getBanzu()
       this.getBroadsideInfo()
+      this.getPofession()
   },
   methods: {
+    getPofession() {
+      var id = localStorage.getItem('siteId')
+      profession(id).then((res) => {
+        console.log("岗位", res)
+        this.postList = res.data.rows
+      })
+    },
     submitExcel() {
       var id = localStorage.getItem('siteId')
       const formData = new FormData()
@@ -562,6 +576,7 @@ export default {
       this.queryParamsUserclass = undefined
       this.queryParams.startTime = ''
       this.queryParams.endTime = ''
+      this.queryParams.userPost = ''
       this.timeArry = []
       
       this.getListDay();

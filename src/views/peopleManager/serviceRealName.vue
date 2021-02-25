@@ -15,7 +15,7 @@
       <el-col :span="20" :xs="24">
         <div v-show="showSearch" style="padding: 10px">
           <span style="font-size: 14px;color: white;font-weight: 700;margin-right: 10px">姓名</span><el-input v-model="queryParams.userName" placeholder="请输入姓名" clearable size="small" style="width: 120px;margin-right: 10px" />
-          <span style="font-size: 14px;color: white;font-weight: 700;margin-right: 10px">手机号</span><el-input v-model="queryParams.phone" placeholder="请输入手机号" clearable size="small" style="width: 150px;margin-right: 10px"  />
+          <span style="font-size: 14px;color: white;font-weight: 700;margin-right: 10px">身份证号</span><el-input v-model="queryParams.userCode" placeholder="请输入手机号" clearable size="small" style="width: 190px;margin-right: 10px"  />
           
           <span style="font-size: 14px;color: white;font-weight: 700;margin-right: 10px">岗位/工种</span>
           <el-select v-model="queryParams.userPost" placeholder="请选择" clearable size="small" style="width: 120px;margin-right: 10px">
@@ -62,10 +62,10 @@
              @selection-change="handleSelectionChange">
             <!-- <el-table-column type="selection" width="50" align="center" /> -->
             <el-table-column label="序号" width="80" type="index" align="center"/>
-            <el-table-column label="姓名" align="center" prop="userName" />
+            <el-table-column label="姓名" align="center" prop="userName" width="120" />
             <el-table-column label="班组" align="center" prop="userClass"  />
-            <el-table-column label="岗位/工种" align="center" prop="userPost" />
-            <el-table-column label="手机号" align="center" prop="phone"  />
+            <el-table-column label="岗位/工种" align="center" prop="userPost"  />
+            <el-table-column label="身份证号" align="center" prop="userCode" width="220" />
             <el-table-column label="民族" align="center" prop="userNationality"  />
             <el-table-column label="年龄" align="center" prop="userAge"  />
             <el-table-column label="学历" align="center" prop="userEducation"  />
@@ -103,8 +103,10 @@
         <el-row>
           <el-col :span="24">
             <el-form-item label="选择单位" prop="userSignCompanyName">
-              <el-select v-model="form.userSignCompanyName" placeholder="请选择" clearable size="small" style="width: 240px">
-                <el-option v-for="dict in danweiList" :key="dict" :label="dict" :value="dict" />
+              <el-select v-model="selectValue" placeholder="请选择" clearable size="small" style="width: 240px" ref="selectTree">
+                <el-option style="height: auto;" :value="optionValue" :label="optionValue">
+                  <el-tree :data="deptOptions" :props="defaultProps" :expand-on-click-node="false" :filter-node-method="filterNode" ref="tree2" @node-click="handleNodeClick2" />
+                </el-option>
               </el-select>
             </el-form-item>
           </el-col>
@@ -125,8 +127,8 @@
           <el-col :span="12">
             <el-form-item label="性别" prop="userSex">
               <el-radio-group v-model="form.userSex">
-                  <el-radio :label="1">男</el-radio>
-                  <el-radio :label="2">女</el-radio>
+                  <el-radio label="1">男</el-radio>
+                  <el-radio label="2">女</el-radio>
               </el-radio-group>
             </el-form-item>
           </el-col>
@@ -171,8 +173,8 @@
           <el-col :span="12">
             <el-form-item label="班组负责人" prop="leader">
               <el-radio-group v-model="form.leader">
-                  <el-radio :label="1">是</el-radio>
-                  <el-radio :label="0">否</el-radio>
+                  <el-radio label="1">是</el-radio>
+                  <el-radio label="0">否</el-radio>
               </el-radio-group>
             </el-form-item>
           </el-col>
@@ -198,8 +200,8 @@
           <el-col :span="12">
             <el-form-item label="特种作业人员" prop="flag">
               <el-radio-group v-model="form.flag">
-                <el-radio :label="1">是</el-radio>
-                <el-radio :label="0">否</el-radio>
+                <el-radio label="1">是</el-radio>
+                <el-radio label="0">否</el-radio>
               </el-radio-group>
             </el-form-item>
           </el-col>
@@ -235,7 +237,7 @@
                 style="margin-left:30px;"
                 v-if="showPic === true"
                 :src="form.userImg"
-                :fit="fit">
+                >
               </el-image>
 
             
@@ -303,8 +305,8 @@
             <el-col :span="12">
               <el-form-item label="性别" prop="userSex">
                 <el-radio-group v-model="banzuForm.userSex">
-                    <el-radio :label="2">男</el-radio>
-                    <el-radio :label="1">女</el-radio>
+                    <el-radio label="2" >男</el-radio>
+                    <el-radio label="1" >女</el-radio>
                 </el-radio-group>
                </el-form-item>
             </el-col>
@@ -455,6 +457,8 @@ export default {
   },
   data() {
     return {
+      selectValue: undefined,
+      optionValue: undefined,
       showPic: false,
       pagesize:10,
       currentPage:1,
@@ -466,7 +470,7 @@ export default {
       currentUserSignCompanyName: '',
       postList: [],
       educationList: ['小学', '初中', '高中', '专科', '本科', '研究生'],
-      danweiList: ['建设单位', '施工单位', '监理单位'],
+      danweiList: [],
       currentSanfang: '',
       userClassList: [],
       treeData: [],
@@ -612,6 +616,9 @@ export default {
         userStatus: [
           { required: true, message: "状态不能为空", trigger: "blur" },
         ],
+        // userStatusStr:  [
+        //   { required: true, message: "状态不能为空", trigger: "blur" },
+        // ],
 
         flag: [
           { required: true, message: "特种作业人员不能为空", trigger: "blur" },
@@ -668,6 +675,18 @@ export default {
     this.getBroadsideInfo()
   },
   methods: {
+
+   handleNodeClick2(data, node, nodeData){
+     console.log("打印data", data)
+     console.log("打印node", node)
+     console.log("打印nodeData", nodeData)
+     this.selectValue = data
+     this.optionValue = data.name
+      setTimeout(() => {
+          this.$refs.selectTree.blur()
+      }, 50)
+   },
+
     handleCurrentChange: function(currentPage){
       this.currentPage = currentPage;
       console.log(this.currentPage)  //点击第几页
@@ -677,6 +696,13 @@ export default {
       var id = localStorage.getItem('siteId')
       broadsideInfo(id).then((res) => {
         this.deptOptions = res.data.data
+        var arr = res.data.data[0].childs
+        var tmp = []
+        for(let i = 0; i < arr.length; i++) {
+          tmp.push(arr[i].name)
+        }
+        this.danweiList = [...new Set(tmp)]
+
       })
     },
     getPofession() {
@@ -767,6 +793,7 @@ export default {
       
       // this.loading = true;
       peopleInfo(params).then(response => {
+        console.log("打印", response.data.rows)
         this.userList = response.data.rows;
         this.total = response.total;
         this.loading = false;
@@ -891,6 +918,7 @@ export default {
       // this.resetForm("queryForm");
       this.queryParams.userName = '';
       this.queryParams.phone = ''
+      this.queryParams.userCode = ''
       this.queryParams.userStatus = ''
       this.queryParams.userClass = null;
       this.queryParams.userPost = ''
@@ -914,6 +942,11 @@ export default {
     /** 修改按钮操作 */
     handleUpdate(row) {
       console.log("Row", row)
+      this.optionValue = row.userSignCompanyName
+      this.selectValue = {
+        deptId: row.constructionSiteId,
+        name: row.userSignCompanyName
+      }
       this.form = row
       this.open = true;
       this.title = "修改人员";
@@ -930,6 +963,8 @@ export default {
     submitForm: function () {
       this.$refs["form"].validate((valid) => {
        this.form.constructionSiteId = localStorage.getItem('siteId')
+       this.form.userSignCompanyName = this.optionValue
+      //  this.form.userStatus = parseInt(this.form.userStatusStr)
         
         if (valid) {
            if(this.form.id === '') {
@@ -1127,5 +1162,8 @@ export default {
 }
 .dialog-footer {
   margin-left:30%;
+}
+.block >>> .el-pagination__total {
+  color: white;
 }
 </style>

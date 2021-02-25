@@ -91,6 +91,11 @@ const routes = [
       {
         path: '/greenConstruction',
         component: () => import('@/views/greenConstruction/index'),
+      },
+      {
+        path: '/greenHistory',
+        name: 'greenHistory',
+        component: () => import('@/views/greenConstruction/greenHistory')
       }
     ]
   },
