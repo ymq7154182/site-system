@@ -776,20 +776,24 @@ export default {
     },
     // 节点单击事件
     handleNodeClick(data, node, e) {
-      // console.log("data",data)
-      // console.log(node)
-      // console.log(e)
+      console.log("data",data)
+      console.log(node)
+      console.log(e)
       this.currentUserSignCompanyName = data.name
-      if(this.currentUserSignCompanyName.length > 4) {
+      // if(this.currentUserSignCompanyName.length > 4) {
+      //   var params = {
+      //     constructionSiteId: data.deptId,
+      //   }
+      // } else {
+      //   var params = {
+      //     constructionSiteId: data.deptId,
+      //     userSignCompanyName: data.name
+      //   }
+      // }
+
         var params = {
           constructionSiteId: data.deptId,
         }
-      } else {
-        var params = {
-          constructionSiteId: data.deptId,
-          userSignCompanyName: data.name
-        }
-      }
       
       // this.loading = true;
       peopleInfo(params).then(response => {
