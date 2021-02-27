@@ -32,10 +32,14 @@
             :row-style="{ color: 'white' }"
           >
             <el-table-column prop="id" label="序号" align="center" width="60" />
+             <el-table-column prop="fromUser" align="center" label="报告人" :show-overflow-tooltip="true" />
+             <el-table-column prop="toUser" align="center" label="整改人" :show-overflow-tooltip="true" />
+             <el-table-column prop="className" align="center" label="施工班组" :show-overflow-tooltip="true" />
+
             <el-table-column prop="context" align="center" label="事件详情" :show-overflow-tooltip="true" />
             <el-table-column prop="checkType" align="center" label="事件类型" :show-overflow-tooltip="true" />
             <el-table-column prop="checkTypeOffspring" align="center" label="详细类型" :show-overflow-tooltip="true" />
-            <el-table-column prop="startTime" align="center" label="记录时间" />
+            <el-table-column prop="startTime" align="center" label="记录时间" :show-overflow-tooltip="true"/>
             
             
             <el-table-column align="center" label="图片" width="100">
@@ -52,7 +56,7 @@
                 <span v-else style="color: rgb(232,85,63); ">逾期</span>
               </template>
             </el-table-column>
-            <el-table-column label="操作" align="center" width="200" class-name="small-padding fixed-width">
+            <el-table-column label="操作" align="center"  class-name="small-padding fixed-width">
               <template slot-scope="scope">
                 <el-button  type="text" icon="el-icon-view" @click="showDetails(scope.row)" >详情</el-button>
               </template>

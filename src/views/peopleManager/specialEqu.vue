@@ -60,9 +60,12 @@
             <!-- <el-table-column type="selection" width="50" align="center" /> -->
             <el-table-column label="序号" width="80" type="index" align="center"/>
             <el-table-column label="姓名" align="center" prop="userName" />
-            <el-table-column label="班组" align="center" prop="userClass"  />
+            <!-- <el-table-column label="班组" align="center" prop="userClass"  /> -->
             <el-table-column label="岗位/工种" align="center" prop="userPost" />
+            <el-table-column label="联系方式" align="center" prop="phone"  />
             <el-table-column label="身份证号" align="center" prop="userCode"  />
+            <el-table-column label="年龄" align="center" prop="userAge"  />
+             <el-table-column label="证书编号" align="center" prop="userVcode"  />
             <el-table-column label="状态" align="center" prop="userStatus" :show-overflow-tooltip="true" >
                 <template slot-scope="scope">
                 <el-tag  v-if="scope.row.userStatus===0" type="danger">离职</el-tag>
@@ -160,7 +163,7 @@
             </el-form-item>
           </el-col>
         </el-row>
-        <el-row>
+        <!-- <el-row>
           <el-col :span="12">
             <el-form-item label="班组" prop="teamId">
               <treeselect v-model="form.teamId" :options="treeData3" placeholder="请选择" :clearable="true" :show-count="true"  style="display:inline-block;vertical-align:bottom;" @select="getSelectList3" />
@@ -174,7 +177,7 @@
               </el-radio-group>
             </el-form-item>
           </el-col>
-        </el-row>
+        </el-row> -->
         <el-row>
           <el-col :span="12">
             <el-form-item label="岗位/工种" prop="userPost">
@@ -652,7 +655,7 @@ export default {
     
     // 表单重置
     resetForm(formName) {
-      this.$refs[formName].resetFields();
+      // this.$refs[formName].resetFields();
       this.form.userImg = ''
       this.form.constructionSiteId = ''
       this.form.id = ''
