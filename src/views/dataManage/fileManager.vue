@@ -825,6 +825,11 @@ export default {
   }
 
 
+  .el-tree >>> .el-tree-node:focus>.el-tree-node__content{
+      background-color: #5daaf0;
+    }
+
+
 
 .type-icon {
   padding: 0 0.2rem;

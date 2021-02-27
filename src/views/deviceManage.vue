@@ -56,19 +56,19 @@
                               </tr>
                               <tr>
                                 <td><i class="el-icon-s-custom" /> 责任人:</td>
-                                <td>{{item.personInCharge}}</td>
+                                <td>{{item.checkUser}}</td>
                               </tr>
-                              <tr>
+                              <!-- <tr>
                                 <td><i class="el-icon-phone-outline" /> 手机号:</td>
                                 <td>{{item.phone}}</td>
-                              </tr>
+                              </tr> -->
                             </table>
                           </div>
                           <div style="height: 18%; width: 100%; ">
                             <el-row>
                               <el-col :span="15">
                                 <div class="device-detail-span">
-                                  {{item.devName  }}&nbsp;
+                                  {{item.deviceName  }}&nbsp;
                                 </div>
                               </el-col>
                               <el-col :span="9">
@@ -193,12 +193,12 @@
                               </tr>
                               <tr>
                                 <td><i class="el-icon-s-custom" /> 责任人:</td>
-                                 <td>{{item.personInCharge}}</td>
+                                 <td>{{item.checkUser}}</td>
                               </tr>
-                              <tr>
+                              <!-- <tr>
                                 <td><i class="el-icon-phone-outline" />手机号:</td>
                                  <td>{{item.phone}}</td>
-                              </tr>
+                              </tr> -->
                             </table>
                           </div>
                           <div style="height: 18%; width: 100%; ">
