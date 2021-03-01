@@ -43,7 +43,7 @@
                           <div v-show="hoverIndex === index" class="device-detail-info">
                             <table>
                               <tr>
-                                <td><i class="el-icon-office-building" /> 生产厂家:</td>
+                                <td><i class="el-icon-office-building" /> 产权单位:</td>
                                 <td>{{item.makefactory}}</td>
                               </tr>
                               <tr>
@@ -180,7 +180,7 @@
                           <div v-show="hoverIndex2 === index" class="device-detail-info">
                             <table>
                               <tr>
-                                <td><i class="el-icon-office-building" /> 生产厂家:</td>
+                                <td><i class="el-icon-office-building" /> 产权单位:</td>
                                 <td>{{item.makefactory}}</td>
                               </tr>
                               <tr>
@@ -222,7 +222,7 @@
                           <div v-show="!infohover2" class="device-detail-info">
                             <table>
                               <tr>
-                                <td><i class="el-icon-office-building" /> 生产厂家:</td>
+                                <td><i class="el-icon-office-building" /> 产权单位:</td>
                                 <td>HAIZHI</td>
                               </tr>
                               <tr>
@@ -263,7 +263,7 @@
                           <div v-show="!infohover3" class="device-detail-info">
                             <table>
                               <tr>
-                                <td><i class="el-icon-office-building" /> 生产厂家:</td>
+                                <td><i class="el-icon-office-building" /> 产权单位:</td>
                                 <td>三一重工</td>
                               </tr>
                               <tr>
@@ -304,7 +304,7 @@
                           <div v-show="!infohover4" class="device-detail-info">
                             <table>
                               <tr>
-                                <td><i class="el-icon-office-building" /> 生产厂家:</td>
+                                <td><i class="el-icon-office-building" /> 产权单位:</td>
                                 <td>HAIZHI</td>
                               </tr>
                               <tr>
@@ -345,7 +345,7 @@
                           <div v-show="!infohover5" class="device-detail-info">
                             <table>
                               <tr>
-                                <td><i class="el-icon-office-building" /> 生产厂家:</td>
+                                <td><i class="el-icon-office-building" /> 产权单位:</td>
                                 <td>HAIZHI</td>
                               </tr>
                               <tr>
@@ -386,7 +386,7 @@
                           <div v-show="!infohover6" class="device-detail-info">
                             <table>
                               <tr>
-                                <td><i class="el-icon-office-building" /> 生产厂家:</td>
+                                <td><i class="el-icon-office-building" /> 产权单位:</td>
                                 <td>HAIZHI</td>
                               </tr>
                               <tr>
@@ -427,7 +427,7 @@
                           <div v-show="!infohover7" class="device-detail-info">
                             <table>
                               <tr>
-                                <td><i class="el-icon-office-building" /> 生产厂家:</td>
+                                <td><i class="el-icon-office-building" /> 产权单位:</td>
                                 <td>HAIZHI</td>
                               </tr>
                               <tr>
@@ -468,7 +468,7 @@
                           <div v-show="!infohover8" class="device-detail-info">
                             <table>
                               <tr>
-                                <td><i class="el-icon-office-building" /> 生产厂家:</td>
+                                <td><i class="el-icon-office-building" /> 产权单位:</td>
                                 <td>三一重工</td>
                               </tr>
                               <tr>
@@ -509,7 +509,7 @@
                           <div v-show="!infohover9" class="device-detail-info">
                             <table>
                               <tr>
-                                <td><i class="el-icon-office-building" /> 生产厂家:</td>
+                                <td><i class="el-icon-office-building" /> 产权单位:</td>
                                 <td>HAIZHI</td>
                               </tr>
                               <tr>
@@ -550,7 +550,7 @@
                           <div v-show="!infohover10" class="device-detail-info">
                             <table>
                               <tr>
-                                <td><i class="el-icon-office-building" /> 生产厂家:</td>
+                                <td><i class="el-icon-office-building" /> 产权单位:</td>
                                 <td>HAIZHI</td>
                               </tr>
                               <tr>

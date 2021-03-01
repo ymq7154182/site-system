@@ -210,10 +210,27 @@
           <el-row>
             <el-col :span="24">
               <el-form-item label="发起问题照片:" prop="imageUrl">
-                 <el-image
+                 
+
+              <el-image
+                  v-if="uploadInfo2.imageUrl !== null"
                 :src="uploadInfo2.imageUrl"
                 >
+                
               </el-image>
+              <span v-else>暂无图片</span>
+              </el-form-item>
+            </el-col>
+            
+          </el-row>
+
+           <el-row>
+            <el-col :span="24">
+              <el-form-item label="发起问题视频:" prop="videoUrl">
+                
+
+                 <video  v-if="uploadInfo2.videoUrl !== null" :src="uploadInfo2.videoUrl" controls></video>
+                 <span v-else>暂无视频</span>
               </el-form-item>
             </el-col>
             
@@ -243,9 +260,24 @@
           <el-row>
             <el-col :span="24">
               <el-form-item label="处理结果照片:" prop="safetyAndQualityProcessList">
-                 <el-image
+                
+
+              <el-image
+                 v-if="dealDatail.imageUrl !== null"
                 :src="dealDatail.imageUrl"
                 >
+              </el-image>
+              <span v-else>暂无图片</span>
+              </el-form-item>
+            </el-col>
+           
+          </el-row>
+
+          <el-row>
+            <el-col :span="24">
+              <el-form-item label="处理结果视频:" prop="safetyAndQualityProcessList">
+                 <video  v-if="dealDatail.videoUrl !== null" :src="dealDatail.videoUrl" controls></video>
+                 <span v-else>暂无视频</span>
               </el-image>
               </el-form-item>
             </el-col>
@@ -298,7 +330,8 @@ export default {
       dealDatail : {
         context: '',
         endTime: '',
-        imageUrl: ''
+        imageUrl: null,
+        videoUrl: null
       },
       uploadInfo2: {
         ccPeople: '',
