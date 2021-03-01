@@ -71,7 +71,7 @@
       <div style="height: 55vh; overflow-y: scroll; ">
         <el-form :model="uploadInfo" :rules="rules" ref="uploadInfo" label-width="1.5rem">
           <el-form-item label="文件名称" prop="name">
-            <el-input v-model="uploadInfo.name" style="width: 50%"></el-input>
+            <el-input v-model="uploadInfo.name" style="width: 50%" ></el-input>
           </el-form-item>
           <el-form-item label="文件路径" prop="urlId">
             <treeselect v-model="uploadInfo.urlId" :options="treeData2" placeholder="请选择" :clearable="true" :show-count="true" :disable-branch-nodes="true"  style="width: 350px" @select="getSelectList" />
@@ -823,6 +823,11 @@ export default {
     background-color: #66b1ff87;
     color:green;
   }
+
+
+  .el-tree >>> .el-tree-node:focus>.el-tree-node__content{
+      background-color: #5daaf0;
+    }
 
 
 

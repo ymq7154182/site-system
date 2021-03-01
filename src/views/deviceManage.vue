@@ -43,7 +43,7 @@
                           <div v-show="hoverIndex === index" class="device-detail-info">
                             <table>
                               <tr>
-                                <td><i class="el-icon-office-building" /> 生产厂家:</td>
+                                <td><i class="el-icon-office-building" /> 产权单位:</td>
                                 <td>{{item.makefactory}}</td>
                               </tr>
                               <tr>
@@ -56,19 +56,19 @@
                               </tr>
                               <tr>
                                 <td><i class="el-icon-s-custom" /> 责任人:</td>
-                                <td>{{item.personInCharge}}</td>
+                                <td>{{item.checkUser}}</td>
                               </tr>
-                              <tr>
+                              <!-- <tr>
                                 <td><i class="el-icon-phone-outline" /> 手机号:</td>
                                 <td>{{item.phone}}</td>
-                              </tr>
+                              </tr> -->
                             </table>
                           </div>
                           <div style="height: 18%; width: 100%; ">
                             <el-row>
                               <el-col :span="15">
                                 <div class="device-detail-span">
-                                  {{item.devName  }}&nbsp;
+                                  {{item.deviceName  }}&nbsp;
                                 </div>
                               </el-col>
                               <el-col :span="9">
@@ -180,7 +180,7 @@
                           <div v-show="hoverIndex2 === index" class="device-detail-info">
                             <table>
                               <tr>
-                                <td><i class="el-icon-office-building" /> 生产厂家:</td>
+                                <td><i class="el-icon-office-building" /> 产权单位:</td>
                                 <td>{{item.makefactory}}</td>
                               </tr>
                               <tr>
@@ -193,12 +193,12 @@
                               </tr>
                               <tr>
                                 <td><i class="el-icon-s-custom" /> 责任人:</td>
-                                 <td>{{item.personInCharge}}</td>
+                                 <td>{{item.checkUser}}</td>
                               </tr>
-                              <tr>
+                              <!-- <tr>
                                 <td><i class="el-icon-phone-outline" />手机号:</td>
                                  <td>{{item.phone}}</td>
-                              </tr>
+                              </tr> -->
                             </table>
                           </div>
                           <div style="height: 18%; width: 100%; ">
@@ -222,7 +222,7 @@
                           <div v-show="!infohover2" class="device-detail-info">
                             <table>
                               <tr>
-                                <td><i class="el-icon-office-building" /> 生产厂家:</td>
+                                <td><i class="el-icon-office-building" /> 产权单位:</td>
                                 <td>HAIZHI</td>
                               </tr>
                               <tr>
@@ -263,7 +263,7 @@
                           <div v-show="!infohover3" class="device-detail-info">
                             <table>
                               <tr>
-                                <td><i class="el-icon-office-building" /> 生产厂家:</td>
+                                <td><i class="el-icon-office-building" /> 产权单位:</td>
                                 <td>三一重工</td>
                               </tr>
                               <tr>
@@ -304,7 +304,7 @@
                           <div v-show="!infohover4" class="device-detail-info">
                             <table>
                               <tr>
-                                <td><i class="el-icon-office-building" /> 生产厂家:</td>
+                                <td><i class="el-icon-office-building" /> 产权单位:</td>
                                 <td>HAIZHI</td>
                               </tr>
                               <tr>
@@ -345,7 +345,7 @@
                           <div v-show="!infohover5" class="device-detail-info">
                             <table>
                               <tr>
-                                <td><i class="el-icon-office-building" /> 生产厂家:</td>
+                                <td><i class="el-icon-office-building" /> 产权单位:</td>
                                 <td>HAIZHI</td>
                               </tr>
                               <tr>
@@ -386,7 +386,7 @@
                           <div v-show="!infohover6" class="device-detail-info">
                             <table>
                               <tr>
-                                <td><i class="el-icon-office-building" /> 生产厂家:</td>
+                                <td><i class="el-icon-office-building" /> 产权单位:</td>
                                 <td>HAIZHI</td>
                               </tr>
                               <tr>
@@ -427,7 +427,7 @@
                           <div v-show="!infohover7" class="device-detail-info">
                             <table>
                               <tr>
-                                <td><i class="el-icon-office-building" /> 生产厂家:</td>
+                                <td><i class="el-icon-office-building" /> 产权单位:</td>
                                 <td>HAIZHI</td>
                               </tr>
                               <tr>
@@ -468,7 +468,7 @@
                           <div v-show="!infohover8" class="device-detail-info">
                             <table>
                               <tr>
-                                <td><i class="el-icon-office-building" /> 生产厂家:</td>
+                                <td><i class="el-icon-office-building" /> 产权单位:</td>
                                 <td>三一重工</td>
                               </tr>
                               <tr>
@@ -509,7 +509,7 @@
                           <div v-show="!infohover9" class="device-detail-info">
                             <table>
                               <tr>
-                                <td><i class="el-icon-office-building" /> 生产厂家:</td>
+                                <td><i class="el-icon-office-building" /> 产权单位:</td>
                                 <td>HAIZHI</td>
                               </tr>
                               <tr>
@@ -550,7 +550,7 @@
                           <div v-show="!infohover10" class="device-detail-info">
                             <table>
                               <tr>
-                                <td><i class="el-icon-office-building" /> 生产厂家:</td>
+                                <td><i class="el-icon-office-building" /> 产权单位:</td>
                                 <td>HAIZHI</td>
                               </tr>
                               <tr>

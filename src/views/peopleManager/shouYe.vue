@@ -102,13 +102,13 @@
                      
                       <li @mouseover="infohover1 = false" @mouseout="infohover1 = true" v-for="(item, index) in leadersList">
                         <div class="device-detail">
-                          <div v-if="item.userImg !== ''" style="height:80%;">
+                          <div v-if="item.userImg !== null" style="height:80%;">
                             <el-image v-show="infohover1"  :src="item.userImg" fit="fill" style="height: 100%; " />
                           </div>
                           <div v-else style="height:80%;">
                             <el-image v-show="infohover1"  :src="require('../../assets/peopleManager/wu.jpg')" fit="fill" style="height: 100%; " />
                           </div>
-                          <div v-show="!infohover1" class="device-detail-info" v-if="item.userImg !== ''">
+                          <div v-show="!infohover1" class="device-detail-info" v-if="item.userImg !== null">
                             <table>
                               <tr>
                                 <td>姓名:</td>
@@ -591,6 +591,7 @@ export default {
       infohover4: true,
       infohover5: true,
       infohover6: true,
+      deptNames: [],
       responsePeopleTotal: [],
       responsePeopleKq: [],
       servicePeopleTotal: [],
@@ -646,7 +647,7 @@ export default {
       setTimeout(() => {
           this.$refs.selectTree.blur()
       }, 50)
-      this.selectResponsePeople(this.optionValue)
+      this.selectResponsePeople(data.deptId)
    },
    filterNode(value, data) {
       if (!value) return true;
@@ -786,24 +787,31 @@ export default {
     },
     getLeaderCount() {
       var id = localStorage.getItem("siteId")
-      if(this.selectDeptName === '' || this.selectDeptName === '全部') {
-        leaderCount(id).then((res) => {
+
+      leaderCount(id).then((res) => {
           
           this.leaderTotalCount = res.data.data.leaderCount
           this.attendLeaderCount = res.data.data.attendLeaderCount
           
         })
-      } else {
-        var params = {
-          deptName: this.selectDeptName
-        }
-        leaderCount(id, params).then((res) => {
+      // if(this.selectDeptName === '' || this.selectDeptName === '全部') {
+      //   leaderCount(id).then((res) => {
           
-          this.leaderTotalCount = res.data.data.leaderCount
-          this.attendLeaderCount = res.data.data.attendLeaderCount
+      //     this.leaderTotalCount = res.data.data.leaderCount
+      //     this.attendLeaderCount = res.data.data.attendLeaderCount
           
-        })
-      }
+      //   })
+      // } else {
+      //   var params = {
+      //     deptName: this.selectDeptName
+      //   }
+      //   leaderCount(id).then((res) => {
+          
+      //     this.leaderTotalCount = res.data.data.leaderCount
+      //     this.attendLeaderCount = res.data.data.attendLeaderCount
+          
+      //   })
+      // }
 
     
       
@@ -995,7 +1003,7 @@ export default {
         },
         yAxis: {
             type: 'category',
-            data: ['监理单位', '施工单位', '建设单位'],
+            data: this.deptNames,
             axisLabel: {
               show: true,
                 textStyle: {
@@ -1011,7 +1019,7 @@ export default {
                 stack: '总数',
                 label: {
                     show: true,
-                    position: 'insideRight'
+                    position: 'inside'
                 },
                 data: this.responsePeopleTotal
             },
@@ -1022,7 +1030,7 @@ export default {
                 stack: '考勤',
                 label: {
                     show: true,
-                    position: 'insideRight'
+                    position: 'inside'
                 },
                 data: this.responsePeopleKq
             },
@@ -1032,7 +1040,7 @@ export default {
                 stack: '总数',
                 label: {
                     show: true,
-                    position: 'insideRight'
+                    position: 'inside'
                 },
                 data: this.servicePeopleTotal
             },
@@ -1042,7 +1050,7 @@ export default {
                 stack: '考勤',
                 label: {
                     show: true,
-                    position: 'insideRight'
+                    position: 'inside'
                 },
                 data: this.servicePeopleKq
             }
@@ -1587,12 +1595,16 @@ export default {
 
           var tmp = obj[i]
           // console.log("SSSSS", tmp)
+          this.deptNames.push(tmp.deptName)
           this.responsePeopleTotal.push(tmp.leaderTotal)
           this.responsePeopleKq.push(tmp.leaderAttend)
           this.servicePeopleTotal.push(tmp.labourTotal)
           this.servicePeopleKq.push(tmp.labourAttend)
-          // console.log("DDDDD", this.responsePeopleTotal)
         }
+         console.log("建设单位项目负责人总数", this.responsePeopleTotal)
+         console.log("建设单位劳务人员总数", this.servicePeopleTotal)
+         console.log("建设单位项目负责人考勤", this.responsePeopleKq)
+         console.log("建设单位劳务人员考勤", this.servicePeopleKq)
         this.drawLine4()
       })
     },
@@ -1625,22 +1637,30 @@ export default {
       
       this.getPeopleCount(this.currentDay, this.deptId, 3)
     },
-    selectResponsePeople(val) {
-      this.selectDeptName = val
-      if(val !== '全部') {
-        var id = localStorage.getItem('siteId')
+    getLeaderCountById(id) {
+      
+
+      leaderCount(id).then((res) => {
+          
+          this.leaderTotalCount = res.data.data.leaderCount
+          this.attendLeaderCount = res.data.data.attendLeaderCount
+          
+        })
+    },
+    selectResponsePeople(id) {
+      // this.selectDeptName = val
+      
+        
         var params = {
           constructionSiteId: id,
-          userSignCompanyName: val,
+        
           projectLeader: 1
         }
         peopleInfo(params).then((res) => {
           this.leadersList = res.data.rows
         })
-        this.getLeaderCount()
-      } else {
-        this.getLeaderList()
-      }
+        this.getLeaderCountById(id)
+      
       
   
     }
@@ -1835,7 +1855,10 @@ export default {
   padding: 0;
   margin: 0;
   animation: moving2 12s linear infinite;
-  width: 25rem;
+  /* width: 30rem; */
+ 
+  width: 2000rem;
+
 
 }
 
@@ -1856,6 +1879,7 @@ export default {
   /* height: calc(28vh - 10px - 0.5rem - 0.3rem); */
   margin: 0.15rem;
   width: calc(100% - 0.3rem);
+  width: 2200rem;
   overflow: hidden;
 }
 
