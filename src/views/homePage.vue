@@ -77,8 +77,9 @@
         <el-col :span="12" class="homePage_dialog">
           <div style="padding-left: 0.3rem;margin-right: 0.3rem">
             <div class="video_container">
-              <el-carousel>
-                <el-carousel-item v-for="item in homeImgs" :key="item" >
+              <img v-if="homeImgs.length === 0" :src="require('../assets/homepage/video_bg.png')"  style="height: 100%; width: 100%; disply:block; " />
+              <el-carousel v-else>
+                <el-carousel-item  v-for="item in homeImgs" :key="item" >
                   <img :src="item"  style="height: 100%; width: 100%; disply:block; " />
                 </el-carousel-item>
               </el-carousel>

@@ -102,13 +102,13 @@
                      
                       <li @mouseover="infohover1 = false" @mouseout="infohover1 = true" v-for="(item, index) in leadersList">
                         <div class="device-detail">
-                          <div v-if="item.userImg !== ''" style="height:80%;">
+                          <div v-if="item.userImg !== null" style="height:80%;">
                             <el-image v-show="infohover1"  :src="item.userImg" fit="fill" style="height: 100%; " />
                           </div>
                           <div v-else style="height:80%;">
                             <el-image v-show="infohover1"  :src="require('../../assets/peopleManager/wu.jpg')" fit="fill" style="height: 100%; " />
                           </div>
-                          <div v-show="!infohover1" class="device-detail-info" v-if="item.userImg !== ''">
+                          <div v-show="!infohover1" class="device-detail-info" v-if="item.userImg !== null">
                             <table>
                               <tr>
                                 <td>姓名:</td>
