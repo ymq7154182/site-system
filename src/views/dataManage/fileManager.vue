@@ -79,7 +79,7 @@
           <el-form-item label="进度绑定" prop="taskId">
               <treeselect v-model="uploadInfo.taskId" :options="progressTreeData" placeholder="请选择进度" :clearable="true" :show-count="true" style="width: 350px" @select="getSelectTask" />
           </el-form-item>
-          <el-form-item label="文件描述" prop="remark">
+          <el-form-item label="轮播展示" prop="statuss">
             <el-switch
               v-model="uploadInfo.statuss"
               active-value="1"
@@ -90,50 +90,21 @@
           <el-form-item label="顺序" prop="orders" v-if="uploadInfo.statuss === '1'">
             <el-input v-model="uploadInfo.orders" ></el-input>
           </el-form-item>
-          <el-form-item label="文件描述" prop="remark">
+          <el-form-item label="文件描述" prop="info">
             <el-input type="textarea" v-model="uploadInfo.info" style="width: 90%; "></el-input>
           </el-form-item>
           <el-form-item label="上传文件">
             <el-upload
-              v-if="fileType === '文档'"
               class="upload-demo"
               action="http://121.36.106.18:36080/system/safe/uploadFile"
               :limit="1"
-              :on-success="handleDocSuccess"
-              accept=".jpg,.png,.pdf,.doc,.docx,.xls,.xlsx,.ppt,.pptx"
+              :file-list="upLoadFileList"
+              :on-success="handleFileSuccess"
               style="width: 90%; "
             >
               <el-button slot="trigger" size="small" type="primary" icon="el-icon-plus">选取文件</el-button>
-              <div slot="tip" class="el-upload__tip">支持上传jpg/png/pdf/doc/docx/xls/xlsx/ppt/pptx格式文件</div>
             </el-upload>
-            <el-upload
-              v-else-if="fileType === '图片'"
-              class="upload-demo"
-              action="http://121.36.106.18:36080/system/safe/uploadFile"
-              :limit="1"
-              :on-success="handleSuccess"
-              accept=".jpg,.png"
-              style="width: 90%; "
-            >
-              <el-button slot="trigger" size="small" type="primary" icon="el-icon-plus">选取文件</el-button>
-              <div slot="tip" class="el-upload__tip">支持上传jpg/png格式图片</div>
-            </el-upload>
-            <el-upload
-              v-else-if="fileType === '视频'"
-              class="upload-demo"
-              action="http://121.36.106.18:36080/system/safe/uploadFile"
-              :limit="1"
-              :on-success="handleSuccess"
-              accept=".avi,.mp4"
-              style="width: 90%; "
-            >
-              <el-button slot="trigger" size="small" type="primary" icon="el-icon-plus">选取文件</el-button>
-              <div slot="tip" class="el-upload__tip">支持上传avi/mp4格式视频</div>
-            </el-upload>
-            <div v-else>
-              <el-button size="small" type="primary" icon="el-icon-plus">选取文件</el-button>
-              <span style="color: #f56c6c; ">&nbsp;请先选择文件类型</span>
-            </div>
+            
           </el-form-item>
           <el-form-item>
             <el-button type="primary" @click="submitUpload('uploadInfo')">上传</el-button>
@@ -151,7 +122,10 @@
           <el-form-item label="文件路径" prop="urlId" >
             <treeselect v-model="currentInfo.urlId" :options="treeData2" placeholder="请选择" :clearable="true" :disabled="disbaled" :show-count="true" :disable-branch-nodes="true"  style="width: 350px" />
           </el-form-item>
-          <el-form-item label="文件描述" prop="remark">
+           <el-form-item label="进度绑定" prop="taskId">
+              <treeselect v-model="currentInfo.taskId" :options="progressTreeData" placeholder="请选择进度" :disabled="disbaled" :clearable="true" :show-count="true" style="width: 350px" @select="getSelectTask" />
+          </el-form-item>
+          <el-form-item label="首页轮播" prop="statuss">
             <el-switch
               v-model="currentInfo.statuss"
               active-value="1"
@@ -163,53 +137,11 @@
           <el-form-item label="顺序" prop="orders" v-if="currentInfo.statuss === '1'">
             <el-input v-model="currentInfo.orders" :disabled="disbaled" ></el-input>
           </el-form-item>
-          <el-form-item label="文件描述" prop="remark">
+          <el-form-item label="文件描述" prop="info">
             <el-input type="textarea" v-model="currentInfo.info" style="width: 90%; " :disabled="disbaled"></el-input>
           </el-form-item>
-          <el-form-item label="上传文件">
-            <el-upload
-              :disabled="disbaled"
-              v-if="fileType === '文档'"
-              class="upload-demo"
-              action="http://121.36.106.18:36080/system/safe/uploadFile"
-              :limit="1"
-              :on-success="handleDocSuccess"
-              accept=".jpg,.png,.pdf,.doc,.docx,.xls,.xlsx,.ppt,.pptx"
-              style="width: 90%; "
-            >
-              <el-button slot="trigger" size="small" type="primary" icon="el-icon-plus">选取文件</el-button>
-              <div slot="tip" class="el-upload__tip">支持上传jpg/png/pdf/doc/docx/xls/xlsx/ppt/pptx格式文件</div>
-            </el-upload>
-            <el-upload
-              :disabled="disbaled"
-              v-else-if="fileType === '图片'"
-              class="upload-demo"
-              action="http://121.36.106.18:36080/system/safe/uploadFile"
-              :limit="1"
-              :on-success="handleSuccess"
-              accept=".jpg,.png"
-              style="width: 90%; "
-            >
-              <el-button slot="trigger" size="small" type="primary" icon="el-icon-plus">选取文件</el-button>
-              <div slot="tip" class="el-upload__tip">支持上传jpg/png格式图片</div>
-            </el-upload>
-            <el-upload
-              :disabled="disbaled"
-              v-else-if="fileType === '视频'"
-              class="upload-demo"
-              action="http://121.36.106.18:36080/system/safe/uploadFile"
-              :limit="1"
-              :on-success="handleSuccess"
-              accept=".avi,.mp4"
-              style="width: 90%; "
-            >
-              <el-button slot="trigger" size="small" type="primary" icon="el-icon-plus">选取文件</el-button>
-              <div slot="tip" class="el-upload__tip">支持上传avi/mp4格式视频</div>
-            </el-upload>
-            <div v-else>
-              <el-button size="small" type="primary" icon="el-icon-plus" disabled>选取文件</el-button>
-              <span style="color: #f56c6c; ">&nbsp;请先选择文件类型</span>
-            </div>
+          <el-form-item label="图片" prop="lookUrl">
+            <el-image  :src="currentInfo.lookUrl"></el-image>
           </el-form-item>
           <el-form-item>
             <el-button type="primary" @click="submitEdit('currentInfo')">修改</el-button>
@@ -263,6 +195,7 @@ export default {
   components: { Treeselect },
   data() {
     return {
+      upLoadFileList: [],
       selectTaskId: undefined,
         progressTreeData: [],
         currentFolder: undefined,
@@ -361,7 +294,8 @@ export default {
         name: '',
         id: '',
         url: '',
-        lookUrl: ''
+        lookUrl: '',
+        taskId: ''
       },
       moveInfo: {
         constructionSiteId: 0,
@@ -389,6 +323,7 @@ export default {
     this.constructionSiteId = parseInt(window.localStorage.getItem('siteId'));
     this.getConstructionSiteName(this.constructionSiteId);
     this.refreshTable();
+    this.getTreeTask()
     docType().then(response => {
       for(var i=0;i<response.data.rows.length;i++) {
         this.docTypeList.push(response.data.rows[i].name)
@@ -424,7 +359,7 @@ export default {
       this.uploadInfo.constructionSiteId = this.constructionSiteId;
       this.uploadInfo.constructionSiteName = this.constructionSiteName;
       this.showUpload = true
-      this.getTreeTask()
+      // this.getTreeTask()
     },
     submitUpload(formName) {
       this.$refs[formName].validate((valid) => {
@@ -480,25 +415,31 @@ export default {
     },
     resetForm(formName) {
       this.$refs[formName].resetFields();
-      this.uploadInfo.info = ''
+      this.uploadInfo = {
+        format: undefined,
+        info: '',
+        name: '',
+        lookUrl: '',
+        orders:'',
+        taskId: undefined
+      }
+      this.upLoadFileList = []
     },
     editInfo(index, row) {
+      
       console.log("ROW", row)
       this.currentInfo.constructionSiteId = this.constructionSiteId;
       this.currentInfo.constructionSiteName = this.constructionSiteName;
-      if (row.doc_type) {
-        this.currentInfo.doc_type = row.doc_type;
-      } else {
-        this.currentInfo.doc_type = '其他'
-      }
+     
       this.currentInfo.statuss = row.statuss;
       this.currentInfo.orders = row.orders;
       this.currentInfo.format = row.format;
       this.currentInfo.info = row.info;
       this.currentInfo.name = row.name;
-      this.currentInfo.url = row.url;
+      this.currentInfo.lookUrl = row.lookUrl;
       this.currentInfo.id = row.id;
       this.currentInfo.urlId = row.urlId
+      this.currentInfo.taskId = row.taskId
       this.fileList = [{
         name: row.name,
         url: row.url
@@ -508,21 +449,56 @@ export default {
     },
     delInfo(index, row) {
       
-      delFile(row.id).then((res) => {
-        console.log("删除文件",res.data.code)
-        if(res.data.code === 200) {
-          this.$message({
-            type: 'success',
-            message: '删除成功！'
+      this.$confirm('此操作将永久删除该文件, 是否继续?', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning',
+          center: true
+        }).then(() => {
+          // this.$message({
+          //   type: 'success',
+          //   message: '删除成功!'
+          // });
+          delFile(row.id).then((res) => {
+            console.log("删除文件",res.data.code)
+            if(res.data.code === 200) {
+              this.$message({
+                type: 'success',
+                message: '删除成功！'
+              })
+              this.getListFolder()
+            } else {
+              this.$message({
+                type: 'success',
+                message: '删除失败！'
+              })
+            }
           })
-          this.getListFolder()
-        } else {
+        }).catch(() => {
           this.$message({
-            type: 'success',
-            message: '删除失败！'
-          })
-        }
-      })
+            type: 'info',
+            message: '已取消删除'
+          });
+        });
+
+
+
+
+      // delFile(row.id).then((res) => {
+      //   console.log("删除文件",res.data.code)
+      //   if(res.data.code === 200) {
+      //     this.$message({
+      //       type: 'success',
+      //       message: '删除成功！'
+      //     })
+      //     this.getListFolder()
+      //   } else {
+      //     this.$message({
+      //       type: 'success',
+      //       message: '删除失败！'
+      //     })
+      //   }
+      // })
     },
     moveFile(index, row) {
       console.log("MoveInfo", row)
@@ -580,60 +556,10 @@ export default {
     openUrl(url) {
       window.open(url);
     },
-    handleSuccess(response, file, fileList) {
-      this.uploadInfo.url = response.data
+    handleFileSuccess(response, file, fileList) {
       this.uploadInfo.lookUrl = response.data
     },
-    handleDocSuccess(response, file, fileList) {
-      this.uploadInfo.url = response.data
-      let fileType = file.name.substring(file.name.lastIndexOf('.') + 1);
-      let extension1 = fileType === 'jpg';
-      let extension2 = fileType === 'png';
-      let extension3 = fileType === 'pdf';
-      if(!extension1 && !extension2 && !extension3){
-        // 不是上述三种格式，需要转换
-        toPdfFile({
-          filePath: response.data
-        }).then(r => {
-          if(r.data.code === 200) {
-            this.uploadInfo.lookUrl = r.data.data
-          } else {
-            this.$message.error(r.data.msg)
-            return false;
-          }
-        })
-      }else{
-        // 是上述三种格式，直接使用url
-        this.uploadInfo.lookUrl = response.data
-      }
-    },
-    handleDocSuccessEdit(response, file, fileList) {
-      this.currentInfo.url = response.data
-      let fileType = file.name.substring(file.name.lastIndexOf('.') + 1);
-      let extension1 = fileType === 'jpg';
-      let extension2 = fileType === 'png';
-      let extension3 = fileType === 'pdf';
-      if(!extension1 && !extension2 && !extension3){
-        // 不是上述三种格式，需要转换
-        toPdfFile({
-          filePath: response.data
-        }).then(r => {
-          if(r.data.code === 200) {
-            this.currentInfo.lookUrl = r.data.data
-          } else {
-            this.$message.error(r.data.msg)
-            return false;
-          }
-        })
-      }else{
-        // 是上述三种格式，直接使用url
-        this.currentInfo.lookUrl = response.data
-      }
-    },
-    handleSuccessEdit(response, file, fileList) {
-      this.currentInfo.url = response.data
-      this.currentInfo.lookUrl = response.data
-    },
+   
     refreshTable() {
       this.getFolderList(this.currentNodeId)
     },
