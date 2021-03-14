@@ -3,7 +3,7 @@
     <div class="notice_container">
       <div class="notice_left">
         <img src="../assets/homepage/laba.png">
-        <span style="margin-left: 0.5rem; color: rgb(220,164,80);">视频监控存在1处警告，塔式起重机监控存在1处警告,请及时查看！</span>
+        <span style="margin-left: 0.5rem; color: rgb(220,164,80);" class="notice_slide">视频监控存在1处警告，塔式起重机监控存在1处警告,请及时查看！</span>
       </div>
       <!--<div class="notice_right">-->
         <!--<span>用户身份:</span>-->
@@ -1551,12 +1551,29 @@
     float: left;
     height:0.66rem;
     position: relative;
+     /* width: 200px;
+    overflow: hidden; */
   }
   .notice_left img{
     position: absolute;
     top: 50%;
     transform: translate(0,-50%)
   }
+  /* .notice_slide {
+   
+    display: inline-block;
+    white-space: nowrap;
+    animation: 10s slide linear infinite normal;
+
+  }
+  @keyframes slide {
+    0% {
+      transform: translateX(0px)
+    }
+    100% {
+      transform: translateX(100%)
+    }
+  } */
   .notice_container span{
     height: 0.66rem;
     line-height: 0.66rem;

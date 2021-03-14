@@ -285,7 +285,7 @@
             >
               <div v-for="(item, index) in checkForm.checkMonthChildList" :key="index" style="border-bottom: dashed 1px #DCDFE6;margin-bottom: 20px">
                 <el-row>
-                  <el-col :span="12">
+                  <!-- <el-col :span="12">
                     <el-form-item
                       label-width="130px"
                       label="diccode"
@@ -296,7 +296,7 @@
                     >
                       <el-input v-model="item.diccode"></el-input>
                     </el-form-item>
-                  </el-col>
+                  </el-col> -->
                   <el-col :span="12">
                     <el-form-item
                       label-width="130px"
@@ -305,6 +305,18 @@
                       :rules="{required: true, message: '检查项不能为空', trigger: 'blur'}"
                     >
                       <el-input v-model="item.firstcode"></el-input>
+                    </el-form-item>
+                  </el-col>
+                  <el-col :span="12">
+                    <el-form-item
+                      label-width="130px"
+                      label="所扣分值"
+                      :prop="'checkForm.checkMonthChildList.' + index + '.checkcode'"
+                      :rules="{
+              required: true, message: '所扣分值不能为空', trigger: 'blur'
+              }"
+                    >
+                      <el-input v-model="item.checkcode"></el-input>
                     </el-form-item>
                   </el-col>
                 </el-row>
@@ -338,7 +350,7 @@
                   <!--                </el-col>-->
                 </el-row>
                 <el-row>
-                  <el-col :span="12">
+                  <el-col :span="24">
                     <el-form-item
                       label-width="130px"
                       label="存在的问题"
@@ -350,18 +362,7 @@
                       <el-input v-model="item.fourcode"></el-input>
                     </el-form-item>
                   </el-col>
-                  <el-col :span="12">
-                    <el-form-item
-                      label-width="130px"
-                      label="所扣分值"
-                      :prop="'checkForm.checkMonthChildList.' + index + '.checkcode'"
-                      :rules="{
-              required: true, message: '所扣分值不能为空', trigger: 'blur'
-              }"
-                    >
-                      <el-input v-model="item.checkcode"></el-input>
-                    </el-form-item>
-                  </el-col>
+                  
                 </el-row>
               </div>
             </el-form>

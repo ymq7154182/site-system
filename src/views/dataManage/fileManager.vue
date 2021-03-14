@@ -37,14 +37,17 @@
               <!-- <el-table-column prop="userName" label="更新者" width="200" align="center" /> -->
               <el-table-column label="首页轮播" align="center"  width="150" >
                 <template slot-scope="scope">
-                    <el-switch v-model="scope.row.statuss" active-value="1" inactive-value="0" disabled></el-switch>
+                    <!-- <el-switch v-model="scope.row.statuss" active-value="1" inactive-value="0" disabled></el-switch> -->
+                    <el-tag type="danger" v-if="scope.row.statuss === '1'">是</el-tag>
+                    <el-tag type="success" v-else>否</el-tag>
                 </template> 
+                
               </el-table-column>
 
               <el-table-column prop="updateTime" label="更新时间" align="center" />
               <el-table-column label="操作" align="center"  fixed="right">
                 <template slot-scope="scope">
-                  <el-button type="primary" size="mini"  @click="editInfo(scope.$index, scope.row)" >重命名</el-button>
+                  <el-button type="primary" size="mini"  @click="editInfo(scope.$index, scope.row)" >编辑</el-button>
                   <el-button type="info" size="mini"  @click="delInfo(scope.$index, scope.row)" >删除</el-button>
                   <el-button type="success" size="mini"  @click="downloadFile(scope.row.url)" >下载</el-button>
                   <el-button type="danger" size="mini"  @click="moveFile(scope.$index, scope.row)" >移动</el-button>
@@ -84,6 +87,7 @@
               v-model="uploadInfo.statuss"
               active-value="1"
               inactive-value="0"
+              
               >
             </el-switch>
           </el-form-item>
@@ -120,25 +124,25 @@
             <el-input v-model="currentInfo.name" style="width: 50%"></el-input>
           </el-form-item>
           <el-form-item label="文件路径" prop="urlId" >
-            <treeselect v-model="currentInfo.urlId" :options="treeData2" placeholder="请选择" :clearable="true" :disabled="disbaled" :show-count="true" :disable-branch-nodes="true"  style="width: 350px" />
+            <treeselect v-model="currentInfo.urlId" :options="treeData2" placeholder="请选择" :clearable="true"  :show-count="true" :disable-branch-nodes="true"  style="width: 350px" />
           </el-form-item>
            <el-form-item label="进度绑定" prop="taskId">
-              <treeselect v-model="currentInfo.taskId" :options="progressTreeData" placeholder="请选择进度" :disabled="disbaled" :clearable="true" :show-count="true" style="width: 350px" @select="getSelectTask" />
+              <treeselect v-model="currentInfo.taskId" :options="progressTreeData" placeholder="请选择进度"  :clearable="true" :show-count="true" style="width: 350px" @select="getSelectTask" />
           </el-form-item>
           <el-form-item label="首页轮播" prop="statuss">
             <el-switch
               v-model="currentInfo.statuss"
               active-value="1"
               inactive-value="0"
-              disabled
+            
               >
             </el-switch>
           </el-form-item>
           <el-form-item label="顺序" prop="orders" v-if="currentInfo.statuss === '1'">
-            <el-input v-model="currentInfo.orders" :disabled="disbaled" ></el-input>
+            <el-input v-model="currentInfo.orders"></el-input>
           </el-form-item>
           <el-form-item label="文件描述" prop="info">
-            <el-input type="textarea" v-model="currentInfo.info" style="width: 90%; " :disabled="disbaled"></el-input>
+            <el-input type="textarea" v-model="currentInfo.info" style="width: 90%; " ></el-input>
           </el-form-item>
           <el-form-item label="图片" prop="lookUrl">
             <el-image  :src="currentInfo.lookUrl"></el-image>

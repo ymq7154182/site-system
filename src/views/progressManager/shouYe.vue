@@ -107,10 +107,16 @@
         </div>
       </el-col>
       <el-col :span="18">
-        <div style="margin-top: 20px;">
+        <div style="margin-top: 20px;" class="drawStep">
           <el-steps align-center :active="nodeTimeList.length">
-            <el-step v-for="(item, index) in nodeTimeList" :key="index" :title="item.label"  :description="item.value"></el-step>
-           
+            <el-step 
+              v-for="(item, index) in nodeTimeList" 
+              :key="index" 
+              :title="item.label"  
+              :description="item.value"
+              @click.native="modifyPostLevel(item, index)"
+              >
+              </el-step>
           </el-steps>
         </div>
        
@@ -139,19 +145,19 @@
           <el-col :span="12">
            <el-form-item label="是否停工" prop="isStop">
               <el-radio-group v-model="form.isStop" >
-                <el-radio label="1">是</el-radio>
-                <el-radio label="0">否</el-radio>
+                <el-radio :label="1">是</el-radio>
+                <el-radio :label="0">否</el-radio>
                   
               </el-radio-group>
             </el-form-item>
           </el-col>
         </el-row>
-        <el-row v-if="form.isStop === '1' ">
+        <el-row v-if="form.isStop === 1 ">
           <el-col :span="12">
             <el-form-item label="异常延期" prop="isAbnormalDelay">
               <el-radio-group v-model="form.isAbnormalDelay">
-                <el-radio label="1">是</el-radio>
-                <el-radio label="0">否</el-radio>
+                <el-radio :label="1">是</el-radio>
+                <el-radio :label="0">否</el-radio>
                   
               </el-radio-group>
             </el-form-item>
@@ -162,38 +168,38 @@
             </el-form-item>
           </el-col>
         </el-row>
-         <el-row v-if="form.isStop === '0' ">
+         <el-row v-if="form.isStop === 0 ">
           <el-col :span="12">
             <el-form-item label="恢复施工" prop="isResumeConstruction">
               <el-radio-group v-model="form.isResumeConstruction">
-                <el-radio label="1">是</el-radio>
-                <el-radio label="0">否</el-radio>
+                <el-radio :label="1">是</el-radio>
+                <el-radio :label="0">否</el-radio>
                   
               </el-radio-group>
             </el-form-item>
           </el-col>
         </el-row>
-         <el-row v-if="form.isStop === '0' ">
+         <el-row v-if="form.isStop === 0 ">
           <el-col :span="12">
             <el-form-item label="复工时间" prop="returnToWorkTime">
               <el-date-picker v-model="form.returnToWorkTime" align="right" type="date" placeholder="选择日期"  value-format="yyyy-MM-dd" />
             </el-form-item>
           </el-col>
-          <el-col :span="12">
+          <!-- <el-col :span="12">
             <el-form-item label="延期时间" prop="delayTime">
               <el-date-picker v-model="form.delayTime" align="right" type="date" placeholder="选择日期"  value-format="yyyy-MM-dd" />
             </el-form-item>
-          </el-col>
+          </el-col> -->
         </el-row>
         
-        <el-row v-if="form.isStop === '1' ">
+        <el-row v-if="form.isStop === 1 ">
           <el-col :span="24">
             <el-form-item label="停工说明" prop="stopContent">
               <el-input type="textarea" v-model="form.stopContent" placeholder="请输入停工说明" />
             </el-form-item>
           </el-col>
         </el-row>
-        <el-row v-if="form.isStop === '1' ">
+        <el-row v-if="form.isStop === 1 ">
 
           <el-col :span="12">
             
@@ -215,16 +221,26 @@
             
           </el-col>
         </el-row>
+         <el-row v-if="form.isStop === 1 && form.stopImgUrl !== ''">
+
+          <el-col :span="12">
+            <el-form-item label="停工照片">
+                 <el-image :src="form.stopImgUrl"></el-image>
+              </el-form-item>
+            
+              
+          </el-col>
+        </el-row>
 
 
-        <el-row v-if="form.isStop === '0' ">
+        <el-row v-if="form.isStop === 0 ">
           <el-col :span="24">
             <el-form-item label="复工说明" prop="returnToWorkContent">
               <el-input type="textarea" v-model="form.returnToWorkContent" placeholder="请输入复工说明" />
             </el-form-item>
           </el-col>
         </el-row>
-        <el-row v-if="form.isStop === '0' ">
+        <el-row v-if="form.isStop === 0 ">
 
           <el-col :span="12">
             
@@ -246,13 +262,27 @@
             
           </el-col>
         </el-row>
+        <el-row v-if="form.isStop === 0 && form.returnToWorkImgUrl !== '' ">
+
+          <el-col :span="12">
+            
+              <el-form-item label="复工照片">
+                 <el-image :src="form.returnToWorkImgUrl"></el-image>
+              </el-form-item>
+              
+
+            
+          </el-col>
+        </el-row>
 
 
 
 
       </el-form>
       <div slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="submitForm">确 定</el-button>
+        <el-button type="primary" v-if="this.form.id !== ''" @click="delNode">删 除</el-button>
+        <el-button type="primary" v-if="this.form.id !== ''" @click="submitForm">修 改</el-button>
+        <el-button type="primary" v-else @click="submitForm">确 定</el-button>
         <el-button @click="cancel">取 消</el-button>
       </div>
     </el-dialog>
@@ -268,7 +298,7 @@
 
 <script>
 
-import { scheduleList, scheduleGantt, totalDay, addNode } from '@/api/progress'
+import { scheduleList, scheduleGantt, totalDay, addNode, putNode, delNodeById, getNodeById } from '@/api/progress'
 export default {
   name: "progress",
   components: {
@@ -296,9 +326,9 @@ export default {
         timeNodeName: [
           { required: true, message: '请输入节点名称', trigger: 'blur' }
         ],
-        delayTime: [
-          { required: true, message: '请选择延期时间', trigger: 'change' }
-        ],
+        // delayTime: [
+        //   { required: true, message: '请选择延期时间', trigger: 'change' }
+        // ],
         isAbnormalDelay: [
            { required: true, message: '请选择是否延期', trigger: 'change' } 
         ],
@@ -354,6 +384,58 @@ export default {
     this.getTotalDay()
   },
   methods:{
+    delNode() {
+      console.log("当前id", this.form.id)
+      delNodeById(this.form.id).then((res) => {
+         if (res.data.code === 200) {
+              
+            this.$message({
+              type: 'success',
+              message: '删除成功！'
+            })
+            this.open = false;
+            this.getTotalDay()
+            this.resetForm('form')
+          }
+      })
+      
+    },
+    
+    modifyPostLevel(step, id) {
+      console.log("step", step.id)
+      console.log("id", id)
+      if(step.id === undefined) {
+        this.$message({
+          type: 'warning',
+          message: '默认节点不可修改'
+        })
+      } else {
+        this.getInfoById(step.id)
+      }
+      
+
+    },
+    getInfoById(id) {
+      getNodeById(id).then((res) => {
+        console.log("获取信息", res.data.data)
+        var obj = res.data.data
+        this.form.id = obj.id
+        this.form.delayTime = obj.delayTime
+        this.form.isResumeConstruction = obj.isResumeConstruction
+        this.form.isStop = obj.isStop
+        this.form.returnToWorkContent = obj.returnToWorkContent
+        this.form.returnToWorkImgUrl = obj.returnToWorkImgUrl
+        this.form.returnToWorkTime = obj.returnToWorkTime
+        this.form.stopContent = obj.stopContent
+        this.form.stopImgUrl = obj.stopImgUrl
+        this.form.stopTime = obj.stopTime
+        this.form.taskId = obj.taskId
+        this.form.timeNodeName = obj.timeNodeName
+        this.form.isAbnormalDelay = obj.isAbnormalDelay
+
+        this.open = true
+      })
+    },
     handleSuccess2(response, file, fileList) {
       this.form.stopImgUrl = response.data
     },
@@ -366,8 +448,9 @@ export default {
        this.form.taskId = this.currentTaskId
         console.log("提交的数据", this.form)
         if (valid) {
-          
-             addNode(this.form).then((response) => {
+
+          if(this.form.id === '') {
+            addNode(this.form).then((response) => {
               if (response.data.code === 200) {
               
                 this.$message({
@@ -379,6 +462,21 @@ export default {
                 this.resetForm('form')
               }
             });
+          } else {
+            putNode(this.form).then((response) => {
+              if (response.data.code === 200) {
+              
+                this.$message({
+                  type: 'success',
+                  message: '修改成功！'
+                })
+                this.open = false;
+                this.getTotalDay()
+                this.resetForm('form')
+              }
+            });
+          }
+             
           
             
           }
@@ -452,6 +550,7 @@ export default {
     },
    
     getTotalDay() {
+      this.nodeTimeList = []
       var siteId = localStorage.getItem('siteId')
       totalDay(siteId).then((res) => {
         console.log("总空间", res.data)
@@ -461,6 +560,7 @@ export default {
         
         for(var i = 0; i < arr.length; i++) {
           var obj = {}
+          obj.id = arr[i].id
           obj.label = arr[i].label
           obj.value = arr[i].value.split('T')[0]
           this.nodeTimeList.push(obj)
@@ -527,5 +627,14 @@ export default {
 .hoverCard {
   list-style: none;
   width: 200px;
+}
+/* .drawStep >>> .el-step__main {
+  color: #fff
+} */
+.drawStep >>> .el-step__title.is-finish {
+  color: white;
+}
+.drawStep >>> .el-step__description.is-finish {
+  color: white;
 }
 </style>
