@@ -936,7 +936,7 @@ export default {
             },
             emphasis: {
               label: {
-                show: true,
+                show: false,
                 // fontSize: '15',
                 fontWeight: 'bold'
               }
@@ -945,6 +945,7 @@ export default {
               // lineStyle: {
               //   color: 'rgba(255, 255, 255, 0.3)'
               // },
+              show: false,
               smooth: 0,
               length: 10,
               length2: 20
