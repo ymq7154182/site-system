@@ -367,6 +367,8 @@
                 <el-date-picker
                   v-model="selectDate"
                   type="date"
+                  @change="getSelectDay"
+                  value-format="yyyy-MM-dd"
                   placeholder="选择日期">
                 </el-date-picker>
             </div>
@@ -627,6 +629,8 @@ export default {
     //     this.todayAttendTotal = res.data.total
     //   })
     // },
+
+    
 
     getBroadsideInfo() {
       var id = localStorage.getItem('siteId')
@@ -927,6 +931,9 @@ export default {
             type: 'pie',
             radius: ['60%', '80%'],
             avoidLabelOverlap: false,
+            label: {
+              show: false
+            },
             emphasis: {
               label: {
                 show: true,
@@ -1606,6 +1613,8 @@ export default {
          console.log("建设单位项目负责人考勤", this.responsePeopleKq)
          console.log("建设单位劳务人员考勤", this.servicePeopleKq)
         this.drawLine4()
+        this.deptNames = []
+
       })
     },
     transDate() {
@@ -1636,6 +1645,15 @@ export default {
     showDay() {
       
       this.getPeopleCount(this.currentDay, this.deptId, 3)
+    },
+    getSelectDay(val) {
+      console.log("SAsasaca", val)
+      if(val !== null) {
+        this.getPeopleCount(val, this.deptId, 3)
+      } else {
+        this.showDay()
+      }
+       
     },
     getLeaderCountById(id) {
       

@@ -31,11 +31,35 @@ export function totalDay(id) {
   })
 }
 
+
+
 export function addNode(data) {
   return request({
     url: `/scheduleManage/time-node`,
     method: 'post',
     data: data
+  })
+}
+
+export function putNode(data) {
+  return request({
+    url: `/scheduleManage/time-node`,
+    method: 'put',
+    data: data
+  })
+}
+
+export function delNodeById(id) {
+  return request({
+    url: `/scheduleManage/time-node/${id}`,
+    method: 'delete'
+  })
+}
+
+export function getNodeById(id) {
+  return request({
+    url: `/scheduleManage/time-node/${id}`,
+    method: 'get'
   })
 }
 
