@@ -117,7 +117,7 @@
         </el-form>
       </div>
     </el-dialog>
-    <el-dialog :visible.sync="showEdit" title="重命名" width="40%">
+    <el-dialog :visible.sync="showEdit" title="修改" width="40%">
       <div style="height: 55vh; overflow-y: scroll; ">
         <el-form :model="currentInfo" :rules="rules" ref="currentInfo" label-width="1.5rem">
           <el-form-item label="文件名称" prop="name">
@@ -132,9 +132,8 @@
           <el-form-item label="首页轮播" prop="statuss">
             <el-switch
               v-model="currentInfo.statuss"
-              active-value="1"
-              inactive-value="0"
-            
+              :active-value="'1'"
+              :inactive-value="'0'"
               >
             </el-switch>
           </el-form-item>
@@ -143,6 +142,18 @@
           </el-form-item>
           <el-form-item label="文件描述" prop="info">
             <el-input type="textarea" v-model="currentInfo.info" style="width: 90%; " ></el-input>
+          </el-form-item>
+          <el-form-item label="上传文件">
+            <el-upload
+              class="upload-demo"
+              action="http://121.36.106.18:36080/system/safe/uploadFile"
+              :limit="1"
+              :file-list="upLoadFileList"
+              :on-success="handleFileSuccess1"
+              style="width: 90%; "
+            >
+              <el-button slot="trigger" size="small" type="primary" icon="el-icon-plus">选取文件</el-button>
+            </el-upload>
           </el-form-item>
           <el-form-item label="图片" prop="lookUrl">
             <el-image  :src="currentInfo.lookUrl"></el-image>
@@ -299,7 +310,8 @@ export default {
         id: '',
         url: '',
         lookUrl: '',
-        taskId: ''
+        taskId: '',
+        statuss: '',
       },
       moveInfo: {
         constructionSiteId: 0,
@@ -563,6 +575,9 @@ export default {
     handleFileSuccess(response, file, fileList) {
       this.uploadInfo.lookUrl = response.data
     },
+    handleFileSuccess1(response, file, fileList) {
+      this.currentInfo.lookUrl = response.data
+    },
    
     refreshTable() {
       this.getFolderList(this.currentNodeId)
@@ -744,19 +759,20 @@ export default {
     background: red !important;
 }
 .el-tree >>> .el-tree-node:focus >>> .el-tree-node__content {
-    background-color: #66b1ff87 !important;
+    background-color: orange !important;
     
   }
   .el-tree >>> .el-tree-node__content:hover {    background-color: #66b1ff87;color:orange;
   }
   .el-tree >>> .el-tree--highlight-current .el-tree-node.is-current>.el-tree-node__content {
-    background-color: #66b1ff87;
+    background-color: orange;
     color:green;
   }
 
 
   .el-tree >>> .el-tree-node:focus>.el-tree-node__content{
-      background-color: #5daaf0;
+      background-color: rgb(240, 107, 107);
+      color: white;
     }
 
 

@@ -36,14 +36,16 @@
               <!-- <el-table-column prop="userName" label="更新者" align="center" /> -->
               <el-table-column label="首页轮播" align="center"  >
                 <template slot-scope="scope">
-                    <el-switch v-model="scope.row.statuss" active-value="1" inactive-value="0" disabled></el-switch>
+                    <!-- <el-switch v-model="scope.row.statuss" active-value="1" inactive-value="0" disabled></el-switch> -->
+                    <el-tag type="danger" v-if="scope.row.statuss === '1'">是</el-tag>
+                    <el-tag type="success" v-else>否</el-tag>
                 </template> 
               </el-table-column>
 
               <el-table-column prop="updateTime" label="更新时间" align="center" />
               <el-table-column label="操作" align="center"  fixed="right">
                 <template slot-scope="scope">
-                  <el-button type="primary" size="mini"  @click="editInfo(scope.$index, scope.row)" >重命名</el-button>
+                  <el-button type="primary" size="mini"  @click="editInfo(scope.$index, scope.row)" >编辑</el-button>
                   <el-button type="info" size="mini"  @click="delInfo(scope.$index, scope.row)" >删除</el-button>
                   <el-button type="success" size="mini"  @click="downloadFile(scope.row.url)" >下载</el-button>
                   <el-button type="danger" size="mini"  @click="moveFile(scope.$index, scope.row)" >移动</el-button>
@@ -138,75 +140,50 @@
         </el-form>
       </div>
     </el-dialog>
-    <el-dialog :visible.sync="showEdit" title="重命名" width="40%">
+    <el-dialog :visible.sync="showEdit" title="编辑文件" width="40%">
       <div style="height: 413px; overflow-y: scroll; ">
         <el-form :model="currentInfo" :rules="rules" ref="currentInfo" label-width="120px">
           <el-form-item label="文件名称" prop="name">
             <el-input v-model="currentInfo.name" style="width: 50%"></el-input>
           </el-form-item>
           <el-form-item label="文件路径" prop="urlId" >
-            <treeselect v-model="currentInfo.urlId" :options="treeData2" placeholder="请选择" :clearable="true" :disabled="disbaled" :show-count="true" :disable-branch-nodes="true"  style="width: 350px" />
+            <treeselect v-model="currentInfo.urlId" :options="treeData2" placeholder="请选择" :clearable="true"  :show-count="true" :disable-branch-nodes="true"  style="width: 350px" />
           </el-form-item>
           <el-form-item label="文件描述" prop="remark">
             <el-switch
               v-model="currentInfo.statuss"
-              active-value="1"
-              inactive-value="0"
-              disabled
+              :active-value="'1'"
+              :inactive-value="'0'"
+              
               >
             </el-switch>
           </el-form-item>
           <el-form-item label="顺序" prop="orders" v-if="currentInfo.statuss === '1'">
-            <el-input v-model="currentInfo.orders" :disabled="disbaled" ></el-input>
+            <el-input v-model="currentInfo.orders"  ></el-input>
           </el-form-item>
           <el-form-item label="文件描述" prop="remark">
-            <el-input type="textarea" v-model="currentInfo.info" style="width: 90%; " :disabled="disbaled"></el-input>
+            <el-input type="textarea" v-model="currentInfo.info" style="width: 90%; " ></el-input>
           </el-form-item>
-          <el-form-item label="上传文件">
-            <el-upload
-              :disabled="disbaled"
-              v-if="fileType === '文档'"
-              class="upload-demo"
-              action="http://121.36.106.18:36080/system/safe/uploadFile"
-              :limit="1"
-              :on-success="handleDocSuccess"
-              accept=".jpg,.png,.pdf,.doc,.docx,.xls,.xlsx,.ppt,.pptx"
-              style="width: 90%; "
-            >
-              <el-button slot="trigger" size="small" type="primary" icon="el-icon-plus">选取文件</el-button>
-              <div slot="tip" class="el-upload__tip">支持上传jpg/png/pdf/doc/docx/xls/xlsx/ppt/pptx格式文件</div>
-            </el-upload>
-            <el-upload
-              :disabled="disbaled"
-              v-else-if="fileType === '图片'"
-              class="upload-demo"
-              action="http://121.36.106.18:36080/system/safe/uploadFile"
-              :limit="1"
-              :on-success="handleSuccess"
-              accept=".jpg,.png"
-              style="width: 90%; "
-            >
-              <el-button slot="trigger" size="small" type="primary" icon="el-icon-plus">选取文件</el-button>
-              <div slot="tip" class="el-upload__tip">支持上传jpg/png格式图片</div>
-            </el-upload>
-            <el-upload
-              :disabled="disbaled"
-              v-else-if="fileType === '视频'"
-              class="upload-demo"
-              action="http://121.36.106.18:36080/system/safe/uploadFile"
-              :limit="1"
-              :on-success="handleSuccess"
-              accept=".avi,.mp4"
-              style="width: 90%; "
-            >
-              <el-button slot="trigger" size="small" type="primary" icon="el-icon-plus">选取文件</el-button>
-              <div slot="tip" class="el-upload__tip">支持上传avi/mp4格式视频</div>
-            </el-upload>
-            <div v-else>
-              <el-button size="small" type="primary" icon="el-icon-plus" disabled>选取文件</el-button>
-              <span style="color: #f56c6c; ">&nbsp;请先选择文件类型</span>
-            </div>
+         
+            
+            <el-form-item label="上传文件">
+              <el-upload
+                class="upload-demo"
+                action="http://121.36.106.18:36080/system/safe/uploadFile"
+                :limit="1"
+                :file-list="upLoadFileList"
+                :on-success="handleFileSuccess1"
+                style="width: 90%; "
+              >
+                <el-button slot="trigger" size="small" type="primary" icon="el-icon-plus">选取文件</el-button>
+              </el-upload>
+            
           </el-form-item>
+          <el-form-item label="图片" prop="lookUrl">
+            <el-image :src="currentInfo.lookUrl"></el-image>
+          </el-form-item>
+            
+         
           <el-form-item>
             <el-button type="primary" @click="submitEdit('currentInfo')">修改</el-button>
             <el-button @click="showEdit = false">取消</el-button>
@@ -265,6 +242,7 @@ export default {
   },
   data() {
     return {
+      upLoadFileList: [],
         currentFolder: undefined,
         disbaled: true,
         fileType: '',
@@ -293,7 +271,8 @@ export default {
         name: '',
         url: '',
         lookUrl: '',
-        orders:''
+        orders:'',
+        taskId: undefined
       },
       rules: {
         name: [
@@ -360,7 +339,9 @@ export default {
         name: '',
         id: '',
         url: '',
-        lookUrl: ''
+        lookUrl: '',
+        taskId: '',
+        statuss: '',
       },
       moveInfo: {
         constructionSiteId: 0,
@@ -405,6 +386,12 @@ export default {
     })
   },
   methods: {
+    handleFileSuccess(response, file, fileList) {
+      this.uploadInfo.lookUrl = response.data
+    },
+    handleFileSuccess1(response, file, fileList) {
+      this.currentInfo.lookUrl = response.data
+    },
     handleCurrentChange(val) {
       this.currentPage = val
     },
@@ -467,25 +454,30 @@ export default {
     },
     resetForm(formName) {
       this.$refs[formName].resetFields();
-      this.uploadInfo.info = ''
+      this.uploadInfo = {
+        format: undefined,
+        info: '',
+        name: '',
+        lookUrl: '',
+        orders:'',
+        statuss: '',
+        taskId: undefined
+      }
+      this.upLoadFileList = []
     },
     editInfo(index, row) {
-      console.log("ROW", row)
       this.currentInfo.constructionSiteId = this.constructionSiteId;
       this.currentInfo.constructionSiteName = this.constructionSiteName;
-      if (row.doc_type) {
-        this.currentInfo.doc_type = row.doc_type;
-      } else {
-        this.currentInfo.doc_type = '其他'
-      }
+     
       this.currentInfo.statuss = row.statuss;
       this.currentInfo.orders = row.orders;
       this.currentInfo.format = row.format;
       this.currentInfo.info = row.info;
       this.currentInfo.name = row.name;
-      this.currentInfo.url = row.url;
+      this.currentInfo.lookUrl = row.lookUrl;
       this.currentInfo.id = row.id;
       this.currentInfo.urlId = row.urlId
+      this.currentInfo.taskId = row.taskId
       this.fileList = [{
         name: row.name,
         url: row.url
