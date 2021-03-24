@@ -4476,17 +4476,19 @@
             if (res.data.data.length === 0){
               this.quaFlag1 = false
             }
+            this.checkKey = ["未处理", "处理中", "已完成", "逾期"]
+            this.checkValue = [0, 0, 0, 0]
             for(var i=0;i<res.data.data.length;i++) {
               if(res.data.data[i].key === 1){
-                this.checkKey.push("未处理")
+                this.checkValue[0] = res.data.data[i].value
               } else if (res.data.data[i].key === 2) {
-                this.checkKey.push("处理中")
+                this.checkValue[1] = res.data.data[i].value
               } else if (res.data.data[i].key === 3) {
-                this.checkKey.push("已完成")
+                this.checkValue[2] = res.data.data[i].value
               } else if (res.data.data[i].key === 4) {
-                this.checkKey.push("逾期")
+                this.checkValue[3] = res.data.data[i].value
               }
-              this.checkValue.push(res.data.data[i].value)
+              
               this.sumNum += res.data.data[i].value
             }
             // console.log("安全检查",this.quaFlag1)

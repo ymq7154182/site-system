@@ -42,7 +42,7 @@
               <span style="height: 0.43rem;line-height: 0.43rem;font-size: 0.08rem;color: #d2d7dc;margin-left: 0.1rem">施工单位：<span>{{projectDetails.constructionUnitSg}}</span></span>
             </div>
             <div class="project_item">
-              <span style="height: 0.43rem;line-height: 0.43rem;font-size: 0.08rem;color: #d2d7dc;margin-left: 0.1rem">工程类别：<span v-if="projectDetails.protype===1">省重点项目</span></span>
+              <span style="height: 0.43rem;line-height: 0.43rem;font-size: 0.08rem;color: #d2d7dc;margin-left: 0.1rem">工程类别：<span v-if="projectDetails.protier===1">省重点项目</span><span v-else-if="projectDetails.protier===2">市重点项目</span><span v-else-if="projectDetails.protier===3">一般项目</span><span v-else>国家重点项目</span></span>
             </div>
             <div class="project_item">
               <span style="height: 0.43rem;line-height: 0.43rem;font-size: 0.08rem;color: #d2d7dc;margin-left: 0.1rem">备案编号：<span>{{projectDetails.proCode}}</span></span>
