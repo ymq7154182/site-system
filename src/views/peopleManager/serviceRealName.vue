@@ -15,7 +15,7 @@
       <el-col :span="20" :xs="24">
         <div v-show="showSearch" style="padding: 10px">
           <span style="font-size: 14px;color: white;font-weight: 700;margin-right: 10px">姓名</span><el-input v-model="queryParams.userName" placeholder="请输入姓名" clearable size="small" style="width: 120px;margin-right: 10px" />
-          <span style="font-size: 14px;color: white;font-weight: 700;margin-right: 10px">身份证号</span><el-input v-model="queryParams.userCode" placeholder="请输入手机号" clearable size="small" style="width: 190px;margin-right: 10px"  />
+          <span style="font-size: 14px;color: white;font-weight: 700;margin-right: 10px">身份证号</span><el-input v-model="queryParams.userCode" placeholder="请输入身份证号" clearable size="small" style="width: 190px;margin-right: 10px"  />
           
           <span style="font-size: 14px;color: white;font-weight: 700;margin-right: 10px">岗位/工种</span>
           <el-select v-model="queryParams.userPost" placeholder="请选择" clearable size="small" style="width: 120px;margin-right: 10px">
@@ -269,7 +269,7 @@
             </el-col>
             <el-col :span="12">
               <el-form-item label="上级班组:" prop="parentId">
-                <treeselect v-model="banzuForm.parentId" :options="treeData2" placeholder="请选择" :clearable="true" :show-count="true"  style="display:inline-block;vertical-align:bottom;" @select="getSelectList2" />
+                <treeselect v-model="banzuForm.parentId" :options="treeData2" placeholder="请选择" noOptionsText="没有上层节点,请在左侧输入名称创建" :clearable="true" :show-count="true"  style="display:inline-block;vertical-align:bottom;" @select="getSelectList2" />
               </el-form-item>
             </el-col>
           </el-row>
@@ -680,6 +680,7 @@ export default {
      console.log("打印data", data)
      console.log("打印node", node)
      console.log("打印nodeData", nodeData)
+     
      this.selectValue = data
      this.optionValue = data.name
       setTimeout(() => {
@@ -793,6 +794,7 @@ export default {
 
         var params = {
           constructionSiteId: data.deptId,
+          userSignCompanyName: data.name
         }
       
       // this.loading = true;
@@ -828,6 +830,11 @@ export default {
           this.fileList12 = []
           this.modelOpen = false
           this.getPeopleInfo()
+        } else {
+          this.$message({
+            type: 'error',
+            message: res.data.msg
+          })
         }
       })
     },
@@ -837,7 +844,8 @@ export default {
     
     // 表单重置
     resetForm(formName) {
-      
+      this.selectValue = undefined
+      this.optionValue = undefined
       this.form.userImg = ''
       this.form.constructionSiteId = ''
       this.form.id = ''
@@ -966,7 +974,7 @@ export default {
     /** 提交按钮 */
     submitForm: function () {
       this.$refs["form"].validate((valid) => {
-       this.form.constructionSiteId = localStorage.getItem('siteId')
+       this.form.constructionSiteId = this.selectValue.deptId
        this.form.userSignCompanyName = this.optionValue
       //  this.form.userStatus = parseInt(this.form.userStatusStr)
         
@@ -982,6 +990,11 @@ export default {
                 this.open = false;
                 this.getPeopleInfo()
                 this.resetForm('form')
+              } else {
+                 this.$message({
+                  type: 'error',
+                  message: response.data.msg
+                })
               }
             });
            } else {
@@ -996,6 +1009,12 @@ export default {
                 this.open = false;
                 this.getPeopleInfo()
                 this.resetForm('form')
+              } else {
+                console.log("错误信息", response.data)
+                this.$message({
+                  type: 'error',
+                  message: response.data.msg
+                })
               }
             });
            }
@@ -1006,8 +1025,13 @@ export default {
     },
 
     submitFormPeople: function () {
+      console.log("班组id",this.banzuForm.parentId)
+      if(this.banzuForm.parentId === undefined) {
+        this.banzuForm.parentId = 0
+      }
       this.$refs["banzuForm"].validate((valid) => {
         if (valid) {
+          
           var obj = {
             siteId: localStorage.getItem('siteId'),
             label: this.banzuForm.label,
@@ -1046,6 +1070,7 @@ export default {
               })
               this.banzuOpen = false;
               this.getPeopleInfo()
+              this.getBanzu()
               this.resetForm2('banzuForm')
             }
           });

@@ -51,7 +51,7 @@
                                 <td>{{item.deviceType}}</td>
                               </tr>
                               <tr>
-                                <td><i class="el-icon-place" /> 设备编号:</td>
+                                <td><i class="el-icon-place" /> 设备备案编号:</td>
                                 <td>{{item.deviceCode}}</td>
                               </tr>
                               <tr>
@@ -188,7 +188,7 @@
                                 <td>{{item.deviceType}}</td>
                               </tr>
                               <tr>
-                                <td><i class="el-icon-place" /> 设备编号:</td>
+                                <td><i class="el-icon-place" /> 设备备案编号:</td>
                                 <td>{{item.deviceCode}}</td>
                               </tr>
                               <tr>
@@ -651,8 +651,8 @@
       <el-dialog :visible.sync="showAdd" title="更新数据" width="40%">
       <div >
         <el-form :model="uploadInfo" :rules="rules" ref="uploadInfo" label-width="2rem">
-          <el-form-item label="设备名称" prop="devName">
-            <el-select v-model="uploadInfo.devName" placeholder="请选择名称" >
+          <el-form-item label="设备备案编号" prop="devName">
+            <el-select v-model="uploadInfo.devName" placeholder="请选择设备备案编号" >
               <el-option
                 v-for="item in taList"
                 :key="item"
@@ -1664,6 +1664,7 @@ export default {
         }
         
         this.taInfoList = res.data.data.devData
+        
         this.taTotal = res.data.data.devData.length
         this.getQizhongjiNum()
         

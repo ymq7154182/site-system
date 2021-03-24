@@ -46,7 +46,9 @@
               <el-table-column prop="phone" label="负责人/电话" width="150" align="center" />
               <el-table-column label="状态" align="center"  width="100" >
                 <template slot-scope="scope">
-                    <el-switch v-model="scope.row.flag" :active-value="1" :inactive-value="0" disabled></el-switch>
+                    <!-- <el-switch v-model="scope.row.flag" :active-value="1" :inactive-value="0" disabled></el-switch> -->
+                    <el-tag type="success" v-if="scope.row.flag === 1">在线</el-tag>
+                    <el-tag type="danger" v-else>离线</el-tag>
                 </template> 
               </el-table-column>
 
@@ -54,7 +56,7 @@
               <el-table-column label="操作" align="center"  fixed="right">
                 <template slot-scope="scope">
                   <el-button type="primary" size="mini"  @click="editInfo(scope.$index, scope.row)" >修改</el-button>
-
+                  <el-button type="primary" size="mini"  @click="delInfo(scope.$index, scope.row)" >删除</el-button>
                 </template>
               </el-table-column>
             </el-table>
@@ -225,7 +227,7 @@
             <el-input v-model="folderInfo.label" style="width: 50%"></el-input>
           </el-form-item>
           <el-form-item label="上级类型" prop="parentId">
-            <treeselect v-model="folderInfo.parentId" :options="treeData4" placeholder="请选择" :clearable="true" :show-count="true"   style="width: 350px" @select="getSelectList3" />
+            <treeselect v-model="folderInfo.parentId" :options="treeData4" placeholder="请选择(不选默认创建新的设备种类)" noOptionsText="没有上级类型,请直接在设备类型输入名称创建" :clearable="true" :show-count="true"   style="width: 350px" @select="getSelectList3" />
           </el-form-item>
           <el-form-item label="显示排序" prop="sort">
             <el-input v-model="folderInfo.sort" style="width: 50%"></el-input>
@@ -326,9 +328,9 @@ export default {
         label: [
           { required: true, message: '请输入设备类型名称', trigger: 'blur' }
         ],
-        parentId: [
-          { required: true, message: '请选择类型', trigger: 'blur' }
-        ],
+        // parentId: [
+        //   { required: true, message: '请选择类型', trigger: 'blur' }
+        // ],
         sort: [
           { required: true, message: '请选择排序', trigger: 'blur' }
         ],
@@ -352,7 +354,8 @@ export default {
       folderInfo: {
         siteId: 0,
         name: '',
-        sort: ''
+        sort: '',
+        parentId: undefined
       },
       currentIndex: null,
       isActive1: true,
@@ -415,6 +418,9 @@ export default {
 
     submitFolder(formName) {
       console.log("新建的信息1", this.folderInfo)
+      if(this.folderInfo.parentId === undefined) {
+        this.folderInfo.parentId = 0
+      }
       this.$refs[formName].validate((valid) => {
         console.log("新建的信息2", this.folderInfo)
         console.log("valid", valid)
@@ -470,7 +476,7 @@ export default {
     submitEdit(formName) {
       this.$refs[formName].validate((valid) => {
           console.log("修改信息如下", this.currentInfo)
-        if(!valid) {
+        if(valid) {
           devPutManage(this.currentInfo).then(response => {
             if(response.data.code === 200) {
               this.$message({

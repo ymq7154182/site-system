@@ -646,6 +646,11 @@ export default {
           this.fileList12 = []
           this.modelOpen = false
           this.getPeopleInfo()
+        } else {
+          this.$message({
+            type: 'error',
+            message: res.data.msg
+          })
         }
       })
     },
@@ -788,6 +793,11 @@ export default {
                 this.open = false;
                 this.getPeopleInfo()
                 this.resetForm('form')
+              } else {
+                this.$message({
+                  type: 'error',
+                  message: response.data.msg
+                })
               }
             });
            } else {
@@ -802,6 +812,11 @@ export default {
                 this.open = false;
                 this.getPeopleInfo()
                 this.resetForm('form')
+              } else {
+                this.$message({
+                  type: 'error',
+                  message: response.data.msg
+                })
               }
             });
            }

@@ -139,6 +139,27 @@ export function getProjectInfo(data) {
   })
 }
 
+export function getInfo(id) {
+  return request({
+    url: `/schedule/task/${id}`,
+    method: 'get'
+  })
+}
+export function putTask(data) {
+  return request({
+    url: `/schedule/task`,
+    method: 'put',
+    data: data
+  })
+}
+
+export function delTask(id) {
+  return request({
+    url: `/schedule/task/${id}`,
+    method: 'delete'
+  })
+}
+
 
 
 
