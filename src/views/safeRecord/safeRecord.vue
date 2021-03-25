@@ -72,16 +72,12 @@
       <div style="overflow-y: scroll; height: 60vh; ">
         <el-form ref="checkForm" :model="checkForm"  label-width="80px" :disabled="true">
           <el-row>
+            
             <el-col :span="12">
-              <el-form-item label="奖惩情况" prop="situation" label-width="130px">
-                <el-input v-model="checkForm.situation" placeholder="请输入奖惩情况" />
+              <el-form-item label="项目进度" prop="progress" label-width="130px">
+                <el-input v-model="checkForm.progress" placeholder="请输入项目进度" />
               </el-form-item>
             </el-col>
-            <!--          <el-col :span="12">-->
-            <!--            <el-form-item label="项目主键" prop="proid" label-width="130px">-->
-            <!--              <el-input v-model="checkForm.proid" placeholder="请输入项目主键" />-->
-            <!--            </el-form-item>-->
-            <!--          </el-col>-->
             <el-col :span="12">
               <el-form-item label="考评时间" prop="evaltime" label-width="130px">
                 <el-date-picker
@@ -96,10 +92,11 @@
           </el-row>
           <el-row>
             <el-col :span="12">
-              <el-form-item label="项目进度" prop="progress" label-width="130px">
-                <el-input v-model="checkForm.progress" placeholder="请输入项目进度" />
+              <el-form-item label="奖惩情况" prop="situation" label-width="130px">
+                <el-input v-model="checkForm.situation" placeholder="请输入奖惩情况" />
               </el-form-item>
             </el-col>
+            
             <el-col :span="9">
               <el-form-item label="综合得分" prop="checkCode" label-width="130px">
                 <el-input v-model="checkForm.checkCode" placeholder="请输入综合得分" />

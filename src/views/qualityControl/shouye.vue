@@ -4366,7 +4366,7 @@
             sitename:this.proName
           }
           getSafetyRecord(prames).then((res) => {
-            //console.log("后端传回监督记录",res.data.data)
+            console.log("后端传回监督记录",res.data.data)
 
             var data2 = []
             for(var i = 0 ;i < res.data.data.length;i++ ){

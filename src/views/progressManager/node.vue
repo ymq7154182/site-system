@@ -71,6 +71,7 @@
             <el-table-column label="操作" align="center" width="180" class-name="small-padding fixed-width">
               <template slot-scope="scope">
                 <el-button size="mini" type="text" @click="handleView(scope.row)" >修改</el-button>
+                <el-button size="mini" type="text" @click="handleDel(scope.row)" >删除</el-button>
                 <el-button size="mini" type="text" @click="handleUpdate(scope.row)" >查看延缓说明</el-button>
               </template>
             </el-table-column>
@@ -147,28 +148,16 @@
               </el-col>
               <el-col :span="12">
                   <el-form-item  label="上级节点" prop="parentId">
-                    <treeselect v-model="nodeForm.parentId" :options="treeData4" placeholder="请选择" :clearable="true" :show-count="true"  @select="getSelectList3" />
+                    <treeselect v-model="nodeForm.parentId" :options="treeData4" placeholder="请选择" noOptionsText="没有上层节点,请输入创建" :clearable="true" :show-count="true"  @select="getSelectList3" />
                   </el-form-item>
               </el-col>
               
           </el-row>
-          <el-row>
-            <el-col :span="12">
-              <el-form-item label="负责人">
-                <el-input v-model="nodeForm.leadingCadre" placeholder="请输入负责人" />
-                
-              </el-form-item>
-            </el-col>
-            <el-col :span="12">
-              <el-form-item label="负责电话">
-                <el-input v-model="nodeForm.phone"  placeholder="请输入负责人电话" ></el-input>
-              </el-form-item>
-            </el-col>
-          </el-row>
+
           <el-row>
               <el-col :span="12">
                   <el-form-item label="绑定班组:" prop="teamId">
-                    <treeselect v-model="nodeForm.teamId" :options="treeData2" placeholder="请选择" :clearable="true" :show-count="true"  style="display:inline-block;vertical-align:bottom;" @select="getSelectList2" />
+                    <treeselect v-model="nodeForm.teamId" :options="treeData2" placeholder="请选择" noOptionsText="目前没有班组，请先创建" :clearable="true" :show-count="true"  style="display:inline-block;vertical-align:bottom;" @select="getSelectList2" />
                   </el-form-item>
               </el-col>
               <el-col :span="12">
@@ -177,7 +166,47 @@
                   </el-form-item>
               </el-col>
           </el-row>
-        
+
+          <el-row>
+            <el-col :span="12">
+              <el-form-item label="负责人">
+                <el-input v-model="nodeForm.leadingCadre" :disabled="disabled" placeholder="请输入负责人" />
+                
+              </el-form-item>
+            </el-col>
+            <el-col :span="12">
+              <el-form-item label="负责电话">
+                <el-input v-model="nodeForm.phone" :disabled="disabled"  placeholder="请输入负责人电话" ></el-input>
+              </el-form-item>
+            </el-col>
+          </el-row>
+
+          <el-row>
+            <el-col :span="12">
+              <el-form-item  label="计划开始时间" prop="planStartTime">
+                  <el-date-picker v-model="nodeForm.planStartTime" align="right" type="date" placeholder="选择日期"  value-format="yyyy-MM-dd"  />
+              </el-form-item>
+            </el-col>
+            <el-col :span="12">
+                <el-form-item  label="计划结束时间" prop="planEndTime">
+                  <el-date-picker v-model="nodeForm.planEndTime" align="right" type="date" placeholder="选择日期"  value-format="yyyy-MM-dd"  />                    
+                </el-form-item>
+            </el-col>
+          </el-row>
+          
+         
+          <el-row>
+            <el-col :span="12">
+                <el-form-item  label="实际开始时间" prop="actualStartTime">
+                  <el-date-picker v-model="nodeForm.actualStartTime" align="right" type="date" placeholder="选择日期"  value-format="yyyy-MM-dd"  />
+                </el-form-item>
+            </el-col>
+            <el-col :span="12">
+                <el-form-item  label="实际结束时间" prop="actualEndTime">
+                  <el-date-picker v-model="nodeForm.actualEndTime" align="right" type="date" placeholder="选择日期"  value-format="yyyy-MM-dd"  />
+                </el-form-item>
+            </el-col>
+          </el-row>
         </el-col>
         
       
@@ -199,15 +228,41 @@
 
               <el-col :span="12">
                   <el-form-item  label="节点名称" prop="label">
-                      <el-input v-model="viewForm.label" placeholder="请输入节点名称" disabled="true"/>
+                      <el-input v-model="viewForm.label" placeholder="请输入节点名称" />
                   </el-form-item>
               </el-col>
               <el-col :span="12">
                   <el-form-item  label="计划工期" prop="planDays">
-                    <el-input v-model="viewForm.planDays" placeholder="请输计划工期" disabled="true"/>
+                    <el-input v-model="viewForm.planDays" placeholder="请输计划工期" :disabled="disabled"/>
                   </el-form-item>
               </el-col>
               
+          </el-row>
+
+          <el-row>
+              <el-col :span="12">
+                  <el-form-item label="绑定班组:" prop="teamId">
+                    <treeselect v-model="viewForm.teamId" :options="treeData2" placeholder="请选择" noOptionsText="目前没有班组，请先创建" :clearable="true" :show-count="true"  style="display:inline-block;vertical-align:bottom;" @select="getSelectList2View" />
+                  </el-form-item>
+              </el-col>
+              <el-col :span="12">
+                  <el-form-item  label="显示排序" prop="sort">
+                      <el-input v-model="viewForm.sort" placeholder="请输入序号" style="width:250px;"/>
+                  </el-form-item>
+              </el-col>
+          </el-row>
+          <el-row>
+            <el-col :span="12">
+              <el-form-item label="负责人" prop="leadingCadre">
+                <el-input v-model="viewForm.leadingCadre" :disabled="disabled" placeholder="请输入负责人" />
+                
+              </el-form-item>
+            </el-col>
+            <el-col :span="12">
+              <el-form-item label="负责电话" prop="phone">
+                <el-input v-model="viewForm.phone" :disabled="disabled" placeholder="请输入负责人电话" ></el-input>
+              </el-form-item>
+            </el-col>
           </el-row>
            <el-row>
 
@@ -355,7 +410,7 @@
 
 <script>
 
-import { nodeList, nodeTemplate, getTeamTree, broadsideInfo, addNodeTemplate, addNode, putNode, exportNodeTemplate, exportNodeList, importNodeList, delayList, addDelay, importNode } from "@/api/processback";
+import { nodeList, nodeTemplate, getTeamTree, broadsideInfo, addNodeTemplate, addNode, putNode, delNode,  exportNodeTemplate, exportNodeList, importNodeList, delayList, addDelay, importNode, getBanzuPeople } from "@/api/processback";
 import Treeselect from "@riophae/vue-treeselect";
 import "@riophae/vue-treeselect/dist/vue-treeselect.css";
 import { mapState } from 'vuex'
@@ -381,6 +436,7 @@ export default {
     
   data() {
     return {
+      disabled: true,
       currentPage:1, //初始页
       pagesize:10, 
       modelOpen: false,
@@ -406,11 +462,20 @@ export default {
           planEndTime: '',
           planStartTime: '',
           taskId: '',
-          teamId: '',
+          teamId: null,
         },
         viewFormRules: {
+          label: [
+            { required: true, message: "节点名称不能为空", trigger: "blur" },
+          ],
+          teamId: [
+            { required: true, message: "班组不能为空", trigger: "blur" },
+          ],
+          sort: [
+            { required: true, message: "排序不能为空", trigger: "blur" },
+          ],
           planStartTime: [
-            { required: true, message: "计划开始时间不能为空", trigger: "blur" },
+            { required: true, message: "计划结束时间不能为空", trigger: "blur" },
           ],
           planEndTime: [
             { required: true, message: "计划结束时间不能为空", trigger: "blur" },
@@ -425,6 +490,10 @@ export default {
           teamId: null,
           leadingCadre: '',
           phone: '',
+          planStartTime: '',
+          planEndTime: '',
+          actualStartTime: '',
+          actualEndTime: ''
         },
         delayForm:{
           startTime: '',
@@ -615,7 +684,19 @@ export default {
         ],
         label: [
           { required: true, message: "节点名称不能为空", trigger: "blur" },
-        ]
+        ],
+        teamId: [
+          { required: true, message: "绑定班组不能为空", trigger: "blur" },
+        ],
+        sort: [
+          { required: true, message: "排序序号不能为空", trigger: "blur" },
+        ],
+        planStartTime: [
+          { required: true, message: "计划开始时间不能为空", trigger: "blur" },
+        ],
+        planEndTime: [
+          { required: true, message: "计划结束时间不能为空", trigger: "blur" },
+        ],
       },
       delayFormRules: {
         startTime: [
@@ -652,6 +733,7 @@ export default {
   mounted() {
          
         this.getNodeList();
+        this.getBanZu()
         
   },
   created() {
@@ -694,7 +776,7 @@ export default {
     },
     
     getBroadsideInfo() {
-      // var id = localStorage.getItem('deptId')
+      // var id = localStorage.getItem('siteId')
       var id = this.$store.state.nodeStateId
       broadsideInfo(id).then((res) => {
         console.log("ASASA", res.data.data)
@@ -714,6 +796,40 @@ export default {
       // console.log("instanceId", instanceId)
       this.nodeForm.userClass = node.label
       this.nodeForm.teamId = node.id
+
+      var params = {
+        siteId: localStorage.getItem('siteId'),
+        teamId: node.id
+      }
+      getBanzuPeople(params).then((res) => {
+        console.log("信息", res.data.data[0])
+        var obj = res.data.data[0]
+        this.nodeForm.leadingCadre = obj.user_name
+        this.nodeForm.phone = obj.phone
+      })
+
+    },
+
+    getSelectList2View(node, instanceId) {
+      // console.log("node", node)
+      // console.log("instanceId", instanceId)
+      this.viewForm.userClass = node.label
+      this.viewForm.teamId = node.id
+      var params = {
+        siteId: localStorage.getItem('siteId'),
+        teamId: node.id
+      }
+      getBanzuPeople(params).then((res) => {
+        console.log("信息", res.data.data[0])
+        var obj = res.data.data[0]
+        this.$nextTick(() => {
+          this.viewForm.leadingCadre = obj.user_name
+          this.viewForm.phone = obj.phone
+        })
+        
+
+      })
+
     },
     getSelectList3(node, instanceId) {
       console.log("FolderNode", node)
@@ -935,7 +1051,7 @@ export default {
         this.getNodeTemplate()
         //console.log(this.form)
         // this.reset()
-        // this.form.siteId = localStorage.getItem("deptId")
+        // this.form.siteId = localStorage.getItem("siteId")
 
     },
     getNodeTemplate() {
@@ -951,7 +1067,7 @@ export default {
       this.nodePlan = true;
       this.title = "新增节点计划";
       console.log(this.form)
-      this.getBanZu()
+      
       this.getBroadsideInfo()
     },
     /** 修改按钮操作 */
@@ -1076,6 +1192,7 @@ export default {
                 this.nodePlan = false;
                 //this.getBroadsideInfo()
                 this.reset()
+                this.getNodeList()
               }
             }); 
           }
@@ -1103,6 +1220,43 @@ export default {
           }
        
       });
+    },
+
+    handleDel(row) {
+
+      console.log("row", row)
+      this.$confirm('此操作将永久删除, 是否继续?', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning',
+          center: true
+        }).then(() => {
+          delNode(row.id).then((res) => {
+            if(res.data.code === 200) {
+              this.$message({
+                type: 'success',
+                message: '删除成功！'
+              })
+              this.getNodeList();
+              
+            } else {
+              this.$message({
+                type: 'error',
+                message: '删除失败！'
+              })
+            }
+          })
+              
+        }).catch(() => {
+          this.$message({
+            type: 'info',
+            message: '已取消删除'
+          });
+        });
+
+
+      
+      
     },
     
 

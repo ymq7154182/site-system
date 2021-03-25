@@ -4,7 +4,7 @@
       <el-col :span="4">
         <div class="dm-aside">
           <div class="border-top-left"></div>
-          <div class="dm-title">文件位置</div>
+          <div class="dm-title">视频位置</div>
           <div class="type-list">
               <el-tree :data="treeData" :props="defaultProps" default-expand-all  @node-click="handleNodeClick"></el-tree>
           </div>
@@ -14,7 +14,7 @@
         <div class="dm-main">
           <div class="border-top-right"></div>
           <div style="padding: 0.13rem">
-            <el-button type="primary" @click="uploadFile"> 上传文件</el-button>
+            <el-button type="primary" @click="uploadFile"> 上传视频</el-button>
             <el-button type="primary" @click="createFile"> 新建文件夹</el-button>
             <div style="float:right;margin-right:20px;">
                 <el-input placeholder="请输入要查找的文件" v-model="searchFile" style="width:300px;margin-right:10px;"></el-input><el-button type="primary" @click="searchFileByName">搜索</el-button><el-button type="primary" style="margi-left:5px;" @click="resetAll">重置</el-button>
@@ -34,10 +34,9 @@
             >
               <el-table-column label="文件名称" align="center" prop="name">
               </el-table-column>
-              <!-- <el-table-column prop="userName" label="更新者" width="200" align="center" /> -->
+              
               <el-table-column label="首页轮播" align="center"  width="150" >
                 <template slot-scope="scope">
-                    <!-- <el-switch v-model="scope.row.statuss" active-value="1" inactive-value="0" disabled></el-switch> -->
                     <el-tag type="danger" v-if="scope.row.statuss === '1'">是</el-tag>
                     <el-tag type="success" v-else>否</el-tag>
                 </template> 
@@ -313,8 +312,7 @@ export default {
         id: '',
         url: '',
         lookUrl: '',
-        taskId: undefined,
-        urlId: undefined,
+        taskId: '',
         statuss: '',
         orders: ''
       },
@@ -473,7 +471,10 @@ export default {
           type: 'warning',
           center: true
         }).then(() => {
-          
+          // this.$message({
+          //   type: 'success',
+          //   message: '删除成功!'
+          // });
           delFile(row.id).then((res) => {
             console.log("删除文件",res.data.code)
             if(res.data.code === 200) {
@@ -606,7 +607,7 @@ export default {
     getListFolder() {
         var deptId = localStorage.getItem('siteId')
         listFolder(deptId).then((res) => {
-            console.log("Folder", res.data.data)
+            // console.log("Folder", res.data.data)
             this.treeData = res.data.data
             this.treeData2 = res.data.data
             this.treeData3 = res.data.data
