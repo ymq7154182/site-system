@@ -119,7 +119,7 @@
           </el-col>
           <el-col :span="12">
             <el-form-item label="身份证号"  prop="userCode">
-              <el-input v-model="form.userCode" placeholder="请输入身份证号"  />
+              <el-input v-model="form.userCode" :disabled="!isAdd" placeholder="请输入身份证号"  />
             </el-form-item>
           </el-col>
         </el-row>
@@ -143,12 +143,12 @@
         <el-row>
           <el-col :span="12">
             <el-form-item label="手机号" prop="phone">
-              <el-input v-model="form.phone" placeholder="请输入手机号" />
+              <el-input v-model="form.phone" :disabled="!isAdd" placeholder="请输入手机号" />
             </el-form-item>
           </el-col>
           <el-col :span="12">
             <el-form-item label="执业资格(岗位)证书编号" >
-              <el-input v-model="form.userVcode" placeholder="请输入" />
+              <el-input v-model="form.userVcode" :disabled="!isAdd" placeholder="请输入" />
             </el-form-item>
           </el-col>
         </el-row>
@@ -457,6 +457,7 @@ export default {
   },
   data() {
     return {
+      isAdd: true,
       selectValue: undefined,
       optionValue: undefined,
       showPic: false,
@@ -866,6 +867,7 @@ export default {
       this.form.leader = ''
       this.form.flag = ''
       this.form.userStatus = ''
+      this.form.projectLeader = ''
       
       this.fileList = []
       
@@ -962,6 +964,7 @@ export default {
       this.form = row
       this.open = true;
       this.title = "修改人员";
+      this.isAdd = false
       if(this.form.userImg !== null) {
         this.showPic = true
       } else {
@@ -998,6 +1001,9 @@ export default {
               }
             });
            } else {
+             this.form.userCode = null
+             this.form.phone = null
+             this.form.userVcode = null
              putPeople(this.form).then((response) => {
           
               if (response.data.code === 200) {
@@ -1103,6 +1109,7 @@ export default {
 
     addPeopleBtn() {
       this.open = true
+      this.isAdd = true
       this.title = '新增人员'
       this.form.id = ''
       this.form.teamId = null

@@ -664,7 +664,7 @@
           <el-form-item label="下次维修时间" prop="nextDay">
             <el-input v-model="uploadInfo.nextDay" type="number" style="width: 50%"></el-input>
           </el-form-item>
-          <el-form-item label="租聘到期时间" prop="hireDay">
+          <el-form-item label="租赁到期时间" prop="hireDay">
             <el-input v-model="uploadInfo.hireDay" type="number" style="width: 50%"></el-input>
           </el-form-item>
             <el-button type="primary" @click="submitUpload('uploadInfo')">提交</el-button>
@@ -691,7 +691,7 @@
           <el-form-item label="下次维修时间" prop="nextDay">
             <el-input v-model="uploadInfo2.nextDay" type="number" style="width: 50%"></el-input>
           </el-form-item>
-          <el-form-item label="租聘到期时间" prop="hireDay">
+          <el-form-item label="租赁到期时间" prop="hireDay">
             <el-input v-model="uploadInfo2.hireDay" type="number" style="width: 50%"></el-input>
           </el-form-item>
             <el-button type="primary" @click="submitUpload2('uploadInfo2')">提交</el-button>

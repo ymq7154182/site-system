@@ -84,6 +84,21 @@ export function putNode(data) {
   })
 }
 
+export function delNode(id) {
+  return request({
+    url: `/scheduleManage/node/${id}`,
+    method: 'delete'
+  })
+}
+
+export function getBanzuPeople(data) {
+  return request({
+    url: `/people/teams/nameFromTeam`,
+    method: 'get',
+    params: data
+  })
+}
+
 export function exportNodeTemplate(data) {
   return request({
     url: `/scheduleManage/template/export`,
