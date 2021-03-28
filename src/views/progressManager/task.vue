@@ -610,6 +610,7 @@ export default {
         if (valid) {
           this.form.parentId = this.$store.state.nodeStateId
           this.form.constructionUnit = this.optionValue
+          if(this.form.id === '') {
             addTask(this.form).then((response) => {
               if (response.data.code === 200) {
                 this.$message({
@@ -622,6 +623,21 @@ export default {
                 this.$emit('updateTree','updateTree');
               }
             });
+          } else {
+            putTask(this.form).then((response) => {
+              if (response.data.code === 200) {
+                this.$message({
+                  type: 'success',
+                  message: '修改成功！'
+                })
+                this.open = false;
+                this.reset()
+                this.getTaskList();
+                this.$emit('updateTree','updateTree');
+              }
+            });
+          }
+            
         }
       });
     },

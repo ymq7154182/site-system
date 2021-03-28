@@ -32,25 +32,18 @@
               :row-style="{ color: 'white' }"
               :default-sort = "{prop: 'id', order: 'ascending'}"
             >
-              <el-table-column label="文件名称" align="center" prop="name">
+              <el-table-column label="视频名称" align="center" prop="name">
               </el-table-column>
               
-              <el-table-column label="首页轮播" align="center"  width="150" >
-                <template slot-scope="scope">
-                    <el-tag type="danger" v-if="scope.row.statuss === '1'">是</el-tag>
-                    <el-tag type="success" v-else>否</el-tag>
-                </template> 
-                
-              </el-table-column>
+             
 
-              <el-table-column prop="updateTime" label="更新时间" align="center" />
+              <el-table-column prop="url" label="视频流地址" align="center" />
+              <el-table-column prop="info" label="协议" align="center" />
               <el-table-column label="操作" align="center"  fixed="right">
                 <template slot-scope="scope">
                   <el-button type="primary" size="mini"  @click="editInfo(scope.$index, scope.row)" >编辑</el-button>
                   <el-button type="info" size="mini"  @click="delInfo(scope.$index, scope.row)" >删除</el-button>
-                  <el-button type="success" size="mini"  @click="downloadFile(scope.row.url)" >下载</el-button>
-                  <el-button type="danger" size="mini"  @click="moveFile(scope.$index, scope.row)" >移动</el-button>
-                  <el-button type="warning" size="mini"  @click="downloadFile(scope.row.url)" >分享</el-button>
+                 
 
                 </template>
               </el-table-column>
@@ -69,46 +62,22 @@
         </div>
       </el-col>
     </el-row>
-    <el-dialog :visible.sync="showUpload" title="上传文件" width="40%" @close="closeDialog">
+    <el-dialog :visible.sync="showUpload" title="新增视频流" width="40%" @close="closeDialog">
       <div style="height: 55vh; overflow-y: scroll; ">
         <el-form :model="uploadInfo" :rules="rules" ref="uploadInfo" label-width="1.5rem">
-          <el-form-item label="文件名称" prop="name">
+          <el-form-item label="视频名称" prop="name">
             <el-input v-model="uploadInfo.name" style="width: 50%" ></el-input>
           </el-form-item>
           <el-form-item label="文件路径" prop="urlId">
             <treeselect v-model="uploadInfo.urlId" :options="treeData2" placeholder="请选择" noOptionsText="没有文件夹,请先创建文件夹" :clearable="true" :show-count="true" :disable-branch-nodes="true"  style="width: 350px" @select="getSelectList" />
           </el-form-item>
-          <el-form-item label="进度绑定" prop="taskId">
-              <treeselect v-model="uploadInfo.taskId" :options="progressTreeData" placeholder="请选择进度" noOptionsText="没有进度,请先去进度管理中创建进度" :clearable="true" :show-count="true" style="width: 350px" @select="getSelectTask" />
+          <el-form-item label="视频流地址" prop="url">
+            <el-input v-model="uploadInfo.url" style="width: 50%" ></el-input>
           </el-form-item>
-          <el-form-item label="轮播展示" prop="statuss">
-            <el-switch
-              v-model="uploadInfo.statuss"
-              active-value="1"
-              inactive-value="0"
-              
-              >
-            </el-switch>
+          <el-form-item label="协议" prop="info">
+             <el-input v-model="uploadInfo.info" style="width: 50%" ></el-input>
           </el-form-item>
-          <el-form-item label="顺序" prop="orders" v-if="uploadInfo.statuss === '1'">
-            <el-input v-model="uploadInfo.orders" ></el-input>
-          </el-form-item>
-          <el-form-item label="文件描述" prop="info">
-            <el-input type="textarea" v-model="uploadInfo.info" style="width: 90%; "></el-input>
-          </el-form-item>
-          <el-form-item label="上传文件">
-            <el-upload
-              class="upload-demo"
-              action="http://121.36.106.18:36080/system/safe/uploadFile"
-              :limit="1"
-              :file-list="upLoadFileList"
-              :on-success="handleFileSuccess"
-              style="width: 90%; "
-            >
-              <el-button slot="trigger" size="small" type="primary" icon="el-icon-plus">选取文件</el-button>
-            </el-upload>
-            
-          </el-form-item>
+          
           <el-form-item>
             <el-button type="primary" @click="submitUpload('uploadInfo')">上传</el-button>
             <el-button @click="resetForm('uploadInfo')">重置</el-button>
@@ -119,46 +88,17 @@
     <el-dialog :visible.sync="showEdit" title="修改" width="40%">
       <div style="height: 55vh; overflow-y: scroll; ">
         <el-form :model="currentInfo" :rules="rules" ref="currentInfo" label-width="1.5rem">
-          <el-form-item label="文件名称" prop="name">
+          <el-form-item label="视频名称" prop="name">
             <el-input v-model="currentInfo.name" style="width: 50%"></el-input>
           </el-form-item>
-          <el-form-item label="文件路径" prop="urlId" >
+           <el-form-item label="文件路径" prop="urlId" >
             <treeselect v-model="currentInfo.urlId" :options="treeData2" placeholder="请选择" noOptionsText="没有文件夹,请先创建文件夹"  :clearable="true"  :show-count="true" :disable-branch-nodes="true"  style="width: 350px" />
           </el-form-item>
-           <el-form-item label="进度绑定" prop="taskId">
-              <treeselect v-model="currentInfo.taskId" :options="progressTreeData" placeholder="请选择进度" noOptionsText="没有进度,请先去进度管理中创建进度"  :clearable="true" :show-count="true" style="width: 350px" @select="getSelectTask" />
+          <el-form-item label="视频流地址" prop="url"  >
+            <el-input v-model="currentInfo.url"></el-input>
           </el-form-item>
-          <el-form-item label="首页轮播" prop="statuss">
-            <el-switch
-              v-model="currentInfo.statuss"
-              :active-value="'1'"
-              :inactive-value="'0'"
-              >
-            </el-switch>
-          </el-form-item>
-          <el-form-item label="顺序" prop="orders" v-if="currentInfo.statuss === '1' ">
-            <el-input v-model="currentInfo.orders"></el-input>
-          </el-form-item>
-          <el-form-item label="文件描述" prop="info">
-            <el-input type="textarea" v-model="currentInfo.info" style="width: 90%; " ></el-input>
-          </el-form-item>
-          <el-form-item label="上传文件">
-            <el-upload
-              class="upload-demo"
-              action="http://121.36.106.18:36080/system/safe/uploadFile"
-              :limit="1"
-              :file-list="upLoadFileList"
-              :on-success="handleFileSuccess1"
-              style="width: 90%; "
-            >
-              <el-button slot="trigger" size="small" type="primary" icon="el-icon-plus">选取文件</el-button>
-            </el-upload>
-          </el-form-item>
-          <el-form-item label="图片" prop="lookUrl" v-if="currentInfo.format === '图片'">
-            <el-image  :src="currentInfo.lookUrl"></el-image>
-          </el-form-item>
-          <el-form-item label="视频" prop="lookUrl" v-if="currentInfo.format === '视频'">
-             <video  :src="currentInfo.lookUrl" controls></video>
+          <el-form-item label="协议" prop="info">
+            <el-input  v-model="currentInfo.info" style="width: 90%; " ></el-input>
           </el-form-item>
           <el-form-item>
             <el-button type="primary" @click="submitEdit('currentInfo')">修改</el-button>
@@ -167,21 +107,7 @@
         </el-form>
       </div>
     </el-dialog>
-    <el-dialog :visible.sync="showMove" title="移动文件" width="40%" >
-      <div>
-        <el-form :model="moveInfo"  ref="moveInfo" label-width="1.5rem">
-           
-            <el-form-item label="选择文件夹" prop="urlId" style="margin-bottom:10px;">
-              <treeselect v-model="moveInfo.urlId" :options="treeData3" placeholder="请选择" :clearable="true" :show-count="true" :disable-branch-nodes="true"  style="width: 350px" @select="getSelectList2" />
-            </el-form-item>
-            <el-tag type="success">当前选择移动的文件为：{{currentFolder}}</el-tag>
-          <el-form-item  style="margin-top:10px;">
-            <el-button type="primary" @click="submitMove('moveInfo')">移动</el-button>
-            <el-button @click="showMove = false">取消</el-button>
-          </el-form-item>
-        </el-form>
-      </div>
-    </el-dialog>
+    
     <el-dialog :visible.sync="showFolder" title="新增文件夹" width="40%">
       <div style="height: 55vh; overflow-y: scroll; ">
         <el-form :model="folderInfo" :rules="folderRles" ref="folderInfo" label-width="1.5rem">
@@ -205,7 +131,8 @@
 <script>
 import Treeselect from '@riophae/vue-treeselect'
 import '@riophae/vue-treeselect/dist/vue-treeselect.css'
-import {changeDoc, docType, findDoc, getSite, insertDoc, toPdfFile, listFolder, getFolderInfo, addFolder, getFolderContent, delFile } from "../../api/dataManage";
+import { docType, getSite,    } from "../../api/dataManage";
+import { addFolder, listFolder, getFolderInfo, insertDoc, changeDoc, getFolderContent, delFile } from "@/api/videoManage"
 import { scheduleInfo, treeTask } from '@/api/progress'
 
 export default {
@@ -238,23 +165,20 @@ export default {
         constructionSiteId: 0,
         constructionSiteName: '',
         doc_type: '其他',
-        format: undefined,
+        format: '视频',
         info: '',
         name: '',
         url: '',
         lookUrl: '',
         orders:'',
-        taskId: undefined
+        urlId: undefined,
       },
       rules: {
         name: [
           { required: true, message: '请输入文件名称', trigger: 'blur' }
         ],
-        format: [
-          { required: true, message: '请选择文件类型', trigger: 'change' }
-        ],
-        order: [
-           { required: true, message: '请输入轮播顺序', trigger: 'change' } 
+        url: [
+           { required: true, message: '请输入视频流地址', trigger: 'change' } 
         ],
         urlId: [
           { required: true, message: '请选择文件路径', trigger: 'change' }
@@ -269,36 +193,8 @@ export default {
           { required: true, message: '请选择文件路径', trigger: 'change' }
         ]
       },
-      moveRule: {
-        urlId: [
-          { required: true, message: '请选择文件路径', trigger: 'change' }
-        ]
-      },
-      pickerOptions: {
-        disabledDate(time) {
-          return time.getTime() > Date.now();
-        },
-        shortcuts: [{
-          text: '今天',
-          onClick(picker) {
-            picker.$emit('pick', new Date());
-          }
-        }, {
-          text: '昨天',
-          onClick(picker) {
-            const date = new Date();
-            date.setTime(date.getTime() - 3600 * 1000 * 24);
-            picker.$emit('pick', date);
-          }
-        }, {
-          text: '一周前',
-          onClick(picker) {
-            const date = new Date();
-            date.setTime(date.getTime() - 3600 * 1000 * 24 * 7);
-            picker.$emit('pick', date);
-          }
-        }]
-      },
+     
+     
       showEdit: false,
       showMove: false,
       showFolder: false,
@@ -311,6 +207,7 @@ export default {
         name: '',
         id: '',
         url: '',
+        urlId: undefined,
         lookUrl: '',
         taskId: '',
         statuss: '',
@@ -337,7 +234,7 @@ export default {
     }
   },
   mounted() {
-    this.$store.dispatch('changeMsg', '资料管理');
+    this.$store.dispatch('changeMsg', '视频管理');
     this.getListFolder()
     this.constructionSiteId = parseInt(window.localStorage.getItem('siteId'));
     this.getConstructionSiteName(this.constructionSiteId);
@@ -384,7 +281,7 @@ export default {
       this.$refs[formName].validate((valid) => {
         console.log("提交的信息", this.uploadInfo)
         this.uploadInfo.userName = localStorage.getItem('userName')
-        this.uploadInfo.taskId = this.selectTaskId
+        
       
           insertDoc(this.uploadInfo).then(response => {
             if(response.data.code === 200) {
@@ -446,13 +343,12 @@ export default {
       console.log("ROW", row)
       this.currentInfo.constructionSiteId = this.constructionSiteId;
       this.currentInfo.constructionSiteName = this.constructionSiteName;
-     
       this.currentInfo.statuss = row.statuss;
       this.currentInfo.orders = row.orders;
       this.currentInfo.format = row.format;
       this.currentInfo.info = row.info;
       this.currentInfo.name = row.name;
-      this.currentInfo.lookUrl = row.lookUrl;
+      this.currentInfo.url = row.url;
       this.currentInfo.id = row.id;
       this.currentInfo.urlId = row.urlId
       this.currentInfo.taskId = row.taskId
@@ -516,13 +412,7 @@ export default {
       //   }
       // })
     },
-    moveFile(index, row) {
-      console.log("MoveInfo", row)
-      this.moveInfo.constructionSiteId = this.constructionSiteId;
-      this.moveInfo.constructionSiteName = this.constructionSiteName;
-      this.moveInfo.id = row.id;
-      this.showMove = true;
-    },
+   
     editClose() {
       this.fileList = [];
     },
@@ -548,42 +438,9 @@ export default {
       })
     },
 
-    submitMove(formName) {
-      console.log("提交的MoveInfo是",this.moveInfo)
-      if(this.moveInfo.urlId === null || this.moveInfo.urlId === undefined || this.moveInfo.urlId === '') {
-        this.$message.error('请先选择文件夹')
-        return;
-      } else {
-        changeDoc(this.moveInfo).then(response => {
-            if(response.data.code === 200) {
-              this.$message({
-                type: 'success',
-                message: '移动成功！'
-              })
-              this.refreshTable();
-              this.showMove = false;
-            } else {
-              this.$message.error(response.data.msg)
-            }
-          })
-      }
-      
-    },
-    openUrl(url) {
-      window.open(url);
-    },
-    handleFileSuccess(response, file, fileList) {
-      
-      this.uploadInfo.lookUrl = response.data
-      if(response.msg.includes('文件')) {
-        this.uploadInfo.format = '文字'
-      } else if(response.msg.includes('图片')) {
-        this.uploadInfo.format = '图片'
-      } else {
-        this.uploadInfo.format = '视频'
-      }
-      this.uploadInfo.format
-    },
+   
+   
+  
     handleFileSuccess1(response, file, fileList) {
       this.currentInfo.lookUrl = response.data
     },
@@ -600,9 +457,7 @@ export default {
         }
       })
     },
-    downloadFile(url) {
-      window.open(url);
-    },
+   
     
     getListFolder() {
         var deptId = localStorage.getItem('siteId')
@@ -619,13 +474,18 @@ export default {
         })
     },
     searchFileByName() {
-      var params = {
-        fileName: this.searchFile,
-        siteId: localStorage.getItem('siteId')
+      if(this.searchFile === '') {
+        console.log("asd")
+      } else {
+        var params = {
+          fileName: this.searchFile,
+          siteId: localStorage.getItem('siteId')
+        }
+        getFolderContent(params).then((res) => {
+          this.fileTable = res.data.data
+        })
       }
-      getFolderContent(params).then((res) => {
-         this.fileTable = res.data.data
-      })
+      
     },
     resetAll() {
       this.searchFile = '',
