@@ -780,6 +780,8 @@ export default {
       this.$refs["form"].validate((valid) => {
       //  this.form.userSignCompanyName = this.optionValue
        this.form.userStatus = parseInt(this.form.userStatusStr)
+        this.form.constructionSiteId = localStorage.getItem('siteId')
+       console.log("提交信息", this.form)
         
         if (valid) {
            if(this.form.id === '') {
@@ -898,10 +900,11 @@ export default {
     },
 
     addPeopleBtn() {
+      console.log("工地id", localStorage.getItem('siteId'))
       this.open = true
       this.title = '新增人员'
       this.form.id = ''
-      this.form.constructionSiteId = localStorage.getItem('siteId')
+     
       this.resetForm("form");
     },
     handleSuccess(response, file, fileList) {
