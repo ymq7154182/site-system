@@ -86,7 +86,7 @@
             <el-upload
               v-if="uploadInfo.format === '文档'"
               class="upload-demo"
-              action="http://121.36.106.18:36080/system/safe/uploadFile"
+              action="http://121.36.106.18:38080/system/safe/uploadFile"
               :limit="1"
               :on-success="handleDocSuccess"
               accept=".jpg,.png,.pdf,.doc,.docx,.xls,.xlsx,.ppt,.pptx"
@@ -98,7 +98,7 @@
             <el-upload
               v-else-if="uploadInfo.format === '图片'"
               class="upload-demo"
-              action="http://121.36.106.18:36080/system/safe/uploadFile"
+              action="http://121.36.106.18:38080/system/safe/uploadFile"
               :limit="1"
               :on-success="handleSuccess"
               accept=".jpg,.png"
@@ -110,7 +110,7 @@
             <el-upload
               v-else-if="uploadInfo.format === '视频'"
               class="upload-demo"
-              action="http://121.36.106.18:36080/system/safe/uploadFile"
+              action="http://121.36.106.18:38080/system/safe/uploadFile"
               :limit="1"
               :on-success="handleSuccess"
               accept=".avi,.mp4"
@@ -154,7 +154,7 @@
             <el-upload
               v-if="currentInfo.format === '文档'"
               class="upload-demo"
-              action="http://121.36.106.18:36080/system/safe/uploadFile"
+              action="http://121.36.106.18:38080/system/safe/uploadFile"
               :limit="1"
               :on-success="handleDocSuccessEdit"
               accept=".jpg,.png,.pdf,.doc,.docx,.xls,.xlsx,.ppt,.pptx"
@@ -166,7 +166,7 @@
             <el-upload
               v-else-if="currentInfo.format === '图片'"
               class="upload-demo"
-              action="http://121.36.106.18:36080/system/safe/uploadFile"
+              action="http://121.36.106.18:38080/system/safe/uploadFile"
               :limit="1"
               :on-success="handleSuccessEdit"
               accept=".jpg,.png"
@@ -178,7 +178,7 @@
             <el-upload
               v-else-if="currentInfo.format === '视频'"
               class="upload-demo"
-              action="http://121.36.106.18:36080/system/safe/uploadFile"
+              action="http://121.36.106.18:38080/system/safe/uploadFile"
               :limit="1"
               :on-success="handleSuccessEdit"
               accept=".avi,.mp4"

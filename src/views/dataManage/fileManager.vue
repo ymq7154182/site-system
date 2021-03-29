@@ -100,7 +100,7 @@
           <el-form-item label="上传文件">
             <el-upload
               class="upload-demo"
-              action="http://121.36.106.18:36080/system/safe/uploadFile"
+              action="http://121.36.106.18:38080/system/safe/uploadFile"
               :limit="1"
               :file-list="upLoadFileList"
               :on-success="handleFileSuccess"
@@ -146,7 +146,7 @@
           <el-form-item label="上传文件">
             <el-upload
               class="upload-demo"
-              action="http://121.36.106.18:36080/system/safe/uploadFile"
+              action="http://121.36.106.18:38080/system/safe/uploadFile"
               :limit="1"
               :file-list="upLoadFileList"
               :on-success="handleFileSuccess1"
