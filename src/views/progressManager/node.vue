@@ -1199,7 +1199,7 @@ export default {
                 this.addDelayOpen = false;
                 this.getDelayList(this.delayId)
                 this.delayId = ''
-                
+                this.getNodeList();
                 //this.getBroadsideInfo()
                 
                 this.resetDelay()

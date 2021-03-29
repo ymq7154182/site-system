@@ -539,17 +539,17 @@
           getProjectTimeInformation(prams).then(response=>{
             console.log('获取项目的时间详细数据')
             console.log(response.data.msg)
-            var temTime = response.data.msg
-            var index = 0
-            for(let i = 0;i<temTime.length;i++){
-              if(temTime[i] === '天' ){
-                index= i
-                break
-              }
-            }
-            console.log(temTime.substring(0,index))
-            this.projectTime = temTime.substring(0,index)
-            console.log(this.projectTime)
+            this.projectTime = response.data.msg
+            // var index = 0
+            // for(let i = 0;i<temTime.length;i++){
+            //   if(temTime[i] === '天' ){
+            //     index= i
+            //     break
+            //   }
+            // }
+            // console.log(temTime.substring(0,index))
+            // this.projectTime = temTime.substring(0,index)
+            // console.log(this.projectTime)
           })
         },
         getProjectName: function(){

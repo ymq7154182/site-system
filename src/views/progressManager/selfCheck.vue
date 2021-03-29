@@ -4,7 +4,7 @@
     <el-row :gutter="20" style="margin-left:15px;">
         
         <div style="margin-top:5px;margin-bottom:10px;">
-          <span style="font-size: 14px;color:white;margin-right: 10px">检查内容</span><el-input v-model="queryParams.content" placeholder="请输入关键字" clearable size="small" style="width: 200px;margin-right: 10px"/>
+          <!-- <span style="font-size: 14px;color:white;margin-right: 10px">检查内容</span><el-input v-model="queryParams.content" placeholder="请输入关键字" clearable size="small" style="width: 200px;margin-right: 10px"/> -->
           <span style="font-size: 14px;color:white;margin-right: 10px">检查时间</span>
           <el-date-picker
             style="width: 250px;margin-right: 10px"
