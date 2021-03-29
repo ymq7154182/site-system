@@ -213,7 +213,7 @@
               <el-form-item label="照片">
                 <el-upload
                   class="upload-demo"
-                  action="http://121.36.106.18:36080/system/safe/uploadFile"
+                  action="http://121.36.106.18:38080/system/safe/uploadFile"
                   :limit="1"
                   :on-success="handleSuccess2"
                   accept=".jpg,.png"
@@ -893,7 +893,7 @@ export default {
     handleImport() {
       this.modelOpen = true;
       this.title = "导入文件"
-      this.actionUrl = `http://121.36.106.18:36080/people/info/importData?siteId=${localStorage.getItem('siteId')}`
+      this.actionUrl = `http://121.36.106.18:38080/people/info/importData?siteId=${localStorage.getItem('siteId')}`
     },
     downloadModel() {
       window.open('http://121.36.106.18:38082/labor_template.xlsx')

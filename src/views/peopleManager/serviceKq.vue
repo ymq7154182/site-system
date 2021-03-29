@@ -636,7 +636,7 @@ export default {
     inExport() {
       this.modelOpen = true;
       this.title = "导入文件"
-      this.actionUrl = `http://121.36.106.18:36080/people/info/importData?siteId=${localStorage.getItem('siteId')}`
+      this.actionUrl = `http://121.36.106.18:38080/people/info/importData?siteId=${localStorage.getItem('siteId')}`
     },
     handleExport() {
       var params = {
