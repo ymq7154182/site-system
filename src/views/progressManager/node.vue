@@ -479,7 +479,7 @@
 </template>
 
 <script>
-
+import Cookies from 'js-cookie'
 import { nodeList, nodeTemplate, getTeamTree, broadsideInfo, addNodeTemplate, addNode, putNode, delNode,  exportNodeTemplate, exportNodeList, importNodeList, delayList, addDelay, importNode, getBanzuPeople } from "@/api/processback";
 import Treeselect from "@riophae/vue-treeselect";
 import "@riophae/vue-treeselect/dist/vue-treeselect.css";
@@ -850,9 +850,13 @@ export default {
       var id = this.$store.state.nodeStateId
       const formData = new FormData()
       formData.append('file', this.fileList12[0].raw)
-      importNode(id, formData).then((res) => {
+      importNode(id, 0, formData).then((res) => {
         console.log("导入的文件res", res)
         if(res.data.code === 200) {
+          this.$message({
+            type: 'success',
+            message: '导入成功！'
+          })
           this.fileList12 = []
           this.modelOpen = false
           this.getNodeList()
@@ -1014,7 +1018,7 @@ export default {
     importNodeExcel() {
       var id = this.$store.state.nodeStateId
       this.modelOpen = true;
-      this.actionUrl = `http://121.36.106.18:38080/scheduleManage/node/importData?taskId=${id}`
+      this.actionUrl = `http://121.36.106.18:36080/scheduleManage/node/importData?taskId=${id}`
     },
     exportExcel() {
       var params = {
@@ -1270,12 +1274,20 @@ export default {
    
 
     submitNodeForm: function () {
+      console.log("ssaa",Cookies.get('username'))
+      var loginName = Cookies.get('username')
+      var fromUser = ''
+      if(loginName.indexOf('-') === -1) {
+        fromUser = loginName
+      } else {
+        fromUser = loginName.split('-')[0]
+      }
        this.nodeForm.taskId = this.$store.state.nodeStateId
        this.nodeForm.parentId = this.selectParentId
        console.log("提交的node", this.nodeForm)
         console.log("提交的node延期", this.nodeAddDelayForm)
        var params = {
-        
+        fromUser: fromUser,
          state: this.nodeForm.state
        }
       this.$refs["nodeForm"].validate((valid) => {
@@ -1301,6 +1313,14 @@ export default {
       });
     },
     submitViewForm: function () {
+      console.log("ssaa",Cookies.get('username'))
+      var loginName = Cookies.get('username')
+      var fromUser = ''
+      if(loginName.indexOf('-') === -1) {
+        fromUser = loginName
+      } else {
+        fromUser = loginName.split('-')[0]
+      }
        this.nodeForm.taskId = this.$store.state.nodeStateId
        console.log("提交的node", this.viewForm)
        console.log("提交的node延期", this.nodeDelayForm)
@@ -1308,7 +1328,8 @@ export default {
       var params = {
         nodeId: this.nodeDelayForm.nodeId,
         explain: this.viewForm.delayInfo,
-        state: this.viewForm.state
+        state: this.viewForm.state,
+        fromUser: fromUser
       }
        
       this.$refs["viewForm"].validate((valid) => {
