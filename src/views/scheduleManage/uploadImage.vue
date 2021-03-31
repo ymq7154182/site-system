@@ -10,7 +10,7 @@
 <!--      <img :src="item" alt="" v-for="(item, index) in imageList" :key="index" class="img_item">-->
     </div>
     <el-upload
-      action="http://121.36.106.18:38080/schedule/putImage"
+      action="http://121.36.106.18:36080/schedule/putImage"
       list-type="picture-card"
       :on-success="handleAvatarSuccess"
       :on-preview="handlePictureCardPreview"

@@ -167,7 +167,7 @@
         <el-row>
           <el-col :span="12">
             <el-form-item label="班组" prop="teamId">
-              <treeselect v-model="form.teamId" :options="treeData3" placeholder="请选择" :clearable="true" :show-count="true"  style="display:inline-block;vertical-align:bottom;" @select="getSelectList3" />
+              <treeselect v-model="form.teamId" :options="treeData3" placeholder="请选择" noOptionsText="没有班组,请先去创建班组" :clearable="true" :show-count="true"  style="display:inline-block;vertical-align:bottom;" @select="getSelectList3" />
             </el-form-item>
           </el-col>
           <el-col :span="12">
@@ -223,7 +223,7 @@
               <el-form-item label="照片">
                 <el-upload
                   class="upload-demo"
-                  action="http://121.36.106.18:38080/system/safe/uploadFile"
+                  action="http://121.36.106.18:36080/system/safe/uploadFile"
                   :limit="1"
                   :on-success="handleSuccess2"
                   accept=".jpg,.png"
@@ -377,7 +377,7 @@
               <el-form-item label="照片:" >
                 <el-upload
                   class="upload-demo"
-                  action="http://121.36.106.18:38080/system/safe/uploadFile"
+                  action="http://121.36.106.18:36080/system/safe/uploadFile"
                   :limit="1"
                   :on-success="handleSuccess"
                   :file-list="fileList"
@@ -390,7 +390,7 @@
                <el-form-item label="执业资格(岗位)证书:" >
                 <el-upload
                   class="upload-demo"
-                  action="http://121.36.106.18:38080/system/safe/uploadFile"
+                  action="http://121.36.106.18:36080/system/safe/uploadFile"
                   :limit="1"
                   :on-success="handleSuccess3"
                   :file-list="fileList"
@@ -1101,7 +1101,7 @@ export default {
     handleImport() {
       this.modelOpen = true;
       this.title = "导入文件"
-      this.actionUrl = `http://121.36.106.18:38080/people/info/importData?siteId=${localStorage.getItem('siteId')}`
+      this.actionUrl = `http://121.36.106.18:36080/people/info/importData?siteId=${localStorage.getItem('siteId')}`
     },
     downloadModel() {
       window.open('http://121.36.106.18:38082/labor_template.xlsx')
