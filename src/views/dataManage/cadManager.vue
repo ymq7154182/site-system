@@ -49,9 +49,9 @@
                 <template slot-scope="scope">
                   <el-button type="primary" size="mini"  @click="editInfo(scope.$index, scope.row)" >编辑</el-button>
                   <el-button type="info" size="mini"  @click="delInfo(scope.$index, scope.row)" >删除</el-button>
-                  <el-button type="success" size="mini"  @click="downloadFile(scope.row.url)" >下载</el-button>
+                  <el-button type="success" size="mini"  @click="downloadFile(scope.row.lookUrl)" >下载</el-button>
                   <el-button type="danger" size="mini"  @click="moveFile(scope.$index, scope.row)" >移动</el-button>
-                  <el-button type="warning" size="mini"  @click="downloadFile(scope.row.url)" >分享</el-button>
+                  <el-button type="warning" size="mini"  @click="downloadFile(scope.row.lookUrl)" >分享</el-button>
 
                 </template>
               </el-table-column>
@@ -100,7 +100,7 @@
           <el-form-item label="上传文件">
             <el-upload
               class="upload-demo"
-              action="http://121.36.106.18:36080/system/safe/uploadFile"
+              action="http://121.36.106.18:38080/system/safe/uploadFile"
               :limit="1"
               :file-list="upLoadFileList"
               :on-success="handleFileSuccess"
@@ -146,7 +146,7 @@
           <el-form-item label="上传文件">
             <el-upload
               class="upload-demo"
-              action="http://121.36.106.18:36080/system/safe/uploadFile"
+              action="http://121.36.106.18:38080/system/safe/uploadFile"
               :limit="1"
               :file-list="upLoadFileList"
               :on-success="handleFileSuccess1"
