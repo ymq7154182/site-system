@@ -140,13 +140,31 @@ export default {
   background-color: transparent !important; 
   font-size: 14px; 
 }
-.header_tree .el-tree >>> .el-tree-node:focus >>> .el-tree-node__content {
-    background-color: #66b1ff87 !important;
+.el-tree {
+    position: relative;
+    cursor: default;
+    background: transparent;
+    color: #a1bbee;
+}
+.el-tree >>> .el-tree-node__children >>> .is-current {
+    background: red !important;
+}
+.el-tree >>> .el-tree-node:focus >>> .el-tree-node__content {
+    background-color: orange !important;
+    
   }
-.header_tree  .el-tree >>> .el-tree-node__content:hover {    background-color: #66b1ff87;
+  .el-tree >>> .el-tree-node__content:hover {    background-color: #66b1ff87;color:orange;
   }
-.header_tree .el-tree >>> .el-tree--highlight-current .el-tree-node.is-current>.el-tree-node__content {
-    background-color: #66b1ff87;
+  .el-tree >>> .el-tree--highlight-current .el-tree-node.is-current>.el-tree-node__content {
+    background-color: orange;
+    color:green;
   }
+
+
+  .el-tree >>> .el-tree-node:focus>.el-tree-node__content{
+      background-color: rgb(240, 107, 107);
+      color: white;
+    }
+
 </style>
 

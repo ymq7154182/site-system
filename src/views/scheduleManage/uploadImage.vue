@@ -10,7 +10,7 @@
 <!--      <img :src="item" alt="" v-for="(item, index) in imageList" :key="index" class="img_item">-->
     </div>
     <el-upload
-      action="http://121.36.106.18:38080/schedule/putImage"
+      action="http://121.36.106.18:36080/schedule/putImage"
       list-type="picture-card"
       :on-success="handleAvatarSuccess"
       :on-preview="handlePictureCardPreview"
@@ -58,7 +58,7 @@
           let imgs = res.data.scheduleImgUrl
           let list = imgs.split(';').slice(1)
           for (let i in list) {
-            this.imageList.push('http://121.36.106.18:38082' + list[i])
+            this.imageList.push('http://121.36.106.18:36082' + list[i])
           }
           console.log('所有图片：', list, this.imageList)
         })

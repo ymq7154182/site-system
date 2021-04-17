@@ -304,10 +304,10 @@
         </el-row>
          <el-row>
           <el-col :span="12">
-            <el-form-item label="叶子节点"  prop="nodeFlag">
+            <el-form-item label="任务计划"  prop="nodeFlag">
               <el-radio-group v-model="form.nodeFlag">
-                <el-radio label="1">是</el-radio>
-                <el-radio label="0">否</el-radio>
+                <el-radio label="1">节点计划</el-radio>
+                <el-radio label="0">子任务</el-radio>
               </el-radio-group>
             </el-form-item>
           </el-col>

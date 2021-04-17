@@ -95,7 +95,7 @@
             <el-upload
               v-if="fileType === '文档'"
               class="upload-demo"
-              action="http://121.36.106.18:38080/system/safe/uploadFile"
+              action="http://121.36.106.18:36080/system/safe/uploadFile"
               :limit="1"
               :on-success="handleDocSuccess"
               accept=".jpg,.png,.pdf,.doc,.docx,.xls,.xlsx,.ppt,.pptx"
@@ -107,7 +107,7 @@
             <el-upload
               v-else-if="fileType === '图片'"
               class="upload-demo"
-              action="http://121.36.106.18:38080/system/safe/uploadFile"
+              action="http://121.36.106.18:36080/system/safe/uploadFile"
               :limit="1"
               :on-success="handleSuccess"
               accept=".jpg,.png"
@@ -119,7 +119,7 @@
             <el-upload
               v-else-if="fileType === '视频'"
               class="upload-demo"
-              action="http://121.36.106.18:38080/system/safe/uploadFile"
+              action="http://121.36.106.18:36080/system/safe/uploadFile"
               :limit="1"
               :on-success="handleSuccess"
               accept=".avi,.mp4"
@@ -169,7 +169,7 @@
             <el-form-item label="上传文件">
               <el-upload
                 class="upload-demo"
-                action="http://121.36.106.18:38080/system/safe/uploadFile"
+                action="http://121.36.106.18:36080/system/safe/uploadFile"
                 :limit="1"
                 :file-list="upLoadFileList"
                 :on-success="handleFileSuccess1"
@@ -798,15 +798,22 @@ export default {
     background: red !important;
 }
 .el-tree >>> .el-tree-node:focus >>> .el-tree-node__content {
-    background-color: #66b1ff87 !important;
+    background-color: orange !important;
     
   }
   .el-tree >>> .el-tree-node__content:hover {    background-color: #66b1ff87;color:orange;
   }
   .el-tree >>> .el-tree--highlight-current .el-tree-node.is-current>.el-tree-node__content {
-    background-color: #66b1ff87;
+    background-color: orange;
     color:green;
   }
+
+
+  .el-tree >>> .el-tree-node:focus>.el-tree-node__content{
+      background-color: rgb(240, 107, 107);
+      color: white;
+    }
+
 
 
 

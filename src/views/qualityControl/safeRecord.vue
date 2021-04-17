@@ -505,7 +505,7 @@
                   class="upload-demo"
                   ref="upload"
                   :limit="1"
-                  action="http://121.36.106.18:38080/system/safe/uploadFile"
+                  action="http://121.36.106.18:36080/system/safe/uploadFile"
                   :on-success="saveAffixStampUrl"
                 >
                   <el-button slot="trigger" size="small" type="primary">上传文件</el-button>
@@ -522,7 +522,7 @@
                   class="upload-demo"
                   ref="upload"
                   :limit="1"
-                  action="http://121.36.106.18:38080/system/safe/uploadFile"
+                  action="http://121.36.106.18:36080/system/safe/uploadFile"
                   :on-success="saveAffixOrgUrl"
                 >
                   <el-button slot="trigger" size="small" type="primary">上传文件</el-button>
