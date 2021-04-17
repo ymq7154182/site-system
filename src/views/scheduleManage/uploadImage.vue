@@ -58,7 +58,7 @@
           let imgs = res.data.scheduleImgUrl
           let list = imgs.split(';').slice(1)
           for (let i in list) {
-            this.imageList.push('http://121.36.106.18:38082' + list[i])
+            this.imageList.push('http://121.36.106.18:36082' + list[i])
           }
           console.log('所有图片：', list, this.imageList)
         })

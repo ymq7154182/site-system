@@ -47,9 +47,9 @@
                 <template slot-scope="scope">
                   <el-button type="primary" size="mini"  @click="editInfo(scope.$index, scope.row)" >编辑</el-button>
                   <el-button type="info" size="mini"  @click="delInfo(scope.$index, scope.row)" >删除</el-button>
-                  <el-button type="success" size="mini"  @click="downloadFile(scope.row.url)" >下载</el-button>
+                  <el-button type="success" size="mini"  @click="downloadFile(scope.row.lookUrl)" >下载</el-button>
                   <el-button type="danger" size="mini"  @click="moveFile(scope.$index, scope.row)" >移动</el-button>
-                  <el-button type="warning" size="mini"  @click="downloadFile(scope.row.url)" >分享</el-button>
+                  <el-button type="warning" size="mini"  @click="downloadFile(scope.row.lookUrl)" >分享</el-button>
 
                 </template>
               </el-table-column>
@@ -798,15 +798,22 @@ export default {
     background: red !important;
 }
 .el-tree >>> .el-tree-node:focus >>> .el-tree-node__content {
-    background-color: #66b1ff87 !important;
+    background-color: orange !important;
     
   }
   .el-tree >>> .el-tree-node__content:hover {    background-color: #66b1ff87;color:orange;
   }
   .el-tree >>> .el-tree--highlight-current .el-tree-node.is-current>.el-tree-node__content {
-    background-color: #66b1ff87;
+    background-color: orange;
     color:green;
   }
+
+
+  .el-tree >>> .el-tree-node:focus>.el-tree-node__content{
+      background-color: rgb(240, 107, 107);
+      color: white;
+    }
+
 
 
 

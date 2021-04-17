@@ -1,5 +1,8 @@
 <template>
   <div>
+    <!-- <div >
+      <span style="color:red; font-size:20px;margin-left:20px;">{{$store.state.nodeState.label}}</span>
+    </div> -->
     <div style="padding: 0.11rem">
       <el-tabs v-model="activeName" class="tabs" @tab-click="handleTabs" >
         <el-tab-pane label="进度管理" name="first" :key="'first'" class="label_top">
@@ -36,6 +39,7 @@ import selfCheck from "./selfCheck";
 import superviseCheck from './superviseCheck';
 import serviceKq from './serviceKq';
 import dataIndex from './dataIndex';
+import { mapState } from 'vuex'
 export default {
   name: "peopleManager",
   components: {
@@ -45,6 +49,12 @@ export default {
     superviseCheck,
     serviceKq,
     dataIndex
+  },
+  computed: {
+    ...mapState({ 
+      nodeState: state => state.nodeState,
+      nodeStateId: state => state.nodeStateId
+    }),
   },
   data(){
     return{

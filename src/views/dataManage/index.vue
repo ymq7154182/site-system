@@ -9,7 +9,7 @@
           <pdf-manager v-if="pdfFlag"></pdf-manager>
         </el-tab-pane>
        
-        <el-tab-pane label="模型管理(CAD+BIM)" name="third" class="label_top">
+        <el-tab-pane label="模型管理(CAD+BAM)" name="third" class="label_top">
           <cad-manager v-if="cadFlag"></cad-manager>
         </el-tab-pane>
        

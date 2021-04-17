@@ -1104,7 +1104,7 @@ export default {
       this.actionUrl = `http://121.36.106.18:36080/people/info/importData?siteId=${localStorage.getItem('siteId')}`
     },
     downloadModel() {
-      window.open('http://121.36.106.18:38082/labor_template.xlsx')
+      window.open('http://121.36.106.18:36082/labor_template.xlsx')
     },
 
     addPeopleBtn() {

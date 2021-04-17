@@ -631,7 +631,7 @@ export default {
     },
 
     downloadModel() {
-      window.open('http://121.36.106.18:38082/attend_template.xlsx')
+      window.open('http://121.36.106.18:36082/attend_template.xlsx')
     },
     inExport() {
       this.modelOpen = true;
