@@ -401,7 +401,7 @@
     </el-dialog>
 
     <el-dialog title="延期说明" :visible.sync="delayOpen" width="1000px"  append-to-body>
-      <el-button size="mini" type="primary" class="margin-bottom: 10px;" @click="showAddDelay">新增施工延期</el-button>
+      <el-button size="mini" type="primary" class="margin-bottom: 10px;" @click="showAddDelay">新增延期说明</el-button>
       <el-table  :data="delayList" >
 
           <el-table-column label="编号" align="center" type="index" />
@@ -422,6 +422,13 @@
           
           <el-table-column label="说明" align="center" prop="explain" :show-overflow-tooltip="true" />
 
+          </el-table-column>
+          <el-table-column label="操作" align="center" width="180" class-name="small-padding fixed-width">
+            <template slot-scope="scope">
+              <el-button size="mini" type="text" @click="handleViewDelay(scope.row)" >修改</el-button>
+              <el-button size="mini" type="text" @click="handleDelDelay(scope.row)" >删除</el-button>
+             
+            </template>
           </el-table-column>
         </el-table>
     </el-dialog>
@@ -510,7 +517,7 @@
 
 <script>
 import Cookies from 'js-cookie'
-import { nodeList, nodeTemplate, getTeamTree, broadsideInfo, addNodeTemplate, addNode, putNode, delNode,  exportNodeTemplate, exportNodeList, importNodeList, delayList, addDelay, importNode, getBanzuPeople } from "@/api/processback";
+import { nodeList, nodeTemplate, getTeamTree, broadsideInfo, addNodeTemplate, addNode, putNode, delNode,  exportNodeTemplate, exportNodeList, importNodeList, delayList, addDelay, updateDelay, delDelay, importNode, getBanzuPeople } from "@/api/processback";
 import Treeselect from "@riophae/vue-treeselect";
 import "@riophae/vue-treeselect/dist/vue-treeselect.css";
 import { mapState } from 'vuex'
@@ -555,6 +562,7 @@ export default {
       addDelayOpen: false,
       delayList: [],
       delayOpen: false,
+      delayName: '',
       selectParentId: '',
       templateId: '',
       currentTemplateName: '',
@@ -617,7 +625,9 @@ export default {
           actualEndTime: '',
           classification: '',
           state: '',
-          delayInfo: ''
+          delayInfo: '',
+          delayInfo: '',
+          siteId: ''
           
         },
         nodeAddDelayForm: {
@@ -1244,6 +1254,49 @@ export default {
     },
     showAddDelay() {
       this.addDelayOpen = true
+      this.delayName = '新增延期说明'
+    },
+    handleViewDelay(row) {
+      console.log("修改", row)
+      this.addDelayOpen = true
+      this.delayName = '修改延期说明'
+      this.delayForm = row
+    },
+    handleDelDelay(row) {
+      console.log("row", row)
+      this.$confirm('此操作将永久删除, 是否继续?', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning',
+          center: true
+        }).then(() => {
+          delDelay(row.id).then((res) => {
+            if(res.data.code === 200) {
+              this.$message({
+                type: 'success',
+                message: '删除成功！'
+              })
+              this.getDelayList(this.delayId)
+              // this.delayId = ''
+              this.getNodeList();
+              //this.getBroadsideInfo()
+              
+              this.resetDelay()
+              
+            } else {
+              this.$message({
+                type: 'error',
+                message: '删除失败！'
+              })
+            }
+          })
+              
+        }).catch(() => {
+          this.$message({
+            type: 'info',
+            message: '已取消删除'
+          });
+        });
     },
     submitDelayForm() {
       this.delayForm.nodeId = this.delayId
@@ -1251,7 +1304,8 @@ export default {
       this.$refs["delayForm"].validate((valid) => {
        
         if (valid) {
-             addDelay(this.delayForm).then((response) => {
+          if(this.delayForm.id === '' || this.delayForm.id === undefined) {
+            addDelay(this.delayForm).then((response) => {
                console.log("打印res",response.data)
               if (response.data.code === 200) {
               
@@ -1268,6 +1322,26 @@ export default {
                 this.resetDelay()
               }
             }); 
+          } else {
+            updateDelay(this.delayForm).then((response) => {
+               console.log("打印更新res",)
+              if (response.data.code === 200) {
+              
+                this.$message({
+                  type: 'success',
+                  message: '更新成功！'
+                })
+                this.addDelayOpen = false;
+                this.getDelayList(this.delayId)
+                // this.delayId = ''
+                this.getNodeList();
+                //this.getBroadsideInfo()
+                
+                this.resetDelay()
+              }
+            });
+          }
+             
           }
        
       });
@@ -1403,6 +1477,7 @@ export default {
       } else {
         fromUser = loginName.split('-')[0]
       }
+      this.nodeForm.siteId = localStorage.getItem("siteId")
        this.nodeForm.taskId = this.$store.state.nodeStateId
        this.nodeForm.parentId = this.selectParentId
        console.log("提交的node", this.nodeForm)
