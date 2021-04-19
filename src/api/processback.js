@@ -140,6 +140,21 @@ export function addDelay(data) {
   })
 }
 
+export function updateDelay(data) {
+  return request({
+    url: `/scheduleManage/delay`,
+    method: 'put',
+    data: data
+  })
+}
+
+export function delDelay(id) {
+  return request({
+    url: `/scheduleManage/delay/${id}`,
+    method: 'delete'
+  })
+}
+
 export function importNode(id, parentId, file) {
   return request({
     url: `/scheduleManage/node/importData?taskId=${id}&parentId=${parentId}`,

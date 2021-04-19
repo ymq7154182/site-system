@@ -16,8 +16,8 @@
         <div v-show="showSearch" style="padding: 10px">
           <span style="font-size: 14px;color:white;margin-right: 10px">姓名</span><el-input v-model="queryParams.userSignName" placeholder="请输入姓名" clearable size="small" style="width: 120px;margin-right: 10px" />
           <span style="font-size: 14px;color:white;margin-right: 10px">手机号</span><el-input v-model="queryParams.userSignPhone" placeholder="请输入手机号" clearable size="small" style="width: 150px;margin-right: 10px"  />
-          <span style="font-size: 14px;color:white;margin-right: 10px">班组</span>
-          <treeselect v-model="queryParams.teamId" :options="treeData" placeholder="请选择" :clearable="true" :show-count="true"  style="width: 250px;display:inline-block;vertical-align:bottom;" @select="getSelectList" />
+          <!-- <span style="font-size: 14px;color:white;margin-right: 10px">班组</span>
+          <treeselect v-model="queryParams.teamId" :options="treeData" placeholder="请选择" :clearable="true" :show-count="true"  style="width: 250px;display:inline-block;vertical-align:bottom;" @select="getSelectList" /> -->
           <span style="font-size: 14px;color:white;margin-right: 10px">类型</span>
           <el-select v-model="queryParams.userSignType" placeholder="请选择" clearable size="small" style="width: 120px;margin-right: 10px">
             <el-option v-for="dict in statusOptions" :key="dict.dictValue" :label="dict.dictLabel" :value="dict.dictValue" />
@@ -26,7 +26,7 @@
           <el-select v-model="queryParams.userSignStatus" placeholder="请选择" clearable size="small" style="width: 120px;margin-right: 10px">
             <el-option v-for="dict in signOptions" :key="dict.dictValue" :label="dict.dictLabel" :value="dict.dictValue" />
           </el-select>
-          <br />
+          
           <span style="font-size: 14px;color:white;margin-right: 10px">时间</span>
           <el-date-picker
             style="width: 220px;margin-right: 10px"
@@ -37,6 +37,13 @@
             start-placeholder="开始日期"
             end-placeholder="结束日期">
           </el-date-picker>
+          <br />
+          <span style="font-size: 14px;color:white;margin-right: 10px">节点名称</span>
+          <el-select v-model="selectValue" placeholder="请选择" clearable size="small" ref="selectTree">
+            <el-option style="height: auto;" :value="optionValue" :label="optionValue">
+              <el-tree :data="deptOptions2" :props="defaultProps2" :expand-on-click-node="false" :filter-node-method="filterNode2" ref="tree2" @node-click="handleNodeClick2" />
+            </el-option>
+          </el-select>
           <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
           <el-button  type="primary" icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>
         </div>
@@ -261,7 +268,7 @@
 
 <script>
 
-import { listDay, getLeftColumn, treeselect, allPeopleName, addDaKaPeople, exportKaoqinExcel, broadsideInfo, getTeamTree, searchDaka, exportDaka, importDaka, listByTime } from '@/api/peopleManager'
+import { listDay, getLeftColumn, treeselect, allPeopleName, addDaKaPeople, exportKaoqinExcel, broadsideInfo, broadsideInfo2, getTeamTree, searchDaka, exportDaka, importDaka, listByTime } from '@/api/peopleManager'
 import Treeselect from "@riophae/vue-treeselect";
 import { mapState } from 'vuex'
 import "@riophae/vue-treeselect/dist/vue-treeselect.css";
@@ -279,7 +286,8 @@ export default {
   },
   data() {
     return {
-
+      selectValue: undefined,
+      optionValue: undefined,
       pagesize:10,
       currentPage:1,
       fileList12: [],
@@ -322,6 +330,7 @@ export default {
         title: "",
         // 部门树选项
         deptOptions: [],
+        deptOptions2: [],
         // 是否显示弹出层
         open: false,
 
@@ -359,6 +368,10 @@ export default {
             children: "childs",
             label: "name",
         },
+        defaultProps2: {
+            children: "children",
+            label: "label",
+        },
       
         // 查询参数
         queryParams: {
@@ -369,7 +382,8 @@ export default {
             userSignClass: undefined,
             startTime: '',
             endTime: '',
-            taskId: ''
+            taskId: '',
+            nodeId: ''
         },
       // 表单校验
       rules: {
@@ -409,6 +423,7 @@ export default {
       this.getListDay()
       this.getBanzu()
       this.getBroadsideInfo()
+      this.getBroadsideInfo2()
   },
   methods: {
     submitExcel() {
@@ -442,6 +457,16 @@ export default {
         
       })
     },
+    handleNodeClick2(data, node, nodeData){
+      console.log("打印data", data)
+      console.log("打印node", node)
+      console.log("打印nodeData", nodeData)
+      this.selectValue = data
+      this.optionValue = data.label
+        setTimeout(() => {
+            this.$refs.selectTree.blur()
+        }, 50)
+    },
     getUserSignTime(val) {
       console.log("CurrentTime", val)
       this.selectTime = val
@@ -473,6 +498,15 @@ export default {
         this.deptOptions = res.data.data
       })
     },
+
+    getBroadsideInfo2() {
+      
+      var id = this.$store.state.nodeStateId
+      broadsideInfo2(id).then((res) => {
+        console.log("自检记录", res.data)
+        this.deptOptions2 = res.data.data
+      })
+    },
      /** 查询用户列表 */
     getListDay() {
       var params = {
@@ -501,6 +535,10 @@ export default {
     
     // 筛选节点
     filterNode(value, data) {
+      if (!value) return true;
+      return data.label.indexOf(value) !== -1;
+    },
+    filterNode2(value, data) {
       if (!value) return true;
       return data.label.indexOf(value) !== -1;
     },
@@ -545,6 +583,9 @@ export default {
     /** 搜索按钮操作 */
     handleQuery() {
       console.log("timeArry", this.timeArry)
+      if(this.selectValue !== undefined) {
+        this.queryParams.nodeId = this.selectValue.id
+      }
       this.queryParams.startTime = this.timeArry[0]
       this.queryParams.endTime = this.timeArry[1]
       if(this.queryParams.startTime !== null && this.queryParams.startTime === this.queryParams.endTime) {
@@ -584,6 +625,10 @@ export default {
       this.queryParams.endTime = ''
       this.queryParams.taskId = ''
       this.timeArry = []
+      this.queryParams.teamId = undefined
+      this.queryParams.nodeId = ''
+      this.selectValue = undefined
+      this.optionValue = undefined
       
       this.getListDay();
     },

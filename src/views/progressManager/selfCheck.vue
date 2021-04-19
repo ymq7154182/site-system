@@ -28,6 +28,13 @@
           <span style="font-size: 14px;color:white;margin-right: 10px">处理状态</span> <el-select v-model="queryParams.processResult" placeholder="请选择" clearable  style="width: 200px;margin-right: 10px">
               <el-option v-for="dict in state2List" :key="dict.value" :label="dict.label" :value="dict.label" ></el-option>
           </el-select>
+
+          <span style="font-size: 14px;color:white;margin-right: 10px">节点名称</span>
+          <el-select v-model="selectValue" placeholder="请选择" clearable size="small" ref="selectTree">
+            <el-option style="height: auto;" :value="optionValue" :label="optionValue">
+              <el-tree :data="deptOptions" :props="defaultProps" :expand-on-click-node="false" :filter-node-method="filterNode" ref="tree2" @node-click="handleNodeClick2" />
+            </el-option>
+          </el-select>
           <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
           <el-button type="primary" icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>
         </div>
@@ -327,6 +334,8 @@ export default {
     
   data() {
     return {
+      selectValue: undefined,
+      optionValue: undefined,
       dealDatail : {
         context: '',
         endTime: '',
@@ -577,8 +586,8 @@ export default {
 
       },
       defaultProps: {
-        children: "childs",
-        label: "name",
+        children: "children",
+        label: "label",
       },
       // 用户导入参数
       upload: {
@@ -607,7 +616,8 @@ export default {
         processResult: '',
         taskId: '',
         startTime: '',
-        endTime: ''
+        endTime: '',
+        nodeId: ''
 
       },
       // 表单校验
@@ -636,6 +646,7 @@ export default {
   created() {
 
     this.getSelfList();
+    this.getBroadsideInfo()
 
   },
   methods: {
@@ -644,11 +655,23 @@ export default {
         console.log(this.currentPage)  //点击第几页
     },
     getBroadsideInfo() {
-      var id = localStorage.getItem('siteId')
-      var id = 10
+
+      var id = this.$store.state.nodeStateId
       broadsideInfo(id).then((res) => {
+        console.log("自检记录", res.data)
         this.deptOptions = res.data.data
       })
+    },
+
+    handleNodeClick2(data, node, nodeData){
+      console.log("打印data", data)
+      console.log("打印node", node)
+      console.log("打印nodeData", nodeData)
+      this.selectValue = data
+      this.optionValue = data.label
+        setTimeout(() => {
+            this.$refs.selectTree.blur()
+        }, 50)
     },
     getBanZu() {
       var id = localStorage.getItem('siteId')
@@ -791,6 +814,9 @@ export default {
       // this.queryParams.page = 1;
       //this.loading = true;
       // console.log("时间判断", this.timeArry)
+      if(this.selectValue !== undefined) {
+        this.queryParams.nodeId = this.selectValue.id
+      }
       this.queryParams.taskId = this.$store.state.nodeStateId
       this.queryParams.startTime = this.timeArry[0]
       this.queryParams.endTime = this.timeArry[1]
@@ -813,6 +839,9 @@ export default {
       this.timeArry = []
       this.queryParams.startTime = ''
       this.queryParams.endTime = ''
+      this.queryParams.nodeId = ''
+      this.selectValue = undefined
+      this.optionValue = undefined
       this.getSelfList();
     },
     // 多选框选中数据
@@ -831,7 +860,7 @@ export default {
       this.title = "新增节点计划";
       console.log(this.form)
       this.getBanZu()
-      this.getBroadsideInfo()
+      
     },
     /** 修改按钮操作 */
     handleUpdate(row) {

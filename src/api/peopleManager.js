@@ -154,6 +154,13 @@ export function broadsideInfo(id) {
   })
 }
 
+export function broadsideInfo2(id) {
+  return request({
+    url: `/scheduleManage/node/tree?taskId=${id}`,
+    method: 'get'
+  })
+}
+
 export function leaderList(id, data) {
   return request({
     url: `/people/info/attend-list?constructionSiteId=${id}`,
