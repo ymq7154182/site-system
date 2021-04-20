@@ -179,9 +179,9 @@
           
           <el-table-column label="状态" align="center" prop="state" :show-overflow-tooltip="true" >
             <template slot-scope="scope">
-                <el-tag  v-if="scope.row.state===0" type="success">正常</el-tag>
+                <el-tag  v-if="scope.row.state===0" type="success">异常</el-tag>
                 <el-tag  v-if="scope.row.state===1" type="warning">正常延期</el-tag>
-                <el-tag  v-if="scope.row.state===2" type="danger">异常延期</el-tag>
+                
             </template>
           </el-table-column>
           
