@@ -558,6 +558,7 @@ export default {
           return this.selectTime(time);//调用方法
         }
       },
+      singleList: [],
       taskStartTime: '',
       taskEndTime: '',
       dialogVisible: false,
