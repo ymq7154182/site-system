@@ -39,7 +39,7 @@
                </el-col>
                <el-col :span="24">
                  <div class="allTask2">
-                    <span>预警</span>
+                    <span>异常</span>
                     <p class="blue">{{allTask.five}}项</p>
                   </div>
                </el-col>
@@ -280,7 +280,7 @@
             </el-form-item>
           </el-col>
         </el-row>
-        <el-row>
+        <!-- <el-row>
           <el-col :span="12">
             <el-form-item label="实际开始时间"  prop="actualStartTime">
                <el-date-picker
@@ -301,7 +301,7 @@
                 </el-date-picker>
             </el-form-item>
           </el-col>
-        </el-row>
+        </el-row> -->
          <el-row>
           <el-col :span="12">
             <el-form-item label="任务计划"  prop="nodeFlag">

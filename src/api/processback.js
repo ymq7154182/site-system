@@ -192,37 +192,14 @@ export function delTask(id) {
   })
 }
 
-
-
-
-
-
-
-
-// 新增支持设备
-export function addDevice(data) {
+export function listSingleProjectTree(query) {
   return request({
-    url: '/device/supportDevice',
-    method: 'post',
-    data: data
-  })
-}
-export function listDevice(query) {
-  return request({
-    url: '/device/supportDevice/list',
+    url: '/singleProject/pretreeselect',
     method: 'get',
     params: query
   })
 }
 
-// 修改支持设备
-export function updateDevice(data) {
-  return request({
-    url: '/device/supportDevice',
-    method: 'put',
-    data: data
-  })
-}
 
 
 
