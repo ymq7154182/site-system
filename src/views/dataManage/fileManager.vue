@@ -51,7 +51,7 @@
                   <el-button type="info" size="mini"  @click="delInfo(scope.$index, scope.row)" >删除</el-button>
                   <el-button type="success" size="mini"  @click="downloadFile(scope.row.lookUrl)" >下载</el-button>
                   <el-button type="danger" size="mini"  @click="moveFile(scope.$index, scope.row)" >移动</el-button>
-                  <el-button type="warning" size="mini"  @click="downloadFile(scope.row.lookUrl)" >分享</el-button>
+                  <el-button type="warning" size="mini"  @click="viewFile(scope.row.lookUrl)" >预览</el-button>
 
                 </template>
               </el-table-column>
@@ -601,6 +601,10 @@ export default {
     },
     downloadFile(url) {
       window.open(url);
+    },
+    viewFile(url) {
+      var newUrl = `http://preview.dati.net/view/url?url=${url}`
+      window.open(newUrl);
     },
     
     getListFolder() {
