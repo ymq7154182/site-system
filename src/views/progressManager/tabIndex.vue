@@ -55,11 +55,21 @@ export default {
   watch: {
     
   "$store.state.nodeStateId"(old, newd) {
-      console.log("旧的", old)
-      console.log("新的", newd)
+      console.log("旧的tabIndex1", old)
+      console.log("新的tabIndex1", newd)
+      
+      console.log("当前页面是否是叶子节点1", this.$store.state.isLeaf)
+      
+      this.leafNode = this.$store.state.isLeaf
+    },
+    "$store.state.isLeaf"(old, newd) {
+      console.log("旧的tabIndex", old)
+      console.log("新的tabIndex", newd)
+      
       console.log("当前页面是否是叶子节点", this.$store.state.isLeaf)
       this.leafNode = this.$store.state.isLeaf
     }
+
     
   },
   mounted() {
@@ -79,7 +89,14 @@ export default {
         console.log("传输节点", res.data)
         this.deptOptions = res.data.data
         this.propData = res.data.data[0]
-         this.$store.commit('CHANGE_NODE_ID', res.data.data[0].id) 
+        //  this.$store.commit('CHANGE_NODE_ID', res.data.data[0].id) 
+        if(this.$store.state.nodeStateId === '') {
+          this.$store.commit('CHANGE_NODE_ID', res.data.data[0].id) 
+        } else {
+          this.leafNode = this.$store.state.isLeaf
+        }
+        
+         
         // console.log("初始的propData", this.propData)
       })
     },

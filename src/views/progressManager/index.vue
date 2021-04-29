@@ -104,6 +104,9 @@ export default {
          this.detail = false
          this.work = true
        }
+       this.$store.commit('CHANGE_NODE', {})  
+       this.$store.commit('CHANGE_NODE_ID', '')
+       this.$store.commit('CHANGE_ISLEAF', false) 
     },
   }
 

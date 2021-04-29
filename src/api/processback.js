@@ -200,7 +200,29 @@ export function listSingleProjectTree(query) {
   })
 }
 
+export function showTask(query) {
+  return request({
+    url: '/schedule/task/task-list',
+    method: 'get',
+    params: query
+  })
+}
 
+export function showNode(query) {
+  return request({
+    url: '/scheduleManage/node/node-list',
+    method: 'get',
+    params: query
+  })
+}
+
+export function showDelay(query) {
+  return request({
+    url: '/scheduleManage/delay/delay-list',
+    method: 'get',
+    params: query
+  })
+}
 
 
 

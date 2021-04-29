@@ -398,20 +398,32 @@ export default {
   },
   watch: {
     "$store.state.nodeStateId"(old, newd) {
-      console.log("旧的", old)
-      console.log("新的", newd)
+      console.log("旧的nodeId", old)
+      console.log("新的nodeId", newd)
+      if(this.$store.state.isLeaf === false) {
+        this.getTaskList()
+      }
       
-      this.getTaskList()
     }
   },
   mounted() {
-      this.selectNodeId = localStorage.getItem('selectNodeId')
-      this.getBroadsideInfo()
+      console.log("任务nodeId", this.$store.state.nodeStateId)
+      
+      if(this.$store.state.isLeaf === false) {
+        console.log("任务isleaf", this.$store.state.isLeaf)
+         this.getBroadsideInfo()
+         this.getTaskList()
+          this.getInfo()
+      }
+      
+     
   },
   created() {
+    // if(this.$store.state.isLeaf === false) {
+      
+    // }
    
-    this.getTaskList()
-    this.getInfo()
+    
   },
   methods: {
 

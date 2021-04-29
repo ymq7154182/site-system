@@ -8,7 +8,7 @@
       <el-col :span="7" :xs="24">
          <el-row>
            <el-col :span="7">
-             <div class="allTaks">
+             <div class="allTaks" @click="showAllTask('all')">
                <span>全部任务</span>
                <p>{{allTask.one}}项</p>
              </div>
@@ -16,13 +16,13 @@
            <el-col :span="7">
              <el-row>
                <el-col :span="24">
-                  <div class="allTask2">
+                  <div class="allTask2" @click="showAllTask('no')">
                     <span>未开工</span>
                     <p class="red">{{allTask.two}}项</p>
                   </div>
                </el-col>
                <el-col :span="24">
-                 <div class="allTask2">
+                 <div class="allTask2" @click="showAllTask('doing')">
                     <span>进行中</span>
                     <p class="yellow">{{allTask.three}}项</p>
                   </div>
@@ -32,13 +32,13 @@
            <el-col :span="6">
              <el-row>
                <el-col :span="24">
-                  <div class="allTask2">
+                  <div class="allTask2" @click="showAllTask('complete')">
                     <span>已完工</span>
                     <p class="pink">{{allTask.four}}项</p>
                   </div>
                </el-col>
                <el-col :span="24">
-                 <div class="allTask2">
+                 <div class="allTask2" @click="showAllTask('alarm')">
                     <span>异常</span>
                     <p class="blue">{{allTask.five}}项</p>
                   </div>
@@ -52,7 +52,7 @@
       <el-col :span="8" :xs="24">
          <el-row>
            <el-col :span="7">
-             <div class="allTaks">
+             <div class="allTaks" @click="showAllNode('all')">
                <span>全部节点计划</span>
                <p>{{allNode.one}}项</p>
              </div>
@@ -60,13 +60,13 @@
            <el-col :span="7">
              <el-row>
                <el-col :span="24">
-                  <div class="allTask2">
+                  <div class="allTask2"  @click="showAllNode('no')">
                     <span>未开工</span>
                     <p class="red">{{allNode.two}}项</p>
                   </div>
                </el-col>
                <el-col :span="24">
-                 <div class="allTask2">
+                 <div class="allTask2"  @click="showAllNode('doing')">
                     <span>进行中</span>
                     <p class="yellow">{{allNode.three}}项</p>
                   </div>
@@ -76,13 +76,13 @@
            <el-col :span="6">
              <el-row>
                <el-col :span="24">
-                  <div class="allTask2">
+                  <div class="allTask2" @click="showAllNode('complete')">
                     <span>已完工</span>
                     <p class="pink">{{allNode.four}}项</p>
                   </div>
                </el-col>
                <el-col :span="24">
-                 <div class="allTask2">
+                 <div class="allTask2" @click="showAllNode('alarm')">
                     <span>预警</span>
                     <p class="blue">{{allNode.five}}项</p>
                   </div>
@@ -96,21 +96,21 @@
       <el-col :span="7" :xs="24">
          <el-row>
            <el-col :span="7">
-             <div class="allTaks">
-               <span>任务延期</span>
+             <div class="allTaks"  @click="showAllDelay('all')">
+               <span>延期说明</span>
                <p>{{allDelay.one}}项</p>
              </div>
            </el-col>
            <el-col :span="7">
              <el-row>
                <el-col :span="24">
-                  <div class="allTask2">
+                  <div class="allTask2" @click="showAllDelay('kai')">
                     <span>开工延期</span>
                     <p class="red">{{allDelay.two}}项</p>
                   </div>
                </el-col>
                <el-col :span="24">
-                 <div class="allTask2">
+                 <div class="allTask2" @click="showAllDelay('normal')">
                     <span>正常延期</span>
                     <p class="yellow">{{allDelay.three}}项</p>
                   </div>
@@ -120,13 +120,13 @@
            <el-col :span="6">
              <el-row>
                <el-col :span="24">
-                  <div class="allTask2">
+                  <div class="allTask2" @click="showAllDelay('complete')">
                     <span>完工延期</span>
                     <p class="pink">{{allDelay.four}}项</p>
                   </div>
                </el-col>
                <el-col :span="24">
-                 <div class="allTask2">
+                 <div class="allTask2" @click="showAllDelay('alarm')">
                     <span>异常延期</span>
                     <p class="blue">{{allDelay.five}}项</p>
                   </div>
@@ -177,13 +177,13 @@
           <el-table-column label="实际开始时间" align="center" prop="actualStartTime" :show-overflow-tooltip="true" />
           <el-table-column label="实际结束时间" align="center" prop="actualEndTime" :show-overflow-tooltip="true" />
           
-          <el-table-column label="状态" align="center" prop="state" :show-overflow-tooltip="true" >
-            <template slot-scope="scope">
-                <el-tag  v-if="scope.row.state===0" type="success">异常</el-tag>
-                <el-tag  v-if="scope.row.state===1" type="warning">正常延期</el-tag>
-                
-            </template>
-          </el-table-column>
+         
+           <el-table-column label="状态" align="center" prop="state" :show-overflow-tooltip="true" >
+              <template slot-scope="scope">
+                  <el-tag  v-if="scope.row.state=== 1" type="success">正常</el-tag>
+                  <el-tag  v-if="scope.row.state=== 0" type="warning">异常</el-tag>
+              </template>
+            </el-table-column>
           
          
           <el-table-column label="操作" align="center" width="180" class-name="small-padding fixed-width">
@@ -207,7 +207,7 @@
     
 
 
-        <el-dialog :title="title" :visible.sync="open" width="900px" append-to-body>
+    <el-dialog :title="title" :visible.sync="open" width="900px" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="160px">
         <el-row>
 
@@ -327,6 +327,140 @@
         <el-button @click="cancel">取 消</el-button>
       </div>
     </el-dialog>
+
+
+    <el-dialog :title="title2" :visible.sync="open2" width="90%" append-to-body @close="cancelTable2">
+      <div class="dataTable2">
+        
+        <el-table :data="dataList2.slice((currentPage2-1)*pagesize2,currentPage2*pagesize2)"  >
+
+            <el-table-column label="序号" align="center" type="index" />
+            <el-table-column label="名称" align="center" prop="label"  width="250"/>
+            <el-table-column label="进度" align="center" prop="progress" :show-overflow-tooltip="true" >
+              <template slot-scope="scope">
+                  <el-tag  v-if="scope.row.progress===0" type="info">未开始</el-tag>
+                  <el-tag  v-if="scope.row.progress===1" type="danger">进行中</el-tag>
+                  <el-tag  v-if="scope.row.progress===2" type="success">已完成</el-tag>
+              </template>
+            </el-table-column>
+            
+            <el-table-column label="计划开始时间" align="center" prop="planStartTime" :show-overflow-tooltip="true" />
+            <el-table-column label="计划结束时间" align="center" prop="planEndTime" :show-overflow-tooltip="true" />
+            <el-table-column label="计划工期" align="center" prop="planDays" :show-overflow-tooltip="true" />
+            <el-table-column label="实际开始时间" align="center" prop="actualStartTime" :show-overflow-tooltip="true" />
+            <el-table-column label="实际结束时间" align="center" prop="actualEndTime" :show-overflow-tooltip="true" />
+            
+            <el-table-column label="状态" align="center" prop="state" :show-overflow-tooltip="true" >
+              <template slot-scope="scope">
+                  <el-tag  v-if="scope.row.state===0" type="success">异常</el-tag>
+                  <el-tag  v-if="scope.row.state===1" type="warning">正常延期</el-tag>
+                  
+              </template>
+            </el-table-column>
+            
+          
+          </el-table>
+        
+
+          <el-pagination
+            @current-change="handleCurrentChange2"
+            :current-page="currentPage2"
+            :page-sizes="[10]" 
+            :page-size="pagesize2"         
+            layout="total, sizes, prev, pager, next, jumper"
+            :total="total2">   
+          </el-pagination>
+
+      </div>
+    </el-dialog>
+
+    <el-dialog :title="title3" :visible.sync="open3" width="90%" append-to-body @close="cancelTable3">
+      <div class="dataTable2">
+        
+          <el-table :data="dataList3.slice((currentPage3-1)*pagesize3,currentPage3*pagesize3)" >
+
+            <el-table-column label="编号" align="center" prop="sort" />
+            <el-table-column label="节点名称" align="center" prop="label"  />
+            <el-table-column label="进度" align="center" prop="progress" :show-overflow-tooltip="true" >
+              <template slot-scope="scope">
+                  <el-tag  v-if="scope.row.progress===0" type="info">未开始</el-tag>
+                  <el-tag  v-if="scope.row.progress===1" type="danger">进行中</el-tag>
+                  <el-tag  v-if="scope.row.progress===2" type="success">已完成</el-tag>
+              </template>
+            </el-table-column>
+            
+            <el-table-column label="计划开始时间" align="center" prop="planStartTime" :show-overflow-tooltip="true" />
+            <el-table-column label="计划结束时间" align="center" prop="planEndTime" :show-overflow-tooltip="true" />
+            <el-table-column label="计划工期" align="center" prop="planDays" :show-overflow-tooltip="true" />
+            <el-table-column label="实际开始时间" align="center" prop="actualStartTime" :show-overflow-tooltip="true" />
+            <el-table-column label="实际结束时间" align="center" prop="actualEndTime" :show-overflow-tooltip="true" />
+
+            <el-table-column label="状态" align="center" prop="state" :show-overflow-tooltip="true" >
+              <template slot-scope="scope">
+                  <el-tag  v-if="scope.row.state=== 1" type="success">正常</el-tag>
+                  <el-tag  v-if="scope.row.state=== 0" type="warning">异常</el-tag>
+                 
+              </template>
+            </el-table-column>
+            
+           
+          </el-table>
+
+          <el-pagination
+            @current-change="handleCurrentChange3"
+            :current-page="currentPage3"
+            :page-sizes="[10]" 
+            :page-size="pagesize3"         
+            layout="total, sizes, prev, pager, next, jumper"
+            :total="total3">   
+          </el-pagination>
+        </div>
+    </el-dialog>
+
+    <el-dialog :title="title4" :visible.sync="open4" width="90%" append-to-body @close="cancelTable4">
+      <div class="dataTable2">
+        <el-table  :data="dataList4.slice((currentPage4-1)*pagesize4,currentPage4*pagesize4)" >
+
+          <el-table-column label="编号" align="center" type="index" />
+          <el-table-column label="开始时间" align="center" prop="startTime"  />
+          <el-table-column label="结束时间" align="center" prop="endTime"  />
+          <el-table-column label="状态" align="center" prop="state" >
+            <template slot-scope="scope">
+                <el-tag  v-if="scope.row.state=== 0 " type="danger">异常延期</el-tag>
+                <el-tag  v-if="scope.row.state=== 1 " type="success">正常延期</el-tag>
+            </template>
+          </el-table-column>
+          <el-table-column label="类别" align="center" prop="classification" >
+            <template slot-scope="scope">
+                <el-tag  v-if="scope.row.classification===0" type="danger">开工延期</el-tag>
+                <el-tag  v-if="scope.row.classification===1" type="success">施工延期</el-tag>
+            </template>
+          </el-table-column>
+          
+          <el-table-column label="说明" align="center" prop="explain" :show-overflow-tooltip="true" />
+
+          </el-table-column>
+          <el-table-column label="操作" align="center" width="180" class-name="small-padding fixed-width">
+            <template slot-scope="scope">
+              <el-button size="mini" type="text" @click="handleViewDelay(scope.row)" >修改</el-button>
+              <el-button size="mini" type="text" @click="handleDelDelay(scope.row)" >删除</el-button>
+             
+            </template>
+          </el-table-column>
+        </el-table>
+        
+
+          <el-pagination
+            @current-change="handleCurrentChange4"
+            :current-page="currentPage4"
+            :page-sizes="[10]" 
+            :page-size="pagesize4"         
+            layout="total, sizes, prev, pager, next, jumper"
+            :total="total4">   
+          </el-pagination>
+        </div>
+    </el-dialog>
+
     
         
   </div>
@@ -336,7 +470,7 @@
 
 import { getTaksNum, getNodeNum, getDelayNum, scheduleList } from '@/api/progress'
 import { broadsideInfo } from '@/api/peopleManager'
-import { taskList, addTask } from "@/api/processback";
+import { taskList, addTask, showTask, showNode, showDelay } from "@/api/processback";
 import Treeselect from "@riophae/vue-treeselect";
 import "@riophae/vue-treeselect/dist/vue-treeselect.css";
 import { mapState } from 'vuex'
@@ -354,6 +488,8 @@ export default {
   },
   data() {
     return {
+      searchValue: undefined,
+      searchValue2: undefined,
       selectValue: undefined,
       optionValue: undefined,
       
@@ -370,6 +506,12 @@ export default {
       ],
       currentPage:1, //初始页
       pagesize:10, 
+      currentPage2:1, //初始页
+      pagesize2:10, 
+      currentPage3:1, //初始页
+      pagesize3:10, 
+      currentPage4:1, //初始页
+      pagesize4:10, 
       currentTaskId: '',
       allTask: {
         one: 0,
@@ -397,11 +539,20 @@ export default {
       showSearch: true,
       // 总条数
       total: 0,
+      total2: 0,
+      total3: 0,
+      total4: 0,
       // 用户表格数据
       userList: null,
       dataList: [],
+      dataList2: [],
+      dataList3: [],
+      dataList4: [],
       // 弹出层标题
       title: "",
+      title2: '',
+      title3: '',
+      title4: '',
       // 部门树选项
       deptOptions: [],
       
@@ -409,6 +560,9 @@ export default {
       
       // 是否显示弹出层
       open: false,
+      open2: false,
+      open3: false,
+      open4: false,
       // 部门名称
       deptName: undefined,
       // 默认密码
@@ -511,6 +665,7 @@ export default {
     
   },
   created() {
+    console.log("进度情况", this.$store.state.nodeStateId)
     this.getAllTaksNum()
     this.getAllNodeNum()
     this.getAllDelayNum()
@@ -519,6 +674,203 @@ export default {
    
   },
   methods: {
+    handleQuery() {
+      var params = {
+        label: this.searchValue,
+        parentId: this.$store.state.nodeStateId
+      }
+     
+      taskList(params).then((res) => {
+        this.dataList = res.data.rows
+        this.total = res.data.total;
+     
+      })
+
+    },
+    resetQuery() {
+      
+      this.searchValue = ''
+      this.getTaskList();
+    },
+    resetQuery2() {
+      
+      this.searchValue = ''
+      this.getTaskList();
+    },
+
+    handleQuery2() {
+      var params = {
+        label: this.searchValue2,
+        parentId: this.$store.state.nodeStateId
+      }
+       
+      taskList(params).then((res) => {
+        this.dataList3 = res.data.rows
+        this.total3 = res.data.total;
+       
+      })
+
+    },
+    resetQuery() {
+      
+      this.searchValue2 = ''
+      this.getTaskList();
+    },
+    showAllNode(name) {
+      // alert(name)
+      if(name === 'all') {
+        var params = {
+          siteId: localStorage.getItem('siteId'),
+          status: 1
+        }
+        this.title3 = '全部节点列表'
+      } else if(name === 'no') {
+        var params = {
+          siteId: localStorage.getItem('siteId'),
+          status: 2
+        }
+        this.title3 = '未开工节点列表'
+      } else if(name === 'doing') {
+        var params = {
+          siteId: localStorage.getItem('siteId'),
+          status: 4
+        }
+        this.title3 = '进行中节点列表'
+      } else if(name === 'complete') {
+        var params = {
+          siteId: localStorage.getItem('siteId'),
+          status: 3
+        }
+        this.title3 = '已完工节点列表'
+      } else {
+        var params = {
+          siteId: localStorage.getItem('siteId'),
+          status: 5
+        }
+        this.title3 = '异常节点列表'
+      }
+      this.open3 = true
+      this.getFiveNodeList(params)
+     
+     
+
+    },
+    showAllDelay(name) {
+      // alert(name)
+      if(name === 'all') {
+        var params = {
+          siteId: localStorage.getItem('siteId'),
+          status: 1
+        }
+        this.title4 = '全部延期列表'
+      } else if(name === 'kai') {
+        var params = {
+          siteId: localStorage.getItem('siteId'),
+          status: 2
+        }
+        this.title4 = '开工延期列表'
+      } else if(name === 'complete') {
+        var params = {
+          siteId: localStorage.getItem('siteId'),
+          status: 3
+        }
+        this.title4 = '完工延期列表'
+      } else if(name === 'normal') {
+        var params = {
+          siteId: localStorage.getItem('siteId'),
+          status: 4
+        }
+        this.title4 = '正常延期列表'
+      } else {
+        var params = {
+          siteId: localStorage.getItem('siteId'),
+          status: 5
+        }
+        this.title4 = '异常延期列表'
+      }
+      this.open4 = true
+      this.getFiveDelayList(params)
+     
+     
+
+    },
+    getFiveDelayList(params) {
+      showDelay(params).then((res) => {
+        console.log("fiveList", res)
+        this.dataList4 = res.data.data
+        this.total4 = res.data.data.length;
+        
+      })
+    },
+    
+    getFiveNodeList(params) {
+      showNode(params).then((res) => {
+        console.log("fiveList", res)
+        this.dataList3 = res.data.data
+        this.total3 = res.data.data.length;
+        
+      })
+    },
+    
+    showAllTask(name) {
+      // alert(name)
+      if(name === 'all') {
+        var params = {
+          siteId: localStorage.getItem('siteId'),
+          status: 1
+        }
+        this.title2 = '全部任务列表'
+      } else if(name === 'no') {
+        var params = {
+          siteId: localStorage.getItem('siteId'),
+          status: 2
+        }
+        this.title2 = '未开工任务列表'
+      } else if(name === 'doing') {
+        var params = {
+          siteId: localStorage.getItem('siteId'),
+          status: 4
+        }
+        this.title2 = '进行中任务列表'
+      } else if(name === 'complete') {
+        var params = {
+          siteId: localStorage.getItem('siteId'),
+          status: 3
+        }
+        this.title2 = '已完工任务列表'
+      } else {
+        var params = {
+          siteId: localStorage.getItem('siteId'),
+          status: 5
+        }
+        this.title2 = '异常任务列表'
+      }
+      this.open2 = true
+      this.getFiveList(params)
+     
+     
+
+    },
+    getFiveList(params) {
+       showTask(params).then((res) => {
+        console.log("fiveList", res)
+        this.dataList2 = res.data.data
+        this.total2 = res.data.data.length;
+        
+      })
+    },
+    cancelTable2() {
+      this.currentPage2 = 1
+      this.pagesize2 = 10
+    },
+    cancelTable3() {
+      this.currentPage3 = 1
+      this.pagesize3 = 10
+    },
+    cancelTable4() {
+      this.currentPage4 = 1
+      this.pagesize4 = 10
+    },
 
     handleNodeClick2(data, node, nodeData){
      console.log("打印data", data)
@@ -567,6 +919,14 @@ export default {
     },
     handleCurrentChange: function(currentPage){
         this.currentPage = currentPage;
+        console.log(this.currentPage)  //点击第几页
+    },
+    handleCurrentChange2: function(currentPage){
+        this.currentPage2 = currentPage;
+        console.log(this.currentPage)  //点击第几页
+    },
+    handleCurrentChange3: function(currentPage){
+        this.currentPage3 = currentPage;
         console.log(this.currentPage)  //点击第几页
     },
     getAllTaksNum() {

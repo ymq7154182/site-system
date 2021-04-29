@@ -488,7 +488,32 @@ export default {
           value: 0
         }
       ],
-      banzuForm: {},
+      banzuForm: {
+            userImg : '',
+            constructionSiteId : '',
+            id : '',
+            userName : '',
+            userClass : null,
+            teamId : null,
+            userPost : '',
+            userCode : '',
+            userVcode : '',
+            userSex : '',
+            phone : '',
+            userNationality : '',
+            userAge : '',
+            userEducation : '',
+            userSignDeptName : '',
+            userSignCompanyName : '',
+            checkImg : '',
+            leader :'',
+            flag :'',
+            userStatus :'',
+            teamId : '',
+            label : '',
+            parentId : undefined
+      
+        },
       banzuOpen: false,
       fileList:[],
       xueliOptions: [],

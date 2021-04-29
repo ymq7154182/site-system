@@ -2,12 +2,23 @@
   <div class="progressManager">
 
     <el-row >
-      <el-col :span="18" >
+      <el-col :span="12" >
         <div style="color:white;font-size:18px;margin-left:10px;">
           任务甘特图
         </div>
       </el-col>
       <el-col :span="6">
+         <div class="tishi">
+           <div class="tishi mr20">
+            <div class="mr8">计划时间 </div><div class="jihua"></div>
+          </div>
+          <div class="tishi">
+            <div class="mr8">实际时间 </div><div class="shiji"></div>
+          </div>
+         </div>
+      </el-col>
+      <el-col :span="6">
+       
         <div>
           <el-input v-model="searchValue" placeholder="请输入关键字"  clearable style="width:200px;margin-right:5px;"></el-input><el-button size="mini" type="primary" @click="queryValue" >搜索</el-button><el-button size="mini" type="primary" @click="clearValue" >重置</el-button>
         </div>
@@ -49,14 +60,16 @@
           <wlGantt
             class="cardUl"
             ref="wl-gantt-demo"
+            :useCard="true"
             
-            use-real-time
+            :useRealTime="true"
             :default-expand-all="true"
-            endDate="2023-12-31"
-            startDate="2020-01-01"
+            :startDate="startDate"
+            :endDate="endDate"
+           
             date-type="monthAndDay"
             :edit="false"
-            :data="data"
+            :data="ganttList"
             :columns="columns"
             :contextMenuOptions="contextMenuOptions"
             
@@ -73,13 +86,13 @@
             <template #info-card="{ row }">
               <ul class="hoverCard">
                 <li>
-                  <label for="name">名称：</label><span id="name">{{ row.name }}</span>
+                  <label for="name">阶段名称：</label><span id="name">{{ row.name }}</span>
                 </li>
                 <li>
-                  <label for="startDate">开始日期：</label><span id="startDate">{{ row.startDate }}</span>
+                  <label for="startDate">计划开始日期：</label><span id="startDate">{{ row.startDate }}</span>
                 </li>
                 <li>
-                  <label for="endDate">结束日期：</label><span id="endDate">{{ row.endDate }}</span>
+                  <label for="endDate">计划结束日期：</label><span id="endDate">{{ row.endDate }}</span>
                 </li>
                 <li>
                   <label for="realStartDate">实际开始日期：</label><span id="realStartDate">{{ row.realStartDate }}</span>
@@ -306,6 +319,8 @@ export default {
   },
   data(){
     return{
+      startDate: '',
+      endDate: '',
       totalStartTime: '',
       totalEndTime: '',
       form: {
@@ -376,12 +391,22 @@ export default {
       columns: [{ type: "name", maxWidth: 200, colType: "expand" }], 
     }
   },
+ 
+  created() {
+    this.startDate = '2019-01-01'
+    this.endDate = '2022-12-30'
+    // this.getSyncTime()
+
+   
+    
+
+  
+  },
   mounted() {
     
    this.getScheduleList()
-   
-   this.getScheduleGantt()
-    this.getTotalDay()
+  //  this.getScheduleGantt()
+   this.getTotalDay()
   },
   methods:{
     delNode() {
@@ -524,27 +549,48 @@ export default {
         
       // })
     },
+    
     clearValue() {},
+    getSyncTime() {
+      var params = {
+        siteId: localStorage.getItem('siteId')
+      }
+      scheduleList(params).then((res) => {
+        this.startDate = res.data.rows[0].startDate
+        this.endDate = res.data.rows[0].endDate
+      })
+    },
+    
     getScheduleList() {
       var params = {
         siteId: localStorage.getItem('siteId')
       }
       scheduleList(params).then((res) => {
         console.log("打印",res.data.rows)
-        this.data = res.data.rows
+        
+        // this.startDate = res.data.rows[0].startDate
+        // this.endDate = res.data.rows[0].endDate
+        this.ganttList = res.data.rows
         
         this.siteName = res.data.rows[0].name
         this.currentTaskId = res.data.rows[0].id
         this.totalStartTime = res.data.rows[0].startDate
         this.totalEndTime = res.data.rows[0].endDate
+       
+        
         console.log("siteName", this.siteName)
+       
+      
         
       })
     },
+    
     getScheduleGantt() {
       var siteId = localStorage.getItem('siteId')
       scheduleGantt(siteId).then((res) => {
         console.log("gantt", res.data)
+        console.log("开始时间", this.startDate)
+        console.log("结束时间", this.endDate)
         this.ganttList = res.data.data
       })
     },
@@ -627,6 +673,7 @@ export default {
 .hoverCard {
   list-style: none;
   width: 200px;
+  font-size: 14px;
 }
 /* .drawStep >>> .el-step__main {
   color: #fff
@@ -637,4 +684,28 @@ export default {
 .drawStep >>> .el-step__description.is-finish {
   color: white;
 }
+.tishi {
+  display: flex;
+  color: white;
+  font-size: 14px;
+  justify-content: center;
+  align-items: center;
+}
+.jihua {
+    width: 50px;
+    height: 20px;
+    background: rgb(88, 157, 246);
+}
+.shiji {
+  width: 50px;
+    height: 20px;
+    background: rgb(238, 171, 150)
+}
+.mr20 {
+  margin-right: 20px;
+}
+.mr8 {
+  margin-right: 8px;
+}
+
 </style>
