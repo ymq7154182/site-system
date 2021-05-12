@@ -929,6 +929,10 @@ export default {
         this.currentPage3 = currentPage;
         console.log(this.currentPage)  //点击第几页
     },
+    handleCurrentChange4: function(currentPage){
+        this.currentPage4 = currentPage;
+        console.log(this.currentPage)  //点击第几页
+    },
     getAllTaksNum() {
       var id = localStorage.getItem('siteId')
       getTaksNum(id).then((res) => {

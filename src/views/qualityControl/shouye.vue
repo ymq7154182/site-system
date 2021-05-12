@@ -13,7 +13,7 @@
                   <!-- <div style="float:right; margin: 0 10px 0 0; z-index: 999; ">
                     <el-button type="text" style="text-decoration: underline; " @click="gotoCheckRecord">历史数据</el-button>
                   </div> -->
-                  <div id="mychart1" v-show="quaFlag1"></div>
+                  <div id="mychart1" v-show="quaFlag1" @click="gotoCheckRecord"></div>
                   <div v-show="!quaFlag1" style="text-align: center;padding-top: 120px">
                     <span style="font-size: 12px;color: #ffffff;font-weight: bolder;">暂无数据，此数据来源于建工随手拍小程序</span>
                   </div>
@@ -321,7 +321,7 @@
         //   //   _this.startTimer();
         //   // })
         // },610)
-        this.inchart1()
+        // this.inchart1()
 
         this.inchart13()
         // this.inchart21()
@@ -1774,10 +1774,10 @@
               ]
             };
             this.myChart1.setOption(option);
-            this.myChart1.on('click', 'title.text', function(params) {
-              alert(params.name);
-            })
+            
+            
           },
+          
         inchart13() {
           this.myChart13 = this.$echarts.init(document.getElementById('mychart13'));
           let innerFontColor = '#FFFFFF';
@@ -4495,7 +4495,7 @@
             // if(this.quaFlag1 === true) {
             //   this.inchart1()
             // }
-            this.inchart1()
+           this.inchart1()
             
           })
         },

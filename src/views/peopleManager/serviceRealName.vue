@@ -19,7 +19,7 @@
           
           <span style="font-size: 14px;color: white;font-weight: 700;margin-right: 10px">岗位/工种</span>
           <el-select v-model="queryParams.userPost" placeholder="请选择" clearable size="small" style="width: 120px;margin-right: 10px">
-            <el-option v-for="dict in postList" :key="dict.id" :label="dict.professionName" :value="dict.professionName" />
+            <el-option v-for="dict in postList" :key="dict.postId" :label="dict.postName" :value="dict.postName" />
           </el-select>
           <span style="font-size: 14px;color: white;font-weight: 700;margin-right: 10px">状态</span>
           <el-select v-model="queryParams.userStatus" placeholder="请选择" clearable size="small" style="width: 120px;margin-right: 10px">
@@ -182,8 +182,8 @@
         <el-row>
           <el-col :span="12">
             <el-form-item label="岗位/工种" prop="userPost">
-              <el-select v-model="form.userPost" placeholder="请选择" clearable size="small" style="width: 240px">
-                <el-option v-for="dict in postList" :key="dict.id" :label="dict.professionName" :value="dict.professionName" />
+              <el-select v-model="form.userPost" placeholder="请选择" clearable size="small" >
+                <el-option v-for="dict in postList" :key="dict.postId" :label="dict.postName" :value="dict.postName" />
               </el-select>
             </el-form-item>
           </el-col>
@@ -343,9 +343,9 @@
                 <el-select v-model="banzuForm.userPost" placeholder="请选择" style="width: 50%">
                     <el-option
                         v-for="item in postList"
-                        :key="item.id"
-                        :label="item.professionName"
-                        :value="item.professionName">
+                        :key="item.postId"
+                        :label="item.postName"
+                        :value="item.postName">
                     </el-option>
                 </el-select>
              </el-form-item>
@@ -734,9 +734,9 @@ export default {
     },
     getPofession() {
       var id = localStorage.getItem('siteId')
-      profession(id).then((res) => {
+      profession().then((res) => {
         console.log("岗位", res)
-        this.postList = res.data.rows
+        this.postList = res.data.data
       })
     },
     getSelectList(node, instanceId) {

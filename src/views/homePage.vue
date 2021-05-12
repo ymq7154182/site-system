@@ -320,7 +320,7 @@
   import { getSite, homeImg } from '@/api/dataManage'
   import { scheduleInfo, treeTask } from '@/api/progress'
   import {  typeCount, todayAttend } from '@/api/peopleManager'
-  import { getGongDiNameById,screenName, devCount, getInfoByName } from '@/api/projectOverview'
+  import { getGongDiNameById,screenName, devCount, getInfoByName, loginName } from '@/api/projectOverview'
   import { getSafeOrQualityChartData,getProjectDetails,getProjectTimeInformation } from '@/api/projectOverview.js'
   import Treeselect from '@riophae/vue-treeselect'
   import '@riophae/vue-treeselect/dist/vue-treeselect.css'
@@ -1439,10 +1439,24 @@
             },100)
           })
         },
+        getLoginUserName(nameId) {
+          var params = {
+            userId: nameId
+          }
+          loginName(params).then((res) => {
+            console.log("登陆名称", res.data.data.userName)
+            var loginName = res.data.data.userName
+            localStorage.setItem('loginName', loginName)
+          })
+        },
         getUrl() {
           
           var projectName = Cookies.get('username')
           console.log("1234", projectName)
+          var l = projectName.lastIndexOf('-')
+          var nameId = projectName.substring(l + 1, projectName.length)
+          
+          this.getLoginUserName(nameId)
           getInfoByName(encodeURIComponent(projectName)).then((res) => {
             
             if(res.data.code === 200) {
