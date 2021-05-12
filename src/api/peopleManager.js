@@ -116,9 +116,9 @@ export function importExcel(id, file) {
   })
 }
 
-export function profession(id) {
+export function profession() {
   return request({
-    url: `/people/profession/prelist?siteId=${id}`,
+    url: `/people/teams/listPosts`,
     method: 'get'
   })
 }
@@ -229,6 +229,13 @@ export function typeCount(data) {
     url: `/people/info/type-count`,
     method: 'get',
     params: data
+  })
+}
+
+export function getUser() {
+  return request({
+    url: '/system/user/',
+    method: 'get'
   })
 }
 

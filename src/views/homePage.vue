@@ -1453,7 +1453,9 @@
           
           var projectName = Cookies.get('username')
           console.log("1234", projectName)
-          var nameId = projectName.split('-')[1]
+          var l = projectName.lastIndexOf('-')
+          var nameId = projectName.substring(l + 1, projectName.length)
+          
           this.getLoginUserName(nameId)
           getInfoByName(encodeURIComponent(projectName)).then((res) => {
             

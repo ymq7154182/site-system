@@ -25,7 +25,7 @@
           <!-- <br /> -->
           <span style="font-size: 14px;color: white;font-weight: 700;margin-right: 10px">岗位/工种</span>
           <el-select v-model="queryParams.userPost" placeholder="请选择" clearable size="small" style="width: 120px;margin-right: 10px">
-            <el-option v-for="dict in postList" :key="dict.id" :label="dict.professionName" :value="dict.professionName" />
+            <el-option v-for="dict in postList" :key="dict.postId" :label="dict.postName" :value="dict.postName" />
           </el-select>
           <span style="font-size: 14px;color: white;font-weight: 700;margin-right: 10px">状态</span>
           <el-select v-model="queryParams.userSignStatus" placeholder="请选择" clearable size="small" style="width: 120px;margin-right: 10px">
@@ -404,10 +404,10 @@ export default {
   },
   methods: {
     getPofession() {
-      var id = localStorage.getItem('siteId')
-      profession(id).then((res) => {
+      // var id = localStorage.getItem('siteId')
+      profession().then((res) => {
         console.log("岗位", res)
-        this.postList = res.data.rows
+        this.postList = res.data.data
       })
     },
     submitExcel() {
