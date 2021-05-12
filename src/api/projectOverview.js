@@ -18,6 +18,14 @@ export function getGongDiNameById (parems) {
   })
 }
 
+export function loginName (parems) {
+  return request({
+    url: '/system/user/getUserInfo',
+    method: 'get',
+    params: parems
+  })
+}
+
 // 大屏端输入项目名称
 export function screenName (parems) {
   return request({

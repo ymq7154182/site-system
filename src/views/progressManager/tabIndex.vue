@@ -79,6 +79,7 @@ export default {
     
     
     this.getTree();
+    console.log("登陆人名", localStorage.getItem('userName'))
     
   },
   methods: {

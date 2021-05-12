@@ -1558,14 +1558,10 @@ export default {
    
 
     submitNodeForm: function () {
-      console.log("ssaa",Cookies.get('username'))
-      var loginName = Cookies.get('username')
-      var fromUser = ''
-      if(loginName.indexOf('-') === -1) {
-        fromUser = loginName
-      } else {
-        fromUser = loginName.split('-')[0]
-      }
+      console.log("ssaa",localStorage.getItem('loginName'))
+      var loginName = localStorage.getItem('loginName')
+      var fromUser = loginName
+      
       this.nodeForm.siteId = localStorage.getItem("siteId")
        this.nodeForm.taskId = this.$store.state.nodeStateId
        this.nodeForm.parentId = this.selectParentId
