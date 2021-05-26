@@ -411,6 +411,7 @@
           <el-col :span="12">
               <el-form-item label="照片">
                 <el-upload
+                  :file-list="fileList"
                   class="upload-demo"
                   action="http://121.36.106.18:36080/system/safe/uploadFile"
                   :limit="1"
@@ -442,6 +443,8 @@ export default {
   },
   data(){
     return{
+
+      fileList: [],
       deptOptions: [],
       defaultProps: {
         children: "childs",
@@ -742,6 +745,8 @@ export default {
     },
     cancel() {
       this.open = false;
+      this.fileList = []
+      this.getLeaderList()
     },
     submitForm: function () {
       this.$refs["form"].validate((valid) => {
@@ -758,6 +763,7 @@ export default {
                   message: '更新成功！'
                 })
                 this.open = false;
+                this.fileList = []
                 this.getLeaderList()
                 this.resetForm('form')
               }

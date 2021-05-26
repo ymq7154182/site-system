@@ -497,11 +497,11 @@ export default {
       taList: [
         {
           value: 'desc',
-          label: '按进度倒叙排序'
+          label: '按进度倒序排序'
         },
         {
           value: 'asc',
-          label: '按进度正叙排序'
+          label: '按进度正序排序'
         }
       ],
       currentPage:1, //初始页
